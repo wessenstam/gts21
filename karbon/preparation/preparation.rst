@@ -76,6 +76,14 @@ Follow these steps to enable Karbon
 
    .. figure:: images/5.png
 
+
+.. raw:: html
+   
+   <FONT color=RED><CENTER><H3>If you already ran the CI/CD workshop, please use that MariaDB server as we want to keep the resources to a minimum. Skip the below part, you're already ok..</h3></center></font>
+
+
+------
+ 
 Deploy the MariaDB Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
