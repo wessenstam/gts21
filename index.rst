@@ -40,6 +40,20 @@
    karbon/deploy/deploy
    karbon/day-2/day-2
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Databases
+   :name: _dbs
+   :hidden:
+
+   dbs/1gettingstarted/gettingstarted
+   dbs/2configure_mssql/configure_mssql
+   dbs/3admin_mssqldb/admin_mssqldb
+   dbs/4deploy_mssql_era/deploy_mssql_era
+   dbs/5patch_sql/patch_sql
+   dbs/b1hammerdb/hammerdb
+   dbs/b2prismops_appmonitoring_lab/prismops_appmonitoring_lab
+   dbs/b3webtier/webtier
 
 .. raw:: html
 
