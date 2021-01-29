@@ -13,10 +13,12 @@ Looking at add self-service for end users, with ability to easily add capacity
 Need control over approvals
 Want an active/active approach with automatic DR between sites
 Portability of security between sites
-interested in autonomous DC operations with flow control
+interested in autonomous DC operations with approval control
+
+
 
 Review Add Clusters to PC (or as separate AZ)
-create simple flow isolation policy, enable
+create simple flow isolation policy, enable - tag env:dev to VM, tag env:prod to webserver, tag both to MSSQL DB
 create simple protection policy (both ways)
 upload and configure Calm BP (or create from scratch), assign categories for Flow/DR/User
 tlak to ability to do native self-service and introduce snow
@@ -32,7 +34,7 @@ trigger alert with stress
 look for alert in SNOW, view CMDB dashboard
 build playbook for webhook, create snow action/flow
 re-trigger alert and verify added memory
-migrate VM back to on-prem environment, verify flow policy followed
+migrate VM back to on-prem environment, verify flow policy followed - reason being for latency to on-prem applications
 
 talk about other ways this could be extended - using playbooks or SNOW to dynamically grow/shrink clusters environment with MCM; reporting on overprovisioned or orphaned VMs in AWS environment
 Create Calm project,

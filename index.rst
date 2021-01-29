@@ -21,6 +21,30 @@
    snow/alerts/alerts
    snow/webhook/webhook
 
+.. toctree::
+   :maxdepth: 2
+   :caption: CI/CD Pipeline using Drone
+   :name: _cicd
+   :hidden:
+
+   cicd/start/start
+   cicd/basic/basic
+   cicd/phase2/phase2
+   cicd/phase3/phase3
+   cicd/phase4/phase4
+   cicd/phase5/phase5
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Karbon - Kubernetes
+   :name: _k8s
+   :hidden:
+
+   karbon/preparation/preparation
+   karbon/karbon/karbon
+   karbon/deploy/deploy
+   karbon/day-2/day-2
+
 .. raw:: html
 
   <br><center><img src="https://get-ahv-images.s3.amazonaws.com/GTSLOGO.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
