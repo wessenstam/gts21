@@ -22,11 +22,6 @@ Good/better/best
 
 Simple recovery mode -> Full
 
-Era Road Map
-++++++++++++
-
-.. figure:: images/roadmap.png
-
 Scenarios
 +++++++++
 
