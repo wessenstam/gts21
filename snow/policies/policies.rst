@@ -104,11 +104,13 @@ You'll begin by assigning Category values to VMs that will be used in the data p
 
    .. note::
 
-      Alternatively, you can select the VM and click the **Actions** menu.
+      When right-clicking, you may need to scroll down to view all available actions. Alternatively, you can select the VM and click the **Actions** menu toward the top of the screen.
 
    As these VMs were provisioned as part of a Calm Blueprint, you will observe that they already have multiple categories automatically applied.
 
-#. In the **Search** field, specify the **Environment: Production** category and click :fa:`plus-circle` to add it. Also add your **User: ##** category based on your :ref:`clusterdetails` assignment.
+#. In the **Search** field, specify the **Environment: Production** category and click :fa:`plus-circle` to add it.
+
+#. Search for **User** and select the **User:** *##* value based on your :ref:`clusterdetails` assignment.
 
    .. figure:: images/9.png
 

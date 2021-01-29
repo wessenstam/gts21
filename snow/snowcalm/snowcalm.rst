@@ -140,30 +140,30 @@ Creating Catalog Items
 
 #. Return to **ServiceNow > Nutanix Calm > Catalog Management > Catalog Items** and verify your Catalog Item appears.
 
-Adding Calm Blueprints to Service Catalog
-+++++++++++++++++++++++++++++++++++++++++
+.. Adding Calm Blueprints to Service Catalog
+   +++++++++++++++++++++++++++++++++++++++++
 
-While users entitled to launch Calm Blueprints can access the Calm plugin menu through ServiceNow, you can also easily present the Blueprint Catalog as part of the Self-Service Portal interface that users are most familiar with for making hardware, software, services, etc. requests via ServiceNow.
+   While users entitled to launch Calm Blueprints can access the Calm plugin menu through ServiceNow, you can also easily present the Blueprint Catalog as part of the Self-Service Portal interface that users are most familiar with for making hardware, software, services, etc. requests via ServiceNow.
 
-#. In the **Filter Navigator** field in the upper-left, search for **Service Catalog** and select **Service Catalog** beneath **Self-Service**.
+   #. In the **Filter Navigator** field in the upper-left, search for **Service Catalog** and select **Service Catalog** beneath **Self-Service**.
 
-   .. figure:: images/10.png
+      .. figure:: images/10.png
 
-#. Click the **+ Add Content** icon in the upper-right.
+   #. Click the **+ Add Content** icon in the upper-right.
 
-   .. figure:: images/11.png
+      .. figure:: images/11.png
 
-#. Search for the default **Blueprints** catalog and select an **Add here** option based on your preferred placement.
+   #. Search for the default **Blueprints** catalog and select an **Add here** option based on your preferred placement.
 
-   .. figure:: images/12.png
+      .. figure:: images/12.png
 
-#. Once added to the Service Catalog, you can drag the catalog to your preferred location.
+   #. Once added to the Service Catalog, you can drag the catalog to your preferred location.
 
-   .. note::
+      .. note::
 
-      The name, description, and icon of the catalog are all easily changeable, but we will use the defaults for this exercise as the change would impact others on your cluster and ServiceNow instance.
+         The name, description, and icon of the catalog are all easily changeable, but we will use the defaults for this exercise as the change would impact others on your cluster and ServiceNow instance.
 
-      Additionally, the Blueprints catalog can be nested inside of other categories within the Service Catalog, for example, providing a Virtual Machines catalog underneath Hardware or an Applications category underneath Software.
+         Additionally, the Blueprints catalog can be nested inside of other categories within the Service Catalog, for example, providing a Virtual Machines catalog underneath Hardware or an Applications category underneath Software.
 
 Ordering VMs
 ++++++++++++
@@ -181,11 +181,9 @@ Ordering VMs
    - **User name** - *Your user##* (ex. user01)
    - **Password** - nutanix/4u
 
-#. Under **Self-Service**, select the **Service Catalog**.
+#. In the **Filter Navigator** field in the upper-left, search for **Launch Blueprint** to access the **Nutanix Calm** application within ServiceNow.
 
-#. Click the **Blueprints** catalog.
-
-   .. figure:: images/14.png
+   .. figure:: images/31.png
 
    .. note::
 
