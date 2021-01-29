@@ -147,7 +147,7 @@ Refresh your clone
 
 #. Within **Era**, select **Databases** from the dropdown menu, and then **Clones** from the left-hand menu.
 
-#. Select the clone for your catabase *Initials*\ -LABSQLDB_Clone1, and click **Refresh**.
+#. Select the clone for your database *Initials*\ -LABSQLDB_Clone1, and click **Refresh**.
 
 #. Click the radio button for *Snapshot*, and choose the entry for *Initials*\ -MSSQL-1st-Snapshot (Date Time).
 
