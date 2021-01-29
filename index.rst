@@ -14,7 +14,12 @@
    :name: _privatecloud
    :hidden:
 
-   snow/deploy/deploy
+   snow/gettingstarted/gettingstarted
+   snow/policies/policies
+   snow/snowcalm/snowcalm
+   snow/migration/migration
+   snow/alerts/alerts
+   snow/webhook/webhook
 
 .. raw:: html
 
