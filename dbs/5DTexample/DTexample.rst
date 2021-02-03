@@ -23,19 +23,21 @@ Re-platform from old to new SQL version
 Notes
 
    - SQL - 2008 R2 -> 2019
-   - Old DB & 2019 DB VM already registered
+   - Register Old DB & 2019 DB VM
 
    - Go to old DB TM, authorize 2019 DB VM
-   - Clone old DB to 2019 DB VM
-   - Log catchup on cloned DB
+   - Time Machine, clone old DB to 2019 DB VM
    - 2008 Compatibility mode. If testing successful, proceed.
-   - Open TM for cloned DB, do snapshot or log catch-up
-   - Refresh new DB
-   - Unregister old DB in Era
-   - Register new DB on 2019
+   - Put source in read only mode - warn of outage, apps will not be able to write data, plan accordingly
+   - Open TM for cloned DB, do snapshot or log catch-up - why one or the other?
+   - Refresh SQL19 clone
+   - Unregister old DB in Era - do not delete
+   - Re-Register target DB on 2019
    - Change recovery model of new DB on 2019 to Full
-   - [PW add-in]
+   - Change SLA of new DB on 2019 to Gold (?)
+   - [PW add-in] Must have multi-cluster mode to use DAM
    - Time Machines -> DAM -> Add (backups to any registered Nutanix cluster)
+   - DT kinda breezes over showing the SLAs... but I want to call out you can have one SLA here, another here, etc.
 
 Registering Your Source MSSQL 2016 VM
 +++++++++++++++++++++++++++++++++++++
