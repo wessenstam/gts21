@@ -11,7 +11,7 @@
 .. toctree::
    :maxdepth: 2
    :caption: Hybrid Cloud IaaS
-   :name: _privatecloud
+   :name: _hybridiaas
    :hidden:
 
    snow/gettingstarted/gettingstarted
@@ -20,6 +20,17 @@
    snow/migration/migration
    snow/alerts/alerts
    snow/webhook/webhook
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Hybrid Cloud EUC
+   :name: _hybrideuc
+   :hidden:
+
+   euc/gettingstarted/gettingstarted
+   euc/expand/expand
+   euc/runbook/runbook
+   euc/secure/secure
 
 .. toctree::
    :maxdepth: 2

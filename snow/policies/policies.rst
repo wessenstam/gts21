@@ -75,6 +75,8 @@ Configuring Data Protection
 
    <That's it, could add multiple recovery locations with different schedules, will come back to this>
 
+.. _assign_categories:
+
 Configuring Network Isolation
 +++++++++++++++++++++++++++++
 
@@ -147,6 +149,8 @@ You'll begin by assigning Category values to VMs that will be used in the data p
 #. Click **Save and Enforce**.
 
    If you select your newly created policy, you'll observe that no traffic has yet been discovered, as there are currently no VMs assigned to Environment:Dev and your user designation. This will occur as part of the self-service provisioning process.
+
+.. _create_project:
 
 Creating A Calm Project
 +++++++++++++++++++++++
