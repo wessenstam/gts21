@@ -51,6 +51,7 @@
    dbs/3admin_mssqldb/admin_mssqldb
    dbs/4deploy_mssql_era/deploy_mssql_era
    dbs/5patch_sql/patch_sql
+   dbs/6DTexample/DTexample
    dbs/B1hammerdb/hammerdb
    dbs/B2prismops_appmonitoring_lab/prismops_appmonitoring_lab
    dbs/B3webtier/webtier

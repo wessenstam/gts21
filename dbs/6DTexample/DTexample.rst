@@ -59,7 +59,7 @@ You must meet the following Era requirements before you register a SQL Server da
 
 #. Within **Era**, select **Database Server VMs** from the dropdown menu, and then **List** from the left-hand menu.
 
-   .. figure:: images/11.png
+   .. figure:: images/1.png
 
 #. Click **+ Register > Microsoft SQL Server > Single Node Server VM** and fill out the following fields:
 
@@ -74,19 +74,61 @@ You must meet the following Era requirements before you register a SQL Server da
 
       If *MSSQLSERVER* doesn't automatically populate in the *Instance* field, this could indicate that the Windows Firewall in your *UserXX*\ **-MSSQLSourceVM** VM may not have been disabled correctly.
 
-   .. figure:: images/12.png
+   .. figure:: images/2.png
 
    .. note::
 
     You can click **API Equivalent** for many operations in Era to enter an interactive wizard providing JSON payload based data you've input or selected within the UI, and examples of the API call in multiple languages (cURL, Python, Golang, Javascript, and Powershell).
 
-    .. figure:: images/17.png
+    .. figure:: images/3.png
 
 #. Click **Register** to begin ingesting the Database Server into Era.
 
 #. Select **Operations** from the dropdown menu to monitor the registration. This process should take approximately 5 minutes.
 
-   .. figure:: images/13.png
+   .. figure:: images/4.png
+
+Register Your Source MSSQL 2016 Database
+++++++++++++++++++++++++++++++++++++++++
+
+#. Within **Era**, select **Databases** from the dropdown menu, and then **Sources** from the left-hand menu.
+
+   .. figure:: images/8.png
+
+#. Click **+ Register > Microsoft SQL Server > Database** and fill out the following fields:
+
+   - **Database is on a Server VM that is:** - Registered
+   - **Registered Database Servers** - *UserXX*\ **-MSSQLSourceVM**
+
+   .. figure:: images/9.png
+
+#. Click **Next**.
+
+   - **Unregistered Databases** - SampleDB
+   - **Database Name in Era** - *Initials*\ -LABSQLDB
+
+   .. figure:: images/10.png
+
+#. Click **Next**.
+
+   - **Recovery Model** - Simple
+   - **Manage Log Backups with** - Era
+   - **Name** - *Initials*\ -LABSSQLDB_TM
+   - **SLA** - DEFAULT_OOB_BRASS_SLA (no continuous replay)
+
+   .. figure:: images/11.png
+
+#. Click **Register**.
+
+#. Select **Operations** from the dropdown menu to monitor the registration. This process should take approximately 3-5 minutes.
+
+   .. figure:: images/12.png
+
+
+
+
+
+NOT SURE IF NEEDED:
 
 Creating A Software Profile
 +++++++++++++++++++++++++++
@@ -95,7 +137,7 @@ Before additional SQL Server VMs can be provisioned, a *Software Profile* must f
 
 #. Within **Era**, select **Profiles** from the dropdown menu, and then **Software** from the left-hand menu.
 
-   .. figure:: images/14.png
+   .. figure:: images/5.png
 
 #. Click **+ Create > Microsoft SQL Server** and fill out the following fields:
 
@@ -103,7 +145,7 @@ Before additional SQL Server VMs can be provisioned, a *Software Profile* must f
    - **Description** - (Optional)
    - **Database Server** - Select your registered *Initials*\ -MSSQL VM
 
-   .. figure:: images/15.png
+   .. figure:: images/6.png
 
 #. Click **Next** and fill out the following fields:
 
@@ -114,45 +156,8 @@ Before additional SQL Server VMs can be provisioned, a *Software Profile* must f
 
 #. Select **Operations** from the dropdown menu to monitor the registration. This process should take approximately 2 minutes.
 
-   .. figure:: images/16.png
+   .. figure:: images/7.png
 
    .. note::
 
        If creating a profile from a server not gracefully shut down, it may be corrupt or may not provision successfully. You may need to reboot your *UserXX*\ **-MSSQLSourceVM** to ensure a clean shutdown and startup before attempting to registering profile to Era.
-
-
-Register Your Database
-++++++++++++++++++++++
-
-#. Within **Era**, select **Databases** from the dropdown menu, and then **Sources** from the left-hand menu.
-
-   .. figure:: images/1.png
-
-#. Click **+ Register > Microsoft SQL Server > Database** and fill out the following fields:
-
-   - **Database is on a Server VM that is:** - Registered
-   - **Registered Database Servers** - *UserXX*\ **-MSSQLSourceVM**
-
-   .. figure:: images/2.png
-
-#. Click **Next**.
-
-   - **Unregistered Databases** - SampleDB
-   - **Database Name in Era** - *Initials*\ -LABSQLDB
-
-   .. figure:: images/3.png
-
-#. Click **Next**.
-
-   - **Recovery Model** - Full
-   - **Manage Log Backups with** - Era
-   - **Name** - *Initials*\ -LABSSQLDB_TM
-   - **SLA** - DEFAULT_OOB_BRASS_SLA (no continuous replay)
-
-   .. figure:: images/4.png
-
-#. Click **Register**.
-
-#. Select **Operations** from the dropdown menu to monitor the registration. This process should take approximately 3-5 minutes.
-
-   .. figure:: images/4a.png
