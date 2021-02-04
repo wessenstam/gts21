@@ -93,7 +93,7 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
    Next, We will utilize Nutanix APIs to collect the VM metrics.
 
-#. Directly to the right of *REST API*, click the :fa:`pencil` and enter **Look up VM IP** in the *Add Description* field, and click **Save*.
+#. Directly to the right of *REST API*, click the :fa:`pencil` and enter **Look up VM IP** in the *Add Description* field, and click **Save**.
 
 #. Within the *Method (Optional)* dropdown, select **POST**, and fill out all fields as indicated.
 
