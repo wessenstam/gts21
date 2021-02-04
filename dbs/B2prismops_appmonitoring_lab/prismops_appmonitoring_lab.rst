@@ -10,23 +10,6 @@ Prism Pro brings smart automation to our customer’s daily IT operations. With 
 
 In this lab you will learn how Prism Ultimate can help IT Admins monitor, analyze and automatically act when a SQL Server's performance is impacted. You will also see how you can discover applications running on your cluster with Prism Ultimate.
 
-Getting Started
-+++++++++++++++
-
-#. Within Prism Central, click on :fa:`bars` **Virtual Infrastructure > VMs**. Note the IP Address of the *PrismOpsLabUtilityServer*. You will need to access this IP Address throughout this lab. At the same time, make note of the IP address of the MSSQL server VM assigned to you.
-
-      .. figure:: images/init1.png
-
-#. Open a new tab in the browser, and navigate to http://`<PRISM-OPS-LAB-UTILITY-SERVER-IP-ADDRESS>`/alerts (ex. `http://10.38.17.12/alerts`). It is possible you may need to log into the VM if you are the first one to use it. If this is the case, enter the required info, and click **Login**.
-
-      .. figure:: images/init2.png
-
-#. Once you have landed on the alerts page, leave the tab open. It will be used in a later portion of this lab.
-
-      .. figure:: images/init2b.png
-
-#. In a separate tab, navigate to http://`<PRISM-OPS-LAB-UTILITY-SERVER-IP-ADDRESS>` (ex. `http://10.38.17.12/alerts`).
-
 .. _sqlservermonitoring:
 
 SQL Server Monitoring with Prism Ultimate
@@ -40,7 +23,7 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
 #. Click **Get Started** to configure the monitoring integration. The *Monitoring Integrations* screen will appear. This is the page where the your configured integrations would show up.
 
-#. Click on **Configure instances**.
+#. Click on **Configure Instance**.
 
       .. figure:: images/appmonitoring2.png
 
@@ -52,9 +35,9 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
 #. Select the IP address of you MSSQL server VM within the *Microsoft SQL Server Host*. Fill in the rest of the fields with the information listed below. The *Microsoft SQL Server Port* field should be auto-filled with 1433 (standard SQL port). Click on **Test Connection**, and once that is successful, click **Save**.
 
-   -**Microsoft SQL Server Port** 1433
-   -**username:** sa
-   -**password:** Nutanix/1234
+   - **Microsoft SQL Server Port** 1433
+   - **username:** sa
+   - **password:** Nutanix/1234
 
       .. figure:: images/appmonitoring5.png
 
@@ -110,7 +93,7 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
    Next, We will utilize Nutanix APIs to collect the VM metrics.
 
-#. Directly to the right of *REST API*, click the :fa:`pencil`, enter **Look up VM IP** in the *Add Description* field, and click **Save*.
+#. Directly to the right of *REST API*, click the :fa:`pencil` and enter **Look up VM IP** in the *Add Description* field, and click **Save*.
 
 #. Within the *Method (Optional)* dropdown, select **POST**, and fill out all fields as indicated.
 
@@ -118,16 +101,16 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
    While the field names in this example include the phrase *(Optional)*, they are required for this step.
 
-   -**URL:** `https://<PRISM-CENTRAL-IP-ADDRESS>:9440/api/nutanix/v3/groups`
-   -**Username (Optional)** admin
-   -**Password (Optional)** <PRISM-CENTRAL-ADMIN-PASSWORD>
-   -**Request Body (Optional)**
+   - **URL:** `https://<PRISM-CENTRAL-IP-ADDRESS>:9440/api/nutanix/v3/groups`
+   - **Username (Optional)** admin
+   - **Password (Optional)** <PRISM-CENTRAL-ADMIN-PASSWORD>
+   - **Request Body (Optional)**
 
       .. code-block:: bash
 
          {"entity_type":"ntnxprismops__microsoft_sqlserver__instance","entity_ids": ["{{trigger[0].source_entity_info.uuid}}"],"query_name":"eb:data-1594987537113","grouping_attribute":" ","group_count":3,"group_offset":0,"group_attributes":[],"group_member_count":40,"group_member_offset":0,"group_member_sort_attribute":"active_node_ip","group_member_sort_order":"DESCENDING","group_member_attributes":[{"attribute":"active_node_ip"}]}
 
-   -**Request Headers (Optional)** `Content-Type:application/json`
+   - **Request Headers (Optional)** `Content-Type:application/json`
 
       .. figure:: images/sqlplay3.png
 
@@ -143,7 +126,7 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
 #. Enter the below into the *JSON Path* field.
 
-   -**JSON Path**
+   - **JSON Path**
 
       .. code-block:: bash
 
@@ -159,9 +142,9 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
 #. Directly below the *IP Address/Hostname* field, click **Parameters**, and select **Parsed String** within the *Previous Action* column. Fill out the following fields as indicated:
 
-   -**Username** Administrator
-   -**Password** Nutanix/4u
-   -**JSON Path:** `C:\\Users\\Administrator\\Desktop\\UploadToGDrive.ps1-id <INITIALS>`
+   - **Username** Administrator
+   - **Password** Nutanix/4u
+   - **JSON Path:** `C:\\Users\\Administrator\\Desktop\\UploadToGDrive.ps1-id <INITIALS>`
 
 #. Slide *HTTPS* to the left (disabled).
 
@@ -173,9 +156,9 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
    The e-mail will serve as notification that an alert has been raised, that a log file has been uploaded to Google Drive (with  link). Fill out the following fields as indicated:
 
-   -**Recipient** Your e-mail address (ex. `first.last@nutanix.com`).
-   -**Subject** ``X-Play notification for {{trigger[0].alert_entity_info.name}}``
-   -**Message** ``This is a message from Prism Pro X-Play. Logs have been collected for your SQL server due to a high buffer pool size event and are available for you at https://drive.google.com/drive/folders/1e4hhdCydQ5pjEKMXUoxe0f35-uYshnLZ?usp=sharing``
+   - **Recipient** Your e-mail address (ex. `first.last@nutanix.com`).
+   - **Subject** ``X-Play notification for {{trigger[0].alert_entity_info.name}}``
+   - **Message** ``This is a message from Prism Pro X-Play. Logs have been collected for your SQL server due to a high buffer pool size event and are available for you at https://drive.google.com/drive/folders/1e4hhdCydQ5pjEKMXUoxe0f35-uYshnLZ?usp=sharing``
 
       .. figure:: images/sqlplay9.png
 
@@ -195,8 +178,8 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
 #. Log in using the following credentials:
 
-   -**Username** Administrator
-   -**Password** Nutanix/4u
+   - **Username** Administrator
+   - **Password** Nutanix/4u
 
    We will now artificially generate the required usage to activate the alert we previously created. To do so, we will be executing a PowerShell script, which utilizes a program called HammerDB.
 
