@@ -4,145 +4,189 @@
 [BONUS] Application Monitoring with Prism Ultimate
 --------------------------------------------------
 
-.. figure:: images/operationstriangle.png
+      .. figure:: images/operationstriangle.png
 
 Prism Pro brings smart automation to our customer’s daily IT operations. With Prism Ultimate we expand this smart automation and intelligent learning to the application and services layers. The typical operations workflow is a continuous cycle of monitoring, analyzing and taking action where necessary. Prism Pro mirrors traditional IT Admin's workflows to improve operations efficiency and Prism Ultimate combines that with full-stack visibility. With Prism Ultimate, IT Admins are able to connect insights from application machine data to automate this typical flow using the power of the machine learning engine X-FIT and the X-Play automation engine.
 
 In this lab you will learn how Prism Ultimate can help IT Admins monitor, analyze and automatically act when a SQL Server's performance is impacted. You will also see how you can discover applications running on your cluster with Prism Ultimate.
 
-Lab Setup
-+++++++++
+Getting Started
++++++++++++++++
 
-#. Open your **Prism Central** and navigate to the **VMs** page. Note down the IP Address of the **PrismOpsLabUtilityServer**. You will need to access this IP Address throughout this lab.
+#. Within Prism Central, click on :fa:`bars` **Virtual Infrastructure > VMs**. Note the IP Address of the *PrismOpsLabUtilityServer*. You will need to access this IP Address throughout this lab. At the same time, make note of the IP address of the MSSQL server VM assigned to you.
 
-   .. figure:: images/init1.png
+      .. figure:: images/init1.png
 
-#. Open a new tab in the browser, and navigate to http://`<PrismOpsLabUtilityServer_IP_ADDRESS>`/alerts [example http://10.38.17.12/alerts]. It is possible you may need to log into the VM if you are the first one to use it. Just fill out the **Prism Central IP**, **Username** and **Password** and click **Login**.
+#. Open a new tab in the browser, and navigate to http://`<PRISM-OPS-LAB-UTILITY-SERVER-IP-ADDRESS>`/alerts (ex. `http://10.38.17.12/alerts`). It is possible you may need to log into the VM if you are the first one to use it. If this is the case, enter the required info, and click **Login**.
 
-   .. figure:: images/init2.png
+      .. figure:: images/init2.png
 
 #. Once you have landed on the alerts page, leave the tab open. It will be used in a later portion of this lab.
 
-   .. figure:: images/init2b.png
+      .. figure:: images/init2b.png
 
-#. In a separate tab, navigate to http://`<PrismOpsLabUtilityServer_IP_ADDRESS>`/ to complete the lab from [example http://10.38.17.12/]. Use the UI at this URL to complete the lab.
-
-   .. figure:: images/init3.png
-
+#. In a separate tab, navigate to http://`<PRISM-OPS-LAB-UTILITY-SERVER-IP-ADDRESS>` (ex. `http://10.38.17.12/alerts`).
 
 SQL Server Monitoring with Prism Ultimate
-+++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++
 
-Prism Ultimate includes the SQL Server monitoring pack which allows IT admin to understand how infrastructure may impact applications and vice versa. This is an agentless solution that gives visibility into databases, queries and SQL metrics and applies the X-FIT behavior learning and anomaly detection capabilities.
+Prism Ultimate licensing includes the SQL Server monitoring pack, which allows IT admins to understand how infrastructure may impact applications and vice versa. This is an agentless solution that gives visibility into databases, queries, SQL metrics and applies the X-FIT behavior learning and anomaly detection capabilities.
 
-#. Go to Integrations from the Prism Central home page
+#. Within Prism Central, click on :fa:`bars` **Operations > Integrations**.
 
-   .. figure:: images/appmonitoring0.png
+      .. figure:: images/appmonitoring0.png
 
-#. Click **Get Started** to start setting up a monitoring integration.
+#. Click **Get Started** to configure the monitoring integration. The *Monitoring Integrations* screen will appear. This is the page where the your configured integrations would show up.
 
-   .. figure:: images/appmonitoring1.png
+#. Click on **Configure instances**.
 
-#. This is the page where the your configured integrations would show up. Click on **Configure instances**.
+      .. figure:: images/appmonitoring2.png
 
-   .. figure:: images/appmonitoring2.png
+#. Select **Microsoft SQL Server** from the dropdown, check the box for *I have increase Prism Central (PC) VM's Memory and vCPU* (please see the note directly below), and then click **Enable**. This allows Nutanix Collector to collect external entity instance metrics. In this case, the SQL Server collector is already enabled, you will not see that option and can skip to the next step.
 
-#. Choose **Microsoft SQL Server** from the dropdown(the other option being vCenter) and click on **Enable** so that the Nutanix collector can start collecting external metrics. In case the SQL Server collector is already enabled, you will not see that option and can skip to the next step.
+   .. note::
 
-   .. figure:: images/appmonitoring3.png
+      Pay close attention to the other features you may have, or will enable in Prism Central in addition to . Please refer to `Prism Central: Resource Requirements for various services enablement on Prism Central <https://portal.nutanix.com/page/documents/kbs/details?targetId=kA00e000000brBgCAI>`_ for resource requirements.
 
-#. Choose your SQL Server Host IP from the dropdown list. This is the IP address of the MSSQL server VM configured for this lab, confirm that it is the right IP address by checking on the VMs page.
+#. Select the IP address of you MSSQL server VM within the *Microsoft SQL Server Host*. Fill in the rest of the fields with the information listed below. The *Microsoft SQL Server Port* field should be auto-filled with 1433 (standard SQL port). Click on **Test Connection**, and once that is successful, click **Save**.
 
-   .. figure:: images/appmonitoring4.png
+   -**Microsoft SQL Server Port** 1433
+   -**username:** sa
+   -**password:** Nutanix/1234
 
-#. Fill in the rest of the fields with the credentials listed below. The port should be auto-filled with 1433, the standard SQL port. Click on **Test Connection** and then hit **Save** once it is successful.
+      .. figure:: images/appmonitoring5.png
 
-   - **username: sa**
-   - **password: Nutanix/1234**.
+#. Once complete, your SQL Server will be listed under *Monitoring Integrations*, as seen below.
 
-   .. figure:: images/appmonitoring5.png
+      .. figure:: images/appmonitoring6.png
 
-#. You should see your SQL Server show up under integrations like in the figure below. Click on the Server Name(IP Address) to have a look at what is being collected.
+#. Click on the IP Address of the server, under the *Name* column to observe the information being collected. The *Summary* screen is now shown.
 
-   .. figure:: images/appmonitoring6.png
+      .. figure:: images/appmonitoring7.png
 
-#. In addition to the summary view, you can look at the databases running on the SQL Server, SQL Specific metrics impacting the server's performance and queries sorted by highest average execution time to provide a better insight into the application.
+#. In addition to the *Summary* view, click **Queries** from the left-hand menu to observe SQL Server queries, sorted by highest average execution time, providing greater insight into the application itself.
 
-   .. figure:: images/sqlqueries.png
+      .. figure:: images/sqlqueries.png
 
-#. Since the SQL Monitoring has just been setup, it will take time for the metrics to populate for a better view of the charts. The figure below shows an example of how the charts would look once the moniotoring has been running for a while. We can see that in the **CPU Utilization** chart anomalies are picked up on based on machine learned baselines just like we do for VM data.
+#. Click **Metrics** from the left-hand menu. As SQL monitoring has recently been setup, it will take time for these metrics to full populate. In the example below, we can see that in the *CPU Utilization* chart anomalies are generated based on machine learned baselines, just as Prism Pro provides on the VM level.
 
-   .. figure:: images/sqlcharts.png
+      .. figure:: images/sqlcharts.png
 
-#. Now we will create an alert policy for the **Buffer Pool Size** and a playbook based on that alert so we can see how we can extend the simplicity of our powerful X-Play automation onto applications as well with Prism Ultimate. Scroll down to the **Buffer Pool Size** metric and click on **Actions** and choose **alert settings**.
+   Next, we will create an alert policy for the *Buffer Pool Size*, and a playbook based on that alert, to extend the simplicity of our powerful X-Play automation onto applications as well.
 
-   .. figure:: images/bufferalert1.png
+#. Scroll down to the **Buffer Pool Size** metric (typically 3rd from the bottom, right column), click on **Actions**, and then choose **Alert Settings**.
 
-#. We will be stressing the SQL Server in a later step using an application called **HammerDB**. The stress will cause the metric to go very high after a delay of a few minutes. We will keep the alert threshold at a fair number so to get the alert policy raised as soon as possible for our example. Set the static threshold for the critical alert at **100mib**. Also change the inteval for how long the conditions should persist before triggering an alert to **0 Minutes** as shown below, so that the alert is triggered immediately with a spike in the metric. Do make sure to change the policy name to **Initials - SQL Server Buffer Pool Size**. Click save and go to playbooks under the Operations tab.
+      .. figure:: images/bufferalert1.png
 
-   .. figure:: images/bufferalert2.png
+   We will be stressing the SQL Server in a later step using an application called *HammerDB*. The stress will cause the metric to increase after a short delay. We will keep the alert threshold at a fair number so to get the alert policy raised as soon as possible for our example.
 
-#. For the next part of this lab, if you understand how to set up Playbooks already and wish to do so, you have the option to skip the setup of the next Playbook. Instead follow the steps under the Importing/Exporting Playbooks section below. We recommend reading through the steps to create the Playbook to better understand what it is doing.
+#. From the *Metric* dropdown on the left-hand side, choose **Buffer Pool Size**.
 
-#. Now we will create the playbook which we want to execute when this alert policy is triggered. The actions we want to take are running a powershell script on the VM to collect logs and then uploading those logs onto a google drive so we can review what went wrong. Choose **Alert** as the trigger for your playbook and specifiy the alert policy you just created. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+#. Within the *Static Threshold* section, click the checkbox for **Alert Critical if** and within the field to the right of the *>=* dropdown, enter **100**.
 
-   .. figure:: images/sqlplay1.png
+#. From the dropdown for *Trigger alert if conditions persist for*, select **0 Minutes**.
 
-#. We have to get the VM IP Address so we can use the out of the box **Powershell** action to run our script. So we will need to create a couple of actions first. The first one will be to the lookup the VM IP. Click on **Add Action** and select the **REST API** action. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+#. Within *Policy Name* enter *Initials*\ **- SQL Server Buffer Pool Size**, and click **Save**.
 
-   .. figure:: images/sqlplay2.png
+      .. figure:: images/bufferalert2.png
 
-#. We use our Nutanix v3 APIs to collect the VM metrics. Select the **POST** method. You will need to enter the Prism Central credentials that were used to login. Fill in the rest of the fields according to below where **localhost** will be the **Prism Central** IP address. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+#. Within Prism Central, click on :fa:`bars` **Operations > Playbooks**.
 
-   - **Method:** POST
-   - **URL:** https://localhost:9440/api/nutanix/v3/groups
-   - **Request Body:** ``{"entity_type":"ntnxprismops__microsoft_sqlserver__instance","entity_ids": ["{{trigger[0].source_entity_info.uuid}}"],"query_name":"eb:data-1594987537113","grouping_attribute":" ","group_count":3,"group_offset":0,"group_attributes":[],"group_member_count":40,"group_member_offset":0,"group_member_sort_attribute":"active_node_ip","group_member_sort_order":"DESCENDING","group_member_attributes":[{"attribute":"active_node_ip"}]}``
-   - **Request Header:** Content-Type:application/json
+   Next, we will create the playbook the alert policy will trigger, which includes a PowerShell script to collect and upload logs to a Google Drive.
 
-   .. figure:: images/sqlplay3.png
+#. Select the *List* menu on the left-hand, click **Get Started** (if displayed), and then **Create Playbook**.
 
-#. Click add action and select the **String Parse** action so that we can extract the VM IP from the previous action. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+#. Within the *Select a Trigger* screen, click **Alert**.
 
-   .. figure:: images/sqlplay4.png
+#. From the *Select an Alert Policy* dropdown, select *Initials*\ **- SQL Server Buffer Pool Size**.
 
-#. Use the **Parameter** link to choose the **Response Body** from the previous action. Add in the following JSON path and fill in the rest of the fields as shown in the figure below. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+      .. figure:: images/sqlplay1.png
 
-   - **JSON Path:** ``$.group_results[0].entity_results[0].data[0].values[0].values[0]``
+   The built-in PowerShell script requires our MSSQL VM IP address, which we will obtain by creating *Action* entries. The first one will be to the lookup the VM IP.
 
-   .. figure:: images/sqlplay5.png
+#. From the left-hand side, click **Add Action** below the *Actions* section.
 
-#. Click **Add Action** to add the next action and select the **IP Address Powershell** action. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+#. Click **Select** on the *REST API* action.
 
-   .. figure:: images/sqlplay6.png
+   Next, We will utilize Nutanix APIs to collect the VM metrics.
 
-#. Use the **Parameters** link to get the parsed string from the previous action i.e. the VM IP for the **IP Address/Hostname** field. Provide the SQL VM credentials listed below. Provide the followng path to script and replace <Name> with your name so you can recognize your log file in the google drive. Make sure to enter only your first name or full name without any spaces in betweeen since the script will read in only one string, example - **firstname_lastname**. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+#. Directly to the right of *REST API*, click the :fa:`pencil`, enter **Look up VM IP** in the *Add Description* field, and click **Save*.
 
-   - **Username: Administrator**
-   - **Password: Nutanix/4u**.
-   - **JSON Path:** C:\\Users\\Administrator\\Desktop\\UploadToGDrive.ps1 -id <Name>
+#. Within the *Method (Optional)* dropdown, select **POST**, and fill out all fields as indicated.
 
-  .. figure:: images/sqlplay7.png
+   .. note::
 
-#. Now we'll add the last action for the playbook, Click **Add Action** and select the **Email** action to send an email. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+   While the field names in this example include the phrase *(Optional)*, they are required for this step.
 
-  .. figure:: images/sqlplay8.png
+   -**URL:** `https://<PRISM-CENTRAL-IP-ADDRESS>:9440/api/nutanix/v3/groups`
+   -**Username (Optional)** admin
+   -**Password (Optional)** <PRISM-CENTRAL-ADMIN-PASSWORD>
+   -**Request Body (Optional)**
 
-#. In the email we want to let teh user know that a alert has been raised and a log file has been uploaded to a google drive link that we will provide so they can take a look. Fill in the following fields. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+      .. code-block:: bash
 
-      - **Recipient:** - Fill in your email address.
-      - **Subject :** - ``X-Play notification for {{trigger[0].alert_entity_info.name}}``
-      - **Message:** - ``This is a message from Prism Pro X-Play. Logs have been collected for your SQL server due to a high buffer pool size event and are available for you at https://drive.google.com/drive/folders/1e4hhdCydQ5pjEKMXUoxe0f35-uYshnLZ?usp=sharing``
+         {"entity_type":"ntnxprismops__microsoft_sqlserver__instance","entity_ids": ["{{trigger[0].source_entity_info.uuid}}"],"query_name":"eb:data-1594987537113","grouping_attribute":" ","group_count":3,"group_offset":0,"group_attributes":[],"group_member_count":40,"group_member_offset":0,"group_member_sort_attribute":"active_node_ip","group_member_sort_order":"DESCENDING","group_member_attributes":[{"attribute":"active_node_ip"}]}
 
-  .. figure:: images/sqlplay9.png
+   -**Request Headers (Optional)** `Content-Type:application/json`
 
-#. Click **Save & Close** button and save it with a name “*Initials* - High Buffer Pool Size”. **Be sure to enable the ‘Enabled’ toggle.** **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+      .. figure:: images/sqlplay3.png
+
+   We will use the *String Parser* action to extract the VM IP from the preceding action.
+
+#. From the left-hand side, click **Add Action** below the *Actions* section.
+
+#. Click **Select** on the *String Parser* action.
+
+#. Directly to the right of *String Parser*, click the :fa:`pencil`, enter **Extract VM IP** in the *Add Description* field, and click **Save*.
+
+#. Directly below the *String to Parse* field, click **Parameters**, and select **Response Body** within the *Previous Action* column.
+
+#. Enter the below into the *JSON Path* field.
+
+   -**JSON Path**
+
+      .. code-block:: bash
+
+      $.group_results[0].entity_results[0].data[0].values[0].values[0]
+
+      .. figure:: images/sqlplay5.png
+
+#. From the left-hand side, click **Add Action** below the *Actions* section.
+
+#. Click **Select** on the *IP Address Powershell* action.
+
+#. Directly to the right of *IP Address Powershell*, click the :fa:`pencil`, enter **Upload to Google Drive** in the *Add Description* field, and click **Save*.
+
+#. Directly below the *IP Address/Hostname* field, click **Parameters**, and select **Parsed String** within the *Previous Action* column. Fill out the following fields as indicated:
+
+   -**Username** Administrator
+   -**Password** Nutanix/4u
+   -**JSON Path:** `C:\\Users\\Administrator\\Desktop\\UploadToGDrive.ps1-id <INITIALS>`
+
+#. Slide *HTTPS* to the left (disabled).
+
+      .. figure:: images/sqlplay7.png
+
+#. From the left-hand side, click **Add Action** below the *Actions* section.
+
+#. Click **Select** on the *Email* action.
+
+   The e-mail will serve as notification that an alert has been raised, that a log file has been uploaded to Google Drive (with  link). Fill out the following fields as indicated:
+
+   -**Recipient** Your e-mail address (ex. `first.last@nutanix.com`).
+   -**Subject** ``X-Play notification for {{trigger[0].alert_entity_info.name}}``
+   -**Message** ``This is a message from Prism Pro X-Play. Logs have been collected for your SQL server due to a high buffer pool size event and are available for you at https://drive.google.com/drive/folders/1e4hhdCydQ5pjEKMXUoxe0f35-uYshnLZ?usp=sharing``
+
+      .. figure:: images/sqlplay9.png
+
+#. Click **Save & Close**.  button and save it with a name *Initials*\ **- High Buffer Pool Size**. Slide the *Playbook Status* to **d**.
 
   .. figure:: images/sqlplay10.png
 
 #. Now we will trigger the workflow, launch the console for your VM where the SQL Server is running using the credentials listed below. There is a *HammerDB* application already installed on the VM. In order to cause a spike in the metrics we will run a powershell script to create some users on the Server, Go to **Local Disk(C:) > Program Files > HammerDB** and right-click on the file **workload.ps1** and select **Run with Powershell** as shown in the figure below. You could also click on **HammerDB** on the left side as one of the quicklinks.
 
-   - **Username: Administrator**
-   - **Password: Nutanix/4u**.
+- **Username: Administrator**
+- **Password: Nutanix/4u**.
 
  .. figure:: images/hammerdb.png
 
@@ -156,7 +200,7 @@ Prism Ultimate includes the SQL Server monitoring pack which allows IT admin to 
 
   .. figure:: images/sqllogfile.png
 
-#. Switch back to the previous tab with the Prism Central console open. Open up the details for the **`Initials` - High Buffer Pool Size** Playbook that you created and click the **Plays** tab towards the top of the view to take a look at the Plays that executed for this playbook. The sections in this view can be expanded to show more details for each item. If there were any errors, they would also be surfaced in this view.
+#. Switch back to the previous tab with the Prism Central console open. Open up the details for the **`Initials`- High Buffer Pool Size** Playbook that you created and click the **Plays** tab towards the top of the view to take a look at the Plays that executed for this playbook. The sections in this view can be expanded to show more details for each item. If there were any errors, they would also be surfaced in this view.
 
  .. figure:: images/sqlplay11.png
 
@@ -180,7 +224,7 @@ X-Play now has the ability to import and export playbooks across Prism Centrals.
 
  .. figure:: images/import2.png
 
-#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once opened the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwords**, **URLs** and **IP Addresses** for each of the Actions is correct according to your environment. Click on **Update** to change fields in the playbook. Refer to the playbook creation steps above to confirm these fields.
+#. Click on the playbook that has just been imported for you- there will be a time stamp in the playbook name. Once opened the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwords**, **URLs** and **IP Addresses** for each of the Actions is correct according to your environment. Click on **Update** to change fields in the playbook. Refer to the playbook creation steps above to confirm these fields.
 
 #. First you will need to make sure the alert policy is correct for your playbook. Click on the trigger and choose the Alert Policy you created for the Buffer Pool Size metric above.
 
@@ -188,7 +232,7 @@ X-Play now has the ability to import and export playbooks across Prism Centrals.
 
  .. figure:: images/import5.png
 
-#. Next you need to change the **Password** in the **IP Address Powershell** action to the SQL VM password - **Nutanix/4u** and the name of the user in path to the script to your name(ABC in the figure below).
+#. Next you need to change the **Password** in the **IP Address Powershell** action to the SQL VM password- **Nutanix/4u** and the name of the user in path to the script to your name(ABC in the figure below).
 
  .. figure:: images/import6.png
 
@@ -222,7 +266,7 @@ Prism Ultimate gives the capability to discover applications running on your ESX
 
  .. figure:: images/appdiscovery4.png
 
-#. You can identify this app by the Ports that will be auto-filled by Discovery. Name this app, example **Initials - My Special App** and click on **Save and Apply**.
+#. You can identify this app by the Ports that will be auto-filled by Discovery. Name this app, example **Initials- My Special App** and click on **Save and Apply**.
 
  .. figure:: images/appdiscovery5.png
 
