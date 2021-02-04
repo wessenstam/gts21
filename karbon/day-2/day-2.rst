@@ -189,11 +189,10 @@ Datasource configuration
    .. figure:: images/8.png
 
 #. In the URL field type the IP address you have found. The port is 9090, so the URL, using the example screen shots, is http://172.20.1.11:9090
-#. Click the **Save & Test** button. If all is correct, you should recieve a green bar above the button stating **Data source is working**
+#. Click the **Save & Test** button. If all is correct, you should receive a green bar above the button stating **Data source is working**
 
    .. figure:: images/9.png
 
-.. TODO: Check this process why we can't use the internal DNS **prometheus-operatord.svc.monitoring.cluster.local**
 
 Dashboard
 *********
