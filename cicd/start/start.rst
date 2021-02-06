@@ -42,7 +42,7 @@ The following resources are needed for the workshop:
   .. figure:: images/1.png
 
 - Docker Hub account is needed for saving/uploading the images for the Fiesta application. Create an account using http://hub.docker.com.
-- Blueprint of the Dev Environment to you are going to deploy. This saves you in building the environment. The blueprint can be download :download:`here <Docker MariaDB FiestaApp.json>`. If you also have Era deployed, you can also use :download:`this blueprint <Docker MariaDB FiestaApp - ERA.json>`. The last blueprint will also register the MariaDB in Era.
+- Blueprint of the Dev Environment to you are going to deploy. This saves you in building the environment. The blueprint can be download `here <https://raw.githubusercontent.com/nutanixworkshops/gts21/master/cicd/start/Docker%20MariaDB%20FiestaApp%20-%20ERA.json>`_. If you also have Era deployed, you can also use `this blueprint <https://raw.githubusercontent.com/nutanixworkshops/gts21/master/cicd/start/Docker%20MariaDB%20FiestaApp.json>`_. The last blueprint will also register the MariaDB in Era.
 
 Prepare your environment
 ------------------------
