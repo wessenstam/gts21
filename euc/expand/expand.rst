@@ -321,4 +321,4 @@ Takeaways
 - Combo of Clusters/MCS/AHV plugin makes for super simple scaling
 - Keep your own image
 - Keep your own Citrix infrastructure
-- How could we build on this? Files + Peer for active/active user profiles and shares across on-prem and cloud; native AOS data replication for persistent desktop DR and syncing gold image changes
+- How could we build on this? Files + Peer for active/active user profiles and shares across on-prem and cloud; native AOS data replication for persistent desktop DR and syncing gold image changes; adding in Citrix HA infra (including multi-cluster SQL managed by Era)

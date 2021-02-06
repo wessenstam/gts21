@@ -23,6 +23,18 @@
 
 .. toctree::
    :maxdepth: 2
+   :caption: Hybrid Cloud Database Management
+   :name: _hybrideuc
+   :hidden:
+
+   dbs/gettingstarted/gettingstarted
+   dbs/clustersaag/clustersaag
+   dbs/clustersdam/clustersdam
+   dbs/patching/patching
+   dbs/sqlmonitoring/sqlmonitoring
+
+.. toctree::
+   :maxdepth: 2
    :caption: Hybrid Cloud EUC
    :name: _hybrideuc
    :hidden:
@@ -34,7 +46,7 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: CI/CD Pipeline using Drone
+   :caption: Containerizg Apps and CI/CD
    :name: _cicd
    :hidden:
 
@@ -47,7 +59,7 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: Karbon - Kubernetes
+   :caption: Cloud Native Apps on Nutanix
    :name: _k8s
    :hidden:
 
