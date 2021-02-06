@@ -4,7 +4,7 @@
 Starting the CI/CD workshop
 ===========================
 
-This workshop is trying to teach the basic steps to get from an existing application (NPM and a MariaDB) to a contairezed application where a CI/CD pipeline is being created to:
+This workshop is trying to teach the basic steps to get from an existing application (NPM and a MariaDB) to a containerised application where a CI/CD pipeline is being created to:
 
 - Build the new containers
 - Test the build container
@@ -17,7 +17,7 @@ This workshop is trying to teach the basic steps to get from an existing applica
 Pre-requisite
 -------------
 
-To run the workshop some extra resources are needed on your laptop (besides Terminal or Putty for the SSH session) are needed.
+To run the workshop some extra resources are needed on your laptop (besides Terminal or Putty for the SSH session).
 
 .. note::
 
@@ -37,12 +37,16 @@ The following resources are needed for the workshop:
   - Shell Syntax (https://marketplace.visualstudio.com/items?itemName=bmalehorn.shell-syntax)
   - Bracket Pair Colorizer 2 (https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
 
-  To install the extensions use the extensions button (left hand pane, fourth icon from the top) in VC and use the Search Extensions field to find and install them.
+  To install the extensions use the extensions button (left hand pane) in VC and use the Search Extensions field to find and install them.
 
   .. figure:: images/1.png
 
 - Docker Hub account is needed for saving/uploading the images for the Fiesta application. Create an account using http://hub.docker.com.
-- Blueprint of the Dev Environment to you are going to deploy. This saves you in building the environment. The blueprint can be download `here <https://raw.githubusercontent.com/nutanixworkshops/gts21/master/cicd/start/Docker%20MariaDB%20FiestaApp%20-%20ERA.json>`_. If you also have Era deployed, you can also use `this blueprint <https://raw.githubusercontent.com/nutanixworkshops/gts21/master/cicd/start/Docker%20MariaDB%20FiestaApp.json>`_. The last blueprint will also register the MariaDB in Era.
+- Blueprint of the Dev Environment to which you are going to deploy. This saves you in building the environment.
+
+  - The blueprint can be downloaded `here <https://raw.githubusercontent.com/nutanixworkshops/gts21/master/cicd/start/Docker%20MariaDB%20FiestaApp.json>`_. One deployed, you will need to manually register MariaDB to Era.
+  - If you have Era deployed, download the blueprint `here <https://raw.githubusercontent.com/nutanixworkshops/gts21/master/cicd/start/Docker%20MariaDB%20FiestaApp%20-%20ERA.json>`_. This blueprint will request for Era server IP and credentials during run time and register MariaDB to Era through a REST call.
+
 
 Prepare your environment
 ------------------------
@@ -133,7 +137,7 @@ Now that we have set the users, their roles, which cluster and networks to use, 
 7. Network adapters
 8. Need of a serial port
 9. Connection configuration including general credentials
-    
+
 .. note::
   These parameters are set as DEFAULT parameters. Meaning you can change them in the Blueprints you are going to create and deploy.
 
@@ -149,26 +153,26 @@ As we are mostly using the Linux O/S in this workshop we are just configuring th
 #. Provide the **vCPU, Cores per vCPU** and the **Memory (GiB)** fields with the value of **1**
 
 #. Under **DISKS (1)** Select the *CentOS7.qcow2* under the Image field. Leave the other options in this area of the configuration.
-   
+
    .. figure:: images/calm3/disk.png
 
 #. Under **NETWORK ADAPTERS (NICS)(1)** Select your Cluster name and Primary as the network. Make sure you have the **Private IP** set as *Dynamic*.
 
    .. figure:: images/calm3/network.png
 
-#. At the **CONNECTION** area, click on the Credential and select *Add New Credential*. As we are using in the Blueprints new setting, we still need to provide them to the Project. 
+#. At the **CONNECTION** area, click on the Credential and select *Add New Credential*. As we are using in the Blueprints new setting, we still need to provide them to the Project.
 
    .. figure:: images/calm3/credential.png
 
 #. In the new screen use **centos** as the Credential Name, **root** as the user and **nutanix/4u** as the password. Click on **Done** if your are ready.
 
-  
+
    .. figure:: images/calm3/credential-2.png
 
 #. Click **Save** to save the project.
 
 #. After a few seconds, the system saves the project and configure itself so it can use the configuration, you should see that the Exclamation mark behind Environment should not be shown as we had before (see step 1).
-   
+
    .. figure:: images/calm3/environment-2.png
 
 ------
@@ -185,7 +189,7 @@ Upload the Blueprint
 #. Upload the downloaded blueprint
 #. Rename the Bueprint to *initials* **-Docker MariaDB Fiesta**. If you have the Era version add **-Era** at the end of the name
 #. Assign it to your project that you have created.
-#. Click the **Upload** button. 
+#. Click the **Upload** button.
 
 After the upload we have to configure the Blueprint so we can deploy it
 
@@ -221,7 +225,7 @@ Deploy the blueprint
 ********************
 
 #. Deploy your Blueprint and provide the needed Name:
-   
+
    For the None Era version of the blueprint:
 
    - **Name of the Application** - *Initials*-Dev-Environment
@@ -272,7 +276,7 @@ Checking the deployment
 #. Run the **mount** command you should see a line that says: **\/dev\/sdb1 on \/docker-location type ext4 (rw,realtime,seclabel,stripe=256,data=ordered)**. This is the second disk we are using for Docker specific actions
 #. Run the command **docker info** in the ssh session and look for
 
-   - **Storage Driver** 
+   - **Storage Driver**
    - **Docker Root Dir**
 
    They should be according to the below screenshot (the red arrows)
