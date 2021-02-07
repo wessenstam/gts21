@@ -1,7 +1,7 @@
 .. _environment_start:
 
 
-Starting the CI/CD workshop
+Starting the CI/CD Workshop
 ===========================
 
 This workshop is trying to teach the basic steps to get from an existing application (NPM and a MariaDB) to a containerised application where a CI/CD pipeline is being created to:
@@ -12,10 +12,10 @@ This workshop is trying to teach the basic steps to get from an existing applica
 - Deploy the new build container
 
 .. note::
-   Estimated time **45 minutes**
+   Estimated time to complete this lab is **45 minutes**
 
-Pre-requisite
--------------
+Pre-requisites
+---------------
 
 To run the workshop some extra resources are needed on your laptop (besides Terminal or Putty for the SSH session).
 
@@ -48,7 +48,7 @@ The following resources are needed for the workshop:
   - If you have Era deployed, download the blueprint `here <https://raw.githubusercontent.com/nutanixworkshops/gts21/master/cicd/start/Docker%20MariaDB%20FiestaApp%20-%20ERA.json>`_. This blueprint will request for Era server IP and credentials during run time and register MariaDB to Era through a REST call.
 
 
-Prepare your environment
+Prepare your Environment
 ------------------------
 
 For this workshop to be run, we need to prepare the environment. Follow the next steps to make your environment ready. They are in high level:
@@ -58,12 +58,12 @@ For this workshop to be run, we need to prepare the environment. Follow the next
 - Configure the blueprint
 - Deploy the blueprint
 
-Create your project
+Create your Project
 ^^^^^^^^^^^^^^^^^^^
 Projects are the logical construct that integrate Calm with Nutanix' native Self-Service Portal (SSP) capabilities, allowing an administrator to assign both infrastructure resources and the roles/permissions of Active Directory users/groups to specific Blueprints and Applications. By using different projects assigned to different clusters and users, administrators can ensure that workloads are deployed the right way each time.  For example, a developer can be a Project Admin for a dev/test project, so they have full control to deploy to their development clusters or to a cloud, while having Read Only access to production projects, allowing them access to logs but no ability to alter production workloads.
 
-Configure users, cluster and network to use
-*******************************************
+Configure Users, Cluster and Network
+**************************************
 
 #. Open your assigned PRISM Central
 #. Click the :fa:`bars` **->  Calm**
@@ -71,7 +71,7 @@ Configure users, cluster and network to use
 
    .. figure:: images/calm3/projects1.png
 
-#. Click + Create Project
+#. Click **+ Create Project**
 
 #. Fill out the following fields:
 
@@ -117,11 +117,11 @@ Configure users, cluster and network to use
    .. figure:: images/projects_infrastructure1.png
 
 #. Click **Save & Configure Environment**.
+
 #. Wait a few minutes till the spinning wheel in the **Save & Configure Environment** button has stopped and you see your project appear when you click on the |proj-icon|
 
    .. note::
       If after 5 minutes you don't see your project show up, please refresh your browser.
-------
 
 Configure Environment
 *********************
@@ -141,18 +141,19 @@ Now that we have set the users, their roles, which cluster and networks to use, 
 .. note::
   These parameters are set as DEFAULT parameters. Meaning you can change them in the Blueprints you are going to create and deploy.
 
-As we are mostly using the Linux O/S in this workshop we are just configuring these parameters.
+As we are using the Linux O/S in this workshop, we will be just configuring these parameters.
 
 #. When you dropped back to the Projects, click your created project to start the configuration
+
 #. In the **Enviroment** part we're assigning the parameters needed for Calm to be able to deploy VMs
 
    .. figure:: images/calm3/environment.png
 
-#. In the **VM Configuration** area, provide the VM Name as @@{initials}@@_VM
+#. In the **VM Configuration** area, provide the VM Name as **@@{initials}@@_VM**
 
 #. Provide the **vCPU, Cores per vCPU** and the **Memory (GiB)** fields with the value of **1**
 
-#. Under **DISKS (1)** Select the *CentOS7.qcow2* under the Image field. Leave the other options in this area of the configuration.
+#. Under **DISKS (1)** Select the *CentOS7-Disk* under the Image field. Leave the other options in this area of the configuration.
 
    .. figure:: images/calm3/disk.png
 
@@ -177,13 +178,13 @@ As we are mostly using the Linux O/S in this workshop we are just configuring th
 
 ------
 
-Build the test environment
+Build the Test Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Follow these steps to deploy the blueprint.
 
 Upload the Blueprint
-********************
+*********************
 
 #. Click on the **Blueprint** (|bp_icon|) icon
 #. Upload the downloaded blueprint
@@ -193,24 +194,28 @@ Upload the Blueprint
 
 After the upload we have to configure the Blueprint so we can deploy it
 
-Configure the blueprint
-***********************
+Configure the Blueprint
+************************
 
 #. Open the uploaded Blueprint on clicking on its name
-#. Click on the **Credentials** button to set the credentials
+
+#. Click on the **CentOS Credentials** button to set the credentials
 
    .. figure:: images/3.png
 
 #. Click on the **Edit** text
+
 #. Provide the password **nutanix/4** as the password and click the **Save** button right hand top corner
 
    .. figure:: images/4.png
 
-#. Click the **Back** button next to the **Save** button
-#. Check the VMs configuation
+#. Click the **Back** button next to the **Save** button to return the blueprint configuration page
+
+#. Check the configuration of the VMs
 
    - Click on the **Docker_VM** in the Services pane (on the dark blue bakground)
-   - Check the VM Name is **@@{initilas}@@-<NAME OF THE SERVICE>>** (Docker, MariaDB or Fiesta)
+
+   - Check that the VM Name is **@@{initilas}@@-<NAME OF THE SERVICE>>** (Docker, MariaDB or Fiesta)
 
      .. figure:: images/5.png
 
@@ -219,7 +224,8 @@ Configure the blueprint
    - **CONNECTION** - CentOS
 
 #. Repeat for the other two VMs using their corresponding Service name as the VM's name
-#. Click the **Save** button. If all went well the **Launch** button should become active
+
+#. Click the **Save** button. If all went well the **Launch** button should become active. If **Launch** button is not active, click on the error message to check the issue and troubleshoot
 
 Deploy the blueprint
 ********************
@@ -252,7 +258,7 @@ Deploy the blueprint
 
     .. figure:: images/7.png
 
-Checking the deployment
+Checking the Deployment
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 #. After the application is running, while still being in the Application you just deployed, click **Services** and note the IP addresses of the following VMs by clicking on them (IP addresses of the selected VM will shown at the right hand of the screen):
@@ -301,9 +307,6 @@ The blueprint you just deployed provides the following automated steps:
 #. Deploy the MariaDB Database for storing the needed data by the Fiesta App
 #. Register the MariaDB VM to Era (if the Era BP has been uploaded and deployed otherwise this step will not be run)
 #. Fiesta Application that will create a dynamical webpage based on the data in the MariaDB database.
-
-
-
 
 .. |proj-icon| image:: ../images/projects_icon.png
 .. |bp_icon| image:: ../images/blueprints_icon.png
