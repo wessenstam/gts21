@@ -1,8 +1,8 @@
 .. _snow_migration:
 
----------------------------------
-Cross-Cluster Migration with Leap
----------------------------------
+------------------------------
+Cross-Cluster DR and Migration
+------------------------------
 
 Using the already configured Data Protection Plan for your self-service provisioned VMs, and Nutanix Leap runbook orchestration capabilities, you can demonstrate how PTE can achieve Disaster Recovery for their active/active datacenter deployment - and also how this same approach can be leveraged to migrate workloads across different clouds.
 
@@ -119,6 +119,6 @@ Takeaways
 
 - Native data replication functionality and Nutanix Leap allow you to easily migrate workloads between clouds with minimal downtime
 
-- The same approach can be used to address both site maintenance and failure
+- The same approach can be used to address Disaster Recovery in the event of site failure.
 
 - Through the Nutanix API, you could further automate migrations based on alert or cost triggers

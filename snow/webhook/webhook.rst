@@ -78,6 +78,8 @@ ServiceNow Event Rules give us the ability to perform additional data manipulati
 
    .. figure:: images/5.png
 
+#. Copy the **Resource** and **vm_uuid** values to a scratch document (ex. Notepad), as they will be used to test your webhook later in the exercise.
+
 #. Click **Create Event Rule**.
 
 #. Specify **User**\ *##* **Alerts** (ex. user01 Alerts) as the **Name**.

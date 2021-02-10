@@ -4,7 +4,15 @@
 Provision & Expand
 ------------------
 
-In this exercise...
+Citrix Virtual Apps and Desktops on Nutanix Clusters allows IT to rapidly support distributed workforce needs for Citrix workloads by delivering the same capabilities in the cloud as they would have in their own datacenters. This is primarily due to Nutanix Clusters running AOS directly on public cloud servers and leveraging the same Prism Central management plane.
+
+.. raw:: html
+
+   <br><center><img src="https://www.nutanix.com/content/dam/nutanix/global/company/blog/img-blog-citrix-virtual-apps-and-desktops-on-clusters-in-aws.png"><br><i>Citrix Virtual Apps and Desktops on Nutanix Clusters in AWS</center></i><br><br>
+
+In this exercise you will provision both on-premises and Clusters on AWS hosted pools of Citrix Desktops, and seamlessly deliver them as a single offering to your end users.
+
+Interested in a larger scale example? In `this 12 minute video <https://www.youtube.com/watch?v=uJoFWePhqX0&list=PLAHgaS9IrJeevEB17CSW5BE8Y9n9v18bU&index=7>`_, Nutanix EUC Staff Solutions Architect, Jarian Gibson, walks through deploying Clusters, replicating a gold image, and bursting 2,000 virtual desktops into the cloud - *all in under 2 hours!*
 
 Provisioning On-Prem Desktops
 +++++++++++++++++++++++++++++
@@ -12,9 +20,15 @@ Provisioning On-Prem Desktops
 Snapshotting Your Gold Image
 ............................
 
-#. Refer to :ref:`clusterassignments` for the details required to access your environment.
+Citrix provisions pools of desktops based on a hypervisor snapshot of the gold image. Unlike traditional hypervisors which can experience performance degradation from traversing long snapshot chains, Nutanix's redirect-on-write algorithm for implementing snapshots has no such drawback. This difference allows for flexibility in using gold image snapshots to maintain many gold image versions from a single VM. Watch `this video <https://youtu.be/uK5wWR44UYE>`_ for additional details on how Nutanix implements snapshots and cloning.
 
-#. Log into your **HPOC Prism Element** ex. (X.X.X.37) using the provided credentials.
+   .. note::
+
+      The current version of the Citrix AHV plugin requires VM snapshots from **Prism Element**, support for **Prism Central** recovery point snapshots will be made available in an upcoming version of the plugin.
+
+#. Refer to :ref:`clusterdetails` for the details required to access your environment.
+
+#. Log into your **HPOC Prism Element** ex. (X.X.X.37) using the provided **admin** credentials.
 
 #. Click the **Home** dropdown menu and select **VM**.
 
@@ -47,7 +61,13 @@ Creating Your On-Prem Machine Catalog
 
    .. figure:: images/4.png
 
-#. Under **Citrix Studio > Configuration > Hosting**, observe that the pre-staged environment has already added your on-prem HPOC cluster as an available location for desktop provisioning. No further action is required here. This is made possible by the....
+#. Under **Citrix Studio > Configuration > Hosting**, observe that the pre-staged environment has already added your on-prem HPOC cluster as an available location for desktop provisioning. No further action is required here.
+
+   .. note::
+
+      By default, Citrix Virtual Apps and Desktops has support for provisioning virtual machines to a number of platforms, including: VMware vSphere, Microsoft Hyper-V, Citrix XenServer, Microsoft Azure, and AWS. The Citrix Provisioning SDK provides the ability to integrate additional platforms with the Delivery Controller's provisioning and power management functions, creating a native Citrix management experience on top of Nutanix AHV.
+
+      To enable this integration, the **Nutanix AHV Plugin for Citrix** has been pre-installed on the DDC. In a production environment, the plugin must be installed on each DDC. The plugin is available for download on the `Nutanix Portal <https://portal.nutanix.com/#/page/static/supportTools>`_.
 
    The first step in providing desktops for users is to provision a pool, referred to as a Machine Catalog,
    based on your Gold Image snapshot.
@@ -61,6 +81,10 @@ Creating Your On-Prem Machine Catalog
 #. Select **Machines that are power managed** and **Citrix Machine Creation Services**. Ensure **NutanixResources (Zone: Primary)** is set for **Resources**, this is what will allow you to select from available snapshots on your on-prem HPOC cluster.
 
    .. figure:: images/6.png
+
+   .. note::
+
+      Machine Creation Services (MCS) is a VM creation/orchestration framework installed as part of the Desktop Delivery Controller role and managed through Citrix Studio.
 
 #. Click **Next**.
 
@@ -154,6 +178,10 @@ Creating Your Delivery Group
 
    .. figure:: images/18.png
 
+   .. note::
+
+      Ensure **Enable Desktop** is selected for the full desktop to be available to the user.
+
 #. Click **OK**. Click **Next**.
 
 #. Specify **USER**\ *##* **Windows 10** as your **Delivery Group name**.
@@ -177,25 +205,27 @@ Testing Your Desktop
 
 #. Within your **USER**\ *##*\ **-WinTools** VM, open **Google Chrome** and browse to http://ddc.ntnxlab.local/Citrix/NTNXLABWeb/.
 
-#. When prompted, click **Detect Receiver**.
+#. If prompted, click **Detect Receiver**.
 
-   As the Citrix Workspace client app is not installed with the WinTools VM, detection will fail.
+   This should succeed, as the Citrix Workspace client has already been installed in the WinTools VM.
 
-#. Click **Download**.
+..      As the Citrix Workspace client app is not installed with the WinTools VM, detection will fail.
 
-   .. figure:: images/21.png
+   #. Click **Download**.
 
-#. Launch **CitrixWorkspaceApp.exe** and click **Run**.
+      .. figure:: images/21.png
 
-#. Complete the installation using the default settings and click **Finish**.
+   #. Launch **CitrixWorkspaceApp.exe** and click **Run**.
 
-#. Return to **Chrome** and click **Continue** or refresh http://ddc.ntnxlab.local/Citrix/NTNXLABWeb/.
+   #. Complete the installation using the default settings and click **Finish**.
 
-   .. figure:: images/22.png
+   #. Return to **Chrome** and click **Continue** or refresh http://ddc.ntnxlab.local/Citrix/NTNXLABWeb/.
 
-   .. note::
+      .. figure:: images/22.png
 
-      If prompted by the browser, click **Open Citrix Workspace Launcher**.
+      .. note::
+
+#. If prompted by the browser, click **Open Citrix Workspace Launcher**.
 
 #. Log in using your **NTNXLAB\\user**\ *##* (ex. NTNXLAB\\user01) credentials.
 
@@ -207,6 +237,8 @@ Testing Your Desktop
 
    .. figure:: images/24.png
 
+#. Leave the virtual desktop session open.
+
 Expanding Into The Cloud
 ++++++++++++++++++++++++
 
@@ -215,11 +247,11 @@ The bad news is that you're running low on resources in your on-prem cluster, th
 Replicating Your Gold Image
 ...........................
 
-Typically when...
+Typically you would leverage the built-in snapshot/replication functionality within AOS (as seen in :ref:`snow_migration`) to ensure you have an up-to-date copy of your gold image across all clusters used to provision your Citrix machine catalogs.
 
-In order to conserve time and allow you to complete additional labs, we have pre-staged a copy of the CitrixGoldImage VM to your **AWS-Cluster**.
+In order to save lab time, we have removed the requirement to sync the 20+GB gold image over the WAN by pre-staging a copy of the CitrixGoldImage VM to your **AWS-Cluster**.
 
-#. Refer to :ref:`clusterassignments` for the details required to access your environment.
+#. Refer to :ref:`clusterdetails` for the details required to access your environment.
 
 #. Log into your **AWS-Cluster Prism Element** using the provided credentials.
 
@@ -237,6 +269,8 @@ In order to conserve time and allow you to complete additional labs, we have pre
 
 Adding Clusters to Citrix Studio
 ................................
+
+As Clusters on AWS runs the same AHV hypervisor and AOS stack, adding this cluster as a resource within Citrix is no different than adding an on-premises Nutanix cluster.
 
 #. Within your **USER**\ *##*\ **-WinTools** VM, open **Citrix Studio** and select **Configuration > Hosting**.
 
@@ -270,7 +304,9 @@ Creating Your Cloud Machine Catalog
 
 #. Complete the **Machine Catalog Setup** with the following configuration changes:
 
-   - On **Machine Management**, select your **USER**\ *##* **Clusters** as **Resources**
+   - Select **Single-session OS**
+
+   - On **Machine Management**, select **Machines that are power managed**, **Citrix Machine Creation Services**, and your **USER**\ *##* **Clusters** as **Resources**
 
       .. figure:: images/28.png
 
@@ -295,6 +331,8 @@ Creating Your Cloud Machine Catalog
 Adding Cloud Desktops to Your Delivery Group
 ............................................
 
+Including your on-prem and Clusters hosted machine catalogs within the same Citrix Delivery Group is what allows for a seamless presentation to the end user of their virtual desktop, regardless of where the VM is running.
+
 #. In **Citrix Studio > Delivery Groups**, right-click your **USER**\ *##* **Windows 10** Delivery Group and select **Add Machines**.
 
    .. figure:: images/30.png
@@ -315,10 +353,21 @@ Adding Cloud Desktops to Your Delivery Group
 
    That's literally it. It's that easy.
 
+   This scenario could be further expanded by leveraging Nutanix Files and Peer Software to `active/active file storage to support user data storage and profiles <https://www.youtube.com/watch?v=iytTfFiXJQ4>`_.
+
+   What about persistent virtual desktops? Native AOS replication could be used to provide DR capabilities across sites.
+
 Takeaways
 +++++++++
 
-- Combo of Clusters/MCS/AHV plugin makes for super simple scaling
-- Keep your own image
-- Keep your own Citrix infrastructure
-- How could we build on this? Files + Peer for active/active user profiles and shares across on-prem and cloud; native AOS data replication for persistent desktop DR and syncing gold image changes; adding in Citrix HA infra (including multi-cluster SQL managed by Era)
+- Citrix Virtual Apps and Desktops on Nutanix Clusters allows IT to rapidly support distributed workforce needs for Citrix workloads. The joint solution allows for customers to have the same capabilities in the cloud as they would in their own datacenters.
+
+- Citrix Virtual Apps and Desktops on Nutanix Clusters offers the same familiar administration user interface for existing Nutanix customers. Managing Citrix Virtual Apps and Desktops on Nutanix Clusters is identical to managing on-premises Nutanix infrastructure.
+
+- Citrix Virtual Apps and Desktops on Nutanix Clusters enables customers to quickly scale their on-premises Citrix workloads into the cloud. Using Nutanix built-in protection and replication capabilities, you can easily move your Citrix workloads from on-premises Nutanix infrastructure to Nutanix Clusters.
+
+- Nutanix Clusters allows customers running Citrix workloads to add additional nodes so they can grow their Citrix deployment on Nutanix infrastructure to support thousands of Citrix users with no up-front hardware investment. Nutanix Clusters can be deployed with a minimum of three nodes in the cluster, easily expand to up to sixteen nodes in the cluster, and then easily scale the cluster back down to whatever number of nodes fits the requirements.
+
+- Admins can easily hibernate and resume Nutanix Clusters to allow customers running Citrix workloads to save costs on cloud infrastructure. Users can hibernate the cluster running the Citrix workload when the capacity is not needed, and then simply resume the cluster when the capacity is needed again.
+
+- Nutanix Clusters use the exact same Nutanix AHV plugins for Citrix that are used for on-premises Nutanix deployments. Leverage the existing Nutanix AHV plugins to deploy Citrix workloads using Machine Creation Services and Provisioning, integrate with Director, and leverage Citrix Virtual Apps and Desktops Service and Citrix Cloud.

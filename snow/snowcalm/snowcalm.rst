@@ -327,6 +327,8 @@ Takeaways
    - Data protection policy
    - Nutanix Flow Security policy
 
+- Clusters allows you to lift and shift existing Nutanix workloads to the public cloud without added complexity of re-architecting applications
+
 - You can target multiple clusters for provisioning from a single Blueprint, making it easy to take advantage of the elastic capacity provided by Nutanix Clusters
 
 - The Nutanix Calm plugin for ServiceNow provides an easy path for integration of the two Platforms

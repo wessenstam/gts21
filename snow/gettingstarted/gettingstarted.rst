@@ -10,18 +10,17 @@ PTE is looking to pivot away from brick and mortar and ramp up their eCommerce o
 
 The primary datacenter, located outside of Chicago, Illinois, is nearing maximum capacity. This has left the team unable to easily add new server and storage capacity to address recent growth, resulting in disruption to their existing workloads.
 
-.. figure:: images/basement.jpg
-   :figwidth: image
-   :align: center
+.. raw:: html
 
-   *Primary datacenter location of Party Time, Excellent Inc.*
+   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/snow/gettingstarted/images/basement.jpg"><br><i>Primary datacenter location of Party Time, Excellent Inc.</i></center><br><br>
 
 In addition to quickly providing more capacity for workloads, PTE must also provide self-service access for developers to maintain peak efficiency and bring new offerings to market quickly. As their business now solely depends on the uptime of their infrastructure, disaster recovery and active/active datacenters are critical design components - as is ensuring workloads remain secure regardless of where they run in the environment. Finally, automating infrastructure remediation for user issues will help the IT scale operations to support their new influx of internal customers.
 
 A solution to all of that would be truly...
 
-.. figure:: https://media.giphy.com/media/3oEjI8vagntG7EDxgQ/giphy.gif
-   :align: center
+.. raw:: html
+
+   <br><center><img src="https://media.giphy.com/media/3oEjI8vagntG7EDxgQ/giphy.gif"></center><br><br>
 
 Your Environment
 ++++++++++++++++
@@ -31,7 +30,7 @@ To let you experience the most fun and interesting parts of the lab, as well as 
 Clusters on AWS
 ...............
 
-#. Refer to :ref:`clusterassignments` for the details required to access your environment.
+#. Refer to :ref:`clusterdetails` for the details required to access your environment.
 
 #. With **Prism Central** in your browser and log in with the provided credentials.
 

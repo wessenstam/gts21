@@ -4,20 +4,26 @@
 Dynamic Expansion with Calm Runbooks
 ------------------------------------
 
-Calm Runbooks...
+.. note::
 
-Normal procedure for expanding Machine Catalogs is only a few clicks...
+   This exercise depends on prior completion of the **Hybrid Cloud IaaS** :ref:`snow_preparingenv` exercise to define your user specific Calm project. Refer to the linked section first before proceeding.
 
-   .. figure:: images/0.png
+The normal procedure for expanding Machine Catalogs is only a few clicks within **Desktop Studio** - and as seen in the previous exercise, spinning up new Citrix desktops on AHV is very fast.
 
-This exercise depends on prior completion of the **Hybrid Cloud IaaS** :ref:`create_project` exercise. Refer to the linked section first before proceeding.
+.. figure:: images/0.png
+
+However, if you have a team managing multiple networks, with new requests for desktops every day (or potentially self-service requests from end users), it could be advantageous to automate adding desktops across clusters dynamically based on some policy.
+
+Unlike Calm Blueprints, which provision new VMs, Calm Runbooks provide a means of visually defining and executing a string of actions that can be run against existing VMs and web services. For instance, you could create a Calm Runbook to apply application updates across a group of VMs.
+
+In this exercise, you will build a Calm Runbook to dynamically add a new Citrix desktop to either your on-prem or Clusters hosted Nutanix cluster, based on memory utilization.
 
 Defining Endpoints
 ++++++++++++++++++
 
-In total, to automate your **Add Desktop** function, your Runbook will need to connect to each of your two clusters and your Citrix DDC VM.
+Within Calm, Runbooks and the tasks they execute are assigned to/associated with Endpoints. Think of an Endpoint as an IP address or host on which the task will run. Within the Calm UI, each Endpoint is configured with IP/DNS address and credentials.
 
-Calm Endpoints allow you to...
+In total, to automate your **Add Desktop** function, your Runbook will need to connect to each of your two clusters and your Citrix DDC VM.
 
 #. In **Prism Central**, select :fa:`bars` **> Services > Calm**.
 
@@ -30,7 +36,7 @@ Calm Endpoints allow you to...
    - **Name** - USER\ *##* AWS PE VIP
    - **Project** - USER\ *##*\ -Project
    - **Type** - HTTP
-   - **Base URL** - \http://*YOUR-AWS-CLUSTER-PRISM-VIP*\ :9440 (ex. https://10.210.X.X:9440)
+   - **Base URL** - \https://*YOUR-AWS-CLUSTER-PRISM-VIP*\ :9440 (ex. https://10.210.X.X:9440)
    - **Authentication > Type** - Basic
    - **Username** - admin
    - **Password** - Refer to your :ref:`clusterassignments`
@@ -44,7 +50,7 @@ Calm Endpoints allow you to...
    - **Name** - USER\ *##* HPOC PE VIP
    - **Project** - USER\ *##*\ -Project
    - **Type** - HTTP
-   - **Base URL** - \http://*YOUR-HPOC-CLUSTER-PRISM-VIP*\ :9440 (ex. https://10.42.X.39:9440)
+   - **Base URL** - \https://*YOUR-HPOC-CLUSTER-PRISM-VIP*\ :9440 (ex. https://10.42.X.39:9440)
    - **Authentication > Type** - Basic
    - **Username** - admin
    - **Password** - Refer to your :ref:`clusterassignments`
@@ -67,7 +73,9 @@ Calm Endpoints allow you to...
 Defining Runbook Variables
 ++++++++++++++++++++++++++
 
-#. From the lefthand toolbar, select the **Runbooks** icon and click **+ Create Runbook**.
+Variables will allow you to define the names of your machine catalogs and delivery group within your Citrix environment. These values could be hard-coded into your tasks, but this approach allows for greater flexibility to run against different environments.
+
+#. From the left-hand toolbar, select the **Runbooks** icon and click **+ Create Runbook**.
 
    .. figure:: images/1.png
 
@@ -121,6 +129,8 @@ Defining Runbook Variables
 
 Building the Runbook
 ++++++++++++++++++++
+
+Similar to the Calm Blueprint Editor, building a Runbook allows you to visually build the sequence of tasks with minimal coding.
 
 #. Select **Editor** from the upper toolbar and click **+ Add Task**.
 
@@ -253,11 +263,11 @@ Building the Runbook
 
 #. Click **Save**.
 
-   .. note::
+   If you're interested in learning more about automating tasks in Citrix Studio via Powershell, the Citrix Studio client makes it easy to get started. The client essentially acts as a front-end for Powershell commands.
 
-      If you're interested in learning more about automating tasks in Citrix Studio via Powershell...
+   You can open Studio, perform some task (ex. updating a machine catalog) and then access the Powershell tab as shown in the screenshot to view all of the commands that were issued to implement the action you performed via the GUI.
 
-      .. figure:: images/14.png
+   .. figure:: images/14.png
 
 Testing Your Runbook
 ++++++++++++++++++++
@@ -286,8 +296,13 @@ Testing Your Runbook
 
    .. figure:: images/15.png
 
+   In an upcoming version of Nutanix Calm, you will be able to publish Runbooks to the Calm Marketplace, allowing you to use a version of this Runbook to allow users to perform self-service requests for a virtual desktop.
+
+   Or you could fully automate the process to grow and shrink your machine catalogs based on utilization by `launching Runbooks via API <https://www.nutanix.dev/2020/06/12/nutanix-calm-runbooks-api-automation/>`_.
+
 Takeaways
 +++++++++
 
-- Runbook Stuff
-- How could we expand on this? Launch programmatically when new desktops are needed (https://www.nutanix.dev/2020/06/12/nutanix-calm-runbooks-api-automation/), hook up to self-service option like ServiceNow (via API today, coming to Calm plug-in in next version). Getting cluster IPs programmatically, getting machine catalog programmatically
+- Runbooks are another means of automated application and datacenter operations within a Nutanix environment
+
+- By running the same Nutanix AHV/AOS stack on public cloud servers as on-premises, applying these automations is little different than managing multiple clusters within your own datacenter
