@@ -98,17 +98,17 @@
 
       Find out how you can go from hundreds to thousands of Citrix Desktops in hours versus weeks. Use Calm Runbooks to build powerful, repeatable automations.
 
-   **Containerizing Apps and CI/CD**
+   - **Containerizing Apps and CI/CD**
 
       Learn about the benefits and challenges of re-platforming applications first hand.
 
-   **Cloud Native Apps on Nutanix**
+   - **Cloud Native Apps on Nutanix**
 
       Lift and shift may not be for you, but there are still economic and security benefits to running your containerized apps on-prem. Deploy and manage Nutanix Karbon and Objects, plus third party integrations, to deliver a full
 
 .. raw:: html
 
-   <strong><font color="red">Before beginning any labs, review the following sections for important information regarding your lab environment, scenario, and FAQs.</font></strong><br>
+   <strong><font color="red">Before beginning any labs, review the following sections for important information regarding your lab environment, scenario, and FAQs.</font></strong><br><br>
 
 Meet Your Customer
 ++++++++++++++++++
@@ -119,29 +119,31 @@ Founded by former public access television rock star duo, Wayne Campbell and Gar
 
 .. raw:: html
 
-   <br><br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/waynes_car2a.jpg"><br><i>Founders Campbell and Algar photographed for the 1996 Wall Street Journal article: PTE IPO FTW</i></center><br>
+   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/waynes_car2a.jpg"><br><i>Founders Campbell and Algar photographed for the 1996 Wall Street Journal article: PTE IPO FTW</i></center><br>
 
 Despite the positive outlook from Chairman Wayne Campbell, PTE is facing significant challenges. In particular, the COVID-19 pandemic has slashed retail sales. Stores are open in many locations, but customers are simply no longer planning parties. In order to survive, PTE has to take massive steps to re-invent itself - **and requires the right technologies and processes to support that transformation.**
 
 .. raw:: html
 
-   <br><br><center><img src="https://media.giphy.com/media/y0IjNxdBMPJjG/giphy.gif"><br><i>Chairman Wayne Campbell after being informed that moving to the cloud does not involve airplanes.</i></center><br>
+   <br><center><img src="https://media.giphy.com/media/y0IjNxdBMPJjG/giphy.gif"><br><i>Chairman Wayne Campbell after being informed that moving to the cloud does not involve airplanes.</i></center><br>
 
 The **Getting Started** section of each lab track will continue the journey.
 
 Frequently Asked Questions
 ++++++++++++++++++++++++++
 
-.. image:: images/readme.png
-   :align: center
+.. raw:: html
+
+   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/readme.png"></center><br><br>
 
 Should I Copy Name & IP Information Directly From Snapshots?
 ............................................................
 
 **NO!** Screenshots are meant to provide navigational context. Screenshot values such as **XYZ** and **USER00** should be replaced with your actual initials or user ID value, as directed in the text of the lab. Similarly, IP addresses used should be relevant to **YOUR** cluster/VM/application/etc.
 
-.. image:: images/skeleton.png
-   :align: center
+.. raw:: html
+
+   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/skeleton.png"></center><br><br>
 
 Where Is The Lab For Provisioning Clusters?
 ...........................................
