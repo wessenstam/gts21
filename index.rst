@@ -75,28 +75,40 @@
   <br><center><img src="https://get-ahv-images.s3.amazonaws.com/GTSLOGO.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
 .. raw:: html
 
-   <br><br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/welcome.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
+   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/welcome.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
 
 .. .. image:: images/welcome.png
    :align: center
 
-**Welcome!** This year we're celebrating how we power customer use cases by exposing you to exciting new hybrid cloud use cases enabled by our core platform, our portfolio products, and Nutanix Clusters on AWS.
+**Welcome!** This year we're celebrating how we power customer use cases by exposing you to exciting new hybrid cloud use cases enabled by our core platform, our portfolio products, and Nutanix Clusters on AWS. Here's a quick look at the available labs:
 
-   **AWS Tour** - Take a look at a Clusters deployment from the other side and learn about key considerations for Clusters networking, security, and migration.
+   - **AWS Tour**
 
-   **Hybrid Cloud IaaS** - Take self-service to the next level with Nutanix ServiceNow integrations. Expand, migrate, secure, and automate your operations.
+      Take a look at a Clusters deployment from the other side and learn about key considerations for Clusters networking, security, and migration.
 
-   **Hybrid Cloud Database Management** - Provision, clone, patch, and monitor Microsoft SQL Server across multiple clouds with Nutanix Era and Prism Ultimate.
+   - **Hybrid Cloud IaaS**
 
-   **Hybrid Cloud EUC** - Find out how you can go from hundreds to thousands of Citrix Desktops in hours versus weeks. Use Calm Runbooks to build powerful, repeatable automations.
+      Take self-service to the next level with Nutanix ServiceNow integrations. Expand, migrate, secure, and automate your operations.
 
-   **Containerizing Apps and CI/CD** - Learn about the benefits and challenges of re-platforming applications first hand.
+    - **Hybrid Cloud Database Management**
 
-   **Cloud Native Apps on Nutanix** - Lift and shift may not be for you, but there are still economic and security benefits to running your containerized apps on-prem. Deploy and manage Nutanix Karbon and Objects, plus third party integrations, to deliver a full
+      Provision, clone, patch, and monitor Microsoft SQL Server across multiple clouds with Nutanix Era and Prism Ultimate.
+
+   - **Hybrid Cloud EUC**
+
+      Find out how you can go from hundreds to thousands of Citrix Desktops in hours versus weeks. Use Calm Runbooks to build powerful, repeatable automations.
+
+   **Containerizing Apps and CI/CD**
+
+      Learn about the benefits and challenges of re-platforming applications first hand.
+
+   **Cloud Native Apps on Nutanix**
+
+      Lift and shift may not be for you, but there are still economic and security benefits to running your containerized apps on-prem. Deploy and manage Nutanix Karbon and Objects, plus third party integrations, to deliver a full
 
 .. raw:: html
 
-   <strong><font color="red">Before beginning any labs, review the following sections for important information regarding your lab environment, scenario, and FAQs.</font></strong>
+   <strong><font color="red">Before beginning any labs, review the following sections for important information regarding your lab environment, scenario, and FAQs.</font></strong><br>
 
 Meet Your Customer
 ++++++++++++++++++
@@ -158,7 +170,7 @@ Within a **Lab Track** (ex. **Hybrid Cloud EUC**), inidividual exercises should 
 How Many Labs Should I Complete?
 ................................
 
-With 1.5 days of supported lab time, you should be able to complete at least 3 of the available lab tracks.
+With 1.5 days of supported lab time, you should be able to complete **at least** 3 of the available lab tracks.
 
 What Happens To The Labs Post-Event?
 ....................................
