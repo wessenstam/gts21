@@ -4,26 +4,18 @@
 Patching SQL Server with Era
 ----------------------------
 
-as the org begins to split up database servers, and span across multiple environments, policy based patching becomes critical to keep database servers up to date
-
-   - `KB3177312 - SQL Server 2019 build versions <https://support.microsoft.com/en-us/topic/kb4518398-sql-server-2019-build-versions-782ed548-1cd8-b5c3-a566-8b4f9e20293a>`_ - Refer to this article for Cumulative Update (CU) information.
-
-   - `SQL Server 2019 RTM Cumulative Update (CU) 4 - KB 4548597 <http://download.windowsupdate.com/c/msdownload/update/software/updt/2020/03/sqlserver2019-kb4548597-x64_654ea92437fde8aad04745c6c380e9e72289babf.exe>`_
-
-In this workshop, we will guide you through creating a Software Profile for MSSQL from within Era. In the example below, your initial MSSQL build version will be `15.0.2000.5` (RTM - Release To Manufacturing). You will create a Software Profile to update RTM to CU4 - build version `15.0.4033.1`. For reference, you could also use any CU after the initial RTM build.
-
-   .. note::
-
-   Any Software Profile you create must be of a higher version than the previous version, otherwise that Software Profile will fail to create. For example, if you create a profile for SP1-CU9, and then attempt to create another for SP1-CU3, it will fail.
-
-      .. figure:: images/1.png
+As the org begins to split up databases across multiple servers and sites to improve performance, availability, and maintenance, policy based patching becomes critical to keep database servers up to date. In this exercise, you will create and apply a SQL Server patch to update your VMs from SQL Server 2016 RTM (15.0.2000.5) to Cumulative Update 4 (15.0.4033.1) via Era Software Profiles.
 
 Creating a Software Profile Version
 +++++++++++++++++++++++++++++++++++
 
 Software Profile Versions are created in Era to support patching of SQL Server database server instances. A Software Profile Version can be created simply by uploading a SQL Server update executable. The SQL Server update can then be used to patch other database server VMs or when provisioning new database server VMs with the updated Software Profile.
 
-#. Begin by downloading
+   .. note::
+
+         The Cumulative Update 4 (CU4) patch has been pre-staged within the lab environment.
+
+         See `KB3177312 - SQL Server 2019 Build Versions <https://support.microsoft.com/en-us/topic/kb4518398-sql-server-2019-build-versions-782ed548-1cd8-b5c3-a566-8b4f9e20293a>`_ for additional patch and download information.
 
 #. Within Era, select **Profiles** from the drop-down menu.
 
@@ -51,6 +43,10 @@ Software Profile Versions are created in Era to support patching of SQL Server d
 
 #. Click **Create**.
 
+   .. note::
+
+      Any Software Profile you create must be of a higher version than the previous version, otherwise that Software Profile will fail to create. For example, if you create a profile for SP1-CU9, and then attempt to create another for SP1-CU3, it will fail.
+
    The **Create Software Profile Version** operation should complete in 1.5 to 3 minutes.
 
 Publishing a Software Profile Version
@@ -77,7 +73,7 @@ Perform the following procedure to apply updates from the available software pro
 
 #. Within Era, select **Database Server VMs** from the drop-down list.
 
-#. Select **List** from the left-hand menu and click the **USER**\ *##*\ **-SampleDBVM** you had previously cloned from your SambleDB source.
+#. Select **List** from the left-hand menu and click the **USER**\ *##*\ **-SampleDBVM** you had previously cloned from your SampleDB source.
 
    As indicated during publishing, **Software Profile Version** shows your newly added profile version as a recommendation.
 

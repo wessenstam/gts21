@@ -109,13 +109,13 @@ Triggering Prism SQL Server Alert
 
       .. figure:: images/15.png
 
+   If you were waiting on your SQL Server to provision in the :ref:`db_clustersdam` exercise, you should now be able to return and complete the exercise.
+
 Takeaways
 +++++++++
 
-   - Prism Ultimate bridges the gap between infrastructure, applications, and services. It satisfies IT OPS processes ranging from intelligent detection, to automated remediation.
+- Prism Ultimate bridges the gap between infrastructure, applications, and services. It satisfies IT OPS processes ranging from intelligent detection, to automated remediation.
 
-   - X-Play, the "IFTTT" for the enterprise, is our engine to enable the automation of daily operations tasks, enabling admins of every skill level to build custom automations to aid them in their daily duties.
+- Prism Ultimate allows the admin to understand the relationship between their applications and infrastructure, with broader visibility and intelligent insights learning.
 
-   - Prism Ultimate allows the admin to understand the relationship between their applications and infrastructure, with broader visibility and intelligent insights learning.
-
-   - X-Play can be used seamlessly with the application data monitored via Prism Ultimate to build smart automation that can alert and remediate issues both on the infrastructure and on applications.
+- X-Play can be used seamlessly with the application data monitored via Prism Ultimate to build smart automation that can alert and remediate issues both on the infrastructure and on applications.

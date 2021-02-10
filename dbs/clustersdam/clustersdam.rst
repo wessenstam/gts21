@@ -4,16 +4,12 @@
 Multi-Cloud Data Access Management
 ----------------------------------
 
-crowded source DB
-limited on-prem resources for non-prod databases
-want to re-platform on newer DB engine
-
-In this exercise...
+In this exercise you will continue breaking up your overcrowded source SQL database server. Using Era's multi-cluster data access management policies, you will clone a SQL 2016 database on-prem to a SQL 2019 database server that you will provision on your AWS hosted Nutanix cluster.
 
 Registering Your Source
 +++++++++++++++++++++++
 
-#. Refer to :ref:`clusterassignments` for the details required to access your environment.
+#. Refer to :ref:`clusterdetails` for the details required to access your environment.
 
 #. Open **Era** in your browser and log in with the provided credentials.
 
@@ -107,8 +103,6 @@ Enabling Multi-Cluster Data Access Management
 
 #. Click your **USER**\ *##*\ **-SampleDB_TM** Time Machine from the list.
 
-   Time Machines...
-
 #. Select the **Nutanix Cluster** dropdown and note that **EraCluster** is the only available option.
 
    This view provides information about the current data protection status of the VM, including available snapshots and log catch ups.
@@ -165,6 +159,8 @@ Enabling Multi-Cluster Data Access Management
 
    .. figure:: images/14.png
 
+   This will automatically refresh the data of your clone based on the source database. Refreshes can also be performed manually in Era.
+
 #. Click **Clone**.
 
    The clone operation should take < 3 minutes to complete.
@@ -177,3 +173,7 @@ Enabling Multi-Cluster Data Access Management
 
 Takeaways
 +++++++++
+
+- Using Era Data Access Management (DAM) policies to replicate log and snapshot data across clusters can be used to enable dev/test use cases where non-production clones run on separate infrastructure from production Databases
+
+- Era DAM policies can also be used to support backup and recovery scenarios, where a standby database can have access to production snapshots for quick recoveries in the event of site failures or maintenance
