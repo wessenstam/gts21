@@ -1,7 +1,8 @@
 .. _docker_start:
 
+---------------------------
 Containerize the Fiesta App
-===========================
+---------------------------
 
 In this section, you will learn how to convert the legacy (Fiesta) application into a containerized application.
 
@@ -16,7 +17,6 @@ High level steps:
 
 Build the container
 +++++++++++++++++++
-
 
 Analyze the original Fiesta Application
 .......................................

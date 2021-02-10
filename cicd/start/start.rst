@@ -41,3 +41,5 @@ Pete Notes
 Should we explain what NPM and similar things are, whether in appendix/glossary, or included in this workshop, with a brief description?
 
 We don't explain what the fiesta app is, and I think we lose some impact when we create the docker container, as we don't understand what that docker container is replacing.
+
+There's a fair bit of "if this happens" or "this may happen" or "you should see". I'd like us to be a bit more definitive. If that means running through it again from scratch, so be it.

@@ -1,78 +1,84 @@
 .. _phase2_container:
 
-Using tooling
-=============
+------------------------------
+Build the CI/CD Infrastructure
+------------------------------
 
-As you have noticed we have create our containerized version of Fiesta, but we have been using vi or nano to manipluate files. These tools work, but are not easy and efficient to change files on a large scale. So we are going to use Visual Code to manipulate the files we create or change from now on.
+While creating the containerized version of Fiesta, we used a text editor (ex. `vi` or `nano`) to manipulate files. While these tools can certain do the job, as we've seen, this method is not exactly easy, or efficient to modify files on a large scale. Instead, we are going to use *Visual Studio Code*. Once we have *Visual Studio Code* installed and configured, we will setup our CI/CD pipeline using *Drone*.
 
-After we have the Visual Code setup and configured, we are going to set up our CI/CD pipeline using Drone (http://harness.io).
+*Visual Studio Code* is a free source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.
+
+*Drone* by Harness is a modern Continuous Integration (CI) platform that empowers busy teams to automate their build, test and release workflows using a powerful, cloud native pipeline engine.
 
 .. note::
+
    Estimated time **30 minutes**
 
-Visual Code
------------
+We need to build the CI/CD pipeline. For this we are going to setup the following parts:
 
-As we have Visual Code already installed and added extensions, we are going to use it.
+   - Visual Studio Code (VSC) - controls the Commit and push of the new code
+   - Gitea - version control manager
+   - Drone - CI/CD part of the pipeline
 
-#. Start Visual Code (VC) in your Windows Tools VM or on your laptop
-#. Click in VC on **View -> Command Palette...**
+Visual Studio Code (VSC)
+........................
+
+#. Remote Desktop into your *UserXX*\ **-WinToolsVM**.
+
+#. Open Visual Studio Code, and click on **View > Command Palette...**.
 
    .. figure:: images/1.png
 
-#. Type **Remote SSH** and select **Remote-SSH: Connect Current Window to Host...**
+#. Type **Remote SSH**, and select **Remote-SSH: Connect Current Window to Host...**.
 
    .. figure:: images/2.png
 
-#. Click on **+ Add New SSH Host...** and type **ssh root@<IP ADDRESS OF YOUR DOCKER VM>**
-#. Select the location where you want to update the config file. Your choice..
-#. Select **Connect** (right bottom corner) to connect to the VM
-#. Answer the following, if you get the questions from VC
+#. Click on **+ Add New SSH Host...** and type **ssh root@<DOCKER-VM-IP-ADDRESS>**
+
+   [screenshot]
+
+#. Select the location where you want to update the config file. Your choice.. [LET'S SPECIFY THIS FOR CONSISTENCY FOR ALL USERS]
+
+#. Select **Connect** (bottom right corner) to connect to the VM
+
+   [screenshot]
+
+#. Answer the following, if you get the questions from VS Code [If?]
 
    - O/S - Linux
    - Fingerprint - Continue
    - Password - nutanix/4u
 
-#. Click on both messages that may pop-up in the bottom right hand corner, the **Don't Show Again** button
+   [screenshot]
+
+#. Click on both messages that may pop-up in the bottom right hand corner, the **Don't Show Again** button.
 
    .. figure:: images/3.png
 
-#. If not already selected, click in the left pane on the **Files** button (left hand pane, first icon) and select **Open Folder**
+#. Click the **Files** button from the left-hand pane, and then select **Open Folder**.
 
    .. figure:: images/4.png
 
 #. Provide the **/** as the folder you want to open and click on **OK**
-#. It will take some time before it opens as VC needs to install and configure the remote host. This takes approximately <1 minute (you might be asked for the password again)
-#. Now you should see the folder structure of the VM, open **/root/github** and you will see everything created earlier
+
+   [screenshot]
+
+   It will take approximately 1 minute (you might be asked for the password again) [Confirm if they will or not].
+
+#. Now you should see [will they?] the folder structure of the VM. Expand **root > github** to see the files we created earlier.
 
    .. figure:: images/5.png
 
-This way of changing files is easier then using the ``vi`` or ``nano``. Even though quick changes can be done using those tools.
+This method of modifying files is easier than ``vi`` or ``nano``. [Are we just showing them a graphical viewer, that has no other benefits? Check back on this to ensure VSC has other value!]
 
-.. note::
+Preparation [?]
+...........
 
-    During the working with VC, you might get pop-up messages due to updates or extensions having some extra information like the below screenshot. It is up to you what to do with them. Those messages can be denied by clicking the **X** in the right hand top corner. They have no influence on the workshop...
+As we already have created the needed infrastructure using `docker-compose`, we're going to pull the existing yaml file, make changes and start the CI/CD pipeline.
 
-    .. figure:: images/message-box.png
+#. Open a ssh session to your *Initials*\ **-docker-vm** by using VSC's built in terminal.
 
-------
-
-Build the CI/CD Infrastructure
-------------------------------
-
-Now that we have our tooling ready we need to build the CI/CD pipeline. For this we are going to setup the following parts:
-
-- Gitea as the Version Control Manager
-- Drone for the CI/CD part of the pipeline
-- Use of VC for controlling the Commit and push of the new code
-
-Preparation
-^^^^^^^^^^^
-
-As we already have created the needed infrastructure using docker-compose we're going to pull the existing yaml file, make changes and start the CI/CD pipeline.
-
-#. Open a ssh session to your *Initials*\ **-docker-vm** by using VC's built in Terminal
-#. In VC click on **Terminal ->  New Terminal**. This will open a new ssh session to the machine you had already opened to see the "remote folder" and saves switching between windows
+#. In VSC click on **Terminal ->  New Terminal**. This will open a new ssh session to the machine you had already opened to see the "remote folder" and saves switching between windows
 
    .. figure:: images/6.png
    .. figure:: images/7.png
@@ -87,7 +93,7 @@ As we already have created the needed infrastructure using docker-compose we're 
        mkdir -p /docker-location/drone/agent
        mkdir -p /docker-location/mysql
 
-#. In the Terminal of VC, run ``cd ~/github``
+#. In the Terminal of VSC, run ``cd ~/github``
 #. Run the command ``curl --silent https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/CI-CD%20Pipeline/docker_files/docker-compose.yaml -O`` to pull the yaml file
 #. To make sure we're not blocked by any rate limit on pulls, run ``docker login`` and authenticate using your dockerhub account you created earlier
 #. In the terminal screen run the command ``docker-compose create db gitea`` and wait for the command prompt to return. You will see that images are pulled and at the end that the two services have been created
@@ -115,13 +121,13 @@ To make sure we can use https with Gitea, we need to go into the gitea docker co
 #. Close the docker connection using **<CTRL>+d**
 #. Open a browser and point it to **http://<IP ADDRESS DOCKER VM>:3000**
 #. Make the following changes:
-   
+
    - MySQL section:
 
      - **Host**: <IP ADDRESS OF YOUR DOCKER VM>:3306
      - **Password**: gitea
 
-   
+
    - General Settings:
 
      - **SSH Server Port**: 2222
@@ -131,10 +137,10 @@ To make sure we can use https with Gitea, we need to go into the gitea docker co
 
 #. Click the **Install Gitea** button
 
-Now you will receive an error that **This site can’t provide a secure connection**, but we are going to change that. 
-In VC, as we have all files for the containers being saved on the docker VM in the earlier created folders in /docker-location, we can change a file that is needed by Gitea and holds the config. 
+Now you will receive an error that **This site can’t provide a secure connection**, but we are going to change that.
+In VSC, as we have all files for the containers being saved on the docker VM in the earlier created folders in /docker-location, we can change a file that is needed by Gitea and holds the config.
 
-#. Open your VC
+#. Open your VSC
 #. Open the file **/docker-location/gitea/conf/app.ini** and make the following changes under the **[server]** section:
 
    - **PROTOCOL**  = https
@@ -143,7 +149,7 @@ In VC, as we have all files for the containers being saved on the docker VM in t
 
      .. figure:: images/12.png
 
-#. Save the file and restart the container using ``docker-compose restart gitea`` in your terminal windows in VC
+#. Save the file and restart the container using ``docker-compose restart gitea`` in your terminal windows in VSC
 #. Reloading the browser page will show an error on the certificate, which is logical as we are now using a Self Signed certificate. Use the normal ways to get to the login screen.
 #. The first user will be the admin user of the Gitea application (default)
 #. Click the **Register button** to create an account. Provide whatever you want. We are going to use **nutanix**, **nutanix@atnutanix.com** and **nutanix/4u** during the workshop as examples.
@@ -172,7 +178,7 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 
    .. figure:: images/16.png
 
-#. Open the **docker-compose.yaml** file in VC and paste the values in their field names **DRONE_GITEA_CLIENT_ID** and **DRONE_GITEA_CLIENT_SECRET**
+#. Open the **docker-compose.yaml** file in VSC and paste the values in their field names **DRONE_GITEA_CLIENT_ID** and **DRONE_GITEA_CLIENT_SECRET**
 
    .. figure:: images/17.png
 
@@ -192,13 +198,13 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 
 #. Save the file
 #. Click in Gitea UI the **Save** button and then the **Dashboard** text
-#. Open the Terminal in VC
+#. Open the Terminal in VSC
 #. Create and start the drone server and agent container by running ``docker-compose create drone-server drone-docker-runner`` and ``docker-compose start drone-server drone-docker-runner``
 #. Open a browser and point to **\http://<IP ADDRESS OF DOCKER VM>:8080**. This will try to authenticate the user **nutanix**, the defined user in Drone section in the docker-compose.yaml file with admin right
 #. A warning **Authorize Application** message is shown, click on **Authorize Application**
 
    .. figure:: images/19.png
-   
+
 #. The Drone UI will open with nothing in it
 
    .. figure:: images/18.png
@@ -220,4 +226,3 @@ We have just created our first CI/CD pipeline infrasturcture. **But** we still h
 - The image is only available as long as the Docker VM exists (:fa:`thumbs-down`)
 
 The next modules in this workshop are going to address these :fa:`thumbs-down`.... Let's go for it!
-
