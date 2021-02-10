@@ -4,9 +4,17 @@
 ServiceNow Alert & CMDB Integration
 -----------------------------------
 
-<Intro - reference https://www.nutanix.com/blog/nutanix-integration-with-servicenow>
+Since July 2019, ServiceNow has offered native support for discovering Nutanix infrastructure running AHV or ESXi as part of its Change Management Database (CMDB). This provides ServiceNow/Nutanix customers with complete visibility of Nutanix clusters, hosts, VMs, categories, CVMs, storage pools, and storage containers with ServiceNow - including the ability to:
+
+   - Generate full cluster topologies
+   - Report on storage utilization
+   - Near real-time visibility with event-driven discovery
+
+Nutanix X-Play support for sending Alerts to ServiceNow complements the CMDB integration by binding the event created by the Nutanix alert with the Configuration Item (VM, host, etc.) auto-discovered by ServiceNow.
 
 Configuring a ServiceNow environment to begin discovering your Nutanix resources only takes a few minutes, `as covered by Paul Harb here <https://www.youtube.com/watch?v=G1EqR0Vt1wo>`_. However, it does depend on a number of pre-requisites covered in the section below.
+
+In this exercise, you will implement a Playbook using Prism X-Play to filter and send alerts to ServiceNow. You will then trigger the alert and review the data inside of ServiceNow.
 
 Your Environment
 ++++++++++++++++
@@ -56,6 +64,7 @@ While you may typically want to send many, or all, Nutanix alerts from your clus
    - **Entity Type** - VM
    - **Entity** - All VMs in a Category
    - **Category** - Your User:\ *##* Category (ex. User:01)
+   - **Metric** - Memory Usage
 
 #. Under **Static Threshold**, select **Alert Critical if** and specify **>= 75%**.
 
@@ -173,3 +182,5 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
 Takeaways
 +++++++++
+
+-

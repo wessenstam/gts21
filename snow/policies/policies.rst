@@ -4,12 +4,18 @@
 Preparing Your Environment
 --------------------------
 
-With the additional infrastructure capacity Alex has unlocked with Nutanix Clusters, one of the goals is to provide users with the ability to request and operate their owns VMs and applications. Depending on the user and/or application, Alex wants to ensure that VMs are properly protected for backup and DR purposes, as well as properly secured on the network from the time of creation.
+With the additional infrastructure capacity you've unlocked with Nutanix Clusters, one of the goals is to provide users with the ability to request and operate their owns VMs and applications. Depending on the user and/or application, PTE needs to ensure that VMs are properly protected for backup and DR purposes, as well as properly secured on the network from the time of creation.
 
-In this exercise, you'll configure example policies in Prism Central for both data protection and microsegmentation that can be applied to apps and VMs. Afterwards, you'll configure a Calm project and Blueprint to use as your first self-service VM offering.
+In this exercise, you'll configure example policies in Prism Central for both data protection and microsegmentation that can be applied to apps and VMs. The goal is to have these policies in place prior to provisioning your VMs, so they can be applied and enforced as VMs are created through self-service.
+
+Additionally, you'll configure a Calm project and Blueprint to use as your first self-service VM offering.
 
 Configuring Data Protection
 +++++++++++++++++++++++++++
+
+In this exercise you will build a policy to replicate hourly snapshots between your primary and AWS clusters, based on category assignment.
+
+A Prism **Category** is a key value pair. Categories are assigned to entities (such as VMs, Networks, or Images) based on some criteria (Location, Production-level, App Name, etc.). Policies can then be mapped to those entities that are assigned a specific category value.
 
 #. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > Categories**.
 
@@ -17,7 +23,7 @@ Configuring Data Protection
 
 #. Click **New Category** and fill out the following:
 
-   - **Name** - *USER##*-DP (ex. USER01-DP)
+   - **Name** - USER\ *##*-DP (ex. USER01-DP)
    - **Purpose** - Used for VM data protection and replication policy assignment.
    - **Value** -
       - Bronze
@@ -32,7 +38,7 @@ Configuring Data Protection
 
 #. Click **Create Protection Policy** and fill out the following:
 
-   - **Policy name** - *USER##*-Bronze (ex. USER01-Bronze)
+   - **Policy name** - USER\ *##*-Bronze (ex. USER01-Bronze)
    - **Primary Location > Location** - Local AZ
    - **Primary Location > Cluster** - AWS-Cluster
    - Click **Save**
@@ -42,7 +48,7 @@ Configuring Data Protection
 
    .. figure:: images/5.png
 
-   <Stuff about single PC being one AZ>
+   An **Availability Zone** in Nutanix is what one instance (single or multi-VM) Prism Central manages as a fault domain. For large sites, having a dedicated instance of the management plane for the site makes sense - but this approach would become very resource intensive for managing several smaller sites. As of AOS 5.17, Nutanix allows for replication and failover within the same AZ, as seen in this lab environment.
 
 #. Click **+ Add Schedule** and fill out the following:
 
@@ -55,9 +61,9 @@ Configuring Data Protection
 
    .. figure:: images/6.png
 
-      Enabling reverse retention will allow bi-directional replication to take place between specified sites, reducing the number of policies needed to be managed for an active/active datacenter configuration, as desired by Alex.
+   Enabling reverse retention will allow bi-directional replication to take place between specified sites, reducing the number of policies needed to be managed for an active/active datacenter configuration.
 
-#. Click **Save**.
+#. Click **Save Schedule**.
 
 #. Click **Next**.
 
@@ -65,7 +71,7 @@ Configuring Data Protection
 
    .. figure:: images/7.png
 
-   Observe that there are not currently any VMs on either cluster with that assigned category value. This will occur as new VMs are provisioned in a later exercise.
+   Observe that there are not currently any VMs on either cluster with that assigned category value. VMs will be provisioned as part of a later exercise and inherit this policy based on being assigned the **USER**\ *##*\ **-DP : Bronze**
 
 #. Click **Create**.
 
@@ -73,20 +79,12 @@ Configuring Data Protection
 
       Optionally, you can create additional policies for Silver and Gold, using the respective category values. For example, a Gold policy could provide Asynchronous snapshots every 5 minutes.
 
-   <That's it, could add multiple recovery locations with different schedules, will come back to this>
-
 .. _assign_categories:
 
 Configuring Network Isolation
 +++++++++++++++++++++++++++++
 
-You'll begin by assigning Category values to VMs that will be used in the data protection and microsegmentation policies. Nutanix Categories can... Simple policy designed to prevent non-production VMs from communicating with production webservers.
-
-#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > Categories**.
-
-#. Observe the pre-staged **User** category with values mapping to your lab user assignment in :ref:`clusterdetails`, as well as the system default category **Envrionment**. These are the two categories you will use to create your microsegmentation policy.
-
-   .. figure:: images/2.png
+Similar to the previous exercise, you'll map a microsegmentation policy to specific VM categories. The purpose of the microsegmentation policy is to prevent non-production VMs from communicating with your production webserver VMs.
 
 #. Select :fa:`bars` **> Virtual Infrastructure > VMs**
 
@@ -94,7 +92,9 @@ You'll begin by assigning Category values to VMs that will be used in the data p
 
    .. figure:: images/4.png
 
-   You'll find a CentOS webserver running a Node-based inventory management application, and a Microsoft SQL database storing its associated data.
+   You'll find a CentOS webserver, **USER**\ *##*\ **-FiestaWeb**, running a Node-based inventory management application, and a Microsoft SQL database, **USER**\ *##*\ **-MSSQL-Source** storing its associated data.
+
+   *Ignore the Fiesta deployment with alternate VM names, as this is used in another lab!*
 
    .. note::
 
@@ -112,19 +112,27 @@ You'll begin by assigning Category values to VMs that will be used in the data p
 
 #. In the **Search** field, specify the **Environment: Production** category and click :fa:`plus-circle` to add it.
 
-#. Search for **User** and select the **User:** *##* value based on your :ref:`clusterdetails` assignment.
+#. Search for the **User** category and select the **User:** *##* value based on your :ref:`clusterdetails` assignment.
 
    .. figure:: images/9.png
 
+   .. note::
+
+      The **User** category and values have already been pre-staged to the lab environment.
+
 #. Click **Save**.
 
-#. Repeat this process to add *ONLY* the **Environment: Production** category to your **USER##-MSSQL-Source** VM. Do *NOT* add the **User: ##** category to this VM!
+#. Repeat this process to add *ONLY* the **Environment: Production** category to your **USER##-MSSQL-Source** VM.
+
+   .. raw:: html
+
+      <strong><font color="red">Do NOT add the User:## category to this VM!</font></strong>
 
 #. In **Prism Central**, select :fa:`bars` **> Policies > Security**.
 
 #. Click **Create Security Policy**.
 
-   Nutanix Flow is capable of...
+   Nutanix Flow is capable of modeling and enforcing more sophisticated application policies that whitelist specific incoming, outgoing, and intra-app communications based on IPs, ports, protocols, or Prism categories, but we will use this simple example to demonstrate the ability for policies to follow VMs in an environment regardless of underlying cluster or network.
 
 #. Select **Isolate Environments** and click **Create**.
 
@@ -155,23 +163,27 @@ You'll begin by assigning Category values to VMs that will be used in the data p
 Creating A Calm Project
 +++++++++++++++++++++++
 
-Calm provides...Creating your own project will allow you to...
+Nutanix Calm allows you to build, provision, and manage your applications across both private (AHV, ESXi) and public cloud (AWS, Azure, GCP) infrastructure.
+
+In order for non-infrastructure administrators to access Calm, allowing them to create or manage applications, users or groups must first be assigned to a **Project**, which acts as a logical container to define user roles, infrastructure resources, and resource quotas. Projects define a set users with a common set of requirements or a common structure and function, such as a team of developers collaborating on the Fiesta application.
 
 #. In **Prism Central**, select :fa:`bars` **> Services > Calm**.
 
 #. Select **Projects** from the left-hand toolbar and click **+ Create Project**.
 
-.. figure:: images/12.png
+   .. figure:: images/12.png
 
 #. Specify *USER##*\ **-Project** (ex. USER01-Project) as your **Project Name**.
 
-#. Under **Users, Groups, and Roles**, fill out the following:
+#. Under **Users, Groups, and Roles**, click **+ User** and fill out the following:
 
-   - **Name** - Bootcamp Users
+   - **Name** - user\ *##*\ @ntnxlab.local (ex. user01@ntnxlab.local)
    - **Role** - Operator
    - Click **Save**
 
    .. figure:: images/13.png
+
+   The purpose of assigning an individual user is simply to limit visibility of other projects in the shared lab environment. In a production environment you would likely be mapping multiple AD Security Groups to specific roles for each project.
 
 #. Under **Infrastructure**, click **Select Provider > Nutanix**.
 
@@ -194,7 +206,11 @@ Calm provides...Creating your own project will allow you to...
 Uploading A Calm Blueprint
 ++++++++++++++++++++++++++
 
-For the purposes of this exercise... simple Blueprint... see XYZ labs for instruction on creating your own...
+A Blueprint is the framework for every application that you model by using Nutanix Calm. Blueprints are templates that describe all the steps that are required to provision, configure, and execute tasks on the services and applications that are created. A Blueprint also defines the lifecycle of an application and its underlying infrastructure, starting from the creation of the application to the actions that are carried out on a application (updating software, scaling out, etc.) until the termination of the application.
+
+You can use Blueprints to model applications of various complexities; from simply provisioning a single virtual machine to provisioning and managing a multi-node, multi-tier application.
+
+For the purposes of this exercise, you will upload an existing Blueprint of a single VM application deployment. Within the customer environment, this Blueprint could represent a pre-configured build tools envrionment for a developer.
 
 #. `Download the Single VM CentOS Blueprint by right-clicking here and saving. <https://raw.githubusercontent.com/nutanixworkshops/gts21/master/snow/plugins/CentOS%20VM.json>`_
 
@@ -216,7 +232,7 @@ For the purposes of this exercise... simple Blueprint... see XYZ labs for instru
 
 #. Select the **Cloud** dropdown and observe that, in this environment, Nutanix AHV is the only option.
 
-   <key benefit of clusters being native AHV...>
+   While Calm provides the ability to define deployment requirements for multiple different cloud providers within a single Blueprint, one of the key advantages of Nutanix Clusters is being able to utilize a single configuration (Nutanix AHV) regardless of whether the app is being provisioned on-premises or in your elastic, public cloud hosted cluster.
 
 #. Click **VM Configuration**.
 
@@ -254,7 +270,7 @@ For the purposes of this exercise... simple Blueprint... see XYZ labs for instru
 
 #. Under **Credentials**, click **Add/Edit credentials**. Specify a password the **ROOT** credential (ex. *nutanix/4u*).
 
-   This will be configurable for the user at runtime, but Calm requires a default value by provided before the Blueprint can be launched.
+   This will be configurable for the user at runtime, but Calm requires a default value be provided before the Blueprint can be launched.
 
    .. figure:: images/22.png
 
@@ -265,3 +281,12 @@ For the purposes of this exercise... simple Blueprint... see XYZ labs for instru
    .. note::
 
       You should no longer see any red error alerts for the Blueprint, but warning alerts related to missing variable values are expected and will not impact the Blueprint.
+
+Takeaways
++++++++++
+
+- Prism provides a single console solution for managing VMs and policies such as snapshot and replication, and microsegmentation.
+
+- Calm Projects allow you to define pools of resources for specific users and groups.
+
+- Calm Blueprints enable repeatable application deployments and lifecycle operations.

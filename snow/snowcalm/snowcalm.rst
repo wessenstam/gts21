@@ -4,9 +4,11 @@
 Self-Service with ServiceNow
 ----------------------------
 
-As covered in other Nutanix Bootcamps, Calm and Prism Central provide native capabilities...
+As covered in other Nutanix Bootcamps, Calm and Prism Central deliver native self-service for VM provisioning by publishing Blueprints to the Calm Marketplace, and entitling certain groups of users with the ability to provision the published Blueprints.
 
-ServiceNow...
+Many organizations require additional levels of control to enforce automated or manual approvals processes over requests for virtual infrastructure. Party Time, Excellent Inc. has existing investments in ServiceNow, leveraging it to provide their employees with a service catalog to fulfill both IT and HR requests.
+
+In this exercise, you will show how you can integrate your multi-cluster Nutanix environment to allow PTE users to request virtual infrastructure via ServiceNow.
 
 Your Environment
 ++++++++++++++++
@@ -73,11 +75,15 @@ Nutanix Calm Plugin Configuration
 
 #. Under the **Name** column, click **Nutanix Calm - User Approval**.
 
-#. Under **Related Links**, click **Show Workflow**. This will open the Workflow Editor in another tab. *Do NOT make changes to this workflow.*
+#. Under **Related Links**, click **Show Workflow**. This will open the Workflow Editor in another tab.
+
+   .. raw:: html
+
+      <strong><font color="red">Do NOT make changes to this workflow.</font></strong>
 
    .. figure:: images/3.png
 
-#. In the Workflow Editor, open the **Approval - User** stage and review the configuration.
+#. In the Workflow Editor, double-click the **Approval - User** stage and review the configuration.
 
    .. figure:: images/4.png
 
@@ -116,7 +122,7 @@ Creating Catalog Items
 
 #. Click **Next Tab**.
 
-#. Under **Service Configuration > Default > VM Configuration**, observe that fields where **Runtime** was not enabled is the Blueprint cannot be manipulated during the Catalog Item creation process.
+#. Expand **Service Configuration > Default > VM Configuration**, observe that fields where **Runtime** was not enabled is the Blueprint cannot be manipulated during the Catalog Item creation process.
 
 #. Update the **Memory Size MB** to **3072**, and then disable the **Runtime** option to prevent users from altering this value during the VM ordering process. For this Catalog Item, users would still be able to request custom vCPU values.
 
@@ -136,9 +142,17 @@ Creating Catalog Items
 
    .. figure:: images/9.png
 
+   .. note::
+
+      As a reminder, these are LOCAL users within the ServiceNow instance due to not being able to integrate with LDAP within the lab environment. In a production environment you would entitle which AD groups you wanted to have permission to view and deploy this Blueprint. Similarly, you would provide that group with an appropriate RBAC role in Prism to allow those users to view and manage their VMs after they've been provisioned.
+
 #. Click **Checkout**.
 
 #. Return to **ServiceNow > Nutanix Calm > Catalog Management > Catalog Items** and verify your Catalog Item appears.
+
+   .. note::
+
+      It may take a minute before your Catalog Item is listed as **Active**, this is normal.
 
 .. Adding Calm Blueprints to Service Catalog
    +++++++++++++++++++++++++++++++++++++++++
@@ -167,6 +181,8 @@ Creating Catalog Items
 
 Ordering VMs
 ++++++++++++
+
+With your Catalog Item active, you're ready to test ordering your first VM as an end user.
 
 #. From the **System Administrator** drop down menu in the upper-right, click **Logout**.
 
@@ -242,7 +258,7 @@ Ordering VMs
 
    .. figure:: images/21.png
 
-#. Once the app is provisioned, Alex can allow users to access and manage their VMs directly through Prism Central based on their Project entitlements. Try it out by logging into Prism Central as:
+#. Once the app is provisioned, you can allow users to access and manage their VMs directly through Prism Central based on their Project entitlements. Try it out by logging into Prism Central as:
 
    - **Username** - *user##*@ntnxlab.local (ex. user01@ntnxlab.local)
    - **Password** - nutanix/4u
@@ -255,6 +271,8 @@ Ordering VMs
 
 Verifying Policies
 ++++++++++++++++++
+
+Finally, you will verify the data protection and microsegmentation policies you built in the previous exercise have been applied to your self-service VM.
 
 #. Log back in to **Prism Central** as **admin** and select :fa:`bars` **> Virtual Infrastructure > VMs**.
 
@@ -297,3 +315,16 @@ Verifying Policies
    .. figure:: images/26.png
 
    While this is a simple example, it demonstrates that combining ServiceNow, Calm, Flow, and other native Nutanix features such as replication and categories, new VMs and applications can be introduced into the environment through end user requests, but with administrative policy automatically applied.
+
+Takeaways
++++++++++
+
+- Extending your on-premises Nutanix environment to the public cloud with clusters allows you to take advantage of familiar features, including:
+
+   - Categories for policy assignment
+   - Data protection policy
+   - Nutanix Flow Security policy
+
+- You can target multiple clusters for provisioning from a single Blueprint, making it easy to take advantage of the elastic capacity provided by Nutanix Clusters
+
+- The Nutanix Calm plugin for ServiceNow provides an easy path for integration of the two Platforms
