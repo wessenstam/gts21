@@ -1,14 +1,14 @@
 .. _phase2_container:
 
-Using tooling
+Using Tooling
 =============
 
-As you have noticed we have create our containerized version of Fiesta, but we have been using vi or nano to manipluate files. These tools work, but are not easy and efficient to change files on a large scale. So we are going to use Visual Code to manipulate the files we create or change from now on.
+As you have noticed we have create our containerised version of Fiesta, but we have been using vi or nano to manipulate files. These tools work, but are not easy and efficient to change files on a large scale. So we are going to use Visual Code to manipulate the files we create or change from now on.
 
 After we have the Visual Code setup and configured, we are going to set up our CI/CD pipeline using Drone (http://harness.io).
 
 .. note::
-   Estimated time **30 minutes**
+   Estimated time to complete this lab is **30 minutes**
 
 Visual Code
 -----------
@@ -16,6 +16,7 @@ Visual Code
 As we have Visual Code already installed and added extensions, we are going to use it.
 
 #. Start Visual Code (VC) in your Windows Tools VM or on your laptop
+
 #. Click in VC on **View -> Command Palette...**
 
    .. figure:: images/1.png
@@ -115,13 +116,13 @@ To make sure we can use https with Gitea, we need to go into the gitea docker co
 #. Close the docker connection using **<CTRL>+d**
 #. Open a browser and point it to **http://<IP ADDRESS DOCKER VM>:3000**
 #. Make the following changes:
-   
+
    - MySQL section:
 
      - **Host**: <IP ADDRESS OF YOUR DOCKER VM>:3306
      - **Password**: gitea
 
-   
+
    - General Settings:
 
      - **SSH Server Port**: 2222
@@ -131,8 +132,8 @@ To make sure we can use https with Gitea, we need to go into the gitea docker co
 
 #. Click the **Install Gitea** button
 
-Now you will receive an error that **This site can’t provide a secure connection**, but we are going to change that. 
-In VC, as we have all files for the containers being saved on the docker VM in the earlier created folders in /docker-location, we can change a file that is needed by Gitea and holds the config. 
+Now you will receive an error that **This site can’t provide a secure connection**, but we are going to change that.
+In VC, as we have all files for the containers being saved on the docker VM in the earlier created folders in /docker-location, we can change a file that is needed by Gitea and holds the config.
 
 #. Open your VC
 #. Open the file **/docker-location/gitea/conf/app.ini** and make the following changes under the **[server]** section:
@@ -168,7 +169,8 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
    - **Redirect URI:** \http://<IP ADDRESS OF YOUR DOCKER VM>:8080/login
 
 #. Click the **Create Application** button
-#. Copy from the next screen the Client ID and the Client Secret
+
+#. Copy the Client ID and the Client Secret from the next screen (you will need this in the next step)
 
    .. figure:: images/16.png
 
@@ -198,7 +200,7 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 #. A warning **Authorize Application** message is shown, click on **Authorize Application**
 
    .. figure:: images/19.png
-   
+
 #. The Drone UI will open with nothing in it
 
    .. figure:: images/18.png
@@ -220,4 +222,3 @@ We have just created our first CI/CD pipeline infrasturcture. **But** we still h
 - The image is only available as long as the Docker VM exists (:fa:`thumbs-down`)
 
 The next modules in this workshop are going to address these :fa:`thumbs-down`.... Let's go for it!
-
