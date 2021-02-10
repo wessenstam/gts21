@@ -6,27 +6,9 @@ Getting Started
 
 This lab track is designed to showcase Nutanix as an ideal platform for delivering a true hybrid cloud for self-service IaaS, leveraging both the flexibility of AWS and Nutanix Clusters and integration with IT service management platform, ServiceNow.
 
-In these exercises, you'll be playing the part of a scrappy IT consultant attempting to win hearts and minds (and open wallets) inside of Party Time, Excellent Inc., by demonstrating solutions to some of PTE's most pressing challenges.
+PTE is looking to pivot away from brick and mortar and ramp up their eCommerce offerings, including entertainment and gaming services to spice up Zoom parties, and planning services to re-invigorate safe and socially distant in-person gatherings. They are hiring new app developers and signing contracts with consultants daily. Unfortunately, the existing IT team has been unable to keep up with the demands of the growing team.
 
-Founded by former public access television rock star duo, Wayne Campbell and Garth Algar, in 1992, Party Time, Excellent, Inc. has become an established name in both manufacturing and retail. Starting out of a two-bay garage in Aurora, Illinois, fashioned into a store selling balloons, streamers, and other "party accessories," PTE has grown to over 2,000 retail locations worldwide. Through acquisitions in the late 90's and early 00's, PTE vertically integrated into related industries, including manufacturing, helium distribution, and party planning. consultative services.
-
-.. figure:: images/waynes_car2a.jpg
-   :figwidth: image
-   :align: center
-
-   *Founders Campbell and Algar photographed for the 1996 Wall Street Journal article: PTE IPO FTW*
-
-Despite the positive outlook from Chairman Wayne Campbell, PTE is facing significant challenges. The COVID-19 pandemic has slashed retail sales due to both lockdowns and the reduction of large gatherings. In order to survive, PTE has to take massive steps to re-invent itself - **and requires the right technologies and processes to support that transformation.**
-
-.. figure:: https://media.giphy.com/media/y0IjNxdBMPJjG/giphy.gif
-   :figwidth: image
-   :align: center
-
-   *Chairman Wayne Campbell after being informed that moving to the cloud does not involve airplanes.*
-
-PTE looks pivot away from brick and mortar and ramp up their eCommerce offerings, including entertainment services to spice up Zoom parties, and planning services to re-invigorate safe and socially distant in-person gatherings. They are hiring new app developers and signing contracts with consultants daily. Unfortunately, the existing IT team has been unable to keep up with the demands of the growing team.
-
-The primary datacenter, located outside of Chicago, Illinois, has reached capacity.
+The primary datacenter, located outside of Chicago, Illinois, is nearing maximum capacity. This has left the team unable to easily add new server and storage capacity to address recent growth, resulting in disruption to their existing workloads.
 
 .. figure:: images/basement.jpg
    :figwidth: image
@@ -51,25 +33,23 @@ Clusters on AWS
 
 #. Refer to :ref:`clusterassignments` for the details required to access your environment.
 
-#. Open **Prism Central** in your browser and log in with the provided credentials.
+#. With **Prism Central** in your browser and log in with the provided credentials.
 
-   .. figure:: images/1.png
+Your **pre-staged** Clusters on AWS cluster has been registered to your existing Prism Central instance. If you have not already viewed the Clusters walk through, refer to that now to understand how this environment is deployed.
 
-   *The most significant component which has been pre-staged is the single node Nutanix Cluster running on AWS. If you have not already viewed the Clusters walk through, refer to that now to understand how this environment is deployed.*
+.. figure:: images/2.png
 
-   .. figure:: images/2.png
-
-   *By leveraging Clusters, Alex has overcome Widget Inc.'s inability to quickly procure and deploy new infrastructure in their datacenter, and can now address the growth, spikes, and seasonality that have caused workload disruptions in the past.*
-
-   <MORE TO COME>
+By leveraging Clusters, you have overcome PTE's inability to quickly procure and deploy new infrastructure in their datacenter, and can now address their additional needs regarding disaster recovery, network security, and infrastructure self-service.
 
 ServiceNow
 ..........
 
-ServiceNow is a SaaS platform that began as an IT Service Management (ITSM) tool that has evolved into an all-encompassing enterprise service management tool, powering service desks, customer service, HR service delivery, business app store, and even resolving security threats.
+The larger and more diverse an organization’s IT environment is, the more they need robust IT process to mitigate and manage risk. The need to follow agreed and approved processes is paramount when organizations are running critical business applications on which things like corporate profit, human lives, or financial markets may depend.
+
+IT organizations want to find a simple way for all end-users to get IT services via a singe portal, and they want everything automated! With many platforms in the mix, **ServiceNow is where they all come together so IT organizations can have one set of processes for all platforms**.
 
 To simplify and accelerate developing new apps and integrations for the platform, ServiceNow `provides free developer instances of its entire platform <https://developer.servicenow.com/>`_ to users - *these instances are great for labs and demos too!*
 
 In addition to your on-prem and AWS Nutanix clusters, each group of users will share a **pre-staged** ServiceNow Developer Instance. We'll cover more about the environment throughout the labs.
 
-   .. figure:: images/3.png
+.. figure:: images/3.png

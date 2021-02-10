@@ -12,6 +12,8 @@ Since July 2019, ServiceNow has offered native support for discovering Nutanix i
 
 Nutanix X-Play support for sending Alerts to ServiceNow complements the CMDB integration by binding the event created by the Nutanix alert with the Configuration Item (VM, host, etc.) auto-discovered by ServiceNow.
 
+   .. figure:: images/0.png
+
 Configuring a ServiceNow environment to begin discovering your Nutanix resources only takes a few minutes, `as covered by Paul Harb here <https://www.youtube.com/watch?v=G1EqR0Vt1wo>`_. However, it does depend on a number of pre-requisites covered in the section below.
 
 In this exercise, you will implement a Playbook using Prism X-Play to filter and send alerts to ServiceNow. You will then trigger the alert and review the data inside of ServiceNow.
@@ -19,7 +21,9 @@ In this exercise, you will implement a Playbook using Prism X-Play to filter and
 Your Environment
 ++++++++++++++++
 
-To save time, and to ensure a consistent configuration for all users within the shared environment, your ServiceNow Developer Instance *has already been pre-staged with all components necessary to complete the following exercise*, including:
+.. raw:: html
+
+   <strong><font color="red">To save time, and to ensure a consistent configuration for all users within the shared environment, your ServiceNow Developer Instance has already been pre-staged with all components necessary to complete the following exercise, including:</font></strong><br><br>
 
 Subscription Plugins
 ....................
@@ -183,4 +187,8 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 Takeaways
 +++++++++
 
--
+- ServiceNow offers integrated support for discovery of Nutanix infrastructure
+
+- X-Play provides a built-in action for sending Nutanix alerts to ServiceNow
+
+- Sending alert data to ServiceNow allows for tracking incident and remediation history as part of the CMDB

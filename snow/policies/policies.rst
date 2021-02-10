@@ -1,8 +1,8 @@
 .. _snow_preparingenv:
 
---------------------------
-Preparing Your Environment
---------------------------
+-------------------------------
+Preparing Policies and Projects
+-------------------------------
 
 With the additional infrastructure capacity you've unlocked with Nutanix Clusters, one of the goals is to provide users with the ability to request and operate their owns VMs and applications. Depending on the user and/or application, PTE needs to ensure that VMs are properly protected for backup and DR purposes, as well as properly secured on the network from the time of creation.
 

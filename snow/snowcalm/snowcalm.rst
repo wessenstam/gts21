@@ -13,7 +13,9 @@ In this exercise, you will show how you can integrate your multi-cluster Nutanix
 Your Environment
 ++++++++++++++++
 
-To save time, and to ensure a consistent configuration for all users within the shared environment, your ServiceNow Developer Instance *has already been pre-staged with all components necessary to complete the following exercise*, including:
+.. raw:: html
+
+   <strong><font color="red">To save time, and to ensure a consistent configuration for all users within the shared environment, your ServiceNow Developer Instance has already been pre-staged with all components necessary to complete the following exercise, including:</font></strong><br><br>
 
 Local User Accounts and Group
 .............................
