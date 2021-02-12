@@ -43,3 +43,11 @@ Should we explain what NPM and similar things are, whether in appendix/glossary,
 We don't explain what the fiesta app is, and I think we lose some impact when we create the docker container, as we don't understand what that docker container is replacing.
 
 There's a fair bit of "if this happens" or "this may happen" or "you should see". I'd like us to be a bit more definitive. If that means running through it again from scratch, so be it.
+
+When we are running commands, maybe do bash so folks can easily copy/paste without risk of not including everything (I noticed this here with a period).
+
+Any way we can use variables in any of this stuff that uses <DOCKER-VM-IP-ADDRESS>?
+
+I'm very concerned that some of this is so fiddly, if one thing is wrong, the entire workshop is blown up and is going to require a TON of effort to troubleshoot it.
+
+[Phase 3] Are there any sections that will step on each other if the user doesn't use a unique name?

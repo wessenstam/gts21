@@ -24,7 +24,7 @@ Analyze the original Fiesta Application
 Let's begin by analyzing the installation of the Fiesta app, by viewing the blueprint.
 
 #. Within Prism Central, click on :fa:`bars` **Services > Calm**.
-#. Click the Blueprint |bp_icon| icon
+#. Click the Blueprint |bp_icon| icon.
 #. Open the *UserXX*\ [NAME OF BLUEPRINT]
 #. Click on the *Fiesta_App_VM* VM, then from the right-hand pane, click on **Package > Configure Install**.
 
@@ -158,7 +158,7 @@ Here's a quick way to visualize these terms, and the overall process. As you can
 
    .. figure:: images/5.png
 
-#. Run the command ``docker build`` to create the container. This takes approximately 1 minute.
+#. Run the command ``docker build .`` (including the period) to create the container. This takes approximately 1 minute.
 
    .. note::
 
@@ -200,6 +200,11 @@ So we have an image ID. Great. But what does this mean to us? Let's quickly add 
 #. Run the command ``docker stop Fiesta_App`` to (you guessed it!) stop the container. This will not only stop the container, but as we specified on creation, will delete the container.
 
 #. Run the command ``docker run -d --rm -p 5000:3000 --name Fiesta_App fiesta_app:1.0``. The *-p 5000:3000* parameter exposes port 5000, and maps the external port of 5000 to the internal port of 3000.
+
+[This failed first attempt, worked second attempt.
+
+root@xyz123-docker-vm github]# docker run -d --rm -p 5000:3000 --name Fiesta_App fiesta_app:1.0
+docker: Error response from daemon: Conflict. The container name "/Fiesta_App" is already in use by container "f838ddea0f8920fde1136bb722fd97fde6605871fd3813068f0e371cf79c6e28". You have to remove (or rename) that container to be able to reuse that name.]
 
 #. Run the command ``docker logs --follow Fiesta_App`` once again. At the same time, open a browser ``http://<DOCKER-VM-IP-ADDRESS>:5000/products``.
 

@@ -12,11 +12,11 @@ While creating the containerized version of Fiesta, we used a text editor (ex. `
 
 .. note::
 
-   Estimated time **30 minutes**
+   Estimated time **30 minutes**.
 
 We need to build the CI/CD pipeline. For this we are going to setup the following parts:
 
-   - Visual Studio Code (VSC) - controls the Commit and push of the new code
+   - Visual Studio Code (VSC) - controls the commit and push of the new code
    - Gitea - version control manager
    - Drone - CI/CD part of the pipeline
 
@@ -33,17 +33,17 @@ Visual Studio Code (VSC)
 
    .. figure:: images/2.png
 
-#. Click on **+ Add New SSH Host...** and type **ssh root@<DOCKER-VM-IP-ADDRESS>**
+#. Click on **+ Add New SSH Host...** and type **ssh root@<DOCKER-VM-IP-ADDRESS>** and hit **Enter**.
 
    [screenshot]
 
-#. Select the location where you want to update the config file. Your choice.. [LET'S SPECIFY THIS FOR CONSISTENCY FOR ALL USERS]
+#. Select the location **C:\\ProgramData\\ssh\\ssh_config** (typically second entry) to update the config file.
 
-#. Select **Connect** (bottom right corner) to connect to the VM
+#. Select **Connect** on the pop-up in the bottom right corner to connect to the VM.
 
    [screenshot]
 
-#. Answer the following, if you get the questions from VS Code [If?]
+#. Input the following in succession:
 
    - O/S - Linux
    - Fingerprint - Continue
@@ -52,6 +52,8 @@ Visual Studio Code (VSC)
    [screenshot]
 
 #. Click on both messages that may pop-up in the bottom right hand corner, the **Don't Show Again** button.
+
+[Any reason we don't just want to have the version it's looking for - in this case Git > v2.0?]
 
    .. figure:: images/3.png
 
@@ -62,6 +64,10 @@ Visual Studio Code (VSC)
 #. Provide the **/** as the folder you want to open and click on **OK**
 
    [screenshot]
+
+[This process is wonky for me. We have to give explicit instructions on how to get / to work. I had to type /. and then remove the period, so it didn't auto-select the bin directory.]
+
+[Also got warning/error: Unable to watch for file changes in this large workspace folder. Please follow the instructions link to resolve this issue. https://code.visualstudio.com/docs/setup/linux#_visual-studio-code-is-unable-to-watch-for-file-changes-in-this-large-workspace-error-enospc ]
 
    It will take approximately 1 minute (you might be asked for the password again) [Confirm if they will or not].
 
@@ -76,12 +82,15 @@ Preparation [?]
 
 As we already have created the needed infrastructure using `docker-compose`, we're going to pull the existing yaml file, make changes and start the CI/CD pipeline.
 
-#. Open a ssh session to your *Initials*\ **-docker-vm** by using VSC's built in terminal.
+#. Open a ssh session to your *Initials*\ **-dockervm** by using VSC's built in terminal.
 
-#. In VSC click on **Terminal ->  New Terminal**. This will open a new ssh session to the machine you had already opened to see the "remote folder" and saves switching between windows
+#. Within VSC, click on **Terminal ->  New Terminal**. This will open a new ssh session to the machine you had already opened to see the "remote folder" and saves switching between windows
 
    .. figure:: images/6.png
+
    .. figure:: images/7.png
+
+[We should also tell them to close the Welcome message, and hit up/down arrow for the terminal window to adjust it, vs. working in this little space at the bottom]
 
 #. In the terminal run the following commands to get the needed directories
 
@@ -94,13 +103,20 @@ As we already have created the needed infrastructure using `docker-compose`, we'
        mkdir -p /docker-location/mysql
 
 #. In the Terminal of VSC, run ``cd ~/github``
+
+[Explain the ~]
+
 #. Run the command ``curl --silent https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/CI-CD%20Pipeline/docker_files/docker-compose.yaml -O`` to pull the yaml file
+
 #. To make sure we're not blocked by any rate limit on pulls, run ``docker login`` and authenticate using your dockerhub account you created earlier
+
 #. In the terminal screen run the command ``docker-compose create db gitea`` and wait for the command prompt to return. You will see that images are pulled and at the end that the two services have been created
 
    .. figure:: images/9.png
 
 #. Run ``docker-compose start db gitea`` to start the MySQL and Gitea containers.
+
+[Got a warning this command is deprecated]
 
 Now that we have part of our CI/CD running, we need to configure it. We start with Gitea and end with Drone.
 
@@ -131,17 +147,23 @@ To make sure we can use https with Gitea, we need to go into the gitea docker co
    - General Settings:
 
      - **SSH Server Port**: 2222
-     - **Gitea Base URL**: \https://<IP ADDRESS OF YOUR DOCKER VM>:3000
+     - **Gitea Base URL**: ``https://<IP ADDRESS OF YOUR DOCKER VM>:3000``
 
    .. figure:: images/11.png
 
 #. Click the **Install Gitea** button
 
+[I'm concerned that if folks do something wrong at this step, they are hosed.]
+
 Now you will receive an error that **This site can’t provide a secure connection**, but we are going to change that.
 In VSC, as we have all files for the containers being saved on the docker VM in the earlier created folders in /docker-location, we can change a file that is needed by Gitea and holds the config.
 
+[I did not get this error]
+
 #. Open your VSC
 #. Open the file **/docker-location/gitea/conf/app.ini** and make the following changes under the **[server]** section:
+
+[We should say they need to add this to the top, vs. make these changes. Maybe we have a copy/paste with the proper formatting?]
 
    - **PROTOCOL**  = https
    - **CERT_FILE** = cert.pem
@@ -149,10 +171,16 @@ In VSC, as we have all files for the containers being saved on the docker VM in 
 
      .. figure:: images/12.png
 
-#. Save the file and restart the container using ``docker-compose restart gitea`` in your terminal windows in VSC
+#. Save the file [How? I say click X and choose Save] and restart the container using ``docker-compose restart gitea`` in your terminal windows in VSC [How do they get back to it easily? What if they closed it? Mention CD to ~/github before running this command]
+
 #. Reloading the browser page will show an error on the certificate, which is logical as we are now using a Self Signed certificate. Use the normal ways to get to the login screen.
-#. The first user will be the admin user of the Gitea application (default)
-#. Click the **Register button** to create an account. Provide whatever you want. We are going to use **nutanix**, **nutanix@atnutanix.com** and **nutanix/4u** during the workshop as examples.
+
+[I didn't notice any difference]
+
+#. The first user will be the admin user of the Gitea application (default). Click the **Register button** (top right) to create an account. Provide whatever you want. We are going to use **nutanix**, **nutanix@atnutanix.com** and **nutanix/4u** during the workshop as examples.
+
+[We should specify what to enter]
+
 #. Click the Register button to have your account created. Welcome to Gitea!!!
 
    .. figure:: images/14.png
@@ -160,7 +188,7 @@ In VSC, as we have all files for the containers being saved on the docker VM in 
 ------
 
 Drone configuration
-^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++
 
 As Drone will use Gitea for its authentication, we need to get some parameters from Gitea and change the docker-compose.yaml file.
 
@@ -171,34 +199,34 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 #. Select Applications and fill the following parameters (under the **Manage OAuth2 Applications** section):
 
    - **Application name:** drone
-   - **Redirect URI:** \http://<IP ADDRESS OF YOUR DOCKER VM>:8080/login
+   - **Redirect URI:** ``http://<DOCKER-VM-IP-ADDRESS>:8080/login``
 
 #. Click the **Create Application** button
-#. Copy from the next screen the Client ID and the Client Secret
+#. Copy from the next screen the Client ID and the Client Secret to Notepad or similar, as you will need this in the proceeding steps.
 
    .. figure:: images/16.png
 
-#. Open the **docker-compose.yaml** file in VSC and paste the values in their field names **DRONE_GITEA_CLIENT_ID** and **DRONE_GITEA_CLIENT_SECRET**
+#. Open the **docker-compose.yaml** file [WHERE??] in VSC and paste the values in their field names **DRONE_GITEA_CLIENT_ID** and **DRONE_GITEA_CLIENT_SECRET** [WHERE??]
 
    .. figure:: images/17.png
 
-#. Also change under the **drone-server** section in the docker-compose.yaml file
+#. Also change under the [START THE]**drone-server** section in the docker-compose.yaml file
 
    - **DRONE_GITEA_SERVER=** \https://<IP ADDRESS OF DOCKER VM>:3000
    - **DRONE_SERVER_HOST=** \https://<IP ADDRESS OF DOCKER VM>:8080
    - **DRONE_USER_CREATE=** <USERNAME> to **nutanix**
 
-   .. note::
+[We should change the <IP ADDRESS> in the file to match what we standardize]
 
-     If you have chosen a different username (not nutanix) in Gitea, make sure you change the needed parameters in the docker-compose.yaml file (drone-server section  **DRONE_USER_CREATE=username:nutanix,admin:true**)
-
-#. Change under the **drone-docker-runner** section
+#. Change under the [START THE]**drone-docker-runner** section
 
    - **DRONE_RPC_HOST=** <IP ADDRESS OF DOCKER VM>
 
 #. Save the file
-#. Click in Gitea UI the **Save** button and then the **Dashboard** text
+#. Click in Gitea UI the **Save** button and then click **Dashboard** (top left).
 #. Open the Terminal in VSC
+
+[Change dir to ~/github!]
 #. Create and start the drone server and agent container by running ``docker-compose create drone-server drone-docker-runner`` and ``docker-compose start drone-server drone-docker-runner``
 #. Open a browser and point to **\http://<IP ADDRESS OF DOCKER VM>:8080**. This will try to authenticate the user **nutanix**, the defined user in Drone section in the docker-compose.yaml file with admin right
 #. A warning **Authorize Application** message is shown, click on **Authorize Application**
@@ -219,9 +247,12 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 
 We have just created our first CI/CD pipeline infrasturcture. **But** we still have to do a few thing...
 
-- The way of working using **vi** or **nano** is not very effective and ready for human error (:fa:`thumbs-up`)
+- The way of working using **vi** or **nano** is not very effective and ready for human error (:fa:`thumbs-up`) [How does this remove human error, since we are still copy/pasting and typing things?]
+
 - Variables needed, have to be set outside of the image we build (:fa:`thumbs-down`)
+
 - The container build takes a long time and is a tedeous work including it's management (:fa:`thumbs-down`)
+
 - The start of the container takes a long time (:fa:`thumbs-down`)
 - The image is only available as long as the Docker VM exists (:fa:`thumbs-down`)
 

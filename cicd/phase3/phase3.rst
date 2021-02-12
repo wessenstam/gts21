@@ -33,11 +33,11 @@ Now that we have our tooling and basic CI/CD infrastructure up and running let's
   - deploy the image as containers
 
 Create a repo in Gitea
-^^^^^^^^^^^^^^^^^^^^^^
+++++++++++++++++++++++
 
 Let's create a repository (repo) that we can use to store our files in from which we want to have our images/containers build.
 
-#. Open in a browser your Gitea interface (**\https://<IP ADDRESS OF DOCKER VM>:3000**) and login using your set credentials (workshop uses **nutanix** and **nutanix/4u**) by clicking on the Login icon (top right corner). You might be auto logged in if the token is still valid
+#. Open in a browser your Gitea interface (``https://<DOCKER-VM-IP-ADDRESS>:3000``) and login using your set credentials (workshop uses **nutanix** and **nutanix/4u**) by clicking on the Login icon (top right corner). You might be auto logged in if the token is still valid
 
 #. Click on the **+** sign in the top right hand corner and select **+New Repository**
 
@@ -48,25 +48,32 @@ Let's create a repository (repo) that we can use to store our files in from whic
 
    .. figure:: images/2.png
 
-#. Copy the https URL
-#. Open a command line or terminal on your laptop or Windows Tools VM and run ``git config --global http.sslVerify false``. This step is necessary otherwise git is not willing to clone anything from a Version Control Manager using Self signed certificates. In the same command line or terminal session run the following two commands ``git config --global user.name "FIRST_NAME LAST_NAME"`` and ``git config --global user.email "MY_NAME@example.com"`` to set the user's name and email address so all the pushes can be identified.
+#. Copy the https URL [YOU HAVE US COPY THIS, BUT THE USER IS THEN GOING TO COPY STUFF TO PASTE INTO THE TERMINAL WINDOW. SPECIFY COPY TO NOTEPAD OR SIMILAR.]
+
+#. Open a command line or terminal on your laptop or Windows Tools VM [WHY AREN'T WE USING VSC ANYMORE, IT'S ALREADY OPEN?] and run ``git config --global http.sslVerify false``. This step is necessary otherwise git is not willing to clone anything from a Version Control Manager using Self signed certificates. In the same command line or terminal session run the following two commands ``git config --global user.name "FIRST_NAME LAST_NAME"`` and ``git config --global user.email "MY_NAME@example.com"`` to set the user's name and email address so all the pushes can be identified.
 
 #. On your laptop or the Windows Tools VM environment open VC, unless already open, and click **File -> New Window**
 
    .. figure:: images/3.png
 
-#. In the new Window click **View -> Command Palette** and type ``git clone``
-#. Paste the earlier copied URl from Gitea's Repo
+#. In the new Window click **View -> Command Palette** and type ``git clone`` [AND HIT ENTER, OR CLICK ON IT]
+
+#. Paste the earlier copied URl from Gitea's Repo [ARE WE CHOOSING CLONE FROM URL OR GITHUB?]
 
    .. figure:: images/5.png
 
-#. Provide the location where to clone the data in from the Gitea Repo in the next screen (**Select Folder**). Create a new folder called **github**, open that folder and click the **Select Repository Location** button.
+#. Provide the location where to clone the data in from the Gitea Repo in the next screen (**Select Folder**). Create a new folder called **github** [WE ALREADY HAVE ONE!], open that folder and click the **Select Repository Location** button. [YOU CHOOSE THE FOLDER AND CLICK OK AT THE RIGHT END OF SPECIFYING /root/github/]
+
 #. This will clone the repo into our development environment. In the bottom right corner you will see a message, *Open*, *Open in New Window*, Click the **Open** button
 
    .. figure:: images/7.png
 
+[MINOR - SCREENSHOT DOESN'T EXACTLY MATCH MINE]
+
+[YOU HAVE TO ENTER YOUR ROOT PASSWORD FOR DOCKER VM]
+
 #. You have your FIESTA_APPLICATION folder on the left side of the screen with no files in there.
-#. Click on the **new File** icon (first one next to the name of the folder FIESTA_APPLICATION) and call it README.md
+#. Click on the **new File** icon (first one next to the name of the folder FIESTA_APPLICATION) [YOU HAVE TO HOVER OVER THE NAME TO SEE THESE OPTIONS] and call it README.md
 
    .. figure:: images/8.png
 
@@ -83,17 +90,22 @@ Let's create a repository (repo) that we can use to store our files in from whic
 
    .. figure:: images/9.png
 
-#. Click the icon that has the **1** on it and provide a message in the Text field and click the :fa:`check` symbol (Commit)
-#. Click **Always** on the Warning screen you get
+#. Click the icon that has the **1** on it [SOURCE CONTROL] and provide a message in the Text field and click the :fa:`check` symbol (Commit)
+
+   [SCREENSHOT]
+
+#. Click **Always** on the Warning screen you get [NOT AN OPTION - SAVE ALL & COMMIT, COMMIT STAGED CHANGES, CANCEL]
+
 #. Click on the **...** icon next to the SOURCE CONTROL and select Push. This will push the new file onto the Repo in Gitea
-#. Provide the login information for Gitea
+
+#. Provide the login information for Gitea [WE SHOULD GIVE THEM A HINT]
 
    .. note::
     In the lower right corner you will get a message with respect to have VC run periodically a git fetch. This is useful if you have multiple people working against the repo, but as we are the only ones, click on **No**
 
     .. figure:: images/10.png
 
-#. Open Gitea, your Repo and see that a push has been made by user nutanix. README.md is shown in the page and is corresponding to the file we created.
+#. Open Gitea, your Repo [WHERE IS IT?] and see that a push has been made by user nutanix. README.md is shown in the page and is corresponding to the file we created. [SCREENSHOT DOESN'T MATCH WHAT I HAVE]
 
    .. figure:: images/11.png
 
@@ -102,12 +114,14 @@ Now that we have a repo and some data in it, we can configure drone to see the p
 ------
 
 Configure Drone
-^^^^^^^^^^^^^^^
++++++++++++++++
 
 Drone needs to understand which Repos to track. To do this we will tell Drone what the repos are.
 
 #. Open Drone in a browser by using the URL **\http://<IP ADDRESS DOCKER VM>:8080** (Drone Authenticates via Gitea)
+
 #. Click the **SYNC** button to have Drone grab the Repos of the user it authenticated against.
+
 #. After a few seconds you will see your **nutanix/Fiesta_Application** Repo
 #. Click the **ACTIVATE** button to the right hand side of the Repo
 #. Click the **ACTIVATE REPOSITORY** button
@@ -131,12 +145,12 @@ Use Drone to build an image
 
     kind: pipeline
     name: default
-    
+
     clone:
       skip_verify: true
-    
+
     steps:
-    
+
       - name: build test image
         image: docker:latest
         pull: if-not-exists
@@ -145,7 +159,7 @@ Use Drone to build an image
             path: /var/run/docker.sock
         commands:
           - docker build -t fiesta_app:${DRONE_COMMIT_SHA:0:6} .
-    
+
     volumes:
       - name: docker_sock
         host:
@@ -159,37 +173,41 @@ Use Drone to build an image
    - Click the three dots and click **Push**
 
 #. Drone has seen a push action and starts to follow the content of the **.drone.yml** file.
+
 #. Open the **Drone UI -> nutanix/Fiesta_Application -> ACTIVITY FEED -> #1 -> build test image** which has errors.
 
    .. figure:: images/12.png
 
+[2-12-21 EOD - I DON'T SEE ANYTHING IN ACTIVITY - WILLEM INVESTIGATING]
+
 #. The steps has searched for a dockerfile, but couldn't find it. Let's fix that
+
 #. Back to VC, create a new file in the root of the **FIESTA_APPLICATION** and call it **dockerfile** and copy the below text (we used this before)
 
    .. code-block:: docker
 
       # Grab the needed OS image
       FROM alpine:3.11
-      
+
       # Install the needed packages
       RUN apk add --no-cache --update nodejs npm mysql-client git python3 python3-dev gcc g++ unixodbc-dev curl
-      
+
       # Create a location in the container for the Fiesta Application Code
       RUN mkdir /code
-      
+
       # Make sure that all next commands are run against the /code directory
       WORKDIR /code
 
       # Copy needed files into the container
       COPY set_privileges.sql /code/set_privileges.sql
       COPY runapp.sh /code
-      
+
       # Make the runapp.sh executable
       RUN chmod +x /code/runapp.sh
 
       # Start the application
       ENTRYPOINT [ "/code/runapp.sh"]
-      
+
       # Expose port 30001 and 3000 to the outside world
       EXPOSE 3001 3000
 
@@ -198,7 +216,7 @@ Use Drone to build an image
 #. Open immediately the Drone UI and click on **ACTIVITY FEED**
 
    .. figure:: images/13.png
-     
+
 #. Create the following files and copy the respective content in the files as the build step is missing them...
 
    .. figure:: images/14.png
@@ -218,30 +236,30 @@ Use Drone to build an image
 
        # Clone the Repo into the container in the /code folder we already created in the dockerfile
        git clone https://github.com/sharonpamela/Fiesta /code/Fiesta
-       
+
        # Change the configuration from the git clone action
        sed -i 's/REPLACE_DB_NAME/FiestaDB/g' /code/Fiesta/config/config.js
        sed -i "s/REPLACE_DB_HOST_ADDRESS/<IP ADDRESS OF MARIADB SERVER>/g" /code/Fiesta/config/config.js
        sed -i "s/REPLACE_DB_DIALECT/mysql/g" /code/Fiesta/config/config.js
        sed -i "s/REPLACE_DB_USER_NAME/fiesta/g" /code/Fiesta/config/config.js
        sed -i "s/REPLACE_DB_PASSWORD/fiesta/g" /code/Fiesta/config/config.js
-       
+
        npm install -g nodemon
-       
+
        # Get ready to start the application
        cd /code/Fiesta
        npm install
        cd /code/Fiesta/client
        npm install
-       
+
        # Update the packages
        npm fund
        npm update
        npm audit fix
-       
+
        # Build the app
        npm run build
-       
+
        # Run the NPM Application
        cd /code/Fiesta
        npm start
@@ -291,13 +309,13 @@ In a CI/CD pipeline testing is very important and needs to be run automatically.
           - sed -i "s/REPLACE_DB_USER_NAME/$DB_USER/g" /code/Fiesta/config/config.js
           - sed -i "s/REPLACE_DB_PASSWORD/$DB_PASSWD/g" /code/Fiesta/config/config.js
           - cat /code/Fiesta/config/config.js
-    
+
    .. note::
      Make sure you have the **- name** at the same indent as the already **- name** section in the file. Otherwise you'll get an error message like below...
      Also change the **<IP ADDRESS OF MARIADB SERVER>** to the correct IP address
 
      .. figure:: images/17.png
-   
+
    This is how it should look like
 
    .. figure:: images/18.png
@@ -307,13 +325,13 @@ In a CI/CD pipeline testing is very important and needs to be run automatically.
    - Use the earlier build container (*image* section)
    - Set variables so we can use them in the commands (*environment* section)
    - Run commands to see if (*commands* section)
-     
+
      - npm has been installed in the container
      - can we connect to the MySQL database SERVER
      - can we clone the data from the github repo
      - can we change a file that exists after the git clone command
      - show the end result of the changed config file
-  
+
 #. Save the file, commit and push to Gitea and open the Drone UI.
 #. Drone will only move to the next step if the previous step was successful.
 
@@ -356,7 +374,7 @@ Manual upload of images
 
    .. figure:: images/23.png
 
-#. Open your dockerhub account using a browser. In your account you should now see the just pushed image 
+#. Open your dockerhub account using a browser. In your account you should now see the just pushed image
 
    .. figure:: images/24.png
 
@@ -387,7 +405,7 @@ CI/CD Upload of images
           - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} devnutanix/fiesta_app:${DRONE_COMMIT_SHA:0:6}
           - docker push devnutanix/fiesta_app:${DRONE_COMMIT_SHA:0:6}
           - docker push devnutanix/fiesta_app:latest
- 
+
 #. Save the file. **DON'T COMMIT AND PUSH YET!!!!** we need to make a small change to Drone to make the step work
 #. As we are using the **from_secret** parameter we need to tell Drone what the secret is. Open the Drone UI (**\http://<IP ADDRESS OF DOCKER VM>:8080**)
 #. Click on your **Fiesta_Application repository -> SETTINGS**
@@ -412,10 +430,10 @@ Deploy the images
 As we already deployed our own build Fiesta_App image in a former part of the workshop (:ref:`basic_container`) we know what the steps are to deploy an image. Those steps need to be repeated by the CI/CD pipeline AFTER the test and the upload have passed. Only then we are allowing the deployment of the image.
 
 #. Open the **.drone.yml** file
-#. Add the following text 
+#. Add the following text
 
    .. code-block:: yaml
-    
+
        - name: Deploy newest image
          image: docker:latest
          pull: if-not-exists
@@ -442,7 +460,7 @@ As we already deployed our own build Fiesta_App image in a former part of the wo
         - *--name* Provide the name of the container
         - *--rm* Remove the container if it is being stopped
         - *-p* Open port 5000 for the outside world and map it to port 3000 on the container
-        - *-d* Run in the background as a daemon 
+        - *-d* Run in the background as a daemon
 
 #. Save the file, Commit and push the image
 #. This will make drone also deploy the container
@@ -472,7 +490,7 @@ We need to make changes to the following files so they use the set variables/par
 - .drone.yml
 - runapp.sh
 
-We are also going to recreate the images, but that will be solved by the CI/CD pipeline, so no need to rebuild manually images etc.. 
+We are also going to recreate the images, but that will be solved by the CI/CD pipeline, so no need to rebuild manually images etc..
 
 Change runapp.sh
 ****************
@@ -486,14 +504,14 @@ Change runapp.sh
 
       # If there is a "/" in the password or username we need to change it otherwise sed goes haywire
       if [ `echo $DB_PASSWD | grep "/" | wc -l` -gt 0 ]
-          then 
+          then
               DB_PASSWD1=$(echo "${DB_PASSWD//\//\\/}")
           else
               DB_PASSWD1=$DB_PASSWD
       fi
-      
+
       if [ `echo $DB_USER | grep "/" | wc -l` -gt 0 ]
-          then 
+          then
               DB_USER1=$(echo "${DB_USER//\//\\/}")
           else
               DB_USER1=$DB_USER
@@ -564,9 +582,9 @@ Change runapp.sh
               from_secret: db_server_ip
             DB_PASSWD:
               from_secret: db_passwd
-            DB_USER: 
+            DB_USER:
               from_secret: db_user
-            DB_TYPE: 
+            DB_TYPE:
               from_secret: db_type
             DB_NAME:
               from_secret: db_name
@@ -611,9 +629,9 @@ Change runapp.sh
               from_secret: db_server_ip
             DB_PASSWD:
               from_secret: db_passwd
-            DB_USER: 
+            DB_USER:
               from_secret: db_user
-            DB_TYPE: 
+            DB_TYPE:
               from_secret: db_type
             DB_NAME:
               from_secret: db_name
@@ -659,7 +677,7 @@ Change runapp.sh
 
     <H1><font color="#AFD135"><center>Congratulations!!!!</center></font></H1>
 
-We have just used our CI/CD pipeline and solved, so far, these topics. 
+We have just used our CI/CD pipeline and solved, so far, these topics.
 
 - The way of working using **vi** or **nano** is not very effective and ready for human error (:fa:`thumbs-up`)
 - Variables needed, have to be set outside of the image we build (:fa:`thumbs-up`)
