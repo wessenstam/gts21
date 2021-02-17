@@ -10,75 +10,9 @@
    info/help
    info/validate
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Hybrid Cloud IaaS
-   :name: _hybridiaas
-   :hidden:
-
-   snow/gettingstarted/gettingstarted
-   snow/policies/policies
-   snow/snowcalm/snowcalm
-   snow/migration/migration
-   snow/alerts/alerts
-   snow/webhook/webhook
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Hybrid Cloud Database Management
-   :name: _hybrideuc
-   :hidden:
-
-   dbs/gettingstarted/gettingstarted
-   dbs/clustersaag/clustersaag
-   dbs/clustersdam/clustersdam
-   dbs/patching/patching
-   dbs/sqlmonitoring/sqlmonitoring
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Hybrid Cloud EUC
-   :name: _hybrideuc
-   :hidden:
-
-   euc/gettingstarted/gettingstarted
-   euc/expand/expand
-   euc/runbook/runbook
-   euc/secure/secure
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Containerizg Apps and CI/CD
-   :name: _cicd
-   :hidden:
-
-   cicd/start/start
-   cicd/basic/basic
-   cicd/phase2/phase2
-   cicd/phase3/phase3
-   cicd/phase4/phase4
-   cicd/phase5/phase5
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Cloud Native Apps on Nutanix
-   :name: _k8s
-   :hidden:
-
-   karbon/preparation/preparation
-   karbon/karbon/karbon
-   karbon/deploy/deploy
-   karbon/day-2/day-2
-
-.. .. raw:: html
-
-  <br><center><img src="https://get-ahv-images.s3.amazonaws.com/GTSLOGO.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
 .. raw:: html
 
    <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/welcome.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
-
-.. .. image:: images/welcome.png
-   :align: center
 
 **Welcome!** This year we're celebrating how we power customer use cases by exposing you to exciting new hybrid cloud use cases enabled by our core platform, our portfolio products, and Nutanix Clusters on AWS. Here's a quick look at the available labs:
 
@@ -104,26 +38,7 @@
 
 .. raw:: html
 
-   <strong><font color="red">Before beginning any labs, review the following sections for important information regarding your lab environment, scenario, and FAQs.</font></strong><br><br>
-
-Meet Your Customer
-++++++++++++++++++
-
-For vGTS21, you'll be playing the part of a scrappy IT consultant attempting to win hearts and minds (and open wallets) inside of **Party Time, Excellent Inc.**, by demonstrating solutions to some of their most pressing challenges.
-
-Founded by former public access television rock star duo, Wayne Campbell and Garth Algar, in 1992, Party Time, Excellent, Inc. (PTE) has become an established name in both manufacturing and retail. Starting out of a garage in Aurora, Illinois, fashioned into a store selling balloons, streamers, and other "party accessories," PTE has grown to over 2,000 retail locations worldwide. Through acquisitions in the late 90's and early 00's, PTE vertically integrated into related industries, including manufacturing, helium distribution, and party planning services.
-
-.. raw:: html
-
-   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/waynes_car2a.jpg"><br><i>Founders Campbell and Algar photographed for the 1996 Wall Street Journal article: PTE IPO FTW</i></center><br>
-
-Despite the positive outlook from Chairman Wayne Campbell, PTE is facing significant challenges. In particular, the COVID-19 pandemic has slashed retail sales. Stores are open in many locations, but customers are simply no longer planning parties. In order to survive, PTE has to take massive steps to re-invent itself - **and requires the right technologies and processes to support that transformation.**
-
-.. raw:: html
-
-   <br><center><img src="https://media.giphy.com/media/y0IjNxdBMPJjG/giphy.gif"><br><i>Chairman Wayne Campbell after being informed that moving to the cloud does not involve airplanes.</i></center><br>
-
-The **Getting Started** section of each lab track will continue the journey.
+   <strong><font color="red">This page will refresh on Tuesday, March 2nd.</font></strong><br><br>
 
 Frequently Asked Questions
 ++++++++++++++++++++++++++
@@ -161,10 +76,6 @@ Do I Have To Complete The Lab Tracks In Order?
 
 Within a **Lab Track** (ex. **Hybrid Cloud EUC**), inidividual exercises should be completed in order (**Getting Started -> Provision and Expand -> ...**). However, you should be able to complete the tracks in your order of interest.
 
-.. note::
-
-   The **Hybrid Cloud EUC** track depends on the completion of :ref:`snow_preparingenv` at the beginning of the **Hybrid Cloud IaaS** track in order to create your dedicated Calm project and properly categorize VMs.
-
 How Many Labs Should I Complete?
 ................................
 
@@ -193,8 +104,3 @@ How Do I Validate My Labs?
 This year we're introducing self-service validation requests to keep you focused and productive.
 
 See :ref:`validate` for complete instructions.
-
-Is Matt OK? Does He Need To Talk To Someone?
-............................................
-
-Your concern is noted and appreciated. Ask again in April.
