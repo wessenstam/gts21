@@ -181,7 +181,7 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 #. Also change under the **drone-server** section in the docker-compose.yaml file
 
    - **DRONE_GITEA_SERVER=** \https://<IP ADDRESS OF DOCKER VM>:3000
-   - **DRONE_SERVER_HOST=** \https://<IP ADDRESS OF DOCKER VM>:8080
+   - **DRONE_SERVER_HOST=** <IP ADDRESS OF DOCKER VM>:8080
    - **DRONE_USER_CREATE=** <USERNAME> to **nutanix**
 
    .. note::
