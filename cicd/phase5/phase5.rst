@@ -13,7 +13,7 @@ For this part of the workshop we are going to do the following:
 - If a clone of the production database doesn't exist, create a clone of the database
 
 .. note::
-  
+
   Estimated time **45-60 minutes**
 
 
@@ -64,7 +64,7 @@ Get the API to Clone the MariaDB database
 As we want to have the creation of the Fiesta Dev environment to clone the Production MariaDB server before we play with it, we need the API calls of Era to do so. This part of the module is going to use Era UI to get the API calls.
 After we have the API calls we are going to use variables to set the correct values.
 
-#. In your Era UI, click on **Time Machine** 
+#. In your Era UI, click on **Time Machine**
 #. Click the radio button in front of *Initials* **-FiestaDB_TM**
 #. Click **Actions -> Snapshot** and call it **First-Snapshot**
 #. Click on **Operations** (via the drop down menu or by clicking in the top right hand corner)
@@ -82,13 +82,13 @@ After we have the API calls we are going to use variables to set the correct val
    - **Description** - (Optional) Dev clone from the *Initials* -FiestaDB
    - **Compute Profile** - CUSTOM_EXTRA_SMALL
    - **Network Profile** - Era_Managed_MariaDB
-   
+
    - Use for **Provide SSH Public Key Through** the following key (select **Text** first):
 
      .. code-block:: SSH
-    
+
         ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmhJS2RbHN0+Cz0ebCmpxBCT531ogxhxv8wHB+7Z1G0I77VnXfU+AA3x7u4gnjbZLeswrAyXk8Rn/wRMyJNAd7FTqrlJ0Imd4puWuE2c+pIlU8Bt8e6VSz2Pw6saBaECGc7BDDo0hPEeHbf0y0FEnY0eaG9MmWR+5SqlkepgRRKN8/ipHbi5AzsQudjZg29xra/NC/BHLAW/C+F0tE6/ghgtBKpRoj20x+7JlA/DJ/Ec3gU0AyYcvNWlhlR+qc83lXppeC1ie3eb9IDTVbCI/4dXHjdSbhTCRu0IwFIxPGK02BL5xOVTmxQyvCEOn5MSPI41YjJctUikFkMgOv2mlV root@centos
-        
+
 #. Click **Next**
 #. Provide the following information:
 
@@ -103,7 +103,7 @@ After we have the API calls we are going to use variables to set the correct val
 
 #. Take a closer look at the curl command and especially at the JSON data being send (left hand side of the screen)
 #. The JSON data being send to the Era server is full of variable values
-  
+
    - Era instance IP
    - Era User Name
    - Era Password
@@ -127,17 +127,17 @@ We need to tell drone to make a difference in the steps it needs to run.
 
 #. In VC open the **.drone.yml** file
 #. Copy and paste below content over the exiting content in the **.drone.yml** file
-   
+
    .. code-block:: yaml
 
     kind: pipeline
     name: default
-    
+
     clone:
       skip_verify: true
-    
+
     steps:
-    
+
       - name: Build Image (Prod)
         image: docker:latest
         pull: if-not-exists
@@ -149,7 +149,7 @@ We need to tell drone to make a difference in the steps it needs to run.
         when:
           branch:
             - master
-    
+
       - name: Build Image (Dev)
         image: docker:latest
         pull: if-not-exists
@@ -161,7 +161,7 @@ We need to tell drone to make a difference in the steps it needs to run.
         when:
           branch:
             - dev
-    
+
       - name: Test container (Prod)
         image: fiesta_app:${DRONE_COMMIT_SHA:0:6}
         pull: if-not-exists
@@ -192,7 +192,7 @@ We need to tell drone to make a difference in the steps it needs to run.
         when:
           branch:
             - master
-    
+
       - name: Test container (Dev)
         image: fiesta_app_dev:${DRONE_COMMIT_SHA:0:6}
         pull: if-not-exists
@@ -223,7 +223,7 @@ We need to tell drone to make a difference in the steps it needs to run.
         when:
           branch:
             - dev
-    
+
       - name: Push to Dockerhub (Prod)
         image: docker:latest
         pull: if-not-exists
@@ -244,7 +244,7 @@ We need to tell drone to make a difference in the steps it needs to run.
         when:
           branch:
             - master
-    
+
       - name: Deploy Prod image
         image: docker:latest
         pull: if-not-exists
@@ -273,7 +273,7 @@ We need to tell drone to make a difference in the steps it needs to run.
         when:
           branch:
             - master
-    
+
       - name: Deploy Dev image
         image: docker:latest
         pull: if-not-exists
@@ -310,13 +310,13 @@ We need to tell drone to make a difference in the steps it needs to run.
         when:
           branch:
             - dev
-    
+
     volumes:
     - name: docker_sock
       host:
         path: /var/run/docker.sock
 
-   
+
    The new **.drone.yml** file does a few things
 
    - Run distinct steps based on the branch the push has been made on
@@ -329,7 +329,7 @@ We need to tell drone to make a difference in the steps it needs to run.
      - name the container **fiesta_app_dev**
 
 #. Save, Commit and Push to Gitea.
-#. This will fire a new build, but you should see the steps with **(Prod)** 
+#. This will fire a new build, but you should see the steps with **(Prod)**
 
    .. figure:: images/7.png
 
@@ -354,7 +354,7 @@ As we are mimicking the full development of the applicaiton, we are going to cre
 
    .. figure:: images/8.png
 
-#. Than in the message box that opens at the top of the screen select **+ Create new branch...** 
+#. Than in the message box that opens at the top of the screen select **+ Create new branch...**
 
    .. figure:: images/9.png
 
@@ -507,7 +507,7 @@ To make your life easier we have already created the needed content for the file
      This script will:
 
      - Check if there is a clone from the *Initials* **-MariaDB_VM** server, if not create one with the naming of:
-       
+
        - *Initials* **-MariaDB_DEV-VM** as the Database server
        - *Initials* **-FiestaDB_DEV** as the name of the cloned Database
        - *Initials* **-FiestaDB_DEV_TM** as the name of the Time Machine of the cloned Database
@@ -524,13 +524,13 @@ Now we need to make sure that the development container is using the newly creat
 
 #. Create a new file called **dockerfile-dev**
 #. Copy and paste the below content in the file
-   
+
    .. code-block:: docker
 
       # This dockerfile multi step is to start the container faster as the runapp.sh doesn't have to run all npm steps
 
       # Grab the Alpine Linux OS image and name the container base
-      FROM alpine:3.11 as base
+      FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest as base
 
       # Install needed packages
       RUN apk add --no-cache --update nodejs npm git
@@ -551,7 +551,7 @@ Now we need to make sure that the development container is using the newly creat
       RUN cd /code/Fiesta/client && npm run build
 
       # Grab the Alpine Linux OS image and name it Final_Image
-      FROM alpine:3.11 as Final_Image
+      FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest as Final_Image
 
       # Install some needed packages
       RUN apk add --no-cache --update nodejs npm mysql-client
@@ -570,7 +570,7 @@ Now we need to make sure that the development container is using the newly creat
       # Start the application
       ENTRYPOINT [ "/code/runapp.sh"]
       EXPOSE 3001 3000
-   
+
    As you can see there is just a small change where we copied **runapp.sh** in earlier steps, we now copy **runapp-dev.sh** as **runapp.sh**
 
 #. Save the file in VC **DON'T COMMIT AND PUSH TO GITEA!**
@@ -591,7 +591,7 @@ As we need to tell drone where our Era instance is and what credentials are need
 
    .. note::
      You should now have 11 secrets
-   
+
    .. figure:: images/11.png
 
 
@@ -601,7 +601,7 @@ Push your files to Gitea
 #. Open your VC
 #. Commit and push all to your Gitea
 #. Click **OK** on the message box you get as Gitea doesn't know YET about this branch
-  
+
    .. figure:: images/12.png
 
 #. Open Drone UI to see the job running
@@ -625,16 +625,16 @@ Push your files to Gitea
 #. Goto **Products**
 #. Add an extra product by clicking on the **Add New Product** button
 #. Use the following values for the fields
-   
+
    - **Product Name (\*)** - Nutanix HQ JS Reception
    - **Suggested Retail Price (\*)** - 10000
    - **Product Image URL (optional)** - \https://images.squarespace-cdn.com/content/v1/5d31ebb829f8cc0001b2481b/1564761967972-SUOBVO463RDQ2GSY9JD1/ke17ZwdGBToddI8pDm48kGmScA6V2_DHTkmfhjdEzm97gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UZMI6X7yGUDybalAFUlJQFpALT4Jd0h1Jp53vKTUc5VLbka3MzgShcsnUbwZjk4-8w/Nutanix+%282%29.jpg?format=1500w
-   - **Product Comments (optional)** - Full reception including screens 
+   - **Product Comments (optional)** - Full reception including screens
 
 #. Click the **Submit** button
 #. Click the **OK** button
 #. Scroll all the way down to see the new added item
-#. Change the URL to the production application by changing the port number from **5000** to **5050** and the new added item is NOT there. 
+#. Change the URL to the production application by changing the port number from **5000** to **5050** and the new added item is NOT there.
 
 Now that we have seen that we are working on two different database, the development area is complete. Whatever we do, it will have no impact on the production database!
 
@@ -642,15 +642,15 @@ Now that we have seen that we are working on two different database, the develop
 
     Refresh the development database
     --------------------------------
-    
+
     #. Open your Era instance
     #. Goto **Databases (drop down menu) -> Clones**
     #. Click the radio button in from of your *Initials* **-FiestaDB_DEV** clone
     #. Click the **Refresh** button
     #. Select under **Snapshot** your **First-Snapshot**
-    
+
        .. figure:: images/16.png
-    
+
     #. Click **Refresh**
     #. Click **Operations** to follow the process (approx. 5-7 minutes)
 

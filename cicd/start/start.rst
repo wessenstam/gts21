@@ -51,3 +51,7 @@ Any way we can use variables in any of this stuff that uses <DOCKER-VM-IP-ADDRES
 I'm very concerned that some of this is so fiddly, if one thing is wrong, the entire workshop is blown up and is going to require a TON of effort to troubleshoot it.
 
 [Phase 3] Are there any sections that will step on each other if the user doesn't use a unique name?
+
+We should wipe all browser history, since I can see the previous Google searches performed by others.
+
+Bit tedious to keep entering credentials to push to repo. Can we somehow save their info to prevent this?

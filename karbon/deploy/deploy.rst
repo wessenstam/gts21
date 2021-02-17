@@ -42,7 +42,7 @@ As you have noticed Kubernetes uses YAML file to deploy the different resources 
           spec:
             containers:
             - name: npm-fiesta
-              image: wessenstam/npm_fiesta
+              image: public.ecr.aws/n5p3f3u5/npm-fiesta:latest
               ports:
               - containerPort: 3000
       ---
@@ -175,7 +175,7 @@ As the application is running and accessible from our machine, we need to tell t
 
    .. code-block:: yaml
 
-      image: wessenstam/npm_fiesta
+      image: public.ecr.aws/n5p3f3u5/npm-fiesta:latest
       env:
         - name: DB_PASSWD
           value: fiesta

@@ -187,7 +187,7 @@ Use Drone to build an image
    .. code-block:: docker
 
       # Grab the needed OS image
-      FROM alpine:3.11
+      FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest
 
       # Install the needed packages
       RUN apk add --no-cache --update nodejs npm mysql-client git python3 python3-dev gcc g++ unixodbc-dev curl
