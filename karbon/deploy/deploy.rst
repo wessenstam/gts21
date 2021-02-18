@@ -75,7 +75,7 @@ In the deployment area there are some important parts.
 - **namespace**: default, Namespaces can be used to separate logically Pod, Services or other resources. Consider namespace as a subnet in a network. All can still communicate with each other, but are logically separated
 - **spec->selector->matchLabels->run**: Labels or tagging a Deployment. Using labeling we can tie resources together. We will see this in the Services part as well.
 - **replicas**: how many pods should be started of the application.
-- **image**: name of the image that needs to be used. Kubernetes will pull the images from the repo, in this case the hub.docker.com repo, from the user wessenstam and the name of the image is npm_fiesta
+- **image**: name of the image that needs to be used. Kubernetes will pull the images from the repo, in this case the AWS ecr repo public.ecr.aws/n5p3f3u5/,and the name of the image is npm-fiesta
 - **containerPort**: This is the port the container will use natively! This is important due to the fact that a wrong port definition will NOT allow any communication to the container.
 
 Explained Service

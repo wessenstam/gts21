@@ -8,15 +8,15 @@ In this section, you will learn how to convert the legacy (Fiesta) application i
 
 High level steps:
 
-- Use the Docker VM to build the containerized application.
-- Test the application by deploying the container.
+- Use the Docker VM to build the containerized application
+- Test the application by deploying the container
 
 .. note::
 
    Estimated time **30 minutes**
 
-Build the container
-+++++++++++++++++++
+Build the Container
+--------------------
 
 Analyze the original Fiesta Application
 .......................................
@@ -117,6 +117,8 @@ Here's a quick way to visualize these terms, and the overall process. As you can
       Before copying and pasting the below information, you must modify the *<MARIADB-IP-ADDRESS>* entry to match your UserXX*\ MariaDB VM's IP address.
 
 #. Copy and paste the following:
+
+      .. figure:: images/dbip.png
 
    .. code-block:: bash
 

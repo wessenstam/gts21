@@ -74,7 +74,7 @@ Deploy the MariaDB Server
 As we will deploy the Fiesta Application (a simple e-Commerce application) to our Kubernetes cluster, one part of the application is a MariaDB. This database will be deployed using a blueprint so it can be done easily.
 
 #. Open Calm in your Prism Central interface via :fa:`bars` -> Services -> Calm
-#. Download the needed blueprint that we're going to use to your machine. :download:`mariadb.json`
+#. Download the needed blueprint that we're going to use to your machine `here <https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/preparation/mariadb.json>`_
 #. Upload the Blueprint By clicking on the Blueprint Icon and the **Upload Blueprint** button
 #. Assign the Blueprint to your project. If your product is not allowing anything, make sure it has been configured. If not, please follow these settings:
 

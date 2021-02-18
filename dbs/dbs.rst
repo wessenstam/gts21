@@ -13,6 +13,7 @@ Create Era managed network 211-253 IP range
 enable multi-cluster
 Spin up 1 copy of source DB
 register that DB server
+Create software profile from that image
 
 (AWS staging script) Add AWS PE to Era
 (AWS staging script) Create Era managed network 210-253 IP range
