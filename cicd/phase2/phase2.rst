@@ -90,7 +90,7 @@ As we already have created the needed infrastructure using docker-compose we're 
 
 #. In the Terminal of VC, run ``cd ~/github``
 #. Run the command ``curl --silent https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/CI-CD%20Pipeline/docker_files/docker-compose.yaml -O`` to pull the yaml file
-#. To make sure we're not blocked by any rate limit on pulls, run ``docker login`` and authenticate using your dockerhub account you created earlier
+#. Run ``docker login`` to make sure you are logged in. This command will use the earlier used credentials to log you in.
 #. In the terminal screen run the command ``docker-compose create db gitea`` and wait for the command prompt to return. You will see that images are pulled and at the end that the two services have been created
 
    .. figure:: images/9.png
