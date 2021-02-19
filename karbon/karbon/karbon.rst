@@ -96,23 +96,14 @@ For Windows
      
      cd <LOCATION WHERE TO STORE FILES>
      wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml -OutFile namespace.yaml
-     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml -OutFile metallb.yaml
+     wget https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/001-metallb.yaml -OutFile 001-metallb.yaml
 
-Now that we have the yaml files we need to manipulate them so we grab the images from the "proxy" account.
-
-#. Open **metallb.yaml** file in Visual Code via File -> Open.. 
-#. Change the following two lines:
-
-   - On **Line 316** change *metallb/speaker:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-cntrl:latest**
-   - On **Line 372** change *metallb/controller:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-spkr:latest**
-
-#. Save the file
 #. Run these two commands
 
    .. code-block:: bash
 
       kubectl apply -f namespace.yaml
-      kubectl apply -f metallb.yaml
+      kubectl apply -f 001-metallb.yaml
 
    .. figure:: images/9.png
 
@@ -146,22 +137,14 @@ For Linux/MacOS
      
      cd <LOCATION WHERE TO STORE FILES>
      wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
-     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
+     wget https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/001-metallb.yaml
 
-
-#. Open metallb.yaml file in Visual Code via File -> Open.. 
-#. Change the following two lines:
-
-   - On **Line 316** change *metallb/speaker:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-cntrl:latest**
-   - On **Line 372** change *metallb/controller:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-spkr:latest**
-
-#. Save the file
 #. Run these two commands
 
    .. code-block:: bash
 
       kubectl apply -f namespace.yaml
-      kubectl apply -f metallb.yaml
+      kubectl apply -f 001-metallb.yaml
 
 #. When you are running MacOS or Linux use:
 
@@ -188,7 +171,7 @@ If you don't see this status,we have to investigate what is the issue at hand. W
 
    kubectl describe pods <name of the POD that has an issue> -n metallb-system
 
-This will show detailed information on the pod, the statuses and errors. INvestigate the last part of the information to get a direction where to search. Mostly it has been that the name of the image has been typed wrong, or not changed at all..
+This will show detailed information on the pod, the statuses and errors. Investigate the last part of the information to get a direction where to search. Mostly it has been that the name of the image has been typed wrong, or not changed at all..
    
 .. figure:: images/11.png
 
@@ -247,7 +230,7 @@ Follow these steps to get the configuration created for MetalLB
 
    .. figure:: images/12.png
 
-Now that we have a LoadBalancer like the Pulbic Cloud providers let's start to use it. To do that we are going to install Traefik as a Ingress controller, but use a "public IP address" so we can access it from our machines without the need of an extra component.
+Now that we have a LoadBalancer like the Public Cloud providers let's start to use it. To do that we are going to install Traefik as a Ingress controller, but use a "public IP address" so we can access it from our machines without the need of an extra component.
 
 Traefik
 -------
@@ -265,9 +248,9 @@ We need to provide Kubernetes specific RBAC rules so Traefik can see the new rul
 
    .. code-block:: bash
 
-      kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/01-traefik-CRD.yaml
-      kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/02-traefik-svc.yaml
-      kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/03-traefik-Deployment.yaml
+      kubectl apply -f https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files//01-traefik-CRD.yaml
+      kubectl apply -f https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files//02-traefik-svc.yaml
+      kubectl apply -f https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files//03-traefik-Deployment.yaml
 
    .. figure:: images/13.png
 
@@ -312,7 +295,7 @@ For the installation and exposure of this dashboard we are going to use the Load
  
    .. code-block:: bash
 
-      kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/05-k8s-dashboard.yaml
+      kubectl apply -f https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files//05-k8s-dashboard.yaml
 
 #. To see the EXTERNAL-IP so we can open the Dashboard, use the **kubectl get svc -n kubernetes-dashboard** command
 
@@ -338,7 +321,7 @@ Portainer is another dashboard that, eventhough still in development, is also av
 
    .. code-block:: bash
 
-      kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/06-portainer.yaml
+      kubectl apply -f https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files//06-portainer.yaml
 
 #. Running the below command you will see that the Portainer service has NO EXTERNAL-IP
 
