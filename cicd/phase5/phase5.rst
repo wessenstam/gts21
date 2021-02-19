@@ -270,8 +270,8 @@ We need to tell drone to make a difference in the steps it needs to run.
           - name: docker_sock
             path: /var/run/docker.sock
         commands:
-          - if [ `docker ps | grep fiesta_app | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app; else echo "Docker container has not been found..."; fi
-          - sleep 10
+          - if [ `docker ps | grep fiesta_app | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app; sleep 10; else echo "Docker container has not been found..."; fi
+          - 
           - docker run --name fiesta_app --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest
         when:
           branch:
@@ -307,9 +307,8 @@ We need to tell drone to make a difference in the steps it needs to run.
           - name: docker_sock
             path: /var/run/docker.sock
         commands:
-          - if [ `docker ps | grep fiesta_app_dev | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app_dev; else echo "Docker container has not been found..."; fi
-          - sleep 10
-          - docker run -d --rm --name fiesta_app_dev -p 5050:3000 -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME -e initials=$INITIALS -e era_ip=$ERA_IP -e era_admin=$ERA_USER -e era_password=$ERA_PASSWORD fiesta_app_dev:${DRONE_COMMIT_SHA:0:6}
+          - if [ `docker ps | grep fiesta_app_dev | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app_dev; sleep 10; else echo "Docker container has not been found..."; fi
+          - docker run -d -v /tmp:/tmp --rm --name fiesta_app_dev -p 5050:3000 -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME -e initials=$INITIALS -e era_ip=$ERA_IP -e era_admin=$ERA_USER -e era_password=$ERA_PASSWORD fiesta_app_dev:${DRONE_COMMIT_SHA:0:6}
         when:
           branch:
             - dev
@@ -479,6 +478,7 @@ To make your life easier we have already created the needed content for the file
       cloned_vm_ip=$(curl --silent -k "https://${era_ip}/era/v0.9/dbservers" -H 'Content-Type: application/json' --user $era_admin:$era_password | jq --arg clone_name $vm_name_dev '.[] | select (.name==$clone_name) .ipAddresses[0]' | tr -d \")
 
       DB_SERVER=$cloned_vm_ip
+      echo "Cloned DB server ip: "$DB_SERVER >> /tmp/test.txt
 
       # If there is a "/" in the password or username we need to change it otherwise sed goes haywire
       if [ `echo $DB_PASSWD | grep "/" | wc -l` -gt 0 ]
