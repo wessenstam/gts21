@@ -374,7 +374,7 @@ CI/CD Upload of images
         image: public.ecr.aws/n5p3f3u5/docker:latest
         pull: if-not-exists
         environment:
-          USERNAME:
+          c:
             from_secret: dockerhub_username
           PASSWORD:
             from_secret: dockerhub_password
@@ -383,10 +383,10 @@ CI/CD Upload of images
             path: /var/run/docker.sock
         commands:
           - docker login -u $USERNAME -p $PASSWORD
-          - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} devnutanix/fiesta_app:latest
-          - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} devnutanix/fiesta_app:${DRONE_COMMIT_SHA:0:6}
-          - docker push devnutanix/fiesta_app:${DRONE_COMMIT_SHA:0:6}
-          - docker push devnutanix/fiesta_app:latest
+          - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} $USERNAME/fiesta_app:latest
+          - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} $USERNAME/fiesta_app:${DRONE_COMMIT_SHA:0:6}
+          - docker push $USERNAMEfiesta_app:${DRONE_COMMIT_SHA:0:6}
+          - docker push $USERNAME/fiesta_app:latest
  
 #. Save the file. **DON'T COMMIT AND PUSH YET!!!!** we need to make a small change to Drone to make the step work
 #. As we are using the **from_secret** parameter we need to tell Drone what the secret is. Open the Drone UI (**\http://<IP ADDRESS OF DOCKER VM>:8080**)
@@ -430,7 +430,7 @@ As we already deployed our own build Fiesta_App image in a former part of the wo
          commands:
            - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; else echo  "Docker container has not been found..."; fi
            - sleep 10
-           - docker run --name Fiesta_App --rm -p 5000:3000 -d devnutanix/fiesta_app:latest
+           - docker run --name Fiesta_App --rm -p 5000:3000 -d $USERNAME/fiesta_app:latest
 
    .. note::
       The commands are there to:
