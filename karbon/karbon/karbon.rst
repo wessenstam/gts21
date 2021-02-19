@@ -1,6 +1,6 @@
 .. _environment_karbon:
 
-Kubernetes configuration 
+Kubernetes configuration
 ========================
 
 After we have created and configured the needed pre-requirements in the earlier module, we are now going to configure our deployed Kubernetes cluster so we can start using it. in this part of the workshop we cover the following items:
@@ -31,7 +31,7 @@ Follow these steps to get to interact with your kubernetes cluster.
 #. Click on the Blue **Download** text
 #. Save the file somewhere on your machine, but remember where you have saved it as we need it in the next steps
 
-.. note:: 
+.. note::
     When you get an error message from your browser about it could harm your machine, please click the **Keep** button.
 
     .. figure:: images/2.png
@@ -42,12 +42,12 @@ Follow these steps to get to interact with your kubernetes cluster.
 
    #. Click on the **Environmental Variables** button and then on the **New...** button under the **User variables** (top of the screen)
    #. Create a new variable and use the following parameters
-   
+
       - **Variable Name** - KUBECONFIG
       - **Variable Value** - <Path of where you stored the file>/kubectl.cfg (screenshot below is the default Download location of the Administrator user)
-   
+
         .. figure:: images/5.png
-   
+
    #. Close all the windows, you have opened with respect to setting the **Environment Variable**
 
 #. For Linux or MacOS use the export functionality after you have opened the terminal session
@@ -73,29 +73,28 @@ External Load Balancer
 
 Customers that use kubernetes from a cloud provider like Google, AWS and Azure will have the benefit of Load Balancers. On Premise installation could use the same or have the possibility to use other Hardware Load Balancers like F5, Palo-Alto, NGINX Plus, HAProxy or whatever is available.
 
-.. note:: 
-   As we are limited by docker pull rules, we have decided to use a "proxy" for the images that are being pulled by the Kubernetes servers. (https://www.docker.com/increase-rate-limits#:~:text=Anonymous%20and%20Free%20Docker%20Hub,%3A%20toomanyrequests%3A%20Too%20Many%20Requests.&text=You%20have%20reached%20your%20pull%20rate%20limit)
-   That means that we need to make same changes to the YAML files we will be using. We need to change the location where the images are to be pulled from.
+Windows Installation
+********************
 
-Installation
-^^^^^^^^^^^^
-
-As there is a small difference in the Windows and Linux/MacOS versions of wget and therefore the installation we show them separately
-
-For Windows
-************
-
-#. In a Powershell interface, type the following commands to install MetalLB 
+#. In a Powershell interface, paste the following command and hit **Enter** to change to your *Downloads* folder:
 
    .. code-block:: bash
-     
-     cd <LOCATION WHERE TO STORE FILES>
-     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml -OutFile namespace.yaml
-     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml -OutFile metallb.yaml
 
-Now that we have the yaml files we need to manipulate them so we grab the images from the "proxy" account.
+      cd downloads
 
-#. Open metallb.yaml file in Visual Code via File -> Open.. 
+#. Then paste in the following to install MetalLB: [Why are we doing this? What is this?]
+
+   .. code-block:: bash
+
+      [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls, [Net.SecurityProtocolType]::Tls11, [Net.SecurityProtocolType]::Tls12, [Net.SecurityProtocolType]::Ssl3
+      [Net.ServicePointManager]::SecurityProtocol = "Tls, Tls11, Tls12, Ssl3"
+      wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml -OutFile namespace.yaml -UseBasicParsing
+      wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml -OutFile metallb.yaml -UseBasicParsing
+
+Now that we have the yaml files we need to manipulate them so we grab the images from the "proxy" account. [IS THIS WORTH DOING?]
+
+#. Open metallb.yaml file in VSC by clicking on **File > Open File...**.
+
 #. Change the following two lines:
 
    - On **Line 316** change *metallb/speaker:v0.9.5* into **wessenstam/metallb-contr:v0.9.5**
@@ -111,40 +110,40 @@ Now that we have the yaml files we need to manipulate them so we grab the images
 
    .. figure:: images/9.png
 
-   .. note:: 
+   .. note::
         We are going to use Notepad to **construct** the needed command as it allows of basic manipulation of text. Powershell does not like the extra lines in variables.
 
 #. Open Notepad
 #. Copy the below command Notepad
-      
+
    .. code-block:: bash
-        
+
         kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="<TO BE COPIED OUTPUT>"
 
 #. Back in Powershell, run
-      
+
    .. code-block:: bash
-      
+
       openssl rand -base64 128
 
 #. Copy the output of the command in your Notepad in place of the text <TO BE COPIED OUTPUT> and remove the extra lines at the end of the copied key.
 #. Copy the entire long line into the Powershell session and run the command
-   
+
    .. figure:: images/8.png
 
-For Linux/MacOS
+For Linux/MacOS [Lane repoted MacOS issues, can we just have everyone use WinTools VM instead?]
 ****************
 
-#. In a terminal session, type the following commands to install MetalLB 
+#. In a terminal session, type the following commands to install MetalLB
 
    .. code-block:: bash
-     
+
      cd <LOCATION WHERE TO STORE FILES>
      wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml -O
      wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml -O
 
 
-#. Open metallb.yaml file in Visual Code via File -> Open.. 
+#. Open metallb.yaml file in Visual Code via File -> Open..
 #. Change the following two lines:
 
    - On **Line 316** change *metallb/speaker:v0.9.5* into **wessenstam/metallb-contr:v0.9.5**
@@ -167,7 +166,7 @@ For Linux/MacOS
 For all systems
 ***************
 
-Now that we have installed MetalLB we need to make sure that the Pod are in a running state. To do this open your terminal or Powershell sessions and type 
+Now that we have installed MetalLB we need to make sure that the Pod are in a running state. To do this open your terminal or Powershell sessions and type
 
 .. code-block:: bash
 
@@ -177,14 +176,14 @@ This should show that there are two Pods, one with in the name controller and on
 
 .. figure:: images/10.png
 
-If you don't see this status,we have to investigate what is the issue at hand. We can do this simply by looking at the command 
+If you don't see this status,we have to investigate what is the issue at hand. We can do this simply by looking at the command
 
 .. code-block:: bash
 
    kubectl describe pods <name of the POD that has an issue> -n metallb-system
 
 This will show detailed information on the pod, the statuses and errors. INvestigate the last part of the information to get a direction where to search. Mostly it has been that the name of the image has been typed wrong, or not changed at all..
-   
+
 .. figure:: images/11.png
 
 Configuration
@@ -196,13 +195,15 @@ Now that we know are sure that we have the POds running we need to configure Met
 
    <font color="#FF0000"><strong> Make 100% sure you are using YOUR assinged IP addresses (4x)! Otherwise the other users on the cluster will suffice strange issues</strong></font>
 
+[We are using DHCP on these clusters, which makes it difficult and/or time consuming to determine 4 IPs in a row, especially with others using this cluster. What if they pick 4, and someone else at the same time picks the same 4? Can't we do better here to help them?]
+
 Follow theses tes to get the configuration created for MetalLB
 
 #. Open Visual Code
 #. Create a New File and copy the below text
 
    .. code-block:: yaml
-     
+
      apiVersion: v1
      kind: ConfigMap
      metadata:
@@ -219,7 +220,7 @@ Follow theses tes to get the configuration created for MetalLB
 #. Example could be
 
    .. code-block:: yaml
-     
+
      apiVersion: v1
      kind: ConfigMap
      metadata:
@@ -237,7 +238,7 @@ Follow theses tes to get the configuration created for MetalLB
 #. Run this command to get the configuration activated
 
    .. code-block:: bash
-     
+
      kubectl apply -f metallb-config.yaml
 
    .. figure:: images/12.png
@@ -254,7 +255,7 @@ To do that we need to follow some steps. Installation, deploying and exposing th
 Installation
 ^^^^^^^^^^^^
 
-We need to provide Kubernetes specific RBAC rules so Traefik can see the new rules and be able to access the Pods we are going to have routed like our Fiesta Application. 
+We need to provide Kubernetes specific RBAC rules so Traefik can see the new rules and be able to access the Pods we are going to have routed like our Fiesta Application.
 
 #. Run the following commands in your Terminal or Powershell session.
 
@@ -278,11 +279,11 @@ We need to provide Kubernetes specific RBAC rules so Traefik can see the new rul
 
       kubectl get svc
 
-#. This should show something under the column of **EXTERNAL-IP**. 
+#. This should show something under the column of **EXTERNAL-IP**.
 
    .. figure:: images/14.png
 
-   .. note:: 
+   .. note::
       If you see Pending, the configuration of MetalLB has not been successful! Use **kubectl describe configmap config -n metallb-system** to see the configuration of MetalLB in the Kubernetes cluster and check the IP address range values.
 
       .. figure:: images/15.png
@@ -291,7 +292,7 @@ We need to provide Kubernetes specific RBAC rules so Traefik can see the new rul
 
    .. figure:: images/16.png
 
-Now that we have our LoadBalancer (MetalLB) and Ingress Controller (Traefik) running we want to have some monitoring for the system. The next part of this workshop is all about dashboards. 
+Now that we have our LoadBalancer (MetalLB) and Ingress Controller (Traefik) running we want to have some monitoring for the system. The next part of this workshop is all about dashboards.
 
 Dashboards
 ----------
@@ -304,7 +305,7 @@ Kubernetes Dashboard
 For the installation and exposure of this dashboard we are going to use the Load Balancer so we can access it even when Traefik, the ingress controller has some issues. This is not the most secure way of working, as we can do a lot from the dashboard with respect to manipulating the environment.
 
 #. Install the Kubernetes Dashboard using the following command
- 
+
    .. code-block:: bash
 
       kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/05-k8s-dashboard.yaml
@@ -314,7 +315,7 @@ For the installation and exposure of this dashboard we are going to use the Load
    .. figure:: images/17.png
 
 #. Open the browser and point it to https://<EXTERNAL-IP_DASHBOARD>/ and "bypass" the certification for your browser.
-#. In the screen that opens in the browser select Kubeconfig and point to your kubectl.cfg file you have downloaded earlier using the three dots and click the **Sign in** button. 
+#. In the screen that opens in the browser select Kubeconfig and point to your kubectl.cfg file you have downloaded earlier using the three dots and click the **Sign in** button.
 
    .. figure:: images/18.png
 
@@ -348,7 +349,7 @@ For Portainer we are going to use the Traefik Ingress Controller to "route" http
 #. In Visual Code, create a new file and copy the below content in the file.
 
    .. code-block:: yaml
-      
+
       apiVersion: traefik.containo.us/v1alpha1
       kind: IngressRoute
       metadata:
@@ -367,7 +368,7 @@ For Portainer we are going to use the Traefik Ingress Controller to "route" http
 #. Save the file as **traefik-routes.yaml** in the location where you also have the other yaml files.
 #. Run **kubectl apply -f traefik-routes.yaml** to have Traefik configure the route to the Portainer application.
 
-As our machine has no idea where to find that machine (portainer.gts2021.local), we need to tell it by adding the external IP address of Traefik to the hosts file. 
+As our machine has no idea where to find that machine (portainer.gts2021.local), we need to tell it by adding the external IP address of Traefik to the hosts file.
 
 #. Manipulate the hosts file using your tool off preference
 
@@ -398,7 +399,7 @@ As our machine has no idea where to find that machine (portainer.gts2021.local),
 #. Click on traefik and scroll down till you see the **Logs** and **Console** buttons
 
    .. figure:: images/25.png
- 
+
 #. Here you can open the logs und execute some commands in the Pod/Container. Maybe for some debug settings....
 
 .. _lens:
@@ -425,7 +426,7 @@ Organizations might not always want to have their Kubernetes cluster to also run
 
 #. Browse around in Lens to see if this might be something for you....
 #. Click on Worklodas -> Pods and search your traefik pod. Click on it and you'll be presented with the information for
- 
+
    - CPU
    - Memory
    - Network
@@ -455,11 +456,3 @@ Takeaways
 - Karbon is like a normal Kubernetes cluster, all known commands to manage a native Kubernetes cluster are the same
 - As Karbon is nothing more then a way of building and maintaining a Kubernetes Cluster, all available Pods, Applications, installations and configurations are exactly the same. THere is nothing that need to be manipulated so it works with the Karbon platform
 - Building relatively quickly an infrastructure on top of Kubernetes with a choice of dashboards for basic monitoring is quite easy to setup
-
-
-
-
-
-
-
-

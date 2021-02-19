@@ -37,13 +37,13 @@ Visual Studio Code (VSC)
 
    [screenshot]
 
-#. Select the location **C:\\ProgramData\\ssh\\ssh_config** (typically second entry) to update the config file.
+#. Select the location **C:\\Users\\Administrator.<MACHINE-NAME>\\.ssh\\config** (typically first entry) to update the config file.
 
 #. Select **Connect** on the pop-up in the bottom right corner to connect to the VM.
 
    [screenshot]
 
-#. Input the following in succession:
+#. Input the following in succession, and hit **Enter**.
 
    - O/S - Linux
    - Fingerprint - Continue
@@ -61,13 +61,13 @@ Visual Studio Code (VSC)
 
    .. figure:: images/4.png
 
-#. Provide the **/** as the folder you want to open and click on **OK**
+#. Provide the **/** as the folder you want to open and click on **OK**.
 
    [screenshot]
 
 [This process is wonky for me. We have to give explicit instructions on how to get / to work. I had to type /. and then remove the period, so it didn't auto-select the bin directory.]
 
-[Also got warning/error: Unable to watch for file changes in this large workspace folder. Please follow the instructions link to resolve this issue. https://code.visualstudio.com/docs/setup/linux#_visual-studio-code-is-unable-to-watch-for-file-changes-in-this-large-workspace-error-enospc ]
+[Also got warning/error every time I did this: Unable to watch for file changes in this large workspace folder. Please follow the instructions link to resolve this issue. https://code.visualstudio.com/docs/setup/linux#_visual-studio-code-is-unable-to-watch-for-file-changes-in-this-large-workspace-error-enospc ]
 
    It will take approximately 1 minute (you might be asked for the password again) [Confirm if they will or not].
 
@@ -104,18 +104,18 @@ As we already have created the needed infrastructure using `docker-compose`, we'
 
 #. In the Terminal of VC, run ``cd ~/github``
 #. Run the command ``curl --silent https://raw.githubusercontent.com/nutanixworkshops/gts21/master/cicd/docker_files/docker-compose.yaml -O`` to pull the yaml file
+
 #. Run ``docker login`` to make sure you are logged in. This command will use the earlier used credentials to log you in.
+
 #. In the terminal screen run the command ``docker-compose create db gitea`` and wait for the command prompt to return. You will see that images are pulled and at the end that the two services have been created
 
    .. figure:: images/9.png
 
 #. Run ``docker-compose start db gitea`` to start the MySQL and Gitea containers.
 
-[Got a warning this command is deprecated]
+[Got a warning this command is deprecated: WARNING: The create command is deprecated. Use the up command with the --no-start flag instead.]
 
 Now that we have part of our CI/CD running, we need to configure it. We start with Gitea and end with Drone.
-
-------
 
 Gitea configuration
 ^^^^^^^^^^^^^^^^^^^
@@ -170,7 +170,7 @@ In VSC, as we have all files for the containers being saved on the docker VM in 
 
 #. Reloading the browser page will show an error on the certificate, which is logical as we are now using a Self Signed certificate. Use the normal ways to get to the login screen.
 
-[I didn't notice any difference]
+[You can't reload the browser, you have to add HTTPS.]
 
 #. The first user will be the admin user of the Gitea application (default). Click the **Register button** (top right) to create an account. Provide whatever you want. We are going to use **nutanix**, **nutanix@atnutanix.com** and **nutanix/4u** during the workshop as examples.
 
@@ -196,12 +196,14 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
    - **Application name:** drone
    - **Redirect URI:** ``http://<DOCKER-VM-IP-ADDRESS>:8080/login``
 
+[YOU SAY TO SAVE LATER IN THE INSTRUCTIONS. MIGHT WANT TO MENTION *NOT* TO SAVE IF YOU DON'T WANT THEM TO HERE.]
+
 #. Click the **Create Application** button
 #. Copy from the next screen the Client ID and the Client Secret to Notepad or similar, as you will need this in the proceeding steps.
 
    .. figure:: images/16.png
 
-#. Open the **docker-compose.yaml** file [WHERE??] in VSC and paste the values in their field names **DRONE_GITEA_CLIENT_ID** and **DRONE_GITEA_CLIENT_SECRET** [WHERE??]
+#. Open the **docker-compose.yaml** file [WHERE? WHAT SECTION?] in VSC and paste the values in their field names **DRONE_GITEA_CLIENT_ID** and **DRONE_GITEA_CLIENT_SECRET** [THEY MIGHT HAVE TO REFRESH VSC (I DID), SO ADD INSTRUCTIONS FOR THAT]
 
    .. figure:: images/17.png
 
@@ -209,9 +211,11 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 
    - **DRONE_GITEA_SERVER=** \https://<IP ADDRESS OF DOCKER VM>:3000
    - **DRONE_SERVER_HOST=** <IP ADDRESS OF DOCKER VM>:8080
-   - **DRONE_USER_CREATE=** <USERNAME> to **nutanix**
+   - **DRONE_USER_CREATE=** <USERNAME> to **nutanix** [THIS WAS ALREADY NUTANIX FOR ME, BUT I DIDN'T USE THAT. RECOMMEND CHANGING TO <GITEA-USERNAME> OR SIMILAR.]
 
 [We should change the <IP ADDRESS> in the file to match what we standardize]
+
+[UPDATE SCREEN SHOT AS LINE #'S DON'T MATCH WHAT IS IN FILE]
 
 #. Change under the [START THE]**drone-docker-runner** section
 
@@ -219,11 +223,16 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 
 #. Save the file
 #. Click in Gitea UI the **Save** button and then click **Dashboard** (top left).
-#. Open the Terminal in VSC
+#. Open [RETURN TO?] the Terminal in VSC. [CHANGE DIR TO ~/GITHUB IF THEY ARE OPENING NEW. DOESN'T HURT TO REMIND THEM.]
 
-[Change dir to ~/github!]
 #. Create and start the drone server and agent container by running ``docker-compose create drone-server drone-docker-runner`` and ``docker-compose start drone-server drone-docker-runner``
-#. Open a browser and point to **\http://<IP ADDRESS OF DOCKER VM>:8080**. This will try to authenticate the user **nutanix**, the defined user in Drone section in the docker-compose.yaml file with admin right
+
+[IF WE CAN RUN THESE CONSECUTIVELY WITHOUT ERROR, PUT THEM IN A BASH COPY/PASTE TEXT BOX TO MAKE THIS EASIER/FASTER. SEEMED TO WORK AOK FOR ME.]
+
+[GOT A BOX OPENED IN LOWER RIGHT WARNING ME OF RUNNING ON PORT 8080]
+
+#. Open a browser and point to ``http://<DOCKER-VM-IP-ADDRESS>:8080``. This will try to authenticate the user defined user in the Drone section of the docker-compose.yaml file.
+
 #. A warning **Authorize Application** message is shown, click on **Authorize Application**
 
    .. figure:: images/19.png

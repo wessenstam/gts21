@@ -37,18 +37,21 @@ Create a repo in Gitea
 
 Let's create a repository (repo) that we can use to store our files in from which we want to have our images/containers build.
 
-#. Open in a browser your Gitea interface (``https://<DOCKER-VM-IP-ADDRESS>:3000``) and login using your set credentials (workshop uses **nutanix** and **nutanix/4u**) by clicking on the Login icon (top right corner). You might be auto logged in if the token is still valid
+#. Open in a browser your Gitea interface (``https://<DOCKER-VM-IP-ADDRESS>:3000``) and login using your set credentials (we use **nutanix** and **nutanix/4u**) [DO WE NOT WANT TO SPECIFY USERXX EARLIER TO AVOID CONFUSION?] by clicking on the Login icon (top right corner). You might be auto logged in if the token is still valid
+
+[HOW ABOUT: IF YOU ARE STILL LOGGED IN, PROCEED TO THE NEXT STEP, IF NOT.... ]
 
 #. Click on the **+** sign in the top right hand corner and select **+New Repository**
 
    .. figure:: images/1.png
 
 #. Provide a name, we have chosen **Fiesta_Application**, and click the **Create Repository** button
+
 #. After the Repo has been created, you will see the possibilities on how to clone the Repo
 
    .. figure:: images/2.png
 
-#. Copy the https URL [YOU HAVE US COPY THIS, BUT THE USER IS THEN GOING TO COPY STUFF TO PASTE INTO THE TERMINAL WINDOW. SPECIFY COPY TO NOTEPAD OR SIMILAR.]
+#. Copy the https URL [IT IS AN HTTP URL, AS YOU DIDN'T SPECIFY HTTPS]
 
 #. Open a command line or terminal on your laptop or Windows Tools VM [WHY AREN'T WE USING VSC ANYMORE, IT'S ALREADY OPEN?] and run ``git config --global http.sslVerify false``. This step is necessary otherwise git is not willing to clone anything from a Version Control Manager using Self signed certificates. In the same command line or terminal session run the following two commands ``git config --global user.name "FIRST_NAME LAST_NAME"`` and ``git config --global user.email "MY_NAME@example.com"`` to set the user's name and email address so all the pushes can be identified.
 

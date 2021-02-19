@@ -38,6 +38,9 @@ The deployed blueprint provides the following automated steps:
 Pete Notes
 ..........
 
+CICD
+====
+
 Should we explain what NPM and similar things are, whether in appendix/glossary, or included in this workshop, with a brief description?
 
 We don't explain what the fiesta app is, and I think we lose some impact when we create the docker container, as we don't understand what that docker container is replacing.
@@ -55,3 +58,12 @@ I'm very concerned that some of this is so fiddly, if one thing is wrong, the en
 We should wipe all browser history, since I can see the previous Google searches performed by others.
 
 Bit tedious to keep entering credentials to push to repo. Can we somehow save their info to prevent this?
+
+Karbon
+======
+
+Can we add the environment piece to the Windows image, vs. having the user do it?
+
+[Installation for Windows] Lots of fiddly copy/paste - especially worried about user error here. If you don't have everything in a single line, this will not execute (>>).
+
+This whole process is not very "Nutanix"
