@@ -30,7 +30,7 @@ Follow these steps to get to interact with your kubernetes cluster.
 
    .. raw:: html
 
-   <font color="#FF0000"><strong> The downloaded kubeconfg fil is valid for 24 hours only (kubernetes security)! If you get error messages during later stages of the lab,kubectl doesn't have resourec XYZ, redownload the config file!</strong></font>
+      <font color="#FF0000"><strong> The downloaded kubeconfg fil is valid for 24 hours only (kubernetes security)! If you get error messages during later stages of the lab,kubectl doesn't have resourec XYZ, redownload the config file!</strong></font>
 
 
 #. Click on the Blue **Download** text
