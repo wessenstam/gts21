@@ -364,21 +364,31 @@ For Portainer we are going to use the Traefik Ingress Controller to "route" http
           - name: portainer
             port: 9000
 
+
 #. Save the file as **traefik-routes.yaml** in the location where you also have the other yaml files.
+
+[I NOTICED VCS SAVES "YAML" FILES AS .YML, SO WE SHOULD ADVISE FOLKS TO AVOID THIS.]
+
 #. Run **kubectl apply -f traefik-routes.yaml** to have Traefik configure the route to the Portainer application.
 
 As our machine has no idea where to find that machine (portainer.gts2021.local), we need to tell it by adding the external IP address of Traefik to the hosts file.
 
 #. Manipulate the hosts file using your tool off preference
 
+
+
    .. note::
+
       In Linux and MacOS this file is located in \/etc\/. Make sure you are using the root account or sudo to manipulate the /etc/hosts file. For Windows this file is located in **C:\Windows\System32\Drivers\etc\hosts**. To manipulate this file you MUST use notepad with evelated rights, otherwise you are not allowed to save the file.
 
+[LET'S JUST SAY NOTEPAD, AND REMOVE LINUX/MAC SINCE WE ARE TELLING FOLKS TO USE WINTOOLS VM]
 
    .. figure:: images/21.png
 
 #. Save the file
+
 #. In the Terminal or Powershell session type **ping portainer.gts2021.local** and you should see that the FQDN is translated in the EXTERNAL IP address of the Traefik application and there should **NOT** be a ping reply. If the IP address not returned correct, it may be that you or 1) mistyped the line in the hosts file, or 2) forgotten to save the hosts file.
+
 #. Open the browser and point it to http://portainer.gts2021.local/
 
    .. raw:: html
@@ -388,18 +398,28 @@ As our machine has no idea where to find that machine (portainer.gts2021.local),
    .. figure:: images/23.png
 
 #. Provide the password of your choice in Portainer to go to the next screen. and click the **Create User** button
+
+[GIVE THEM A PASSWORD TO SPECIFY, FOR CONSISTENCY REASONS.]
+
 #. Click the **Connect Button** at the left bottom corner,as *Kubernetes* has already been selected.
+
 #. Leave all default in the next screen and click the **Save configuration** button to start working with Portainer
+
 #. Browse through the dashboard and have a look around...
+
 #. Click on **Applications** in the left hand side and click on the 2 on the blue bar (right bottom corner) to see the rest of the Applications (Pods)
 
    .. figure:: images/24.png
+
+[THERE IS NO APPLICATIONS UNTIL YOU CLICK ON THE KUBERNETES INSTALL, THEN YOU SEE IT IN THE LEFT-HAND MENU. VERSION I HAVE IS 2.0.1.]
 
 #. Click on traefik and scroll down till you see the **Logs** and **Console** buttons
 
    .. figure:: images/25.png
 
 #. Here you can open the logs und execute some commands in the Pod/Container. Maybe for some debug settings....
+
+[MAYBE? LET'S BE A BIT MORE PERSCRIPTIVE!]
 
 .. _lens:
 
@@ -408,10 +428,7 @@ Lens
 
 Organizations might not always want to have their Kubernetes cluster to also run the monitoring solution. One way to solve this is to have an application in stalled on a machine that can "talk" to the Kubernetes cluster alike the Kubernetes Dashboard. Lens is such an application and can be downloaded at http://k8slens.dev
 
-#. Download Lens for you computer from the URL http://k8slens.dev
-#. Install the application using the default settings
-#. Lens will start after the installation is done. Click the **Ok, got it!** button to proceed
-#. Click the BIG **+** sign in the top left corner to add your cluster
+#. Open Lens, and click the **+** sign in the top left corner to add your cluster
 
    .. figure:: images/26.png
 
@@ -423,7 +440,10 @@ Organizations might not always want to have their Kubernetes cluster to also run
 
    .. figure:: images/28.png
 
-#. Browse around in Lens to see if this might be something for you....
+#. Browse around in Lens to see if this might be something for you.
+
+[HOW WOULD THEY KNOW? THIS MIGHT BE FOLKS FIRST TIME SEEING THIS.]
+
 #. Click on Worklodas -> Pods and search your traefik pod. Click on it and you'll be presented with the information for
 
    - CPU
