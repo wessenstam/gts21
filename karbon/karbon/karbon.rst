@@ -28,6 +28,11 @@ Follow these steps to get to interact with your kubernetes cluster.
 
    .. figure:: images/1.png
 
+   .. raw:: html
+
+   <font color="#FF0000"><strong> The downloaded kubeconfg fil is valid for 24 hours only (kubernetes security)! If you get error messages during later stages of the lab,kubectl doesn't have resourec XYZ, redownload the config file!</strong></font>
+
+
 #. Click on the Blue **Download** text
 #. Save the file somewhere on your machine, but remember where you have saved it as we need it in the next steps
 
