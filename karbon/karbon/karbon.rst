@@ -190,13 +190,13 @@ This will show detailed information on the pod, the statuses and errors. INvesti
 Configuration
 ^^^^^^^^^^^^^
 
-Now that we know are sure that we have the POds running we need to configure MetalLB. To do this we need to create a small yaml file that holds the IP range that we can use for MetalLB
+Now that we know are sure that we have the Pods running we need to configure MetalLB. To do this we need to create a small yaml file that holds the IP range that we can use for MetalLB
 
 .. raw:: html
 
-   <font color="#FF0000"><strong> Make 100% sure you are using YOUR assinged IP addresses (4x)! Otherwise the other users on the cluster will suffice strange issues</strong></font>
+   <font color="#FF0000"><strong> Make 100% sure you are using YOUR assinged IP addresses (2x)! Otherwise the other users on the cluster will suffice strange issues</strong></font>
 
-Follow theses tes to get the configuration created for MetalLB
+Follow these steps to get the configuration created for MetalLB
 
 #. Open Visual Code
 #. Create a New File and copy the below text
