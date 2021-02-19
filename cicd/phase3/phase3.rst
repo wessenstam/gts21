@@ -152,7 +152,7 @@ Use Drone to build an image
     steps:
 
       - name: build test image
-        image: docker:latest
+        image: public.ecr.aws/n5p3f3u5/docker:latest
         pull: if-not-exists
         volumes:
           - name: docker_sock
@@ -389,7 +389,7 @@ CI/CD Upload of images
    .. code-block:: yaml
 
       - name: Push to Dockerhub
-        image: docker:latest
+        image: public.ecr.aws/n5p3f3u5/docker:latest
         pull: if-not-exists
         environment:
           USERNAME:
@@ -435,7 +435,7 @@ As we already deployed our own build Fiesta_App image in a former part of the wo
    .. code-block:: yaml
 
        - name: Deploy newest image
-         image: docker:latest
+         image: public.ecr.aws/n5p3f3u5/docker:latest
          pull: if-not-exists
          environment:
            USERNAME:
@@ -562,7 +562,7 @@ Change runapp.sh
       steps:
 
         - name: build test image
-          image: docker:latest
+          image: public.ecr.aws/n5p3f3u5/docker:latest
           pull: if-not-exists
           volumes:
             - name: docker_sock
@@ -600,7 +600,7 @@ Change runapp.sh
             - sed -i "s/REPLACE_DB_PASSWORD/$DB_PASSWD/g" /code/Fiesta/config/config.js
 
         - name: Push to Dockerhub
-          image: docker:latest
+          image: public.ecr.aws/n5p3f3u5/docker:latest
           pull: if-not-exists
           environment:
             USERNAME:
@@ -618,7 +618,7 @@ Change runapp.sh
             - docker push $USERNAME/fiesta_app:latest
 
         - name: Deploy newest image
-          image: docker:latest
+          image: public.ecr.aws/n5p3f3u5/docker:latest
           pull: if-not-exists
           environment:
             USERNAME:
