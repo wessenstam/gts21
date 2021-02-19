@@ -96,23 +96,14 @@ For Windows
      
      cd <LOCATION WHERE TO STORE FILES>
      wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml -OutFile namespace.yaml
-     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml -OutFile metallb.yaml
+     wget https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/001-metallb.yaml -OutFile 001-metallb.yaml
 
-Now that we have the yaml files we need to manipulate them so we grab the images from the "proxy" account.
-
-#. Open **metallb.yaml** file in Visual Code via File -> Open.. 
-#. Change the following two lines:
-
-   - On **Line 316** change *metallb/speaker:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-cntrl:latest**
-   - On **Line 372** change *metallb/controller:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-spkr:latest**
-
-#. Save the file
 #. Run these two commands
 
    .. code-block:: bash
 
       kubectl apply -f namespace.yaml
-      kubectl apply -f metallb.yaml
+      kubectl apply -f 001-metallb.yaml
 
    .. figure:: images/9.png
 
@@ -146,22 +137,14 @@ For Linux/MacOS
      
      cd <LOCATION WHERE TO STORE FILES>
      wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
-     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
+     wget https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/001-metallb.yaml
 
-
-#. Open **metallb.yaml** file in Visual Code via File -> Open.. 
-#. Change the following two lines:
-
-   - On **Line 316** change *metallb/speaker:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-cntrl:latest**
-   - On **Line 372** change *metallb/controller:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-spkr:latest**
-
-#. Save the file
 #. Run these two commands
 
    .. code-block:: bash
 
       kubectl apply -f namespace.yaml
-      kubectl apply -f metallb.yaml
+      kubectl apply -f 001-metallb.yaml
 
 #. When you are running MacOS or Linux use:
 
