@@ -139,7 +139,8 @@ We need to tell drone to make a difference in the steps it needs to run.
     steps:
 
       - name: Build Image (Prod)
-        image: docker:latest
+        image: public.ecr.aws/n5p3f3u5/docker:latest
+
         pull: if-not-exists
         volumes:
           - name: docker_sock
@@ -151,7 +152,8 @@ We need to tell drone to make a difference in the steps it needs to run.
             - master
 
       - name: Build Image (Dev)
-        image: docker:latest
+        image: public.ecr.aws/n5p3f3u5/docker:latest
+        
         pull: if-not-exists
         volumes:
           - name: docker_sock
@@ -225,7 +227,8 @@ We need to tell drone to make a difference in the steps it needs to run.
             - dev
 
       - name: Push to Dockerhub (Prod)
-        image: docker:latest
+        image: public.ecr.aws/n5p3f3u5/docker:latest
+
         pull: if-not-exists
         environment:
           USERNAME:
@@ -246,7 +249,7 @@ We need to tell drone to make a difference in the steps it needs to run.
             - master
 
       - name: Deploy Prod image
-        image: docker:latest
+        image: public.ecr.aws/n5p3f3u5/docker:latest
         pull: if-not-exists
         environment:
           USERNAME:
@@ -267,15 +270,15 @@ We need to tell drone to make a difference in the steps it needs to run.
           - name: docker_sock
             path: /var/run/docker.sock
         commands:
-          - if [ `docker ps | grep fiesta_app | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app; else echo "Docker container has not been found..."; fi
-          - sleep 10
+          - if [ `docker ps | grep fiesta_app | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app; sleep 10; else echo "Docker container has not been found..."; fi
+          - 
           - docker run --name fiesta_app --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest
         when:
           branch:
             - master
 
       - name: Deploy Dev image
-        image: docker:latest
+        image: public.ecr.aws/n5p3f3u5/docker:latest
         pull: if-not-exists
         environment:
           USERNAME:
@@ -304,9 +307,8 @@ We need to tell drone to make a difference in the steps it needs to run.
           - name: docker_sock
             path: /var/run/docker.sock
         commands:
-          - if [ `docker ps | grep fiesta_app_dev | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app_dev; else echo "Docker container has not been found..."; fi
-          - sleep 10
-          - docker run -d --rm --name fiesta_app_dev -p 5050:3000 -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME -e initials=$INITIALS -e era_ip=$ERA_IP -e era_admin=$ERA_USER -e era_password=$ERA_PASSWORD fiesta_app_dev:${DRONE_COMMIT_SHA:0:6}
+          - if [ `docker ps | grep fiesta_app_dev | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app_dev; sleep 10; else echo "Docker container has not been found..."; fi
+          - docker run -d -v /tmp:/tmp --rm --name fiesta_app_dev -p 5050:3000 -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME -e initials=$INITIALS -e era_ip=$ERA_IP -e era_admin=$ERA_USER -e era_password=$ERA_PASSWORD fiesta_app_dev:${DRONE_COMMIT_SHA:0:6}
         when:
           branch:
             - dev
@@ -466,7 +468,7 @@ To make your life easier we have already created the needed content for the file
               -H 'Content-Type: application/json' \
               --user $era_admin:$era_password  \
               -d \
-              '{"name":"'$db_name_dev'","description":"Dev clone from the "'$db_name_prod'","createDbserver":true,"clustered":false,"nxClusterId":"'$era_uuid'","sshPublicKey":"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmhJS2RbHN0+Cz0ebCmpxBCT531ogxhxv8wHB+7Z1G0I77VnXfU+AA3x7u4gnjbZLeswrAyXk8Rn/wRMyJNAd7FTqrlJ0Imd4puWuE2c+pIlU8Bt8e6VSz2Pw6saBaECGc7BDDo0hPEeHbf0y0FEnY0eaG9MmWR+5SqlkepgRRKN8/ipHbi5AzsQudjZg29xra/NC/BHLAW/C+F0tE6/ghgtBKpRoj20x+7JlA/DJ/Ec3gU0AyYcvNWlhlR+qc83lXppeC1ie3eb9IDTVbCI/4dXHjdSbhTCRu0IwFIxPGK02BL5xOVTmxQyvCEOn5MSPI41YjJctUikFkMgOv2mlV root@centos","dbserverId":null,"dbserverClusterId":null, "dbserverLogicalClusterId":null,"timeMachineId":"'$tms_id'","snapshotId":"'$snap_id'",  "userPitrTimestamp":null,"timeZone":"Europe/Amsterdam","latestSnapshot":false,"nodeCount":1,"nodes":[{"vmName":"'$vm_name_dev'",  "computeProfileId":"'$compute_id'","networkProfileId":"'$network_id'","newDbServerTimeZone":null,   "nxClusterId":"'$era_uuid'","properties":[]}],"actionArguments":[{"name":"vm_name","value":"'$vm_name_dev'"}, {"name":"dbserver_description","value":"Dev clone from the '$vm_name'"},{"name":"db_password","value":"nutanix/4u"}],"tags":[],"newDbServerTimeZone":"UTC","computeProfileId":"'$compute_id'","networkProfileId":"'$network_id'",    "databaseParameterProfileId":"'$db_param_id'"}')
+              '{"name":"'$db_name_dev'","description":"Dev clone from the '$db_name_prod'","createDbserver":true,"clustered":false,"nxClusterId":"'$era_uuid'","sshPublicKey":"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmhJS2RbHN0+Cz0ebCmpxBCT531ogxhxv8wHB+7Z1G0I77VnXfU+AA3x7u4gnjbZLeswrAyXk8Rn/wRMyJNAd7FTqrlJ0Imd4puWuE2c+pIlU8Bt8e6VSz2Pw6saBaECGc7BDDo0hPEeHbf0y0FEnY0eaG9MmWR+5SqlkepgRRKN8/ipHbi5AzsQudjZg29xra/NC/BHLAW/C+F0tE6/ghgtBKpRoj20x+7JlA/DJ/Ec3gU0AyYcvNWlhlR+qc83lXppeC1ie3eb9IDTVbCI/4dXHjdSbhTCRu0IwFIxPGK02BL5xOVTmxQyvCEOn5MSPI41YjJctUikFkMgOv2mlV root@centos","dbserverId":null,"dbserverClusterId":null, "dbserverLogicalClusterId":null,"timeMachineId":"'$tms_id'","snapshotId":"'$snap_id'",  "userPitrTimestamp":null,"timeZone":"Europe/Amsterdam","latestSnapshot":false,"nodeCount":1,"nodes":[{"vmName":"'$vm_name_dev'",  "computeProfileId":"'$compute_id'","networkProfileId":"'$network_id'","newDbServerTimeZone":null,   "nxClusterId":"'$era_uuid'","properties":[]}],"actionArguments":[{"name":"vm_name","value":"'$vm_name_dev'"}, {"name":"dbserver_description","value":"Dev clone from the '$vm_name'"},{"name":"db_password","value":"nutanix/4u"}],"tags":[],"newDbServerTimeZone":"UTC","computeProfileId":"'$compute_id'","networkProfileId":"'$network_id'",    "databaseParameterProfileId":"'$db_param_id'"}')
 
           # Call the waitloop function
           waitloop "$opanswer" 30
@@ -476,6 +478,7 @@ To make your life easier we have already created the needed content for the file
       cloned_vm_ip=$(curl --silent -k "https://${era_ip}/era/v0.9/dbservers" -H 'Content-Type: application/json' --user $era_admin:$era_password | jq --arg clone_name $vm_name_dev '.[] | select (.name==$clone_name) .ipAddresses[0]' | tr -d \")
 
       DB_SERVER=$cloned_vm_ip
+      echo "Cloned DB server ip: "$DB_SERVER >> /tmp/test.txt
 
       # If there is a "/" in the password or username we need to change it otherwise sed goes haywire
       if [ `echo $DB_PASSWD | grep "/" | wc -l` -gt 0 ]
@@ -608,6 +611,7 @@ Push your files to Gitea
 
    .. figure:: images/13.png
 
+#. Wait till all steps ran before moving forward
 #. Open a ssh session to your docker vm server and run ``docker logs --follow fiesta_app_dev``
 #. You will see a step running mentioning ```Operation still in progress...``
 
