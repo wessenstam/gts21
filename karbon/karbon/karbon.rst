@@ -194,7 +194,7 @@ Now that we know are sure that we have the Pods running we need to configure Met
 
 .. raw:: html
 
-   <font color="#FF0000"><strong> Make 100% sure you are using YOUR assinged IP addresses (2x)! Otherwise the other users on the cluster will suffice strange issues</strong></font>
+   <font color="#FF0000"><strong> Make 100% sure you are using YOUR assinged IP addresses (2x) from the Lookup tool! Otherwise the other users on the cluster will suffice strange issues</strong></font>
 
 Follow these steps to get the configuration created for MetalLB
 
