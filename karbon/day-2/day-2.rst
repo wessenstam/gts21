@@ -31,9 +31,14 @@ Prometheus
 
 For Prometheus (http://www.prometheus.io) we are already done. Reason is that Karbon by default has Prometheus installed. 
 
-#. In your Dashboard of choice, we are going to use Lens, open the **Worklodas -> Pods** there you will see prometheus being mentioned.
+#. In your Dashboard of choice, we are going to use Lens, open the **Workloads -> Pods** there you will see prometheus being mentioned.
 
    .. figure:: images/1.png
+
+   .. note::
+      If you don't see the pod mentioned, make sure that in the right hand side of Lens, you have **All Namespaces** selected. 
+
+      .. figure:: images/1-a.png
 
 Grafana
 ^^^^^^^
@@ -160,6 +165,10 @@ Deployment
 
    .. figure:: images/3.png
 
+   .. note::
+      If you don't see the pod mentioned, make sure that in the right hand side of Lens, you have **All Namespaces** selected. 
+
+      .. figure:: images/1-a.png
 
 Traefik configuration
 *********************
@@ -213,7 +222,7 @@ Datasource configuration
 
 #. Click the **Add data source** button to add the built-in Prometheus deployment
 #. Select Prometheus in the next screen by clicking the **Select** button
-#. Switch to Lens and get the IP address of the Prometheus operator Pod as shown in Lens (**Workloads -> Pods -> prometheus-operatord**)
+#. Switch to Lens and get the IP address of the Prometheus operatord Service as shown in Lens (**Workloads -> Services -> prometheus-operatord -> Endpoints**)
 
    .. figure:: images/8.png
 
