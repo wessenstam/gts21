@@ -51,6 +51,9 @@ Let's create a repository (repo) that we can use to store our files in from whic
 #. Copy the https URL
 #. Open a command line or terminal on your laptop or Windows Tools VM and run ``git config --global http.sslVerify false``. This step is necessary otherwise git is not willing to clone anything from a Version Control Manager using Self signed certificates. In the same command line or terminal session run the following two commands ``git config --global user.name "FIRST_NAME LAST_NAME"`` and ``git config --global user.email "MY_NAME@example.com"`` to set the user's name and email address so all the pushes can be identified.
 
+   .. note::
+      Setting the two parameters (``git config user.name`` and ``git config user.email``), you can use the full command as mentioned or exchange the user.name and user.email with your information.
+
 #. On your laptop or the Windows Tools VM environment open VC, unless already open, and click **File -> New Window**
 
    .. figure:: images/3.png
