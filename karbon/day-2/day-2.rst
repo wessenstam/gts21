@@ -1,6 +1,6 @@
 .. _environment_day2:
 
-Day2 operations 
+Day2 operations
 ===============
 
 As we are now looking at the day-2 operations, we are going to focus on these items which are still open:
@@ -29,7 +29,7 @@ We are going to build a monitoring system using Prometheus and Grafana for the v
 Prometheus
 ^^^^^^^^^^
 
-For Prometheus (http://www.prometheus.io) we are already done. Reason is that Karbon by default has Prometheus installed. 
+For Prometheus (http://www.prometheus.io) we are already done. Reason is that Karbon by default has Prometheus installed.
 
 #. In your Dashboard of choice, we are going to use Lens, open the **Worklodas -> Pods** there you will see prometheus being mentioned.
 
@@ -48,7 +48,7 @@ Grafana (http://www.grafana.com)is a open source application that can vizualize 
 Deployment
 **********
 
-#. In Visual Cafe create a new YAML file called **grafana-deploy.yaml**
+#. In VSC, create a new YAML file called **grafana-deploy.yaml**
 #. Run the following command to create the Namespace monitoring in which we will deploy Grafana ``kubectl create ns monitoring``
 
    .. figure:: images/2.png
@@ -83,7 +83,7 @@ Deployment
                   limits:
                     memory: "2Gi"
                     cpu: "1000m"
-                  requests: 
+                  requests:
                     memory: "1Gi"
                     cpu: "500m"
                 volumeMounts:
@@ -102,9 +102,9 @@ Deployment
 
 #. Save the file
 #. Create a new file in Visual Cafe called **grafana-svc.yaml** for the service for Grafana and copy the below content in the file
-    
+
     .. code-block:: yaml
-        
+
         apiVersion: v1
         kind: Service
         metadata:
@@ -114,7 +114,7 @@ Deployment
               prometheus.io/scrape: 'true'
               prometheus.io/port:   '3000'
         spec:
-          selector: 
+          selector:
             app: grafana
           ports:
             - port: 3000
@@ -140,7 +140,7 @@ Now that Grafana is deployed, we need to tell Traefik to route traffic from a sp
 #. Open the file **traefik-routes.yaml** in Visual Code and add the following content to the end of the file:
 
    .. code-block:: yaml
-      
+
        ---
        apiVersion: traefik.containo.us/v1alpha1
        kind: IngressRoute
@@ -206,10 +206,10 @@ Let's see if everything is working by creating a simple chart. We are going to c
 #. Click **New Dashboard**
 #. Click the **+ Add new panel** button
 #. Select the field right to Metrics (half way the screen in the middle)
-#. Start typing **cpu** as soon as you start typing, data should be seen. 
+#. Start typing **cpu** as soon as you start typing, data should be seen.
 
    .. figure:: images/10.png
-   
+
    .. note::
        If not, that means that the Prometheus server can not be reached. All the data points come from that infrastructure. One way to solve this is to wait a few minutes as it takes some time for Grafana to pull data from the data sources that have been defined.
 
@@ -238,7 +238,7 @@ Logging
 -------
 
 Logging is very important to see what are possible reasons for rising issue. Logging can be done using the Kubernetes Dashboard, Portainer or the Lens application. Downside of this is that it doesn't show a full logging experience where you can drill down into the logs themselves or even search.
-To help in this area, Karbon already has an ELK (Elastic Search, Logfile and Kibana environment installed). This logging platform provides information for the Kubernetes installation only. 
+To help in this area, Karbon already has an ELK (Elastic Search, Logfile and Kibana environment installed). This logging platform provides information for the Kubernetes installation only.
 
 As we need to see the logs from our pods, at the current release of Karbon, we have to build our own logging Stack. This part of the Module will show you how to use the internal only logging stack and how to install, configure and use another Stack that can be used for the user pods like our MetalLB, Traefik, Fiesta, Grafana and Prometheus Pods.
 
@@ -400,7 +400,7 @@ Traefik configuration
    .. figure:: images/24.png
 
 #. After a few seconds, when you see the total overview of all possible fields, click on the Discover (compass :fa:`compass`) icon on the left hand side of the screen
-#. This should show you all the logs from the system as well as our deployed pods (traefik, fiesta). 
+#. This should show you all the logs from the system as well as our deployed pods (traefik, fiesta).
 #. In the Filters field, type ``kubernetes.pod_name : traefik*`` and hit the enter key to filter just on that. Now you would see all logs lines that have the line **kubernetes.pod_name : traefik\*** in them
 
    .. figure:: images/25.png
@@ -484,7 +484,7 @@ Install an Object store
 #. In your Prism Central click :fa:`bars` **-> Services -> Objects** and see if there is already an Object Store defined. If it is, skip to the next part, **Create a bucket**. If not follow these below steps
 
    #. If it doesn't exists use the following parameters (after you have clicked on the **Create Object Store** button -> Continue):
-      
+
       #. **Object store name**: nutanix
       #. **Domain**: ntnxlab.local (click **Next**)
       #. **Performance** and **Resources**: leave default
@@ -547,7 +547,7 @@ As the bucket can only be addressed by a URL we need to make sure that we have a
 
 #. In the Message box **Connect to DNS Server** type **DC**
 #. Your DC will open in the DNS, Expand till you see the content of ntnxlab.local
-#. Check to see if the DNS name ntnxlab.local has a subdomain with the same name as the Object Store. 
+#. Check to see if the DNS name ntnxlab.local has a subdomain with the same name as the Object Store.
 
    .. note::
       As the cluster is a shared resource, someone else has created the domain already for you.
@@ -568,7 +568,7 @@ As the bucket can only be addressed by a URL we need to make sure that we have a
 
    .. figure:: images/36.png
 
-#. Click **Add Host -> OK -> Done** 
+#. Click **Add Host -> OK -> Done**
 #. Select the subdomain of ntnxlab.local, you should see the just recreated A records in the form off **(same as parent folder)**
 #. Right Click the subdomain and select **New Host (A or AAAA)**...
 #. For the name, use the name of the bucket you just created for K10 Backup (Example. xyz-k10-bucket)
@@ -594,7 +594,7 @@ As we also need to have the kubernetes environment updated for the DNS entries w
          forward . <AUTO AD Server>
      }
 
-   .. note:: 
+   .. note::
       Make sure you change the **<AUTO AD Server>** BEFORE you save and close the editor!!! Otherwise you end up in a strange situation!!
       In the following screenshots we have used **nutanix-demo** as the name of the Object Store and **10.42.3.41** as the IP addresses of AutoAD
 
@@ -659,27 +659,27 @@ K10 installation
       kubectl get pods --namespace kasten-io
 
 #. Wait until all pods are in the running state (approx. 5 minutes). To have an auto update of the commend. add --watch so you keep updated on any changes that happen on the status of the pods.
-#. In Lens you can also track the status of the pods. 
+#. In Lens you can also track the status of the pods.
 
 #. If the all pods are in the running state use the following temporary command in your terminal or Powershell session to see if we can get to the Dashboard of K10 kasten
-   
+
    .. code-block:: bash
 
       kubectl --namespace kasten-io port-forward service/gateway 8080:8000
 
 #. Open a browser and point it to http://127.0.0.1:8080/k10/#/ this should provide you access to the dashboard. Have a quick look around and then close the browser.
-#. In your terminal/Powershell session hit <CTRL>+C to stop the proxy process. 
+#. In your terminal/Powershell session hit <CTRL>+C to stop the proxy process.
 
 Define Traefik for routing
 **************************
 
-Let's make this a more convenient solution by using Traefik. 
+Let's make this a more convenient solution by using Traefik.
 
 #. Open the treafik-routes.yaml in Visual Cafe
 #. Add the following content to the end of the yaml file
 
    .. code-block:: yaml
-      
+
       ---
       apiVersion: traefik.containo.us/v1alpha1
       kind: IngressRoute
@@ -727,7 +727,7 @@ K10 - Configure S3 storage
 
      .. figure:: images/42.png
 
-     .. note:: 
+     .. note::
         The File of the secret has been slightly changed so we see the information in one screen with the settings we have set. For the Endpoint and the Bucket we have used our example information we used earlier.
 
 #. Click the **Save Profile** button. This should result in a green bar at the top of the screen and the just defined profile should be shown.
@@ -744,7 +744,7 @@ K10 - Configure backup policy
 
    .. figure:: images/44.png
 
-#. On the right side of the screen, you see the new policy with default settings. 
+#. On the right side of the screen, you see the new policy with default settings.
 #. Leave all default Except the **Enable Backups via Snapshot Exports** and check that your created Location Profile (nutanix-demo) is shown
 
    .. figure:: images/45.png
@@ -771,7 +771,7 @@ Now that we have a backup and an export, let's restore some data in the form of 
 #. In the **Application Name**, click the **Create na New Namespace** text and call it **default-restore**
 #. Click the **Create** button. This will set the **Application name** to the just created **default-restore**
 #. Scroll down to the Artifacts and select the **Deselect All Artifacts** text
-#. Only select (by clicking on the Checkbox) 
+#. Only select (by clicking on the Checkbox)
 
    #. Type **deployment** that has the name **npm-fiesta** in the Name field
    #. Type **services** that has the name **npm-fiesta** in the Name field
@@ -792,7 +792,7 @@ Now that we have a backup and an export, let's restore some data in the form of 
    .. figure:: images/50.png
    .. figure:: images/50a.png
 
-.. note:: 
+.. note::
    To use the "restored" Fiesta app, you can use the Traefik and change the original route to point to the restored svc, OR create a new route, like fiesta_restore. The only thing that you need to change is the parameter namespace in the traefik-routes.yaml file.
    Apply the file using ``kubectl apply -f traefik.yaml`` and you have the restore app available for testing etc.
 
@@ -830,11 +830,4 @@ Takeaways
 - Monitoring and logging are crucial as it is the only way to get an overview if there are issues in an environment which consists out of small spinning wheels and the possibility of loosing the overview is at hand.
 - Expanding and upgrading the nodes in the cluster has to be just some small clicks. Organizations don;t want to much time in expanding their infrastructure as manual labor could lead to inconsistency and failure
 - Using Objects in any backup scenario is a great value add. The Objects store is build in and can be used quickly by just a few mouse clicks.
-- The used backup solution, K10 from Kasten.io, is just an example of many backup solutions out in the market, but backups are important. Things will happen. People make mistakes and they can have a very big impact on the organization. Think of the following: running the command ``kubectl delete ns default-restore`` would literally delete ALL items in that name space! If you want to rebuild everything from hand, can be done, but is taken a lot of effort as not all steps that have been run AFTER the initial deployment might be documented. Kubernetes is capable of keeping pods alive and accessible via services, but a small mistake, even typo could lead to disaster.... 
-
-
-
-
-
-
-
+- The used backup solution, K10 from Kasten.io, is just an example of many backup solutions out in the market, but backups are important. Things will happen. People make mistakes and they can have a very big impact on the organization. Think of the following: running the command ``kubectl delete ns default-restore`` would literally delete ALL items in that name space! If you want to rebuild everything from hand, can be done, but is taken a lot of effort as not all steps that have been run AFTER the initial deployment might be documented. Kubernetes is capable of keeping pods alive and accessible via services, but a small mistake, even typo could lead to disaster....
