@@ -59,6 +59,7 @@ Let's create a repository (repo) that we can use to store our files in from whic
    .. figure:: images/3.png
 
 #. In the new Window click **View -> Command Palette** and type ``git clone``
+#. Make sure VC selects **Clone from URL**. (It will be done automaticaly as soon as you paste the URL in the field)
 #. Paste the earlier copied URl from Gitea's Repo
 
    .. figure:: images/5.png
@@ -349,7 +350,15 @@ Manual upload of images
 
    .. figure:: images/21.png
 
-#. Run ``docker image tag fiesta_app:15b0c0 devnutanix/fiesta_app:1.0`` (the version **15b0c0** came from step 6 in the **Test the build images** screenshot. Please use yours as mentioned in the Drone UI) this will create a new image which will be tagged **devnutanix/fiesta_app** with version **1.0**
+#. Return back to your Drone UI. Your last run should still be open. if not click on the last run and click on the **build test image** step. This will provide you with something like this:
+   
+   .. figure:: images/21-a.png
+
+   .. note::
+      Just use the 6 Alphanumerical code from inside the red square. In this example the code to be used is **cd725f**
+
+#. Use the tag that is mentioned in the red square, yours will be diffent.
+#. Run ``docker image tag fiesta_app:cd725f devnutanix/fiesta_app:1.0`` (example using the screenshot's information above) this will create a new image which will be tagged **devnutanix/fiesta_app** with version **1.0**
 #. Running ``docker image ls`` is showing the image in the list
 
    .. figure:: images/22.png
