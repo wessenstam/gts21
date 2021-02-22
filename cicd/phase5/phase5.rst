@@ -270,9 +270,9 @@ We need to tell drone to make a difference in the steps it needs to run.
           - name: docker_sock
             path: /var/run/docker.sock
         commands:
-          - if [ `docker ps | grep fiesta_app | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app; sleep 10; else echo "Docker container has not been found..."; fi
+          - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; sleep 10; else echo "Docker container has not been found..."; fi
           - 
-          - docker run --name fiesta_app --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest
+          - docker run --name Fiesta_App --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest
         when:
           branch:
             - master
