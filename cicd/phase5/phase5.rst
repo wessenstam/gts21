@@ -638,7 +638,7 @@ Push your files to Gitea
 #. Click the **Submit** button
 #. Click the **OK** button
 #. Scroll all the way down to see the new added item
-#. Change the URL to the production application by changing the port number from **5000** to **5050** and the new added item is NOT there.
+#. Change the URL to the production application by changing the port number from **5050** to **5000** and the new added item is NOT there.
 
 Now that we have seen that we are working on two different database, the development area is complete. Whatever we do, it will have no impact on the production database!
 
