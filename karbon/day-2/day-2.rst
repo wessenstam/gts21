@@ -588,7 +588,7 @@ As the bucket can only be addressed by a URL we need to make sure that we have a
 #. Check to see if the DNS name ntnxlab.local has a subdomain with the same name as the Object Store. 
 
    .. note::
-      As the cluster is a shared resource, someone else has created the domain already for you.
+      As the cluster is a shared resource, someone else might have created the domain already for you.
 
 #. If this is not the case, create it using the below steps
 
@@ -621,7 +621,7 @@ Update the Kubernetes DNS Services
 
 As we also need to have the kubernetes environment updated for the DNS entries we just made, we need to tell the DNS service in the Kubernetes Cluster where the ntnxlab.local and <OBJECT STORE NAME>>.nutanix.local DNS servers/entries can be found. To do this follow these simple steps:
 
-#. In your terminal or Powershell session type ``kubectl -n kube-system edit configmap coredns`` this will open on Windows Notepad.
+#. In your terminal or Powershell session type ``kubectl -n kube-system edit configmap coredns`` this will open a Windows Notepad.
 #. Add the following before **kind:ConfigMap**
 
    .. code-block:: bash
@@ -633,14 +633,14 @@ As we also need to have the kubernetes environment updated for the DNS entries w
      }
 
    .. note:: 
-      Make sure you change the **<AUTO AD Server>** BEFORE you save and close the editor!!! Otherwise you end up in a strange situation!!
-      In the following screenshots we have used **nutanix-demo** as the name of the Object Store and **10.42.3.41** as the IP addresses of AutoAD
+      Make sure you change the **<AUTO AD Server>** to the IP address as mentioned in your Lookup tool under **Domain Controller IP (DNS Server)** BEFORE you save and close the editor!!! Otherwise you end up in a strange situation!!
+      In the following screenshots we have used **nutanix-demo** as the name of the Object Store and **10.42.3.41** as the IP addresses of teh Domain Controller
 
 #. Run ``kubectl -n kube-system describe configmap corredns`` to see that the information is correct
 
    .. figure:: images/40.png
 
-#. This should tell the DNS service in Kubernetes to forward the DNS requests for domains **ntnxlab.local** and sub domains to **10.42.3.41**
+#. This should tell the DNS service in Kubernetes to forward the DNS requests for domains **ntnxlab.local** and sub domains to your Domain Controller's IP address
 
 We are now ready to have the Bucket and Object Store to be used by applications that need to have access.
 
@@ -667,6 +667,7 @@ Install helm on your machine
 ****************************
 
 Helm is another way of deploying applications.
+
 #. Open in a browser https://github.com/helm/helm/releases and select your helm version for your operating system
 #. Extract the downloaded file and make sure your can execute it (Linux and MacOS)
 #. Run **helm** from the Powershell or a terminal session, to make sure you can run the command
@@ -696,10 +697,13 @@ K10 installation
 
       kubectl get pods --namespace kasten-io
 
-#. Wait until all pods are in the running state (approx. 5 minutes). To have an auto update of the commend. add --watch so you keep updated on any changes that happen on the status of the pods.
+#. Wait until all pods are in the running state (approx. 5 minutes). To have an auto update of the commend. add ``--watch`` to the command so you keep updated on any changes that happen on the status of the pods.
 #. In Lens you can also track the status of the pods. 
 
-#. If the all pods are in the running state use the following temporary command in your terminal or Powershell session to see if we can get to the Dashboard of K10 kasten
+   .. note::
+      If you don't see the pods mentioned, make sure that in the right hand side of Lens, you have **All Namespaces** selected.
+
+#. If all pods are in the running state use the following temporary command in your terminal or Powershell session to see if we can get to the Dashboard of K10 kasten
    
    .. code-block:: bash
 
