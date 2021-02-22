@@ -1,12 +1,16 @@
 .. _snow_migration:
 
----------------------------------
-Cross-Cluster Migration with Leap
----------------------------------
+------------------------------
+Cross-Cluster DR and Migration
+------------------------------
 
-Use case for wanting to move the CentOS VM back to on-prem/DR - recovery plan can be used for with minimal downtime.
+Using the already configured Data Protection Plan for your self-service provisioned VMs, and Nutanix Leap runbook orchestration capabilities, you can demonstrate how PTE can achieve Disaster Recovery for their active/active datacenter deployment - and also how this same approach can be leveraged to migrate workloads across different clouds.
 
-AOS 5.19 introduces live migration for sync rep, currently requires multiple PCs, latency
+In this scenario, we'll target a VM that was provisioned on your AWS cluster to migrate back on-premises in order to reduce the latency between the VM and a backend database.
+
+.. note::
+
+   As of AOS 5.19, it is also possible to perform VM Live Migration across multiple Nutanix clusters. This feature requires synchronous replication between clusters, meaning that round trip latency needs to be very low (<5ms RTT). Additionally, the clusters must be in separate Nutanix Availability Zones, each with their own Prism Central instance. This is to ensure management plane availability in the result of a site failure.
 
 Creating A Recovery Plan
 ++++++++++++++++++++++++
@@ -109,3 +113,12 @@ Validating the Migration
 #. SSH into your VM or click **Launch Console** and re-attempt your pings to **USER**\ *##*\ **-FiestaWeb** and **USER**\ *##*\ **-MSSQL-Source** IP addresses. You should observe that you are still isolated from **USER**\ *##*\ **-FiestaWeb** and you now have minimal latency to connect to your **USER**\ *##*\ **-MSSQL-Source** database - goal achieved!
 
    .. figure:: images/12.png
+
+Takeaways
++++++++++
+
+- Native data replication functionality and Nutanix Leap allow you to easily migrate workloads between clouds with minimal downtime
+
+- The same approach can be used to address Disaster Recovery in the event of site failure.
+
+- Through the Nutanix API, you could further automate migrations based on alert or cost triggers

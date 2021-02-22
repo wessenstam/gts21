@@ -144,7 +144,7 @@ Use Drone to build an image
     steps:
 
       - name: build test image
-        image: docker:latest
+        image: public.ecr.aws/n5p3f3u5/docker:latest
         pull: if-not-exists
         volumes:
           - name: docker_sock
@@ -175,8 +175,8 @@ Use Drone to build an image
    .. code-block:: docker
 
       # Grab the needed OS image
-      FROM alpine:3.11
-
+      FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest
+      
       # Install the needed packages
       RUN apk add --no-cache --update nodejs npm mysql-client git python3 python3-dev gcc g++ unixodbc-dev curl
 
@@ -376,10 +376,10 @@ CI/CD Upload of images
    .. code-block:: yaml
 
       - name: Push to Dockerhub
-        image: docker:latest
+        image: public.ecr.aws/n5p3f3u5/docker:latest
         pull: if-not-exists
         environment:
-          USERNAME:
+          USERNAME
             from_secret: dockerhub_username
           PASSWORD:
             from_secret: dockerhub_password
@@ -388,10 +388,10 @@ CI/CD Upload of images
             path: /var/run/docker.sock
         commands:
           - docker login -u $USERNAME -p $PASSWORD
-          - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} <your-docker-account>/fiesta_app:latest
-          - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} <your-docker-account>/fiesta_app:${DRONE_COMMIT_SHA:0:6}
-          - docker push <your-docker-account>/fiesta_app:${DRONE_COMMIT_SHA:0:6}
-          - docker push <your-docker-account>/fiesta_app:latest
+          - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} $USERNAME/fiesta_app:latest
+          - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} $USERNAME/fiesta_app:${DRONE_COMMIT_SHA:0:6}
+          - docker push $USERNAME/fiesta_app:${DRONE_COMMIT_SHA:0:6}
+          - docker push $USERNAME/fiesta_app:latest
 
    .. figure:: images/24-1.png
 
@@ -425,7 +425,7 @@ As we already deployed our own build Fiesta_App image in a former part of the wo
    .. code-block:: yaml
 
        - name: Deploy newest image
-         image: docker:latest
+         image: public.ecr.aws/n5p3f3u5/docker:latest
          pull: if-not-exists
          environment:
            USERNAME:
@@ -438,7 +438,7 @@ As we already deployed our own build Fiesta_App image in a former part of the wo
          commands:
            - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; else echo  "Docker container has not been found..."; fi
            - sleep 10
-           - docker run --name Fiesta_App --rm -p 5000:3000 -d devnutanix/fiesta_app:latest
+           - docker run --name Fiesta_App --rm -p 5000:3000 -d $USERNAME/fiesta_app:latest
 
    .. note::
       The commands are there to:
@@ -552,7 +552,7 @@ Change runapp.sh
       steps:
 
         - name: build test image
-          image: docker:latest
+          image: public.ecr.aws/n5p3f3u5/docker:latest
           pull: if-not-exists
           volumes:
             - name: docker_sock
@@ -590,7 +590,7 @@ Change runapp.sh
             - sed -i "s/REPLACE_DB_PASSWORD/$DB_PASSWD/g" /code/Fiesta/config/config.js
 
         - name: Push to Dockerhub
-          image: docker:latest
+          image: public.ecr.aws/n5p3f3u5/docker:latest
           pull: if-not-exists
           environment:
             USERNAME:
@@ -608,7 +608,7 @@ Change runapp.sh
             - docker push $USERNAME/fiesta_app:latest
 
         - name: Deploy newest image
-          image: docker:latest
+          image: public.ecr.aws/n5p3f3u5/docker:latest
           pull: if-not-exists
           environment:
             USERNAME:

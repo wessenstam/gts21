@@ -6,14 +6,11 @@ Getting Started
 
 This lab track is designed to showcase Nutanix as an ideal platform for delivering a true hybrid cloud for Database workloads, leveraging both the flexibility of AWS and Nutanix Clusters and new multi-cluster support in Nutanix Era.
 
-In these exercises, you'll be playing the part of Widget Inc.'s IT admin extraordinaire, Alex. Alex...
+As Party Time, Excellent Inc. seeks to modernize their sales and services offerings, their database management challenges are holding them back from delivering the kind of availability and performance required.
 
-- On-prem environment with limited capacity
-- Currently database architecture does not follow SQL best practices
-- Overcrowded database servers creating performance and maintenance issues, failure domain concerns
-- Lacking database high availability for key apps
-- Manual processes for patching existing database VMs
-- interested in an integrated monitoring platform
+Current SQL Server deployments inside of PTE do not follow Microsoft best practices, and contain overcrowded database servers, hosting databases for several applications, often from a single vDisk. This approach has caused availability issues where maintenance or failure has taken several applications offline, and "noisy neighbor" performance issues across apps. To make matters worse, critical applications such as PTE's retail inventory management application, Fiesta, is hosted on a single instance VM, providing no high availability in the event of failure.
+
+Ideally, PTE would be able to separate their overcrowded database servers, but they lack the on-premises capacity. Additionally, they have concerns about keeping up to date with the latest versions of SQL Server and patching if they were to host each database on its own server - not to mention how to monitor all of those additional servers.
 
 Your Environment
 ++++++++++++++++
@@ -33,7 +30,7 @@ Using a Calm Blueprint, each on-premises (HPOC) cluster has been pre-staged with
 
    - **USER**\ *##*\ **-FiestaWeb**
 
-      A CentOS 7 VM running a Node-based web application used to access the Fiesta database. You can validate your Fiesta application is capable of reaching your source database by browsing to \http://*USER##-FiestaWeb-IP-ADDRESS*\ /
+      A CentOS 7 VM running a NodeJS-based web application used to access the Fiesta database. You can validate your Fiesta application is capable of reaching your source database by browsing to \http://*USER##-FiestaWeb-IP-ADDRESS*\ /
 
    .. figure:: images/3.png
 

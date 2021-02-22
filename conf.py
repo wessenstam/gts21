@@ -50,7 +50,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Nutanix Tech Summit 2020'
+project = u'Nutanix Tech Summit 2021'
 copyright = u'2020 Nutanix'
 author = u'Nutanix Global Technical Enablement'
 

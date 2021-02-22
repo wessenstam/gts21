@@ -69,7 +69,7 @@ Follow these steps to create the first container. As space consumed by the conta
    .. code-block:: dockerfile
 
       # Grab the needed OS image
-      FROM alpine:3.11
+      FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest
 
       # Install the needed packages
       RUN apk add --no-cache --update nodejs npm mysql-client git python3 python3-dev gcc g++ unixodbc-dev curl
@@ -142,10 +142,9 @@ Follow these steps to create the first container. As space consumed by the conta
 
    .. figure:: images/5.png
 
-#. Now that we have al needed files, let's run ``docker build .`` to create the container. This takes approximately 1 minute
+#. Run the command ``docker login`` and use your credentials of your Docker Hub account you created earlier. This way we avoid the issue that Docker has put into place since November 2020 (https://www.docker.com/increase-rate-limits)
 
-   .. note::
-       If you get a message stating **You have reached your pull limit...** ask the leading SE for the solution
+#. Now that we have al needed files, let's run ``docker build .`` to create the container. This takes approximately 1 minute
 
 #. Run ``docker image ls`` to see our image we've just build
 

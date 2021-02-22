@@ -23,6 +23,8 @@ In this exercise, you'll create a Webhook to allow a ServiceNow Flow to conditio
 Creating Add Memory Playbook
 ++++++++++++++++++++++++++++
 
+First you'll create the X-Play Playbook that will ultimately add memory to your impacted VM, after the alert has been processed by ServiceNow.
+
 #. In **Prism Central**, select :fa:`bars` **> Operations > Playbooks**.
 
 #. Click **Create Playbook**.
@@ -60,6 +62,8 @@ Creating Add Memory Playbook
 Creating ServiceNow Event Rules
 +++++++++++++++++++++++++++++++
 
+ServiceNow Event Rules give us the ability to perform additional data manipulation of a record when a set of conditions is met. In this scenario, we are leveraging an Event Rule to expose data from the Nutanix alert needed for the webhook.
+
 #. Log into your ServiceNow instance as **admin**.
 
 #. In the **Filter Navigator** field in the upper-left, search for **All Events**.
@@ -73,6 +77,8 @@ Creating ServiceNow Event Rules
    This string can be isolated by performing additional processing of future events using an **Event Rule**.
 
    .. figure:: images/5.png
+
+#. Copy the **Resource** and **vm_uuid** values to a scratch document (ex. Notepad), as they will be used to test your webhook later in the exercise.
 
 #. Click **Create Event Rule**.
 
@@ -96,7 +102,7 @@ Creating ServiceNow Event Rules
 
    This filter will ensure the rule applies to all incoming Memory Usage alerts for *your VMs only*.
 
-#. Select the **Transpose and Compose Alert Output** tab.
+#. Select the **Transform and Compose Alert Output** tab.
 
 #. Replace the unused **Description** value with **${vm_uuid}** and click **Submit**.
 
@@ -114,9 +120,11 @@ Building the Action
 
 #. In the **Filter Navigator** field in the upper-left, search for **Studio**. The Studio will open in a new tab.
 
-#. To simplify the lab, we'll add this Flow to our existing **Nutanix Calm** application, rather than create a name namespace and tables.
+#. Select the existing **Nutanix Calm** application.
 
    .. figure:: images/9.png
+
+   To simplify the lab, we'll add this Flow to our existing **Nutanix Calm** application, rather than create a new namespace and tables.
 
 #. In the upper-left of **Studio**, click **+ Create Application File**.
 
@@ -127,6 +135,10 @@ Building the Action
    .. figure:: images/10.png
 
 #. Click **Create** to launch the **Flow Designer**.
+
+   .. note::
+
+      You may need to expand the Flow Designer browser window to view all fields mentioned in the following steps.
 
 #. Under **Action Properties**, specify **User**\ *##*\ **-RESTAPI** as the **Name** and click **Submit**.
 
@@ -187,9 +199,11 @@ Building the Action
 
 #. Replace **<ENTITY_TYPE>**, **ENTITY_NAME>**, and **<ENTITY_UUID>** with the appropriate **Input Variables** by dragging and dropping from the **Data** column.
 
-   Your finished **Request Body** should resemble the screenshot below, with your unique **webhook_id**.
+   Your finished **Request Body** should resemble the screenshot below, with your unique **webhook_id**. Watch out for typos, including missing escape slashes before quotation marks (ex. \\")!
 
    .. figure:: images/17.png
+
+   .. note::
 
 #. Click **Save**.
 
@@ -208,7 +222,7 @@ Testing the Action
 
    .. figure:: images/18.png
 
-#. Click **Run Test > Action has been executed. To view the action, click here**.
+#. Click **Run Test**, followed by **Action has been executed. To view the action, click here**.
 
    The test should change to state **Completed** within a few moments.
 
@@ -220,6 +234,8 @@ Testing the Action
 
    .. figure:: images/20.png
 
+   The most common error is syntax within the **Request Body**, specifically not having escaped quotation mark characters in the right place (ex. **\\"type\\":\\"action->type\\",**).
+
 #. After validating your Action executes successfully, return to the **Flow Designer** and **Publish** your Action.
 
    .. figure:: images/23.png
@@ -227,7 +243,7 @@ Testing the Action
 Building the Flow
 .................
 
-#. In **Flow Designer**, click **+ New > Flow**.
+#. In **Flow Designer**, select the **Home** tab and click **+ New > Flow**.
 
    .. figure:: images/21.png
 
@@ -265,7 +281,7 @@ Building the Flow
 
    .. figure:: images/24.png
 
-#. Finally, you need to map the data (via drag and drop from the **Data** column) provided by the **Alert Record** in your **Trigger** to the **Input Variables** you created for your Action, as shown in the screenshot below.
+#. Finally, you need to map the data provided by the **Alert Record** in your **Trigger** to the **Input Variables** you created for your Action. Expand **Alert Record** in the **Data** column, then drag and drop the appropriate values to match the screenshot below:
 
    .. figure:: images/25.png
 
@@ -297,6 +313,8 @@ Testing the Flow
 Takeaways
 +++++++++
 
-- stuff
-- things
-- filtering for cluster name to allow auto memory expansion only if running on the AWS cluster
+- X-Play Webhooks are a powerful tool for integrating your Nutanix cluster with other services. For instance, you could use this approach to migrate workloads from on-prem to AWS (or vice versa) based on alerts processed by ServiceNow.
+
+- ServiceNow Flows provide additional flexibility for processing Nutanix events. For instance, you could only allow automatic memory expansion for VMs running on your elastic, cloud-based cluster and require an additional approval workflow for on-premises VMs.
+
+- Operations performed related to Nutanix events sent to ServiceNow can be tracked via the CMDB, giving administrators greater visiblility into the lifecycle of the app in order to provide better, faster support.

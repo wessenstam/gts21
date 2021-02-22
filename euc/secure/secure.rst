@@ -4,15 +4,24 @@
 Securing Desktops with Flow
 ---------------------------
 
-This exercise depends on completion of the **Hybrid Cloud IaaS** :ref:`assign_categories` exercise to properly categorize VMs that will be used in Flow policies. Refer to the linked section first before proceeding.
+.. note::
 
-In this exercise...
+   This exercise depends on completion of the **Hybrid Cloud IaaS** :ref:`snow_preparingenv` exercise to properly categorize VMs that will be used in Flow policies. Refer to the linked section first before proceeding.
 
+As seen in other exercises, Nutanix Flow Security makes it easy to define and enforce network security policies for applications running on Nutanix. ID Firewall is an extension to Flow that allows you to write security policies based on users and groups in an Active Directory domain in which your VDI VMs are attached. When using ID Firewall, you can import groups from Active Directory into Prism Central as categories (in the category key ADGroup), and then write policies around these categories, just as you would for any other category.
+
+This means with the same set of underlying virtual desktops, you can enforce different access policies, at logon, based on who is logged into that desktop VM.
+
+In this exercise you'll configure the Flow VDI Policy to prevent a group of users within your environment from accessing an application on the network.
 
 Configuring ID Based Security
 +++++++++++++++++++++++++++++
 
-Configuring these settings only needs to be done once per shared environment, if the **Bootcamp Users** and **SSP Developers** user groups have already been added, review the configuration and skip to :ref:`euc_flowpolicy`.
+.. raw:: html
+
+   <strong><font color="red">Configuring the settings in this section only needs to be done once per shared environment.</font></strong><br><br>
+
+#. If the **Bootcamp Users** and **SSP Developers** user groups have already been added, review the configuration and skip to :ref:`euc_flowpolicy`.
 
 #. In **Prism Central**, select :fa:`bars` **> Prism Central Settings**.
 
@@ -38,6 +47,16 @@ Configuring these settings only needs to be done once per shared environment, if
 
 #. Click **Save**.
 
+   .. note::
+
+      ID Based Security requires the following:
+
+      - Prism Central requires WMI access to all the Active Directory Domain Controllers in your network firewall and Active Directory firewall.
+      - Minimum supported domain functional level in Active Directory is Windows Server 2008 R2.
+      - ID Firewall checks the membership of Security Groups only, Distribution Groups are not supported.
+      - NTP must be configured on Active Directory and Prism Central.
+      - DNS must be configured on Prism Central if you want to use host name for domain controllers.
+
 #. Under **Referenced AD Groups**, click **+ Add User Group**.
 
 #. Specify **Bootcamp Users** as the **User Group** and click :fa:`check-circle`.
@@ -53,7 +72,11 @@ Configuring these settings only needs to be done once per shared environment, if
 Adding The Flow VDI Policy
 ++++++++++++++++++++++++++
 
-Configuring these settings only needs to be done once per shared environment, if the **VDI Policy** already exists, review the steps and proceed to :ref:`euc_flowpolicy2`.
+.. raw:: html
+
+   <strong><font color="red">Configuring the settings in this section only needs to be done once per shared environment.</font></strong><br><br>
+
+#. If the **VDI Policy** already exists, review the steps and proceed to :ref:`euc_flowpolicy2`.
 
 #. In **Prism Central**, select :fa:`bars` **> Policies > Security**.
 
@@ -91,7 +114,9 @@ Configuring these settings only needs to be done once per shared environment, if
 
    .. figure:: images/9.png
 
-   *DO NOT ENFORCE THIS POLICY AS IT COULD NEGATIVELY IMPACT OTHER USERS ON THE CLUSTER*.
+   .. raw:: html
+
+      <strong><font color="red">DO NOT ENFORCE THIS POLICY AS IT COULD NEGATIVELY IMPACT OTHER USERS ON YOUR SHARED CLUSTER!</font></strong><br><br>
 
    .. figure:: https://media.giphy.com/media/yAcKHAu1iFdTvOysZK/giphy.gif
 
@@ -99,6 +124,8 @@ Configuring these settings only needs to be done once per shared environment, if
 
 Creating A User Based Isolation Policy
 ++++++++++++++++++++++++++++++++++++++
+
+In addition to the single VDI Policy, which allows you to map whitelist connections to your various ADGroup values, you can also leverage the ADGroup category in Isolation Policies.
 
 #. In **Prism Central**, select :fa:`bars` **> Policies > Security**.
 
@@ -151,4 +178,4 @@ Creating A User Based Isolation Policy
 Takeaways
 +++++++++
 
--
+- ID Based Security further extends Flows microsegmentation capabilities to user based policies to better support virtual desktop use cases

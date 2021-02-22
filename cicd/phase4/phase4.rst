@@ -33,8 +33,8 @@ Change dockerfile
       # This dockerfile multi step is to start the container faster as the runapp.sh doesn't have to run all npm steps
 
       # Grab the Alpine Linux OS image and name the container base
-      FROM alpine:3.11 as base
-
+      FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest as base
+      
       # Install needed packages
       RUN apk add --no-cache --update nodejs npm git
 
@@ -54,8 +54,8 @@ Change dockerfile
       RUN cd /code/Fiesta/client && npm run build
 
       # Grab the Alpine Linux OS image and name it Final_Image
-      FROM alpine:3.11 as Final_Image
-
+      FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest as Final_Image
+      
       # Install some needed packages
       RUN apk add --no-cache --update nodejs npm mysql-client
 
