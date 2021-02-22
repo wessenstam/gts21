@@ -54,6 +54,9 @@ Let's create a repository (repo) that we can use to store our files in from whic
 
 #. In the same command line or terminal session run the following two commands ``git config --global user.name "FIRST_NAME LAST_NAME"`` and ``git config --global user.email "MY_NAME@example.com"`` to set the user's name and email address so all the pushes can be identified.
 
+   .. note::
+      Setting the two parameters (``git config user.name`` and ``git config user.email``), you can use the full command as mentioned or exchange the user.name and user.email with your information.
+
 #. On your laptop or the Windows Tools VM environment open VC, unless already open, and click **File -> New Window**
 
    .. figure:: images/3.png
