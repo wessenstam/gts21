@@ -38,7 +38,7 @@ For Prometheus (http://www.prometheus.io) we are already done. Reason is that Ka
 Grafana
 ^^^^^^^
 
-Grafana (http://www.grafana.com)is a open source application that can vizualize multiple sources. Prometheus being one of them. This part of the workshop is where we will:
+Grafana (http://www.grafana.com) is a open source application that can vizualize multiple sources. Prometheus being one of them. This part of the workshop is where we will:
 
 - Deploy Grafana
 - Use Traefik to open the Grafana UI to the external world
@@ -48,11 +48,11 @@ Grafana (http://www.grafana.com)is a open source application that can vizualize 
 Deployment
 **********
 
-#. In Visual Cafe create a new YAML file called **grafana-deploy.yaml**
 #. Run the following command to create the Namespace monitoring in which we will deploy Grafana ``kubectl create ns monitoring``
 
    .. figure:: images/2.png
 
+#. In Visual Cafe create a new YAML file called **grafana-deploy.yaml**
 #. Copy the below content in the file, this will deploy Grafana in the just created **monitoring** namespace
 
    .. code-block:: yaml
