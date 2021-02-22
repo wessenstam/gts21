@@ -379,7 +379,7 @@ CI/CD Upload of images
         image: public.ecr.aws/n5p3f3u5/docker:latest
         pull: if-not-exists
         environment:
-          USERNAME
+          USERNAME:
             from_secret: dockerhub_username
           PASSWORD:
             from_secret: dockerhub_password
