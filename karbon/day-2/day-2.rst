@@ -120,10 +120,39 @@ Deployment
             - port: 3000
 
 #. Save the file
+
+#. Create a new file in Visual Cafe called **grafana-datasources.yaml** for the persistent storage for Grafana and copy the below in the file
+
+
+   .. code-block:: yaml
+
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: grafana-datasources
+        namespace: monitoring
+      data:
+        prometheus.yaml: |-
+          {
+              "apiVersion": 1,
+              "datasources": [
+                  {
+                     "access":"proxy",
+                      "editable": true,
+                      "name": "prometheus",
+                      "orgId": 1,
+                      "type": "prometheus",
+                      "url": "http://prometheus-service.monitoring.svc:8080",
+                      "version": 1
+                  }
+              ]
+          }
+
 #. Use the following commands to deploy and configure Grafana
 
    .. code-block:: bash
 
+        kubectl apply -f grafana-datasources.yaml
         kubectl apply -f grafana-deploy.yaml
         kubectl apply -f grafana-svc.yaml
 
