@@ -371,7 +371,7 @@ As our machine has no idea where to find that machine (portainer.gts2021.local),
 
    .. raw:: html
 
-      <font color=red><bold>Don't forget the trailing \/ ! otherwise you will not get a reply</bold></font>
+      <font color=red><bold>Don't forget the trailing / ! otherwise you will not get a reply</bold></font>
 
    .. figure:: images/23.png
 
