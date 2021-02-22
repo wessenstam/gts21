@@ -61,7 +61,11 @@ Visual Studio Code (VSC)
 
    .. figure:: images/4.png
 
-#. Provide the **/** as the folder you want to open and click on **OK**.
+#. Provide the ``/`` as the folder you want to open and click on **OK**
+#. It will take some time before it opens as VC needs to install and configure the remote host. This takes approximately <1 minute (you might be asked for the password again)
+#. Now you should see the folder structure of the VM, open **/root/github** and you will see everything created earlier
+
+   .. figure:: images/5.png
 
    [screenshot]
 
@@ -138,6 +142,7 @@ To make sure we can use https with Gitea, we need to go into the gitea docker co
      - **Host**: <IP ADDRESS OF YOUR DOCKER VM>:3306
      - **Password**: gitea
 
+   .. figure:: images/10-1.png
 
    - General Settings:
 
@@ -155,8 +160,8 @@ In VSC, as we have all files for the containers being saved on the docker VM in 
 
 [I did not get this error]
 
-#. Open your VSC
-#. Open the file **/docker-location/gitea/conf/app.ini** and make the following changes under the **[server]** section:
+#. Open your VC
+#. Open the file **/docker-location/gitea/conf/app.ini** and add the following lines under the **[server]** section:
 
 [We should say they need to add this to the top, vs. make these changes. Maybe we have a copy/paste with the proper formatting?]
 
@@ -166,24 +171,20 @@ In VSC, as we have all files for the containers being saved on the docker VM in 
 
      .. figure:: images/12.png
 
-#. Save the file [How? I say click X and choose Save] and restart the container using ``docker-compose restart gitea`` in your terminal windows in VSC [How do they get back to it easily? What if they closed it? Mention CD to ~/github before running this command]
-
-#. Reloading the browser page will show an error on the certificate, which is logical as we are now using a Self Signed certificate. Use the normal ways to get to the login screen.
-
-[You can't reload the browser, you have to add HTTPS.]
-
-#. The first user will be the admin user of the Gitea application (default). Click the **Register button** (top right) to create an account. Provide whatever you want. We are going to use **nutanix**, **nutanix@atnutanix.com** and **nutanix/4u** during the workshop as examples.
-
-[We should specify what to enter]
-
-#. Click the Register button to have your account created. Welcome to Gitea!!!
+#. Save the file and restart the container using ``docker-compose restart gitea`` in your terminal windows in VC
+#. Reloading the browser page (\https://<IP ADDRESS OF YOUR DOCKER VM>:3000) will show an error on the certificate, which is logical as we are now using a Self Signed certificate. Use the normal ways to get to the login screen.
+#. The first user will be the admin user of the Gitea application (default)
+#. Click the **Register button** to create an account. Provide whatever you want. We are going to use **nutanix**, **nutanix@atnutanix.com** and **nutanix/4u** during the workshop as examples.
+#. Click the Register button to have your account created.
 
    .. figure:: images/14.png
 
+Welcome to Gitea!!!
+
 ------
 
-Drone configuration
-+++++++++++++++++++
+Drone Configuration
+^^^^^^^^^^^^^^^^^^^
 
 As Drone will use Gitea for its authentication, we need to get some parameters from Gitea and change the docker-compose.yaml file.
 
@@ -205,21 +206,24 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 
 #. Open the **docker-compose.yaml** file [WHERE? WHAT SECTION?] in VSC and paste the values in their field names **DRONE_GITEA_CLIENT_ID** and **DRONE_GITEA_CLIENT_SECRET** [THEY MIGHT HAVE TO REFRESH VSC (I DID), SO ADD INSTRUCTIONS FOR THAT]
 
-   .. figure:: images/17.png
-
-#. Also change under the [START THE]**drone-server** section in the docker-compose.yaml file
+#. Also change under the **drone-server** section in the docker-compose.yaml file
 
    - **DRONE_GITEA_SERVER=** \https://<IP ADDRESS OF DOCKER VM>:3000
    - **DRONE_SERVER_HOST=** <IP ADDRESS OF DOCKER VM>:8080
    - **DRONE_USER_CREATE=** <USERNAME> to **nutanix** [THIS WAS ALREADY NUTANIX FOR ME, BUT I DIDN'T USE THAT. RECOMMEND CHANGING TO <GITEA-USERNAME> OR SIMILAR.]
 
-[We should change the <IP ADDRESS> in the file to match what we standardize]
+   .. figure:: images/17.png
+
+
+   .. note::
 
 [UPDATE SCREEN SHOT AS LINE #'S DON'T MATCH WHAT IS IN FILE]
 
 #. Change under the [START THE]**drone-docker-runner** section
 
    - **DRONE_RPC_HOST=** <IP ADDRESS OF DOCKER VM>
+
+   .. figure:: images/17-1.png
 
 #. Save the file
 #. Click in Gitea UI the **Save** button and then click **Dashboard** (top left).
@@ -254,10 +258,8 @@ We have just created our first CI/CD pipeline infrasturcture. **But** we still h
 - The way of working using **vi** or **nano** is not very effective and ready for human error (:fa:`thumbs-up`) [How does this remove human error, since we are still copy/pasting and typing things?]
 
 - Variables needed, have to be set outside of the image we build (:fa:`thumbs-down`)
-
-- The container build takes a long time and is a tedeous work including it's management (:fa:`thumbs-down`)
-
+- The container build takes a long time and is a tedious work including it's management (:fa:`thumbs-down`)
 - The start of the container takes a long time (:fa:`thumbs-down`)
 - The image is only available as long as the Docker VM exists (:fa:`thumbs-down`)
 
-The next modules in this workshop are going to address these :fa:`thumbs-down`.... Let's go for it!
+The next modules in this workshop are going to address these :fa:`thumbs-down`.... Let's go for it:fa:`thumbs-up`!

@@ -174,7 +174,8 @@ So we have an image ID. Great. But what does this mean to us? Let's quickly add 
 
 #. Run the command ``docker build . -t fiesta_app:1.0``. This will change the existing *Repository* to *fiesta_app*, and the *tag* to *1.0*.
 
-#. Run the command ``docker image ls`` to list your images once again.
+#. Rerun ``docker build . -t fiesta_app:1.0`` . This will tag the existing image **<none>** to be called **fiesta_app** with version number **1.0**
+#. Run ``docker image ls`` to show the list of images we have in our docker environment.
 
    .. figure:: images/7.png
 

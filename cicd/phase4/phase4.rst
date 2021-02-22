@@ -1,6 +1,6 @@
 .. _phase4_container:
 
-Starting the container faster
+Starting the Container Faster
 =============================
 
 As you may have noticed it takes a while before the Fiesta_App container is up and running. The CI/CD pipeline does it work in automating the build, test, upload to our Dockerhub registry and deployment steps, but still takes a few minutes before the application is up and running and serving \HTTP requests.
@@ -10,7 +10,7 @@ The reason for the time needed is that during the start of the container it has 
 .. note::
    Estimated time **45 minutes**
 
-Multi step image build
+Multi Step Image Build
 ----------------------
 
 To do the step up of the Fiesta Application we are going to do three things
@@ -116,7 +116,7 @@ Now the dockerfile is running the npm stuff compared to earlier images, this has
 
 #. Save the file
 
-Change the .drone.yml file
+Change the .drone.yml File
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Open the **.drone.yml** file
@@ -127,16 +127,16 @@ Change the .drone.yml file
 
    .. figure:: images/1.png
 
-#. Wait till all steps have been run before moving forward
+#. Wait till all steps in the cicd build have been run before moving forward
 
-Check effect of the new build method
+Check Effect of the New Build Method
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 To see the difference of these "New Way of Building" let's check two things:
 
 - Size fo the new image
 - Start time using the new image
 
-Check size difference
+Check Size Difference
 *********************
 
 #. Open a ssh session to the docker vm (using your other VC window or via terminal/putty)
@@ -144,7 +144,7 @@ Check size difference
 
    .. figure:: images/3.png
 
-Check the start time needed
+Check the Start Time Needed
 ***************************
 
 #. Open a ssh session to the docker vm (using your other VC window or via terminal/putty)
@@ -153,7 +153,7 @@ Check the start time needed
 
    .. figure:: images/4.png
 
-#. Run the following from the command line (**make sure you use your information!!**)
+#. Run the following from the command line (**make sure you use your environment information!!**)
 
    .. code-block:: bash
 

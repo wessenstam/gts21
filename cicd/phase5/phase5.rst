@@ -66,7 +66,7 @@ After we have the API calls we are going to use variables to set the correct val
 
 #. In your Era UI, click on **Time Machine**
 #. Click the radio button in front of *Initials* **-FiestaDB_TM**
-#. Click **Actions -> Snapshot** and call it **First-Snapshot**
+#. Click **Actions -> Snapshot** and choose **First-Snapshot** that you created in the previous section
 #. Click on **Operations** (via the drop down menu or by clicking in the top right hand corner)
 #. Wait till the snapshot operation has ended before moving forward
 #. Return to the Time Machine, click the radio button in front of *Initials* **-FiestaDB_TM**
@@ -81,7 +81,7 @@ After we have the API calls we are going to use variables to set the correct val
    - **Database Server VM Name** - *Initials* -MariaDB_DEV_VM
    - **Description** - (Optional) Dev clone from the *Initials* -FiestaDB
    - **Compute Profile** - CUSTOM_EXTRA_SMALL
-   - **Network Profile** - Era_Managed_MariaDB
+   - **Network Profile** - Era_Managed_MariaDB (DEFAULT_OOB_MARIADB_NETWORK)
 
    - Use for **Provide SSH Public Key Through** the following key (select **Text** first):
 
@@ -153,7 +153,7 @@ We need to tell drone to make a difference in the steps it needs to run.
 
       - name: Build Image (Dev)
         image: public.ecr.aws/n5p3f3u5/docker:latest
-        
+
         pull: if-not-exists
         volumes:
           - name: docker_sock
@@ -271,7 +271,7 @@ We need to tell drone to make a difference in the steps it needs to run.
             path: /var/run/docker.sock
         commands:
           - if [ `docker ps | grep fiesta_app | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app; sleep 10; else echo "Docker container has not been found..."; fi
-          - 
+          -
           - docker run --name fiesta_app --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest
         when:
           branch:
