@@ -42,7 +42,7 @@ As we have Visual Code already installed and added extensions, we are going to u
 
    .. figure:: images/4.png
 
-#. Provide the **/** as the folder you want to open and click on **OK**
+#. Provide the ``/`` as the folder you want to open and click on **OK**
 #. It will take some time before it opens as VC needs to install and configure the remote host. This takes approximately <1 minute (you might be asked for the password again)
 #. Now you should see the folder structure of the VM, open **/root/github** and you will see everything created earlier
 
@@ -122,6 +122,7 @@ To make sure we can use https with Gitea, we need to go into the gitea docker co
      - **Host**: <IP ADDRESS OF YOUR DOCKER VM>:3306
      - **Password**: gitea
 
+   .. figure:: images/10-1.png
 
    - General Settings:
 
@@ -136,7 +137,7 @@ Now you will receive an error that **This site can’t provide a secure connecti
 In VC, as we have all files for the containers being saved on the docker VM in the earlier created folders in /docker-location, we can change a file that is needed by Gitea and holds the config.
 
 #. Open your VC
-#. Open the file **/docker-location/gitea/conf/app.ini** and make the following changes under the **[server]** section:
+#. Open the file **/docker-location/gitea/conf/app.ini** and add the following lines under the **[server]** section:
 
    - **PROTOCOL**  = https
    - **CERT_FILE** = cert.pem
@@ -145,16 +146,18 @@ In VC, as we have all files for the containers being saved on the docker VM in t
      .. figure:: images/12.png
 
 #. Save the file and restart the container using ``docker-compose restart gitea`` in your terminal windows in VC
-#. Reloading the browser page will show an error on the certificate, which is logical as we are now using a Self Signed certificate. Use the normal ways to get to the login screen.
+#. Reloading the browser page (\https://<IP ADDRESS OF YOUR DOCKER VM>:3000) will show an error on the certificate, which is logical as we are now using a Self Signed certificate. Use the normal ways to get to the login screen.
 #. The first user will be the admin user of the Gitea application (default)
 #. Click the **Register button** to create an account. Provide whatever you want. We are going to use **nutanix**, **nutanix@atnutanix.com** and **nutanix/4u** during the workshop as examples.
-#. Click the Register button to have your account created. Welcome to Gitea!!!
+#. Click the Register button to have your account created.
 
    .. figure:: images/14.png
 
+Welcome to Gitea!!!
+
 ------
 
-Drone configuration
+Drone Configuration
 ^^^^^^^^^^^^^^^^^^^
 
 As Drone will use Gitea for its authentication, we need to get some parameters from Gitea and change the docker-compose.yaml file.
@@ -176,13 +179,13 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 
 #. Open the **docker-compose.yaml** file in VC and paste the values in their field names **DRONE_GITEA_CLIENT_ID** and **DRONE_GITEA_CLIENT_SECRET**
 
-   .. figure:: images/17.png
-
 #. Also change under the **drone-server** section in the docker-compose.yaml file
 
    - **DRONE_GITEA_SERVER=** \https://<IP ADDRESS OF DOCKER VM>:3000
    - **DRONE_SERVER_HOST=** \https://<IP ADDRESS OF DOCKER VM>:8080
-   - **DRONE_USER_CREATE=** <USERNAME> to **nutanix**
+   .. - **DRONE_USER_CREATE=** <USERNAME> to **nutanix**
+
+   .. figure:: images/17.png
 
    .. note::
 
@@ -191,6 +194,8 @@ As Drone will use Gitea for its authentication, we need to get some parameters f
 #. Change under the **drone-docker-runner** section
 
    - **DRONE_RPC_HOST=** <IP ADDRESS OF DOCKER VM>
+
+   .. figure:: images/17-1.png
 
 #. Save the file
 #. Click in Gitea UI the **Save** button and then the **Dashboard** text
@@ -217,8 +222,8 @@ We have just created our first CI/CD pipeline infrasturcture. **But** we still h
 
 - The way of working using **vi** or **nano** is not very effective and ready for human error (:fa:`thumbs-up`)
 - Variables needed, have to be set outside of the image we build (:fa:`thumbs-down`)
-- The container build takes a long time and is a tedeous work including it's management (:fa:`thumbs-down`)
+- The container build takes a long time and is a tedious work including it's management (:fa:`thumbs-down`)
 - The start of the container takes a long time (:fa:`thumbs-down`)
 - The image is only available as long as the Docker VM exists (:fa:`thumbs-down`)
 
-The next modules in this workshop are going to address these :fa:`thumbs-down`.... Let's go for it!
+The next modules in this workshop are going to address these :fa:`thumbs-down`.... Let's go for it:fa:`thumbs-up`!

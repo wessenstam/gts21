@@ -1,6 +1,6 @@
 .. _phase4_container:
 
-Starting the container faster
+Starting the Container Faster
 =============================
 
 As you may have noticed it takes a while before the Fiesta_App container is up and running. The CI/CD pipeline does it work in automating the build, test, upload to our Dockerhub registry and deployment steps, but still takes a few minutes before the application is up and running and serving \HTTP requests.
@@ -10,7 +10,7 @@ The reason for the time needed is that during the start of the container it has 
 .. note::
    Estimated time **45 minutes**
 
-Multi step image build
+Multi Step Image Build
 ----------------------
 
 To do the step up of the Fiesta Application we are going to do three things
@@ -31,45 +31,45 @@ Change dockerfile
    .. code-block:: yaml
 
       # This dockerfile multi step is to start the container faster as the runapp.sh doesn't have to run all npm steps
-      
+
       # Grab the Alpine Linux OS image and name the container base
       FROM alpine:3.11 as base
-      
+
       # Install needed packages
       RUN apk add --no-cache --update nodejs npm git
-      
+
       # Create and set the working directory
       RUN mkdir /code
       WORKDIR /code
-      
+
       # Get the Fiesta Application in the container
       RUN git clone https://github.com/sharonpamela/Fiesta.git /code/Fiesta
-      
+
       # Get ready to install and build the application
       RUN cd /code/Fiesta && npm install
       RUN cd /code/Fiesta/client && npm install
-      RUN cd /code/Fiesta/client && npm audit fix 
-      RUN cd /code/Fiesta/client && npm fund 
+      RUN cd /code/Fiesta/client && npm audit fix
+      RUN cd /code/Fiesta/client && npm fund
       RUN cd /code/Fiesta/client && npm update
       RUN cd /code/Fiesta/client && npm run build
-      
+
       # Grab the Alpine Linux OS image and name it Final_Image
       FROM alpine:3.11 as Final_Image
-      
+
       # Install some needed packages
       RUN apk add --no-cache --update nodejs npm mysql-client
-      
+
       # Get the NMP nodemon and install it
       RUN npm install -g nodemon
-      
+
       # Copy the earlier created application from the first step into the new container
       COPY --from=base /code /code
-      
+
       # Copy the starting app
       COPY runapp.sh /code
       RUN chmod +x /code/runapp.sh
       WORKDIR /code
-      
+
       # Start the application
       ENTRYPOINT [ "/code/runapp.sh"]
       EXPOSE 3001 3000
@@ -87,36 +87,36 @@ Now the dockerfile is running the npm stuff compared to earlier images, this has
    .. code-block:: bash
 
       #!/bin/sh
-      
+
       # If there is a "/" in the password or username we need to change it otherwise sed goes haywire
       if [ `echo $DB_PASSWD | grep "/" | wc -l` -gt 0 ]
-          then 
+          then
               DB_PASSWD1=$(echo "${DB_PASSWD//\//\\/}")
           else
               DB_PASSWD1=$DB_PASSWD
       fi
-      
+
       if [ `echo $DB_USER | grep "/" | wc -l` -gt 0 ]
-          then 
+          then
               DB_USER1=$(echo "${DB_USER//\//\\/}")
           else
               DB_USER1=$DB_USER
       fi
-      
+
       # Change the Fiesta configuration code so it works in the container
       sed -i "s/REPLACE_DB_NAME/$DB_NAME/g" /code/Fiesta/config/config.js
       sed -i "s/REPLACE_DB_HOST_ADDRESS/$DB_SERVER/g" /code/Fiesta/config/config.js
       sed -i "s/REPLACE_DB_DIALECT/$DB_TYPE/g" /code/Fiesta/config/config.js
       sed -i "s/REPLACE_DB_USER_NAME/$DB_USER1/g" /code/Fiesta/config/config.js
       sed -i "s/REPLACE_DB_PASSWORD/$DB_PASSWD1/g" /code/Fiesta/config/config.js
-      
+
       # Run the NPM Application
       cd /code/Fiesta
       npm start
 
 #. Save the file
 
-Change the .drone.yml file
+Change the .drone.yml File
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Open the **.drone.yml** file
@@ -127,16 +127,16 @@ Change the .drone.yml file
 
    .. figure:: images/1.png
 
-#. Wait till all steps have been run before moving forward
+#. Wait till all steps in the cicd build have been run before moving forward
 
-Check effect of the new build method
+Check Effect of the New Build Method
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 To see the difference of these "New Way of Building" let's check two things:
 
 - Size fo the new image
 - Start time using the new image
 
-Check size difference
+Check Size Difference
 *********************
 
 #. Open a ssh session to the docker vm (using your other VC window or via terminal/putty)
@@ -144,7 +144,7 @@ Check size difference
 
    .. figure:: images/3.png
 
-Check the start time needed
+Check the Start Time Needed
 ***************************
 
 #. Open a ssh session to the docker vm (using your other VC window or via terminal/putty)
@@ -153,10 +153,10 @@ Check the start time needed
 
    .. figure:: images/4.png
 
-#. Run the following from the command line (**make sure you use your information!!**)
+#. Run the following from the command line (**make sure you use your environment information!!**)
 
    .. code-block:: bash
-      
+
       DB_SERVER=<IP ADDRESS OF MARIADB VM>
       DB_NAME=FiestaDB
       DB_USER=fiesta
@@ -178,7 +178,7 @@ Check the start time needed
 
     <H1><font color="#AFD135"><center>Congratulations!!!!</center></font></H1>
 
-We have just used our CI/CD pipeline and solved these topics. 
+We have just used our CI/CD pipeline and solved these topics.
 
 - The way of working using **vi** or **nano** is not very effective and ready for human error (:fa:`thumbs-up`)
 - Variables needed, have to be set outside of the image we build (:fa:`thumbs-up`)
@@ -190,7 +190,7 @@ We have just used our CI/CD pipeline and solved these topics.
 
 
 
-..   .. TODO:: 
+..   .. TODO::
 
         All on MariaDB
 
