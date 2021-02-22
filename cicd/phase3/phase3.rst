@@ -32,7 +32,7 @@ Now that we have our tooling and basic CI/CD infrastructure up and running let's
   - save images in Dockerhub
   - deploy the image as containers
 
-Create a repo in Gitea
+Create a Repo in Gitea
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Let's create a repository (repo) that we can use to store our files in from which we want to have our images/containers build.
@@ -44,12 +44,15 @@ Let's create a repository (repo) that we can use to store our files in from whic
    .. figure:: images/1.png
 
 #. Provide a name, we have chosen **Fiesta_Application**, and click the **Create Repository** button
-#. After the Repo has been created, you will see the possibilities on how to clone the Repo
+#. After the Repo has been created, you will see the possibilities on how to clone the Repo to you local development environment (Windows Tools VM)
 
    .. figure:: images/2.png
 
 #. Copy the https URL
-#. Open a command line or terminal on your laptop or Windows Tools VM and run ``git config --global http.sslVerify false``. This step is necessary otherwise git is not willing to clone anything from a Version Control Manager using Self signed certificates. In the same command line or terminal session run the following two commands ``git config --global user.name "FIRST_NAME LAST_NAME"`` and ``git config --global user.email "MY_NAME@example.com"`` to set the user's name and email address so all the pushes can be identified.
+
+#. Open a command line or terminal on your laptop or Windows Tools VM and run ``git config --global http.sslVerify false`` . This step is necessary otherwise git is not willing to clone anything from a Version Control Manager using Self signed certificates.
+
+#. In the same command line or terminal session run the following two commands ``git config --global user.name "FIRST_NAME LAST_NAME"`` and ``git config --global user.email "MY_NAME@example.com"`` to set the user's name and email address so all the pushes can be identified.
 
 #. On your laptop or the Windows Tools VM environment open VC, unless already open, and click **File -> New Window**
 
@@ -84,9 +87,12 @@ Let's create a repository (repo) that we can use to store our files in from whic
    .. figure:: images/9.png
 
 #. Click the icon that has the **1** on it and provide a message in the Text field and click the :fa:`check` symbol (Commit)
+
 #. Click **Always** on the Warning screen you get
+
 #. Click on the **...** icon next to the SOURCE CONTROL and select Push. This will push the new file onto the Repo in Gitea
-#. Provide the login information for Gitea
+
+#. Provide the login information for Gitea (user name is nutanix and password is the default password)
 
    .. note::
     In the lower right corner you will get a message with respect to have VC run periodically a git fetch. This is useful if you have multiple people working against the repo, but as we are the only ones, click on **No**
@@ -115,7 +121,7 @@ Drone needs to understand which Repos to track. To do this we will tell Drone wh
 #. Click the **SAVE** button
 #. Click the **Repositories** text just above the *Fiesta_Application* text to return to your main dashboard. You can return to the settings by clicking the name of the repo
 
-Drone is now ready to be used. it is looking from a file **.drone.yml** in the root of the repo to tell it what to do. Let's get one created and see what happens...
+Drone is now ready to be used. Drone is looking for a file **.drone.yml** in the root of the repo to tell it what Drone has to do. Let's get one created and see what happens.
 
 Use Drone to build an image
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -131,12 +137,12 @@ Use Drone to build an image
 
     kind: pipeline
     name: default
-    
+
     clone:
       skip_verify: true
-    
+
     steps:
-    
+
       - name: build test image
         image: public.ecr.aws/n5p3f3u5/docker:latest
         pull: if-not-exists
@@ -145,7 +151,7 @@ Use Drone to build an image
             path: /var/run/docker.sock
         commands:
           - docker build -t fiesta_app:${DRONE_COMMIT_SHA:0:6} .
-    
+
     volumes:
       - name: docker_sock
         host:
@@ -173,23 +179,23 @@ Use Drone to build an image
       
       # Install the needed packages
       RUN apk add --no-cache --update nodejs npm mysql-client git python3 python3-dev gcc g++ unixodbc-dev curl
-      
+
       # Create a location in the container for the Fiesta Application Code
       RUN mkdir /code
-      
+
       # Make sure that all next commands are run against the /code directory
       WORKDIR /code
 
       # Copy needed files into the container
       COPY set_privileges.sql /code/set_privileges.sql
       COPY runapp.sh /code
-      
+
       # Make the runapp.sh executable
       RUN chmod +x /code/runapp.sh
 
       # Start the application
       ENTRYPOINT [ "/code/runapp.sh"]
-      
+
       # Expose port 30001 and 3000 to the outside world
       EXPOSE 3001 3000
 
@@ -198,7 +204,7 @@ Use Drone to build an image
 #. Open immediately the Drone UI and click on **ACTIVITY FEED**
 
    .. figure:: images/13.png
-     
+
 #. Create the following files and copy the respective content in the files as the build step is missing them...
 
    .. figure:: images/14.png
@@ -218,30 +224,30 @@ Use Drone to build an image
 
        # Clone the Repo into the container in the /code folder we already created in the dockerfile
        git clone https://github.com/sharonpamela/Fiesta /code/Fiesta
-       
+
        # Change the configuration from the git clone action
        sed -i 's/REPLACE_DB_NAME/FiestaDB/g' /code/Fiesta/config/config.js
        sed -i "s/REPLACE_DB_HOST_ADDRESS/<IP ADDRESS OF MARIADB SERVER>/g" /code/Fiesta/config/config.js
        sed -i "s/REPLACE_DB_DIALECT/mysql/g" /code/Fiesta/config/config.js
        sed -i "s/REPLACE_DB_USER_NAME/fiesta/g" /code/Fiesta/config/config.js
        sed -i "s/REPLACE_DB_PASSWORD/fiesta/g" /code/Fiesta/config/config.js
-       
+
        npm install -g nodemon
-       
+
        # Get ready to start the application
        cd /code/Fiesta
        npm install
        cd /code/Fiesta/client
        npm install
-       
+
        # Update the packages
        npm fund
        npm update
        npm audit fix
-       
+
        # Build the app
        npm run build
-       
+
        # Run the NPM Application
        cd /code/Fiesta
        npm start
@@ -255,7 +261,6 @@ Use Drone to build an image
 
 #. Switch the VC window to the **docker VM** so we can use the terminal to run some commands
 #. Run ``docker image ls`` to see our create image via the CI/CD pipeline
-
 
    .. figure:: images/16.png
 
@@ -291,13 +296,13 @@ In a CI/CD pipeline testing is very important and needs to be run automatically.
           - sed -i "s/REPLACE_DB_USER_NAME/$DB_USER/g" /code/Fiesta/config/config.js
           - sed -i "s/REPLACE_DB_PASSWORD/$DB_PASSWD/g" /code/Fiesta/config/config.js
           - cat /code/Fiesta/config/config.js
-    
+
    .. note::
      Make sure you have the **- name** at the same indent as the already **- name** section in the file. Otherwise you'll get an error message like below...
      Also change the **<IP ADDRESS OF MARIADB SERVER>** to the correct IP address
 
      .. figure:: images/17.png
-   
+
    This is how it should look like
 
    .. figure:: images/18.png
@@ -307,13 +312,13 @@ In a CI/CD pipeline testing is very important and needs to be run automatically.
    - Use the earlier build container (*image* section)
    - Set variables so we can use them in the commands (*environment* section)
    - Run commands to see if (*commands* section)
-     
+
      - npm has been installed in the container
      - can we connect to the MySQL database SERVER
      - can we clone the data from the github repo
      - can we change a file that exists after the git clone command
      - show the end result of the changed config file
-  
+
 #. Save the file, commit and push to Gitea and open the Drone UI.
 #. Drone will only move to the next step if the previous step was successful.
 
@@ -346,17 +351,17 @@ Manual upload of images
 
    .. figure:: images/21.png
 
-#. Run ``docker image tag fiesta_app:15b0c0 devnutanix/fiesta_app:1.0`` (the version **15b0c0** came from step 6 in the **Test the build images** screenshot. Please use yours as mentioned in the Drone UI) this will create a new image which will be tagged **devnutanix/fiesta_app** with version **1.0**
+#. Run ``docker image tag fiesta_app:15b0c0 <your-docker-account>/fiesta_app:1.0`` (the version **15b0c0** came from step 6 in the **Test the build images** screenshot. Please use yours as mentioned in the Drone UI) this will create a new image which will be tagged **<your-docker-account>/fiesta_app** with version **1.0**
 #. Running ``docker image ls`` is showing the image in the list
 
    .. figure:: images/22.png
 
-#. Run ``docker push devnutanix/fiesta_app:1.0`` to initiate to push of the image onto the Dockerhub environment
+#. Run ``docker push <your-docker-account>/fiesta_app:1.0`` to initiate to push of the image onto the Dockerhub environment
 #. After a few seconds you should see this in your screen
 
    .. figure:: images/23.png
 
-#. Open your dockerhub account using a browser. In your account you should now see the just pushed image 
+#. Open your dockerhub account using a browser. In your account you should now see the just pushed image
 
    .. figure:: images/24.png
 
@@ -374,7 +379,7 @@ CI/CD Upload of images
         image: public.ecr.aws/n5p3f3u5/docker:latest
         pull: if-not-exists
         environment:
-          c:
+          USERNAME
             from_secret: dockerhub_username
           PASSWORD:
             from_secret: dockerhub_password
@@ -385,15 +390,17 @@ CI/CD Upload of images
           - docker login -u $USERNAME -p $PASSWORD
           - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} $USERNAME/fiesta_app:latest
           - docker image tag fiesta_app:${DRONE_COMMIT_SHA:0:6} $USERNAME/fiesta_app:${DRONE_COMMIT_SHA:0:6}
-          - docker push $USERNAMEfiesta_app:${DRONE_COMMIT_SHA:0:6}
+          - docker push $USERNAME/fiesta_app:${DRONE_COMMIT_SHA:0:6}
           - docker push $USERNAME/fiesta_app:latest
- 
+
+   .. figure:: images/24-1.png
+
 #. Save the file. **DON'T COMMIT AND PUSH YET!!!!** we need to make a small change to Drone to make the step work
 #. As we are using the **from_secret** parameter we need to tell Drone what the secret is. Open the Drone UI (**\http://<IP ADDRESS OF DOCKER VM>:8080**)
 #. Click on your **Fiesta_Application repository -> SETTINGS**
-#. Under the **Secrets** section type the following - Hit the **ADD SECRET** button after each line:
+#. Under the **Secrets** section type the following - Hit the **ADD SECRET** button after each line(make sure to input secret values):
 
-   - **dockerhub_username** - Your DockerHub Account name (we will use devnutanix)
+   - **dockerhub_username** - Your DockerHub Account name (in this example we will use devnutanix as the docker hub account)
    - **dockerhub_password** - The password of the Dockerhub Account
 
    .. figure:: images/25.png
@@ -412,10 +419,11 @@ Deploy the images
 As we already deployed our own build Fiesta_App image in a former part of the workshop (:ref:`basic_container`) we know what the steps are to deploy an image. Those steps need to be repeated by the CI/CD pipeline AFTER the test and the upload have passed. Only then we are allowing the deployment of the image.
 
 #. Open the **.drone.yml** file
-#. Add the following text 
+
+#. Add the following text before the final volumes section
 
    .. code-block:: yaml
-    
+
        - name: Deploy newest image
          image: public.ecr.aws/n5p3f3u5/docker:latest
          pull: if-not-exists
@@ -442,17 +450,17 @@ As we already deployed our own build Fiesta_App image in a former part of the wo
         - *--name* Provide the name of the container
         - *--rm* Remove the container if it is being stopped
         - *-p* Open port 5000 for the outside world and map it to port 3000 on the container
-        - *-d* Run in the background as a daemon 
+        - *-d* Run in the background as a daemon
 
 #. Save the file, Commit and push the image
 #. This will make drone also deploy the container
 
 -------
 
-Use variables outside of the container
+Use Variables outside of the Container
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As we have now a running CI/CD pipeline that is functional, we need to start thinking about the parameters that may change during new tests. These changes can be due to the environment we use being Dev/Test or Production. Having passwords and/or secrets in plain text is not the best idea as well. This means that the variables/parameters, we now have defined in the different files, need to be stored somewhere. The location where we put these variables/parameters must be used during build, test, upload and deploy time by the CI/CD pipeline. We already used the **Secrets** in the upload and deploy steps of Drone. So let's extend it for the images that need to be built for all variables/parameters.
+As we have now a running CI/CD pipeline that is functional, we need to start thinking about the parameters that may change during new tests. These changes can be due to the environment we use being Dev/Test or Production. It is not ideal to have passwords and/or secrets. This means that the variables/parameters, we now have defined in the different files, need to be stored somewhere. The location where we put these variables/parameters must be used during build, test, upload and deploy time by the CI/CD pipeline. We already used the **Secrets** in the upload and deploy steps of Drone. So let's extend it for the images that need to be built for all variables/parameters.
 
 List of variables/parameters
 ****************************
@@ -472,7 +480,7 @@ We need to make changes to the following files so they use the set variables/par
 - .drone.yml
 - runapp.sh
 
-We are also going to recreate the images, but that will be solved by the CI/CD pipeline, so no need to rebuild manually images etc.. 
+We are also going to recreate the images, but that will be solved by the CI/CD pipeline, so no need to rebuild manually images etc..
 
 Change runapp.sh
 ****************
@@ -486,14 +494,14 @@ Change runapp.sh
 
       # If there is a "/" in the password or username we need to change it otherwise sed goes haywire
       if [ `echo $DB_PASSWD | grep "/" | wc -l` -gt 0 ]
-          then 
+          then
               DB_PASSWD1=$(echo "${DB_PASSWD//\//\\/}")
           else
               DB_PASSWD1=$DB_PASSWD
       fi
-      
+
       if [ `echo $DB_USER | grep "/" | wc -l` -gt 0 ]
-          then 
+          then
               DB_USER1=$(echo "${DB_USER//\//\\/}")
           else
               DB_USER1=$DB_USER
@@ -564,9 +572,9 @@ Change runapp.sh
               from_secret: db_server_ip
             DB_PASSWD:
               from_secret: db_passwd
-            DB_USER: 
+            DB_USER:
               from_secret: db_user
-            DB_TYPE: 
+            DB_TYPE:
               from_secret: db_type
             DB_NAME:
               from_secret: db_name
@@ -611,9 +619,9 @@ Change runapp.sh
               from_secret: db_server_ip
             DB_PASSWD:
               from_secret: db_passwd
-            DB_USER: 
+            DB_USER:
               from_secret: db_user
-            DB_TYPE: 
+            DB_TYPE:
               from_secret: db_type
             DB_NAME:
               from_secret: db_name
@@ -630,7 +638,7 @@ Change runapp.sh
         host:
           path: /var/run/docker.sock
 
-#. Save the file
+#. Save the file (do not push changes to git repo yet)
 #. Open the Drone UI so we can set the variables/parameters we need during the different steps of the CI/CD pipeline
 #. Open your repository and click the **SETTINGS** tab
 #. Scroll a bit down to the **Secrets** section
@@ -659,7 +667,7 @@ Change runapp.sh
 
     <H1><font color="#AFD135"><center>Congratulations!!!!</center></font></H1>
 
-We have just used our CI/CD pipeline and solved, so far, these topics. 
+We have just used our CI/CD pipeline and solved, so far, these topics.
 
 - The way of working using **vi** or **nano** is not very effective and ready for human error (:fa:`thumbs-up`)
 - Variables needed, have to be set outside of the image we build (:fa:`thumbs-up`)

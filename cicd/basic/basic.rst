@@ -152,7 +152,7 @@ Follow these steps to create the first container. As space consumed by the conta
 
 The alpine image with tag 3.11 is seen and an image with an ID, but they don't mean much to us, let's recreate the image and provide a more meaningfull name
 
-#. Rerun ``docker build . -t fiesta_app:1.0``. This will tag the existing image **<none>** to be called **fiesta_app** with version number **1.0**
+#. Rerun ``docker build . -t fiesta_app:1.0`` . This will tag the existing image **<none>** to be called **fiesta_app** with version number **1.0**
 #. Run ``docker image ls`` to show the list of images we have in our docker environment.
 
    .. figure:: images/7.png
