@@ -131,6 +131,7 @@ Deployment
 
    .. figure:: images/3.png
 
+[CREATE A NOTE THAT SAYS TO SELECT ALL NAMESPACES IF NOT ALREADY SELECTED]
 
 Traefik configuration
 *********************
@@ -138,6 +139,8 @@ Traefik configuration
 Now that Grafana is deployed, we need to tell Traefik to route traffic from a specific URL to the Grafana Service we created.
 
 #. Open the file **traefik-routes.yaml** in Visual Code and add the following content to the end of the file:
+
+[DOES THE FORMATTING/SPACES MATTER ON THE 3 DASHES?]
 
    .. code-block:: yaml
 
@@ -173,7 +176,7 @@ Datasource configuration
 
    .. figure:: images/6.png
 
-#. Use the combination **admin and admin** for the login and choose a new password in the screen that follows.
+#. Use the combination **admin and admin** for the login and choose a new password in the screen that follows. [WHY NOT JUST SKIP CREATING A NEW PASSWORD, FOR TROUBLESHOOTING/CONSISTENCY PURPOSES?]
 
    .. note::
      You might get a popup p save the password, click on your preference. The workshop has no dependency on it.
@@ -184,9 +187,13 @@ Datasource configuration
 
 #. Click the **Add data source** button to add the built-in Prometheus deployment
 #. Select Prometheus in the next screen by clicking the **Select** button
-#. Switch to Lens and get the IP address of the Prometheus operator Pod as shown in Lens (**Workloads -> Pods -> prometheus-operatord**)
+#. Switch to Lens and get the IP address of the Prometheus operator Pod as shown in Lens (**Workloads -> Pods -> prometheus-operator**)
 
    .. figure:: images/8.png
+
+[YOU HAVE BOTH -OPERATED (HIGHLIGHTED) AND OPERATOR (IN YOUR INSTRUCTIONS) FIX SCREEN SHOT TO HIGHLIGHT OPERATOR.]
+
+[ALSO, HOW ARE YOU GETTING THE IP? WHAT IS IT CALLED? IN SS IT SAYS IN YOUR SS IT SAYS ENDPOINTS. SEEMS LIKE I CAN JUST CLICK ON IT, AND SEE THE IP. NOT THE CASE.]
 
 #. In the URL field type the IP address you have found. The port is 9090, so the URL, using the example screen shots, is http://172.20.1.11:9090
 #. Click the **Save & Test** button. If all is correct, you should receive a green bar above the button stating **Data source is working**

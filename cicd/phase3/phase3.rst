@@ -56,17 +56,19 @@ Let's create a repository (repo) that we can use to store our files in from whic
 
 #. In the same command line or terminal session run the following two commands ``git config --global user.name "FIRST_NAME LAST_NAME"`` and ``git config --global user.email "MY_NAME@example.com"`` to set the user's name and email address so all the pushes can be identified.
 
+[RECOMMEND MAKING IT MORE CLEAR THAT THOSE ARE TWO SEPARATE COMMANDS]
+
 #. On your laptop or the Windows Tools VM environment open VC, unless already open, and click **File -> New Window**
 
    .. figure:: images/3.png
 
 #. In the new Window click **View -> Command Palette** and type ``git clone`` [AND HIT ENTER, OR CLICK ON IT]
 
-#. Paste the earlier copied URl from Gitea's Repo [ARE WE CHOOSING CLONE FROM URL OR GITHUB?]
+#. Paste the earlier copied URL from Gitea's Repo [ARE WE CHOOSING CLONE FROM URL OR GITHUB?]
 
    .. figure:: images/5.png
 
-#. Provide the location where to clone the data in from the Gitea Repo in the next screen (**Select Folder**). Create a new folder called **github** [WE ALREADY HAVE ONE!], open that folder and click the **Select Repository Location** button. [YOU CHOOSE THE FOLDER AND CLICK OK AT THE RIGHT END OF SPECIFYING /root/github/]
+#. Provide the location where to clone the data in from the Gitea Repo in the next screen (**Select Folder**). Create a new folder called **github**, open that folder and click the **Select Repository Location** button.
 
 #. This will clone the repo into our development environment. In the bottom right corner you will see a message, *Open*, *Open in New Window*, Click the **Open** button
 
@@ -90,11 +92,13 @@ Let's create a repository (repo) that we can use to store our files in from whic
     This Repo is built for the Fiesta Application and has all needed files to build the containerized version of the Fiesta app.
     Original version of the Fiesta Application can be found at https://github.com/sharonpamela/Fiesta
 
-#. As we have Git integration installed in VC, we get a blue number on the Git extension (third icon from the top in the left hand pane)
+#. As we have Git integration installed in VC, we get a blue number on the Git extension (third icon from the top in the left hand pane) [SOURCE CONTROL]
 
    .. figure:: images/9.png
 
-#. Click the icon that has the **1** on it and provide a message in the Text field and click the :fa:`check` symbol (Commit)
+#. Click the icon that has the **1** on it [SOURCE CONTROL] and provide a message in the Text field and click the :fa:`check` symbol (Commit)
+
+[HIT ENTER]
 
 #. Click **Always** on the Warning screen you get
 
@@ -130,6 +134,8 @@ Drone needs to understand which Repos to track. To do this we will tell Drone wh
 #. In the **Main** section click the **Trusted** checkbox. That way we allow drone to use the Repo.
 #. Click the **SAVE** button
 #. Click the **Repositories** text just above the *Fiesta_Application* text to return to your main dashboard. You can return to the settings by clicking the name of the repo
+
+[NOT CLEAR WHY THIS IS HAPPENING OR WHY IT MATTERS OR WHAT WE ACCOMPLISHED BY DOING THIS SPECIFICALLY TO GET AN ERROR]
 
 Drone is now ready to be used. Drone is looking for a file **.drone.yml** in the root of the repo to tell it what Drone has to do. Let's get one created and see what happens.
 
@@ -179,8 +185,6 @@ Use Drone to build an image
 #. Open the **Drone UI -> nutanix/Fiesta_Application -> ACTIVITY FEED -> #1 -> build test image** which has errors.
 
    .. figure:: images/12.png
-
-[2-12-21 EOD - I DON'T SEE ANYTHING IN ACTIVITY - WILLEM INVESTIGATING]
 
 #. The steps has searched for a dockerfile, but couldn't find it. Let's fix that
 
@@ -311,15 +315,23 @@ In a CI/CD pipeline testing is very important and needs to be run automatically.
           - sed -i "s/REPLACE_DB_PASSWORD/$DB_PASSWD/g" /code/Fiesta/config/config.js
           - cat /code/Fiesta/config/config.js
 
+[THE PASTED FORMATTING DOESN'T MAINTAIN THE CORRECT SPACING, I THINK FOLKS NEED MORE INSTRUCTIONS HERE. "HIGHLIGHT EVERYTHING AND HIT TAB"? OR SIMILAR EASY INSTRUCTIONS.]
+
    .. note::
      Make sure you have the **- name** at the same indent as the already **- name** section in the file. Otherwise you'll get an error message like below...
      Also change the **<IP ADDRESS OF MARIADB SERVER>** to the correct IP address
 
      .. figure:: images/17.png
 
+[MAKE IT MORE OBVIOUS TO CHANGE MARIA DB IP - SEPARATE STEP?]
+
    This is how it should look like
 
    .. figure:: images/18.png
+
+[HIGHLIGHT THE PORTION THEY ARE PASTING IN TO MAKE IT VERY OBVIOUS]
+
+[THE SCREEN SHOT LOOKS COMPLETELY DIFFERENT FROM MINE]
 
 #. This step will do the following:
 
@@ -339,6 +351,8 @@ In a CI/CD pipeline testing is very important and needs to be run automatically.
    .. figure:: images/19.png
 
 As all steps have completed successful and the output of the **config.js** file is according to what is expected, looking at the bash commands, we can start with the next phase. Upload the image to Dockerhub...
+
+[CLARIFY WHAT WE DID AND WHY.]
 
 -------
 
@@ -365,8 +379,10 @@ Manual upload of images
 
    .. figure:: images/21.png
 
-#. Run ``docker image tag fiesta_app:15b0c0 <your-docker-account>/fiesta_app:1.0`` (the version **15b0c0** came from step 6 in the **Test the build images** screenshot. Please use yours as mentioned in the Drone UI) this will create a new image which will be tagged **<your-docker-account>/fiesta_app** with version **1.0**
+#. Run ``docker image tag fiesta_app:15b0c0 <your-docker-account>/fiesta_app:1.0`` (the version **15b0c0** came from step 17 in the **Use Drone to build an image** screenshot.  Please use yours as mentioned in the Drone UI) this will create a new image which will be tagged **<your-docker-account>/fiesta_app** with version **1.0**
 #. Running ``docker image ls`` is showing the image in the list
+
+[REMOVE 15B0C0 AND REPLACE WITH <VALUE> TAG]
 
    .. figure:: images/22.png
 
