@@ -69,7 +69,7 @@ Follow these steps to create the first container. As space consumed by the conta
    .. code-block:: dockerfile
 
       # Grab the needed OS image
-      FROM alpine:3.11
+      FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest
 
       # Install the needed packages
       RUN apk add --no-cache --update nodejs npm mysql-client git python3 python3-dev gcc g++ unixodbc-dev curl
@@ -142,10 +142,9 @@ Follow these steps to create the first container. As space consumed by the conta
 
    .. figure:: images/5.png
 
-#. Now that we have al needed files, let's run ``docker build .`` to create the container. This takes approximately 1 minute
+#. Run the command ``docker login`` and use your credentials of your Docker Hub account you created earlier. This way we avoid the issue that Docker has put into place since November 2020 (https://www.docker.com/increase-rate-limits)
 
-   .. note::
-       If you get a message stating **You have reached your pull limit...** ask the leading SE for the solution
+#. Now that we have al needed files, let's run ``docker build .`` to create the container. This takes approximately 1 minute
 
 #. Run ``docker image ls`` to see our image we've just build
 
@@ -153,7 +152,7 @@ Follow these steps to create the first container. As space consumed by the conta
 
 The alpine image with tag 3.11 is seen and an image with an ID, but they don't mean much to us, let's recreate the image and provide a more meaningfull name
 
-#. Rerun ``docker build . -t fiesta_app:1.0``. This will tag the existing image **<none>** to be called **fiesta_app** with version number **1.0**
+#. Rerun ``docker build . -t fiesta_app:1.0`` . This will tag the existing image **<none>** to be called **fiesta_app** with version number **1.0**
 #. Run ``docker image ls`` to show the list of images we have in our docker environment.
 
    .. figure:: images/7.png
