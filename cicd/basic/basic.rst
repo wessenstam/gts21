@@ -203,7 +203,7 @@ So we have an image ID. Great. But what does this mean to us? Let's quickly add 
 
 #. Run the command ``docker run -d --rm -p 5000:3000 --name Fiesta_App fiesta_app:1.0``. The *-p 5000:3000* parameter exposes port 5000, and maps the external port of 5000 to the internal port of 3000.
 
-[THIAGO -- SHOULDN'T THIS BE PORT 5001? IT'S NOT WORKING ON 5000.]
+[THIAGO: SHOULDN'T THIS BE PORT 5001? IT'S NOT WORKING ON 5000.]
 
 #. Run the command ``docker logs --follow Fiesta_App`` once again. At the same time, open a browser ``http://<DOCKER-VM-IP-ADDRESS>:5000/products``.
 
@@ -229,8 +229,8 @@ We have just created our initial version of the Fiesta app as a container. Howev
 
 In the proceeding sections, we will show you how to address all of these concerns.
 
-.. |proj-icon| image:: ../images/projects_icon.png
-.. |bp_icon| image:: ../images/blueprints_icon.png
-.. |mktmgr-icon| image:: ../images/marketplacemanager_icon.png
-.. |mkt-icon| image:: ../images/marketplace_icon.png
-.. |bp-icon| image:: ../images/blueprints_icon.png
+.. |proj-icon| image:: ../../../images/projects_icon.png
+.. |bp_icon| image:: ../../../images/blueprints_icon.png
+.. |mktmgr-icon| image:: ../../../images/marketplacemanager_icon.png
+.. |mkt-icon| image:: ../../../images/marketplace_icon.png
+.. |bp-icon| image:: ../../../images/blueprints_icon.png

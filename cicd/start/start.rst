@@ -36,8 +36,8 @@ The deployed blueprint provides the following automated steps:
 
    - (VM3) Deploys the Fiesta app. This creates a dynamic webpage based on the data within the MariaDB database.
 
-.. |proj-icon| image:: ../images/projects_icon.png
-.. |bp_icon| image:: ../images/blueprints_icon.png
-.. |mktmgr-icon| image:: ../images/marketplacemanager_icon.png
-.. |mkt-icon| image:: ../images/marketplace_icon.png
-.. |bp-icon| image:: ../images/blueprints_icon.png
+.. |proj-icon| image:: ../../../images/projects_icon.png
+.. |bp_icon| image:: ../../../images/blueprints_icon.png
+.. |mktmgr-icon| image:: ../../../images/marketplacemanager_icon.png
+.. |mkt-icon| image:: ../../../images/marketplace_icon.png
+.. |bp-icon| image:: ../../../images/blueprints_icon.png

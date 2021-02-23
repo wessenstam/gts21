@@ -63,8 +63,8 @@ Follow these steps to enable Karbon
 
 Now that the pre-requirements are ready, we can proceed.
 
-.. |proj-icon| image:: ../images/projects_icon.png
-.. |bp_icon| image:: ../images/blueprints_icon.png
-.. |mktmgr-icon| image:: ../images/marketplacemanager_icon.png
-.. |mkt-icon| image:: ../images/marketplace_icon.png
-.. |bp-icon| image:: ../images/blueprints_icon.png
+.. |proj-icon| image:: ../../../images/projects_icon.png
+.. |bp_icon| image:: ../../../images/blueprints_icon.png
+.. |mktmgr-icon| image:: ../../../images/marketplacemanager_icon.png
+.. |mkt-icon| image:: ../../../images/marketplace_icon.png
+.. |bp-icon| image:: ../../../images/blueprints_icon.png
