@@ -222,7 +222,7 @@ Datasource configuration
 
 #. Click the **Add data source** button to add the built-in Prometheus deployment
 #. Select Prometheus in the next screen by clicking the **Select** button
-#. Switch to Lens and get the IP address of the Prometheus operatord Service as shown in Lens (**Workloads -> Services -> prometheus-operatord -> Endpoints**)
+#. Switch to Lens and get the IP address of the Prometheus **operated** Service as shown in Lens (**Network -> Services -> prometheus-operated -> Endpoints**)
 
    .. figure:: images/8.png
 
@@ -597,17 +597,17 @@ As the bucket can only be addressed by a URL we need to make sure that we have a
 
       .. figure:: images/35.png
 
-   #. Type the name of the object store you have in your Prism Central (examples are using nutanix-demo)
+   #. Type the name of the object store you have in your Prism Central **ntnx-objects** (examples are using nutanix-demo)
    #. Click the **OK** button to get the new domain created
 
 #. Right click the Domain ntnxlab.local and select  **New Host (A or AAAA)**...
-#. For the name type **<NAME OF THE OBJECT STORE>** (example nutanix-demo)
+#. For the name type **<NAME OF THE OBJECT STORE>** (example ntnx-objects)
 #. For the IP address, use one of the public IP addresses of the Object Store you see in the Object Store interface in PRISM Central.
 
    .. figure:: images/36.png
 
 #. Click **Add Host -> OK -> Done** 
-#. Select the subdomain of ntnxlab.local, you should see the just recreated A records in the form off **(same as parent folder)**
+#. Select the subdomain of ntnxlab.local, called **ntnx-objects**, you should see the just recreated A records in the form off **(same as parent folder)**
 #. Right Click the subdomain and select **New Host (A or AAAA)**...
 #. For the name, use the name of the bucket you just created for K10 Backup (Example. xyz-k10-bucket)
 #. In the IP address type one of the Public IP addresses of the Object Store
@@ -634,6 +634,7 @@ As we also need to have the kubernetes environment updated for the DNS entries w
 
    .. note:: 
       Make sure you change the **<AUTO AD Server>** to the IP address as mentioned in your Lookup tool under **Domain Controller IP (DNS Server)** BEFORE you save and close the editor!!! Otherwise you end up in a strange situation!!
+      Also make sure that the txt is lined out exactly as the already information. Kubernetes is very particular of that. If the formatiing is not correct, it will reopen again!
       In the following screenshots we have used **nutanix-demo** as the name of the Object Store and **10.42.3.41** as the IP addresses of teh Domain Controller
 
 #. Run ``kubectl -n kube-system describe configmap corredns`` to see that the information is correct
