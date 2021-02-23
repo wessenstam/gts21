@@ -22,8 +22,9 @@ Create a snapshot of the deployed MariaDB database
 To be able to clone a Database and its Database Server we need to have a snapshot.
 
 #. Open in your Era instance **Time Machines** from the dropdown menu
-
-#. Select the radio button in front of your *Initials* **-MariaDB_TM** instance
+#. Select the radio button in front of your *Initials* **-FiestaDB_TM** instance
+#. Select **Actions -> Snapshot**
+#. Type the name **First-Snapshot** and click the **Create** button
 
 [IT IS USER01-FIESTADB_TM ON MINE]
 
@@ -250,9 +251,9 @@ We need to tell drone to make a difference in the steps it needs to run.
           - name: docker_sock
             path: /var/run/docker.sock
         commands:
-          - if [ `docker ps | grep fiesta_app | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app; sleep 10; else echo "Docker container has not been found..."; fi
+          - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; sleep 10; else echo "Docker container has not been found..."; fi
           -
-          - docker run --name fiesta_app --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest
+          - docker run --name Fiesta_App --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest
         when:
           branch:
             - master
@@ -440,6 +441,20 @@ To make your life easier we have already created the needed content for the file
       # Now that we have all the needed parameters we can check if there is a clone named INITIALS-FiestaDB_DEV
       clone_id=$(curl --silent -k "https://${era_ip}/era/v0.9/clones" -H 'Content-Type: application/json' --user $era_admin:$era_password | jq --arg db_name_dev $db_name_dev '.[] | select (.name==$db_name_dev) .id' | tr -d \")
 
+      # Getting the parameters outside of the container
+      echo "------------------------------------" >> /tmp/test.txt
+      echo "Era IP :"$era_ip  >> /tmp/test.txt
+      echo "Era Username :"$era_admin >> /tmp/test.txt
+      echo "Era_password :"$era_password >> /tmp/test.txt
+      echo "Era UUID :"$era_uuid >> /tmp/test.txt
+      echo "Network ID :"$network_id >> /tmp/test.txt
+      echo "Compute ID :"$compute_id >> /tmp/test.txt
+      echo "DB Parameters :"$db_name_tm >> /tmp/test.txt
+      echo "TMS ID :"$tms_id >> /tmp/test.txt
+      echo "Snap ID :"$snap_id >> /tmp/test.txt
+      echo "Clone ID :"$clone_id >> /tmp/test.txt
+      echo "Initials :"$initials >> /tmp/test.txt
+      echo "------------------------------------" >> /tmp/test.txt
 
       # Check if there is a clone already. if not, start the clone process
       if [[ -z $clone_id ]]
@@ -458,6 +473,19 @@ To make your life easier we have already created the needed content for the file
 
       # Let's get the IP address of the cloned database server
       cloned_vm_ip=$(curl --silent -k "https://${era_ip}/era/v0.9/dbservers" -H 'Content-Type: application/json' --user $era_admin:$era_password | jq --arg clone_name $vm_name_dev '.[] | select (.name==$clone_name) .ipAddresses[0]' | tr -d \")
+
+      # Getting the parameters outside of the container
+      echo "Era IP :"$era_ip  >> /tmp/test.txt
+      echo "Era Username :"$era_admin >> /tmp/test.txt
+      echo "Era_password :"$era_password >> /tmp/test.txt
+      echo "Era UUID :"$era_uuid >> /tmp/test.txt
+      echo "Network ID :"$network_id >> /tmp/test.txt
+      echo "Compute ID :"$compute_id >> /tmp/test.txt
+      echo "DB Parameters :"$db_name_tm >> /tmp/test.txt
+      echo "TMS ID :"$tms_id >> /tmp/test.txt
+      echo "Snap ID :"$snap_id >> /tmp/test.txt
+      echo "Clone ID :"$clone_id >> /tmp/test.txt
+      echo "Initials :"$initials >> /tmp/test.txt
 
       DB_SERVER=$cloned_vm_ip
       echo "Cloned DB server ip: "$DB_SERVER >> /tmp/test.txt
@@ -530,9 +558,6 @@ Now we need to make sure that the development container is using the newly creat
       # Get ready to install and build the application
       RUN cd /code/Fiesta && npm install
       RUN cd /code/Fiesta/client && npm install
-      RUN cd /code/Fiesta/client && npm audit fix
-      RUN cd /code/Fiesta/client && npm fund
-      RUN cd /code/Fiesta/client && npm update
       RUN cd /code/Fiesta/client && npm run build
 
       # Grab the Alpine Linux OS image and name it Final_Image
@@ -620,7 +645,7 @@ Push your files to Gitea
 #. Click the **Submit** button
 #. Click the **OK** button
 #. Scroll all the way down to see the new added item
-#. Change the URL to the production application by changing the port number from **5000** to **5050** and the new added item is NOT there.
+#. Change the URL to the production application by changing the port number from **5050** to **5000** and the new added item is NOT there.
 
 Now that we have seen that we are working on two different database, the development area is complete. Whatever we do, it will have no impact on the production database!
 

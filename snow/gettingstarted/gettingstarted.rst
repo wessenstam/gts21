@@ -27,14 +27,14 @@ Your Environment
 
 To let you experience the most fun and interesting parts of the lab, as well as accommodate the large number of simultaneous users, multiple components have already been staged for you. *Let's explore!*
 
+.. raw:: html
+
+   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/snow/gettingstarted/images/env.png"><br><i>vGTS 2021 Hybrid Cloud IaaS Lab Environment</i></center><br>
+
 Clusters on AWS
 ...............
 
-#. Refer to :ref:`clusterdetails` for the details required to access your environment.
-
-#. With **Prism Central** in your browser and log in with the provided credentials.
-
-Your **pre-staged** Clusters on AWS cluster has been registered to your existing Prism Central instance. If you have not already viewed the Clusters walk through, refer to that now to understand how this environment is deployed.
+A single node Nutanix cluster running in AWS has already been provisioned and registered to your on-premises Prism Central instance.
 
 .. figure:: images/2.png
 

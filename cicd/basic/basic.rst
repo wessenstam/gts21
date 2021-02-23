@@ -142,11 +142,6 @@ Here's a quick way to visualize these terms, and the overall process. As you can
       cd /code/Fiesta/client
       npm install
 
-      # Update the packages
-      npm fund
-      npm update
-      npm audit fix
-
       # Build the app
       npm run build
 

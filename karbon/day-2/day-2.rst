@@ -31,14 +31,19 @@ Prometheus
 
 For Prometheus (http://www.prometheus.io) we are already done. Reason is that Karbon by default has Prometheus installed.
 
-#. In your Dashboard of choice, we are going to use Lens, open the **Worklodas -> Pods** there you will see prometheus being mentioned.
+#. In your Dashboard of choice, we are going to use Lens, open the **Workloads -> Pods** there you will see prometheus being mentioned.
 
    .. figure:: images/1.png
+
+   .. note::
+      If you don't see the pod mentioned, make sure that in the right hand side of Lens, you have **All Namespaces** selected.
+
+      .. figure:: images/1-a.png
 
 Grafana
 ^^^^^^^
 
-Grafana (http://www.grafana.com)is a open source application that can vizualize multiple sources. Prometheus being one of them. This part of the workshop is where we will:
+Grafana (http://www.grafana.com) is a open source application that can vizualize multiple sources. Prometheus being one of them. This part of the workshop is where we will:
 
 - Deploy Grafana
 - Use Traefik to open the Grafana UI to the external world
@@ -48,11 +53,11 @@ Grafana (http://www.grafana.com)is a open source application that can vizualize 
 Deployment
 **********
 
-#. In VSC, create a new YAML file called **grafana-deploy.yaml**
 #. Run the following command to create the Namespace monitoring in which we will deploy Grafana ``kubectl create ns monitoring``
 
    .. figure:: images/2.png
 
+#. In Visual Cafe create a new YAML file called **grafana-deploy.yaml**
 #. Copy the below content in the file, this will deploy Grafana in the just created **monitoring** namespace
 
    .. code-block:: yaml
@@ -120,10 +125,39 @@ Deployment
             - port: 3000
 
 #. Save the file
+
+#. Create a new file in Visual Cafe called **grafana-datasources.yaml** for the persistent storage for Grafana and copy the below in the file
+
+
+   .. code-block:: yaml
+
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: grafana-datasources
+        namespace: monitoring
+      data:
+        prometheus.yaml: |-
+          {
+              "apiVersion": 1,
+              "datasources": [
+                  {
+                     "access":"proxy",
+                      "editable": true,
+                      "name": "prometheus",
+                      "orgId": 1,
+                      "type": "prometheus",
+                      "url": "http://prometheus-service.monitoring.svc:8080",
+                      "version": 1
+                  }
+              ]
+          }
+
 #. Use the following commands to deploy and configure Grafana
 
    .. code-block:: bash
 
+        kubectl apply -f grafana-datasources.yaml
         kubectl apply -f grafana-deploy.yaml
         kubectl apply -f grafana-svc.yaml
 
@@ -131,7 +165,10 @@ Deployment
 
    .. figure:: images/3.png
 
-[CREATE A NOTE THAT SAYS TO SELECT ALL NAMESPACES IF NOT ALREADY SELECTED]
+   .. note::
+      If you don't see the pod mentioned, make sure that in the right hand side of Lens, you have **All Namespaces** selected.
+
+      .. figure:: images/1-a.png
 
 Traefik configuration
 *********************
@@ -187,7 +224,7 @@ Datasource configuration
 
 #. Click the **Add data source** button to add the built-in Prometheus deployment
 #. Select Prometheus in the next screen by clicking the **Select** button
-#. Switch to Lens and get the IP address of the Prometheus operator Pod as shown in Lens (**Workloads -> Pods -> prometheus-operator**)
+#. Switch to Lens and get the IP address of the Prometheus operatord Service as shown in Lens (**Workloads -> Services -> prometheus-operatord -> Endpoints**)
 
    .. figure:: images/8.png
 
@@ -598,7 +635,7 @@ As the bucket can only be addressed by a URL we need to make sure that we have a
 #. Check to see if the DNS name ntnxlab.local has a subdomain with the same name as the Object Store.
 
    .. note::
-      As the cluster is a shared resource, someone else has created the domain already for you.
+      As the cluster is a shared resource, someone else might have created the domain already for you.
 
 #. If this is not the case, create it using the below steps
 
@@ -631,7 +668,7 @@ Update the Kubernetes DNS Services
 
 As we also need to have the kubernetes environment updated for the DNS entries we just made, we need to tell the DNS service in the Kubernetes Cluster where the ntnxlab.local and <OBJECT STORE NAME>>.nutanix.local DNS servers/entries can be found. To do this follow these simple steps:
 
-#. In your terminal or Powershell session type ``kubectl -n kube-system edit configmap coredns`` this will open on Windows Notepad.
+#. In your terminal or Powershell session type ``kubectl -n kube-system edit configmap coredns`` this will open a Windows Notepad.
 #. Add the following before **kind:ConfigMap**
 
    .. code-block:: bash
@@ -643,8 +680,8 @@ As we also need to have the kubernetes environment updated for the DNS entries w
      }
 
    .. note::
-      Make sure you change the **<AUTO AD Server>** BEFORE you save and close the editor!!! Otherwise you end up in a strange situation!!
-      In the following screenshots we have used **nutanix-demo** as the name of the Object Store and **10.42.3.41** as the IP addresses of AutoAD
+      Make sure you change the **<AUTO AD Server>** to the IP address as mentioned in your Lookup tool under **Domain Controller IP (DNS Server)** BEFORE you save and close the editor!!! Otherwise you end up in a strange situation!!
+      In the following screenshots we have used **nutanix-demo** as the name of the Object Store and **10.42.3.41** as the IP addresses of teh Domain Controller
 
 []
 
@@ -652,7 +689,7 @@ As we also need to have the kubernetes environment updated for the DNS entries w
 
    .. figure:: images/40.png
 
-#. This should tell the DNS service in Kubernetes to forward the DNS requests for domains **ntnxlab.local** and sub domains to **10.42.3.41**
+#. This should tell the DNS service in Kubernetes to forward the DNS requests for domains **ntnxlab.local** and sub domains to your Domain Controller's IP address
 
 We are now ready to have the Bucket and Object Store to be used by applications that need to have access.
 
@@ -701,15 +738,13 @@ K10 installation
 
       kubectl get pods --namespace kasten-io
 
-[SCREEN SHOT]
-
-#. Wait until all pods are in the running state (approx. 5 minutes). To have an auto update of the commend. add --watch so you keep updated on any changes that happen on the status of the pods.
-
+#. Wait until all pods are in the running state (approx. 5 minutes). To have an auto update of the commend. add ``--watch`` to the command so you keep updated on any changes that happen on the status of the pods.
 #. In Lens you can also track the status of the pods.
 
-[SCREEN SHOT]
+   .. note::
+      If you don't see the pods mentioned, make sure that in the right hand side of Lens, you have **All Namespaces** selected.
 
-#. If the all pods are in the running state use the following temporary command in your terminal or Powershell session to see if we can get to the Dashboard of K10 kasten
+#. If all pods are in the running state use the following temporary command in your terminal or Powershell session to see if we can get to the Dashboard of K10 kasten
 
    .. code-block:: bash
 

@@ -50,21 +50,22 @@ Let's create a repository (repo) that we can use to store our files in from whic
 
    .. figure:: images/2.png
 
-#. Copy the https URL
-
 #. Open a command line or terminal on your laptop or Windows Tools VM and run ``git config --global http.sslVerify false`` . This step is necessary otherwise git is not willing to clone anything from a Version Control Manager using Self signed certificates.
 
 #. In the same command line or terminal session run the following two commands ``git config --global user.name "FIRST_NAME LAST_NAME"`` and ``git config --global user.email "MY_NAME@example.com"`` to set the user's name and email address so all the pushes can be identified.
 
-[RECOMMEND MAKING IT MORE CLEAR THAT THOSE ARE TWO SEPARATE COMMANDS]
+   .. note::
+      Setting the two parameters (``git config user.name`` and ``git config user.email``), you can use the full command as mentioned or exchange the user.name and user.email with your information.
 
 #. On your laptop or the Windows Tools VM environment open VC, unless already open, and click **File -> New Window**
 
    .. figure:: images/3.png
 
-#. In the new Window click **View -> Command Palette** and type ``git clone`` [AND HIT ENTER, OR CLICK ON IT]
+#. Back to your Gitea Interface, your repo should still be shown, copy the https URL you see mentioned
 
-#. Paste the earlier copied URL from Gitea's Repo [ARE WE CHOOSING CLONE FROM URL OR GITHUB?]
+#. In the new Window click **View -> Command Palette** and type ``git clone``
+#. Make sure VC selects **Clone from URL**. (It will be done automaticaly as soon as you paste the URL in the field)
+#. Paste the earlier copied URl from Gitea's Repo
 
    .. figure:: images/5.png
 
@@ -111,7 +112,7 @@ Let's create a repository (repo) that we can use to store our files in from whic
 
     .. figure:: images/10.png
 
-#. Open Gitea, your Repo [WHERE IS IT?] and see that a push has been made by user nutanix. README.md is shown in the page and is corresponding to the file we created. [SCREENSHOT DOESN'T MATCH WHAT I HAVE]
+#. Open Gitea, your Repo and see that a push has been made by user nutanix. README.md is shown in the page and is corresponding to the file we created. You may have to refresh you browser to see the file.
 
    .. figure:: images/11.png
 
@@ -127,8 +128,7 @@ Drone needs to understand which Repos to track. To do this we will tell Drone wh
 #. Open Drone in a browser by using the URL **\http://<IP ADDRESS DOCKER VM>:8080** (Drone Authenticates via Gitea)
 
 #. Click the **SYNC** button to have Drone grab the Repos of the user it authenticated against.
-
-#. After a few seconds you will see your **nutanix/Fiesta_Application** Repo
+#. After a few seconds you will see your **Fiesta_Application** Repo
 #. Click the **ACTIVATE** button to the right hand side of the Repo
 #. Click the **ACTIVATE REPOSITORY** button
 #. In the **Main** section click the **Trusted** checkbox. That way we allow drone to use the Repo.
@@ -258,17 +258,16 @@ Use Drone to build an image
        cd /code/Fiesta/client
        npm install
 
-       # Update the packages
-       npm fund
-       npm update
-       npm audit fix
-
        # Build the app
        npm run build
 
        # Run the NPM Application
        cd /code/Fiesta
        npm start
+
+
+   .. note::
+      Make sure you have changed the <IP ADDRESS OF MARIADB SERVER> to the correct IP addres!!
 
 #. Save the files in the FIESTA_APPLICATION
 #. Commit and push the new files to the Repo
@@ -277,7 +276,7 @@ Use Drone to build an image
 
    .. figure:: images/15.png
 
-#. Switch the VC window to the **docker VM** so we can use the terminal to run some commands
+#. Switch the VC window of the **docker VM** so we can use the terminal to run some commands. If you closed it, use putty or any ssh to connect to your Docker VM
 #. Run ``docker image ls`` to see our create image via the CI/CD pipeline
 
    .. figure:: images/16.png
@@ -379,7 +378,15 @@ Manual upload of images
 
    .. figure:: images/21.png
 
-#. Run ``docker image tag fiesta_app:15b0c0 <your-docker-account>/fiesta_app:1.0`` (the version **15b0c0** came from step 17 in the **Use Drone to build an image** screenshot.  Please use yours as mentioned in the Drone UI) this will create a new image which will be tagged **<your-docker-account>/fiesta_app** with version **1.0**
+#. Return back to your Drone UI. Your last run should still be open. if not click on the last run and click on the **build test image** step. This will provide you with something like this:
+
+   .. figure:: images/21-a.png
+
+   .. note::
+      Just use the 6 Alphanumerical code from inside the red square. In this example the code to be used is **cd725f**
+
+#. Use the tag that is mentioned in the red square, yours will be diffent.
+#. Run ``docker image tag fiesta_app:cd725f devnutanix/fiesta_app:1.0`` (example using the screenshot's information above) this will create a new image which will be tagged **devnutanix/fiesta_app** with version **1.0**
 #. Running ``docker image ls`` is showing the image in the list
 
 [REMOVE 15B0C0 AND REPLACE WITH <VALUE> TAG]
@@ -440,6 +447,9 @@ CI/CD Upload of images
 [VERY CONFUSING. WE NEED THIS SPELLED OUT A BIT MORE, AS TO ME THIS IS JUST IN A JUMBLE. WHAT IS THE GOAL OF THE ABOVE?]
 
    .. figure:: images/27.png
+
+  .. note::
+    If the push step is not working, most common is that you have typed the wrong username and password, or the name of the secrets. Check this by retyping (Hit the DELETE text first!)
 
 Now that we are able to use the CI/CD pipeline to build, basic test and push to Dockerhub repository the last step is to deploy the image as a container to the docker VM.
 
@@ -559,11 +569,6 @@ Change runapp.sh
       npm install
       cd /code/Fiesta/client
       npm install
-
-      # Update the packages
-      npm fund
-      npm update
-      npm audit fix
 
       # Build the app
       npm run build
