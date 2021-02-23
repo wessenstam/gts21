@@ -86,7 +86,7 @@
 
       Take self-service to the next level with Nutanix ServiceNow integrations. Expand, migrate, secure, and automate your operations.
 
-    - **Hybrid Cloud Database Management**
+   - **Hybrid Cloud Database Management**
 
       Provision, clone, patch, and monitor Microsoft SQL Server across multiple clouds with Nutanix Era and Prism Ultimate.
 
@@ -105,6 +105,23 @@
 .. raw:: html
 
    <strong><font color="red">Before beginning any labs, review the following sections for important information regarding your lab environment, scenario, and FAQs.</font></strong><br><br>
+
+Your Environment
+++++++++++++++++
+
+Labs will be completed on a shared hybrid cloud environment consisting of:
+
+   - 1x 4 Node RF2 Nutanix "HPOC" Cluster running in either Nutanix PHX or RTP datacenters
+   - 1x 1 Node RF1 Nutanix "Public Cloud" Cluster running in AWS US-WEST-2 datacenter
+   - To conserve resources, both clusters are joined to a single Prism Central instance running on the "HPOC" cluster
+   - To conserve resources, both clusters use a single Domain Controller VM for Active Directory and DNS
+   - **Each of these environments will be shared by up to 7 users, please be mindful not to waste memory and IP resources**
+
+Refer to :ref:`clusterdetails` for your specific lab assignment information, as the provided diagram is a generic, high level representation of your environment.
+
+.. raw:: html
+
+   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/env.PNG"><br><i>vGTS 2021 Lab Environment</i></center><br>
 
 Meet Your Customer
 ++++++++++++++++++
@@ -153,8 +170,8 @@ How Long Do I Have Access To The Labs?
 
 The lab environments will be available all day Tuesday and Wednesday. The labs will be supported by a team of SMEs during the following periods:
 
-- **Tuesday** -
-- **Wednesday** -
+- **Tuesday** - 08:00 CET - 20:00 CET
+- **Wednesday** - 08:00 CET - 12:00 CET
 
 Do I Have To Complete The Lab Tracks In Order?
 ..............................................
@@ -194,7 +211,18 @@ This year we're introducing self-service validation requests to keep you focused
 
 See :ref:`validate` for complete instructions.
 
-Is Matt OK? Does He Need To Talk To Someone?
-............................................
+Where Can I Access More Clusters Demo Resources?
+................................................
+
+- Hands-On Clusters Deployment Workshop - *Coming soon!*
+
+- `Clusters Test Drive <https://www.nutanix.com/one-platform?type=clusters>`_ - Sign-up to provide a prospect with a 2 hour, interactive demo of Clusters on AWS.
+
+- `Standalone Clusters Deployment Demo <https://clusters.nutanixtestdrive.com/>`_ - On-demand MCM Clusters on AWS deployment demo *without a Test Drive sign-up.* A great option for quick demos of how easily Clusters can be provisioned.
+
+- `Nutanix YouTube Clusters Playlist <https://www.youtube.com/playlist?list=PLAHgaS9IrJeevEB17CSW5BE8Y9n9v18bU>`_ - Short videos covering topics like deployment, networking, security, and hibernation.
+
+When Is Matt Going To Shave? He Looks Ridiculous.
+.................................................
 
 Your concern is noted and appreciated. Ask again in April.

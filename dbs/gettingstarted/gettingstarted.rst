@@ -17,6 +17,17 @@ Your Environment
 
 To let you experience the most fun and interesting parts of the lab, as well as accommodate the large number of simultaneous users, multiple components have already been staged for you. *Read on to learn more!*
 
+.. raw:: html
+
+   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/dbs/gettingstarted/images/env.png"><br><i>vGTS 2021 Hybrid Cloud Database Management Lab Environment</i></center><br>
+
+Clusters on AWS
+...............
+
+A single node Nutanix cluster running in AWS has already been provisioned and registered to your on-premises Prism Central instance.
+
+.. figure:: images/0.png
+
 Source Database and App Servers
 ...............................
 
@@ -43,7 +54,7 @@ Each shared environment has been pre-staged with a Nutanix Era server, configure
 
       .. figure:: images/4.png
 
-      The Era Service VM is responsible for...
+      The Era Agent VM is responsible for managing, scheduling, and executing database operations on its cluster, offloading these operations and relaying status back to the parent Era server VM.
 
    - **Era Managed** networks were configured for a subset of the available IP range for both **EraCluster** (HPOC) and **AWS-Cluster**. While external IPAM solutions (including AHV IPAM) can be used for single instance database deployments, Era must control the IP pool for provisioning highly available database clusters, such as SQL Always-On Availability Groups.
 
@@ -51,7 +62,7 @@ Each shared environment has been pre-staged with a Nutanix Era server, configure
 
    - **MSSQL_19_SYNCED** Software Profile pre-created using a vanilla Windows Server 2019/SQL Server 2019 VM, and replicated across both **EraCluster** and **AWS-Cluster**.
 
-      Software Profiles are...
+      Software Profiles are templates that include the database engine installation and the host operating system, and are used for provisioning and cloning operations. This template exists as a hidden disk image on your Nutanix storage.
 
    - **MSSQL_19_USER**\ *##* Software Profiles pre-created using the same VM, but located only on **AWS-Cluster**.
 
