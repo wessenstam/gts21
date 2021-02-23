@@ -124,11 +124,6 @@ Follow these steps to create the first container. As space consumed by the conta
       cd /code/Fiesta/client
       npm install
 
-      # Update the packages
-      npm fund
-      npm update
-      npm audit fix
-
       # Build the app
       npm run build
 
