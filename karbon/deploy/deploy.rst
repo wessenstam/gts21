@@ -1,6 +1,6 @@
 .. _environment_deploy:
 
-Fiesta Application 
+Fiesta Application
 ==================
 
 During the workshop we are at the stage where we are going to start deploying our application, Fiesta App, on the Kubernetes cluster. This module is explaining the following
@@ -19,8 +19,10 @@ Deploy the Fiesta App
 
 As you have noticed Kubernetes uses YAML file to deploy the different resources like pods, deployments, namespaces and services. As we haven't a YAML file already we need to build that for the Fiesta App.
 
-#. Open Visual Cafe
+#. Open VSC.
+
 #. Create a new file
+
 #. Copy the below content and paste it in the file
 
    .. code-block:: yaml
@@ -64,7 +66,7 @@ As you have noticed Kubernetes uses YAML file to deploy the different resources 
 
 Let's dissect the content high level.
 
-The top part until the ``---`` icon is a deployment, so consider that the installation of the application (Pod). In the lower part after the ``---`` sign we see the service deployment. Service is how can we communicate with the Pod. The ``---`` is the resource separator for Kubernetes. So the split symbol between Deployment and Service in the above example. 
+The top part until the ``---`` icon is a deployment, so consider that the installation of the application (Pod). In the lower part after the ``---`` sign we see the service deployment. Service is how can we communicate with the Pod. The ``---`` is the resource separator for Kubernetes. So the split symbol between Deployment and Service in the above example.
 
 Explained Deployment
 ^^^^^^^^^^^^^^^^^^^^
@@ -100,12 +102,16 @@ Now we have the basic YAML file ready, let's deploy the Pod.
    .. figure:: images/1.png
 
 #. As we have Lens running, let's use that dashboard to see what influence the YAML had on the Kubernetes environment (if you have skipped that part, follow this :ref:`link` )
+
+[INSERT CORRECT LINK]
+
 #. Click on the Workloads -> Pods
 #. Search for  **npm-fiesta**, based on the YAML file, there should be three (replicas)
 
    .. figure:: images/2.png
 
-#. Open Visual Cafe and change in the fiesta_app.yaml and change the **replicas** number to 2
+#. Open VSC and change in the fiesta_app.yaml and change the **replicas** number to 2
+
 #. Save the file
 #. In your terminal run **kubectl apply -f fiesta_app.yaml** and see the effect in Lens on the change.
 #. Lens is showing a Terminating message under the status column of one of the npm-fiesta pods
@@ -163,14 +169,10 @@ Connect to the database
 
 As the application is running and accessible from our machine, we need to tell the application where the database is. o make that happen, follow these steps.
 
-#. In your Prism Central go to the Calm page via :fa:`bars` **-> Services -> Calm**
-#. in the Applications view, click on your **mariadb** application -> Services and the MariaDB icon.
-#. Note the IP address which is mentioned on the right hand side of the screen
+#. In VSC, open the file **fiesta_app.yaml**
 
-   .. figure:: images/9.png
-
-#. In Visual Code, open the file **fiesta_app.yaml**
 #. As the application needs environmental parameters, we are going to make changes to the YAML file. Use this URL for more background information (https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/)
+
 #. In the containers section (in the Deployment section) add the following lines under image and use the same ident (**image** line is for reference!):
 
    .. code-block:: yaml
@@ -187,13 +189,15 @@ As the application is running and accessible from our machine, we need to tell t
           value: mysql
 
    .. figure:: images/10.png
-      
+
+[REMIND THEM TO CHANGE IP ADDRESS ABOVE]
+
 #. Save the file and run the command ``kubectl apply -f fiesta_app.yaml`` from your terminal or Powershell session.
 #. The command should show a configured text in the output of the command with respect to the deployment. This means that the change we made, the environmental variables, have been configured and executed.
 
    .. figure:: images/11.png
 
-#. Now let's open the browser and refresh the page where we only had the app running, but no output in the Products etc. 
+#. Now let's open the browser and refresh the page where we only had the app running, but no output in the Products etc.
 #. The page is showing the correct output as we expected using the environmental variables when we redeployed the Fiesta App Pods
 
    .. figure:: images/12.png
@@ -224,4 +228,3 @@ Takeaways
 - Changing the routing of URL into the application is just a few lines and traffic moves into the Kubernetes cluster without to difficult configuration changes
 - Changes to YAML files and applying the using ``kubectl apply`` are seamlessly activated, not need to drop the "old" config and rerun the config. Kubernetes takes care of that.
 - Using external application outside of Kubernetes can easily be configured. All depends on the "power" of the container being used and the underlying network. Nothing specific to Kubernetes
-

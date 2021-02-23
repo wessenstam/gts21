@@ -70,7 +70,21 @@
    karbon/deploy/deploy
    karbon/day-2/day-2
 
-.. .. raw:: html
+.. toctree::
+   :maxdepth: 2
+   :caption: Databases
+   :name: _dbs
+   :hidden:
+
+   dbs/1gettingstarted/gettingstarted
+   dbs/2configure_mssql/configure_mssql
+   dbs/3admin_mssqldb/admin_mssqldb
+   dbs/4deploy_mssql_era/deploy_mssql_era
+   dbs/5patch_sql/patch_sql
+   dbs/6DTexample/DTexample
+   dbs/B1hammerdb/hammerdb
+   dbs/B2prismops_appmonitoring_lab/prismops_appmonitoring_lab
+   dbs/B3webtier/webtier
 
   <br><center><img src="https://get-ahv-images.s3.amazonaws.com/GTSLOGO.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
 .. raw:: html

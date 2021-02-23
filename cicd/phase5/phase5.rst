@@ -16,27 +16,6 @@ For this part of the workshop we are going to do the following:
 
   Estimated time **45-60 minutes**
 
-
-Check Era version
------------------
-
-As we are using Era 2.0 version please make sure that the version of Era is 2.0.0.2. If it is not, please upgrade to this version as we have dependencies in the APIs call we are using in this part of the workshop. If you are on this version, you can proceed.
-
-Check MariaDB registration in Era
----------------------------------
-
-The blueprint that been deployed installs the VM, but also registers the MariaDB Database server and the FiestaDB to the Era instance you have running
-
-#. Open the Era instance in your cluster
-#. Login using the username and password given
-#. Click on **Dashboard -> Databases**
-
-   .. figure:: images/1.png
-
-#. Click **Sources**. Your *Initials* **-FiestaDB** database should be registered and shown
-
-   .. figure:: images/2.png
-
 Create a snapshot of the deployed MariaDB database
 --------------------------------------------------
 
@@ -47,13 +26,15 @@ To be able to clone a Database and its Database Server we need to have a snapsho
 #. Select **Actions -> Snapshot**
 #. Type the name **First-Snapshot** and click the **Create** button
 
-   .. note::
+[IT IS USER01-FIESTADB_TM ON MINE]
 
-      Make 110% sure you have typed it in as mentioned in this step, otherwise the deployment of the Development container will not work later in the script!!!
+#. Select **Actions -> Snapshot**
+#. Type the name **First-Snapshot** and click the **Create** button
 
    .. figure:: images/2a.png
 
 #. Click on **Operations** (via the drop down menu or by clicking in the top right hand corner)
+
 #. Wait till the operation has finished (approx. 2 minutes)
 
 Now that the snapshot is there we can proceed to the next step.
@@ -153,7 +134,7 @@ We need to tell drone to make a difference in the steps it needs to run.
 
       - name: Build Image (Dev)
         image: public.ecr.aws/n5p3f3u5/docker:latest
-        
+
         pull: if-not-exists
         volumes:
           - name: docker_sock
@@ -271,7 +252,7 @@ We need to tell drone to make a difference in the steps it needs to run.
             path: /var/run/docker.sock
         commands:
           - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; sleep 10; else echo "Docker container has not been found..."; fi
-          - 
+          -
           - docker run --name Fiesta_App --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest
         when:
           branch:
@@ -332,6 +313,8 @@ We need to tell drone to make a difference in the steps it needs to run.
 
 #. Save, Commit and Push to Gitea.
 #. This will fire a new build, but you should see the steps with **(Prod)**
+
+[SHOULD STATE TO LOOK IN DRONE]
 
    .. figure:: images/7.png
 

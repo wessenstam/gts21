@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: npm-fiesta
-        image: wessenstam/npm_fiesta
+        image: public.ecr.aws/n5p3f3u5/npm-fiesta:latest
         ports:
         - containerPort: 3000
 ---
