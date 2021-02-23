@@ -28,11 +28,16 @@ Your Environment
 
 To let you experience the most fun and interesting parts of the lab, as well as accommodate the large number of simultaneous users, multiple components have already been staged for you. *Let's explore!*
 
-Refer to :ref:`clusterdetails` for the details required to access your environment.
+.. raw:: html
 
-Open **Prism Central** in your browser and log in with the provided credentials.
+   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/euc/gettingstarted/images/env.png"><br><i>vGTS 2021 Hybrid Cloud EUC Lab Environment</i></center><br>
 
-   .. figure:: images/1.png
+Clusters on AWS
+...............
+
+A single node Nutanix cluster running in AWS has already been provisioned and registered to your on-premises Prism Central instance.
+
+.. figure:: images/1.png
 
 Citrix Desktop Delivery Controller
 ..................................

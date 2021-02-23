@@ -34,7 +34,7 @@ Change dockerfile
 
       # Grab the Alpine Linux OS image and name the container base
       FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest as base
-      
+
       # Install needed packages
       RUN apk add --no-cache --update nodejs npm git
 
@@ -55,7 +55,7 @@ Change dockerfile
 
       # Grab the Alpine Linux OS image and name it Final_Image
       FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest as Final_Image
-      
+
       # Install some needed packages
       RUN apk add --no-cache --update nodejs npm mysql-client
 

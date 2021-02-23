@@ -62,8 +62,8 @@ Creating A Recovery Plan
 
 #. Click **Done > Continue** to save your Recovery Plan.
 
-Executing A Migration
-+++++++++++++++++++++
+Executing A Failover
++++++++++++++++++++
 
 #. After you are returned to the list of available **Recovery Plans**, right-click your *Initials*\ **-DR** plan and select **Failover** to begin your migration.
 
