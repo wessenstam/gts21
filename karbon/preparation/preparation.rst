@@ -1,8 +1,8 @@
 .. _environment_setup:
 
-----------------------------------------
-Deploying Karbon Platform Services (KPS)
-----------------------------------------
+----------------
+Deploying Karbon
+----------------
 
 .. note::
    Estimated time **45 minutes**
