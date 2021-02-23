@@ -478,7 +478,7 @@ Over time a Kubernetes may need to be expanded due to the workloads that are goi
    .. note::
       As we have deployed a Develop environment, we can not expand the etcd or the Master nodes. On a production version we would be able to also expand those two type of nodes.
 
-#. Change the field **Number of Nodes** to 2 and click the **Create** button to have your cluster being extended with two worker nodes.
+#. Change the field **Number of Nodes** to 1 and click the **Create** button to have your cluster being extended with two worker nodes.
 
    .. figure:: images/26.png
    .. figure:: images/27.png
