@@ -6,11 +6,6 @@ Containerize the Fiesta App
 
 In this section, you will learn how to convert the legacy (Fiesta) application into a containerized application.
 
-High level steps:
-
-- Use the Docker VM to build the containerized application
-- Test the application by deploying the container
-
 .. note::
 
    Estimated time **30 minutes**
@@ -18,14 +13,21 @@ High level steps:
 Build the Container
 --------------------
 
+- Use the Docker VM to build the containerized application
+
+- Test the application by deploying the container
+
 Analyze the original Fiesta Application
 .......................................
 
 Let's begin by analyzing the installation of the Fiesta app, by viewing the blueprint.
 
 #. Within Prism Central, click on :fa:`bars` **Services > Calm**.
+
 #. Click the Blueprint |bp_icon| icon.
+
 #. Open the *UserXX*\ [NAME OF BLUEPRINT]
+
 #. Click on the *Fiesta_App_VM* VM, then from the right-hand pane, click on **Package > Configure Install**.
 
    .. figure:: images/1.png
@@ -151,7 +153,7 @@ Here's a quick way to visualize these terms, and the overall process. As you can
 
 #. Hit the **ESC** key to stop editing the file, followed by **:wq!** to save and close the file.
 
-#. Enter **ls -al** to perform a directory listing. Ensure tour github directory looks like the below before proceeding.
+#. Enter **ls -al** to perform a directory listing. Ensure your github directory looks like the below before proceeding.
 
    .. figure:: images/5.png
 
