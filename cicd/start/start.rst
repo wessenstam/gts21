@@ -4,7 +4,7 @@
 Getting Started
 ---------------
 
-You will learn the basic steps to migrate (?) an existing 2-tier application to a containerized application.
+You will learn the basic steps to migrate [IS THAT RIGHT?] an existing 2-tier application to a containerized application.
 
 During this workshop, you will learn how to:
 
