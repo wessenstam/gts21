@@ -23,9 +23,27 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
 #. Within Prism Central, click on :fa:`bars` **Operations > Integrations**.
 
+#. If prompted, click **Get Started**.
+
+   .. note::
+
+      This is a one-time operation that may have already been completed by another user sharing the cluster.
+
 #. Click **Configure Instance**.
 
    .. figure:: images/4.png
+
+#. Select **Microsoft SQL Server** from the **External Entity Type** dropdown menu.
+
+#. If prompted that **Nutanix Collector is not enabled**, select **I have increased PC VM's Memory and vCPU** and click **Enable**.
+
+   Nutanix Collector is the service that runs within PC to gather statistics from SQL Server and vCenter entities.
+
+   .. figure:: images/16.png
+
+   .. note::
+
+      This is a one-time operation that may have already been completed by another user sharing the cluster.
 
 #. Fill out the following fields to add your SQL Server:
 
