@@ -604,8 +604,7 @@ Change runapp.sh
           pull: if-not-exists
           environment:
             USERNAME:
-              from_
-: dockerhub_username
+              from_: dockerhub_username
             PASSWORD:
               from_secret: dockerhub_password
             DB_SERVER:
