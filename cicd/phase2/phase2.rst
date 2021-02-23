@@ -41,15 +41,11 @@ Visual Studio Code (VSC)
 
 #. Select **Connect** on the pop-up in the bottom right corner to connect to the VM.
 
-   [screenshot]
-
 #. Input the following in succession, and hit **Enter**.
 
    - O/S - Linux
    - Fingerprint - Continue
    - Password - nutanix/4u
-
-   [screenshot]
 
 #. Click on both messages that may pop-up in the bottom right hand corner, the **Don't Show Again** button.
 
@@ -62,12 +58,11 @@ Visual Studio Code (VSC)
    .. figure:: images/4.png
 
 #. Provide the ``/`` as the folder you want to open and click on **OK**
+
 #. It will take some time before it opens as VC needs to install and configure the remote host. This takes approximately <1 minute (you might be asked for the password again)
 #. Now you should see the folder structure of the VM, open **/root/github** and you will see everything created earlier
 
    .. figure:: images/5.png
-
-   [screenshot]
 
 [This process is wonky for me. We have to give explicit instructions on how to get / to work. I had to type /. and then remove the period, so it didn't auto-select the bin directory.]
 

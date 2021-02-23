@@ -700,8 +700,6 @@ Change runapp.sh
 
 #. Point your browser to **\http://<IP ADDRESS DOCKER VM>:5000/Products** and you'll see the Fiesta Application as you have seen before.
 
-[PORT SHOULD BE 5001?]
-
 ------
 .. raw:: html
 

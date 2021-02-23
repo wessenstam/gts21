@@ -22,13 +22,11 @@ Create a snapshot of the deployed MariaDB database
 To be able to clone a Database and its Database Server we need to have a snapshot.
 
 #. Open in your Era instance **Time Machines** from the dropdown menu
+
 #. Select the radio button in front of your *Initials* **-FiestaDB_TM** instance
-#. Select **Actions -> Snapshot**
-#. Type the name **First-Snapshot** and click the **Create** button
-
-[IT IS USER01-FIESTADB_TM ON MINE]
 
 #. Select **Actions -> Snapshot**
+
 #. Type the name **First-Snapshot** and click the **Create** button
 
    .. figure:: images/2a.png
