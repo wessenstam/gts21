@@ -48,8 +48,6 @@ Let's create a repository (repo) that we can use to store our files in from whic
 
    .. figure:: images/2.png
 
-#. Copy the https URL
-
 #. Open a command line or terminal on your laptop or Windows Tools VM and run ``git config --global http.sslVerify false`` . This step is necessary otherwise git is not willing to clone anything from a Version Control Manager using Self signed certificates.
 
 #. In the same command line or terminal session run the following two commands ``git config --global user.name "FIRST_NAME LAST_NAME"`` and ``git config --global user.email "MY_NAME@example.com"`` to set the user's name and email address so all the pushes can be identified.
@@ -60,6 +58,8 @@ Let's create a repository (repo) that we can use to store our files in from whic
 #. On your laptop or the Windows Tools VM environment open VC, unless already open, and click **File -> New Window**
 
    .. figure:: images/3.png
+
+#. Back to your Gitea Interface, your repo should still be shown, copy the https URL you see mentioned
 
 #. In the new Window click **View -> Command Palette** and type ``git clone``
 #. Make sure VC selects **Clone from URL**. (It will be done automaticaly as soon as you paste the URL in the field)
@@ -103,7 +103,7 @@ Let's create a repository (repo) that we can use to store our files in from whic
 
     .. figure:: images/10.png
 
-#. Open Gitea, your Repo and see that a push has been made by user nutanix. README.md is shown in the page and is corresponding to the file we created.
+#. Open Gitea, your Repo and see that a push has been made by user nutanix. README.md is shown in the page and is corresponding to the file we created. You may have to refresh you browser to see the file.
 
    .. figure:: images/11.png
 
@@ -118,7 +118,7 @@ Drone needs to understand which Repos to track. To do this we will tell Drone wh
 
 #. Open Drone in a browser by using the URL **\http://<IP ADDRESS DOCKER VM>:8080** (Drone Authenticates via Gitea)
 #. Click the **SYNC** button to have Drone grab the Repos of the user it authenticated against.
-#. After a few seconds you will see your **nutanix/Fiesta_Application** Repo
+#. After a few seconds you will see your **Fiesta_Application** Repo
 #. Click the **ACTIVATE** button to the right hand side of the Repo
 #. Click the **ACTIVATE REPOSITORY** button
 #. In the **Main** section click the **Trusted** checkbox. That way we allow drone to use the Repo.
@@ -244,17 +244,16 @@ Use Drone to build an image
        cd /code/Fiesta/client
        npm install
 
-       # Update the packages
-       npm fund
-       npm update
-       npm audit fix
-
        # Build the app
        npm run build
 
        # Run the NPM Application
        cd /code/Fiesta
        npm start
+
+
+   .. note::
+      Make sure you have changed the <IP ADDRESS OF MARIADB SERVER> to the correct IP addres!!
 
 #. Save the files in the FIESTA_APPLICATION
 #. Commit and push the new files to the Repo
@@ -263,7 +262,7 @@ Use Drone to build an image
 
    .. figure:: images/15.png
 
-#. Switch the VC window to the **docker VM** so we can use the terminal to run some commands
+#. Switch the VC window of the **docker VM** so we can use the terminal to run some commands. If you closed it, use putty or any ssh to connect to your Docker VM
 #. Run ``docker image ls`` to see our create image via the CI/CD pipeline
 
    .. figure:: images/16.png
@@ -421,6 +420,9 @@ CI/CD Upload of images
 
    .. figure:: images/27.png
 
+  .. note:: 
+    If the push step is not working, most common is that you have typed the wrong username and password, or the name of the secrets. Check this by retyping (Hit the DELETE text first!)
+
 Now that we are able to use the CI/CD pipeline to build, basic test and push to Dockerhub repository the last step is to deploy the image as a container to the docker VM.
 
 -------
@@ -537,11 +539,6 @@ Change runapp.sh
       npm install
       cd /code/Fiesta/client
       npm install
-
-      # Update the packages
-      npm fund
-      npm update
-      npm audit fix
 
       # Build the app
       npm run build

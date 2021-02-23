@@ -458,6 +458,20 @@ To make your life easier we have already created the needed content for the file
       # Now that we have all the needed parameters we can check if there is a clone named INITIALS-FiestaDB_DEV
       clone_id=$(curl --silent -k "https://${era_ip}/era/v0.9/clones" -H 'Content-Type: application/json' --user $era_admin:$era_password | jq --arg db_name_dev $db_name_dev '.[] | select (.name==$db_name_dev) .id' | tr -d \")
 
+      # Getting the parameters outside of the container
+      echo "------------------------------------" >> /tmp/test.txt
+      echo "Era IP :"$era_ip  >> /tmp/test.txt
+      echo "Era Username :"$era_admin >> /tmp/test.txt
+      echo "Era_password :"$era_password >> /tmp/test.txt
+      echo "Era UUID :"$era_uuid >> /tmp/test.txt
+      echo "Network ID :"$network_id >> /tmp/test.txt
+      echo "Compute ID :"$compute_id >> /tmp/test.txt
+      echo "DB Parameters :"$db_name_tm >> /tmp/test.txt
+      echo "TMS ID :"$tms_id >> /tmp/test.txt
+      echo "Snap ID :"$snap_id >> /tmp/test.txt
+      echo "Clone ID :"$clone_id >> /tmp/test.txt
+      echo "Initials :"$initials >> /tmp/test.txt
+      echo "------------------------------------" >> /tmp/test.txt
 
       # Check if there is a clone already. if not, start the clone process
       if [[ -z $clone_id ]]
@@ -476,6 +490,19 @@ To make your life easier we have already created the needed content for the file
 
       # Let's get the IP address of the cloned database server
       cloned_vm_ip=$(curl --silent -k "https://${era_ip}/era/v0.9/dbservers" -H 'Content-Type: application/json' --user $era_admin:$era_password | jq --arg clone_name $vm_name_dev '.[] | select (.name==$clone_name) .ipAddresses[0]' | tr -d \")
+
+      # Getting the parameters outside of the container
+      echo "Era IP :"$era_ip  >> /tmp/test.txt
+      echo "Era Username :"$era_admin >> /tmp/test.txt
+      echo "Era_password :"$era_password >> /tmp/test.txt
+      echo "Era UUID :"$era_uuid >> /tmp/test.txt
+      echo "Network ID :"$network_id >> /tmp/test.txt
+      echo "Compute ID :"$compute_id >> /tmp/test.txt
+      echo "DB Parameters :"$db_name_tm >> /tmp/test.txt
+      echo "TMS ID :"$tms_id >> /tmp/test.txt
+      echo "Snap ID :"$snap_id >> /tmp/test.txt
+      echo "Clone ID :"$clone_id >> /tmp/test.txt
+      echo "Initials :"$initials >> /tmp/test.txt
 
       DB_SERVER=$cloned_vm_ip
       echo "Cloned DB server ip: "$DB_SERVER >> /tmp/test.txt
@@ -548,9 +575,6 @@ Now we need to make sure that the development container is using the newly creat
       # Get ready to install and build the application
       RUN cd /code/Fiesta && npm install
       RUN cd /code/Fiesta/client && npm install
-      RUN cd /code/Fiesta/client && npm audit fix
-      RUN cd /code/Fiesta/client && npm fund
-      RUN cd /code/Fiesta/client && npm update
       RUN cd /code/Fiesta/client && npm run build
 
       # Grab the Alpine Linux OS image and name it Final_Image
