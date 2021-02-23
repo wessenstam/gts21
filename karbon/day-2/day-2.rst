@@ -654,10 +654,15 @@ As the bucket can only be addressed by a URL we need to make sure that we have a
    .. figure:: images/36.png
 
 #. Click **Add Host -> OK -> Done**
+
 #. Select the subdomain of ntnxlab.local, called **ntnx-objects**, you should see the just recreated A records in the form off **(same as parent folder)**
+
 #. Right Click the subdomain and select **New Host (A or AAAA)**...
+
 #. For the name, use the name of the bucket you just created for K10 Backup (Example. xyz-k10-bucket)
+
 #. In the IP address type one of the Public IP addresses of the Object Store
+
 #. Click the **Add Host** button and then the **OK -> DONE** buttons to close the windows
 
    .. figure:: images/37.png
@@ -827,18 +832,25 @@ K10 - Configure backup policy
 *****************************
 
 #. Click in the **Applications** box, **unmanaged**
+
 #. In the **default** box (default namespace), click the **Create Policy** button
 
    .. figure:: images/44.png
 
 #. On the right side of the screen, you see the new policy with default settings.
+
 #. Leave all default Except the **Enable Backups via Snapshot Exports** and check that your created Location Profile (nutanix-demo) is shown
 
    .. figure:: images/45.png
 
 #. Click the **Create Policy** button so we have a policy
+
 #. Now to run the Policy, click the **run once** button (running man icon)
+
+[ADD SCREENSHOT]
+
 #. Click **Run Policy** to have the policy run immediate.
+
 #. In the Dashboard a few seconds after the policy has been in a running state, it will start to export the data to the S3 bucket we created.
 
    .. figure:: images/46.png
@@ -848,25 +860,44 @@ K10 - Restore data
 
 Now that we have a backup and an export, let's restore some data in the form of "clone" the Pods we just backup-ed... The clone will be a separate name space.
 
-#. Click on the Application box
+#. Click on the **Applications** box.
+
 #. Click on the **restore** text in the bottom area of the box called default.
 
    .. figure:: images/47.png
 
-#. Click the first icon (from the right). That is your first manually started backup.
-#. Click the **EXPORTED** box as we want the restore to be made from our Nutanix Objects S3 storage
-#. In the **Application Name**, click the **Create na New Namespace** text and call it **default-restore**
-#. Click the **Create** button. This will set the **Application name** to the just created **default-restore**
-#. Scroll down to the Artifacts and select the **Deselect All Artifacts** text
-#. Only select (by clicking on the Checkbox)
+#. Click on the **default-backup** box. That is your *run once* manually created backup.
 
-   #. Type **deployment** that has the name **npm-fiesta** in the Name field
-   #. Type **services** that has the name **npm-fiesta** in the Name field
+   .. figure:: images/47a.png
+
+#. Click the **EXPORTED** box as we want the restore to be made from our Nutanix Objects S3 storage
+
+   .. figure:: images/47b.png
+
+#. Within the *Application Name* section, click on **Create a New Namespace**. Enter **default-restore** as the name, and click **Create**.
+
+   .. figure:: images/47c.png
+
+#. This will set the *Application name* to the just created *default-restore*.
+
+#. Scroll down to the *Artifacts* section, and click **Deselect All Artifacts**.
+
+   .. figure:: images/47d.png
+
+#. Only select:
+
+   Type: **deployments** that has the name *npm-fiesta* in the *Name field*.
+
+   Type: **services** that has the name *npm-fiesta* in the *Name* field.
 
    .. figure:: images/48.png
 
-#. Click the **Restore** button to start the restore process.
-#. Click **Restore** again in the message that appears
+#. Click the **Restore > Restore** button to start the restore process.
+
+   .. note::
+
+      You may see a *Slow Connection* message pop up several times. This can be safely ignored.
+
 #. Go back to your Dashboard, by clicking the text Dashboard at the top of your screen. You should see a Blue bar appear and rising. Also under the Actions you will see the Restore action taking place.
 
    .. figure:: images/49.png
@@ -880,6 +911,7 @@ Now that we have a backup and an export, let's restore some data in the form of 
    .. figure:: images/50a.png
 
 .. note::
+
    To use the "restored" Fiesta app, you can use the Traefik and change the original route to point to the restored svc, OR create a new route, like fiesta_restore. The only thing that you need to change is the parameter namespace in the traefik-routes.yaml file.
    Apply the file using ``kubectl apply -f traefik.yaml`` and you have the restore app available for testing etc.
 
@@ -887,6 +919,7 @@ Impact on the objects store
 ***************************
 
 #. Open your bucket in Nutanix Objects via **Prism Central ->** :fa:`bars` **-> Services -> Objects -> Your Object store -> Your bucket**
+
 #. Click on the Performance on the right hand side and you should see the "load" the backup has had on your bucket.
 
    .. figure:: images/51.png
