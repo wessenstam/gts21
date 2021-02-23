@@ -16,44 +16,24 @@ For this part of the workshop we are going to do the following:
 
   Estimated time **45-60 minutes**
 
-
-Check Era version
------------------
-
-As we are using Era 2.0 version please make sure that the version of Era is 2.0.0.2. If it is not, please upgrade to this version as we have dependencies in the APIs call we are using in this part of the workshop. If you are on this version, you can proceed.
-
-Check MariaDB registration in Era
----------------------------------
-
-The blueprint that been deployed installs the VM, but also registers the MariaDB Database server and the FiestaDB to the Era instance you have running
-
-#. Open the Era instance in your cluster
-#. Login using the username and password given
-#. Click on **Dashboard -> Databases**
-
-   .. figure:: images/1.png
-
-#. Click **Sources**. Your *Initials* **-FiestaDB** database should be registered and shown
-
-   .. figure:: images/2.png
-
 Create a snapshot of the deployed MariaDB database
 --------------------------------------------------
 
 To be able to clone a Database and its Database Server we need to have a snapshot.
 
 #. Open in your Era instance **Time Machines** from the dropdown menu
+
 #. Select the radio button in front of your *Initials* **-MariaDB_TM** instance
+
+[IT IS USER01-FIESTADB_TM ON MINE]
+
 #. Select **Actions -> Snapshot**
 #. Type the name **First-Snapshot** and click the **Create** button
-
-   .. note::
-
-      Make 110% sure you have typed it in as mentioned in this step, otherwise the deployment of the Development container will not work later in the script!!!
 
    .. figure:: images/2a.png
 
 #. Click on **Operations** (via the drop down menu or by clicking in the top right hand corner)
+
 #. Wait till the operation has finished (approx. 2 minutes)
 
 Now that the snapshot is there we can proceed to the next step.
@@ -332,6 +312,8 @@ We need to tell drone to make a difference in the steps it needs to run.
 
 #. Save, Commit and Push to Gitea.
 #. This will fire a new build, but you should see the steps with **(Prod)**
+
+[SHOULD STATE TO LOOK IN DRONE]
 
    .. figure:: images/7.png
 

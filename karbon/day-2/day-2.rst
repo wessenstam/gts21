@@ -258,11 +258,14 @@ Built-in logging environment
 #. Accept the certification issue
 #. Kibana interface will Open
 #. Click **Explore on my Own**
+
+[I DO NOT SEE THIS, BUT ABLE TO CONTINUE!]
+
 #. Click the :fa:`cog` Management icon on the bottom left side
 #. Click on **Index Patterns** in the Kibana section
 #. In the Index pattern field type *****
 #. Click on the **> Next step** button
-#. In the **Time Filter field name** select the **@timestamp**
+#. In the **Time Filter field name** select the **@timestamp** [FROM THE DROPDOWN]
 #. CLick the **Create index pattern** button
 #. When ready, click on the **Discover** text to the left of the screen in the navigation bar
 #. If all went ok, you should see now a vertical bar chart and the logs below in a chronological order.
@@ -302,7 +305,7 @@ Elacsticsearch environment
 
 To get this working we need to install a service and the deployment of the Elasticsearch environment
 
-#. Run the following commands to get the Elasticsearch environment ready
+#. Run the following commands [WHERE?] to get the Elasticsearch environment ready
 
    .. code-block:: yaml
 
@@ -396,18 +399,28 @@ Traefik configuration
    .. figure:: images/22.png
 
 #. Click the **Explore on my own** button to proceed
+
 #. Click the **No** button at the top of the screen
-#. Click on **Index Patterns** under the *Kibana* section
+
+#. Click on **Index Patterns** under the *Manage and Administer the Elastic Stack* section.
+
+[CLOSE PANEL ON RIGHT SIDE]
+
+[ADD INSTRUCTION TO CREATE INDEX PATTERN]
+
 #. In the **Index pattern** field, type **logstash\*** and click the **> Next step** button
 
    .. figure:: images/23.png
 
-#. In the **Time Filter field name** select **@timestamp** and click the **Create index pattern** button
+#. In the **Time Filter field name** select **@timestamp** [FROM THE DROPDOWN] and click the **Create index pattern** button
 
    .. figure:: images/24.png
 
 #. After a few seconds, when you see the total overview of all possible fields, click on the Discover (compass :fa:`compass`) icon on the left hand side of the screen
 #. This should show you all the logs from the system as well as our deployed pods (traefik, fiesta).
+
+[I DON'T KNOW WHAT I'M LOOKING AT, SO I DON'T KNOW!]
+
 #. In the Filters field, type ``kubernetes.pod_name : traefik*`` and hit the enter key to filter just on that. Now you would see all logs lines that have the line **kubernetes.pod_name : traefik\*** in them
 
    .. figure:: images/25.png
@@ -450,8 +463,13 @@ Change replicas
 Now that we have 3 workers, let's change the deployment of our application to start using all three worker nodes.
 
 #. Open your fiesta_app.yaml in Visual Code
+
 #. Change the number after **replicas:** to 3
+
+[SAVE THE FILE]
+
 #. Run ``kubectl apply -f fiesta_app.yaml`` to get the new configuration activated in the cluster.
+
 #. In Lens goto **Workloads -> Deployments** you should see now three Pods requested and after a few seconds should see below screenshot.
 
    .. figure:: images/31.png
@@ -492,13 +510,27 @@ Install an Object store
 
    #. If it doesn't exists use the following parameters (after you have clicked on the **Create Object Store** button -> Continue):
 
-      #. **Object store name**: nutanix
-      #. **Domain**: ntnxlab.local (click **Next**)
-      #. **Performance** and **Resources**: leave default
-      #. **Capacity**: 1 TiB (click **Next**)
-      #. **Cluster Details**: your cluster
-      #. **Objects Infra Network**: your IP subnet of the primary network and then the .18 and .19, example 10.42.3.18,10.42.3.19
-      #. **Objects Public Network**: your IP subnet of the primary network and then the .20 till .23, example 10.42.3.20-10.42.3.23 (click **Create**)
+         **Object store name**: nutanix
+
+[HOW ABOUT USER01?]
+
+         **Domain**: ntnxlab.local
+
+      #. Click **Next**.
+
+         **Performance** and **Resources**: leave default
+
+         **Capacity**: 1 TiB
+
+      #. Click **Next**.
+
+         **Cluster Details**: your cluster
+
+         **Objects Infra Network**: your IP subnet of the primary network and then the .18 and .19, example 10.42.3.18,10.42.3.19
+
+         **Objects Public Network**: your IP subnet of the primary network and then the .20 till .23, example 10.42.3.20-10.42.3.23
+
+      #. Click **Create**.
 
    #. The Object store is being created. The process takes approx. 10-20 minutes
 
@@ -526,20 +558,23 @@ Create a bucket
 
 The Object store is build, let's create a bucket and get some credentials we need for K10 to be able to write to the bucket.
 
-#. In Objects, select the available object store (example. nutanix)
-#. Click on the name of the object store and click the **Create Bucket** button
+#. In Objects [-> OBJECT STORES -> click the **Create Bucket** button
+
 #. Provided the name *initials*-**k10-bucket**, leave all other fields default
+
 #. Click the **Create** button to have the bucket created
 
 Assign access right to the bucket
 *********************************
 
-#. Click on the bucket you just created and select the **User Access**
+#. Click on the bucket you just created and select the **User Access** [FROM THE LEFT-HAND SIDE -> EDIT USER ACCESS]
+
 #. In the **People** field start typing your earlier created user. Select the user by clicking the checkbox in front on the user
 
    .. figure:: images/33.png
 
 #. In the **Permissions**, select Read AND Write and click the **Save** button
+
 #. Your created "user account" should be shown
 
 
@@ -553,7 +588,13 @@ As the bucket can only be addressed by a URL we need to make sure that we have a
    .. figure:: images/34.png
 
 #. In the Message box **Connect to DNS Server** type **DC**
+
+[IN WINTOOLS VM I SEE A RADIO BUTTON FOR "THE FOLLOWING COMPUTER". IF I HIT THAT BUTTON AND TYPE DC THIS WORKS FINE.]
+
 #. Your DC will open in the DNS, Expand till you see the content of ntnxlab.local
+
+[UNDER FORWARD LOOKUP ZONES]
+
 #. Check to see if the DNS name ntnxlab.local has a subdomain with the same name as the Object Store.
 
    .. note::
@@ -605,6 +646,8 @@ As we also need to have the kubernetes environment updated for the DNS entries w
       Make sure you change the **<AUTO AD Server>** BEFORE you save and close the editor!!! Otherwise you end up in a strange situation!!
       In the following screenshots we have used **nutanix-demo** as the name of the Object Store and **10.42.3.41** as the IP addresses of AutoAD
 
+[]
+
 #. Run ``kubectl -n kube-system describe configmap corredns`` to see that the information is correct
 
    .. figure:: images/40.png
@@ -631,14 +674,7 @@ We are going to run a few steps to get K10 installed:
 - Run a backup, export to S3 storage
 - Restore as a "clone"
 
-
-Install helm on your machine
-****************************
-
-Helm is another way of deploying applications.
-#. Open in a browser https://github.com/helm/helm/releases and select your helm version for your operating system
-#. Extract the downloaded file and make sure your can execute it (Linux and MacOS)
-#. Run **helm** from the Powershell or a terminal session, to make sure you can run the command
+[HELM WILL BE STAGED]
 
 K10 installation
 ******************
@@ -653,7 +689,7 @@ K10 installation
 
    .. code-block:: bash
 
-      helm repo add helm repo add kasten https://charts.kasten.io/
+      helm repo add kasten https://charts.kasten.io/
       helm repo update
       helm install k10 kasten/k10 --namespace=kasten-io
 
@@ -665,8 +701,13 @@ K10 installation
 
       kubectl get pods --namespace kasten-io
 
+[SCREEN SHOT]
+
 #. Wait until all pods are in the running state (approx. 5 minutes). To have an auto update of the commend. add --watch so you keep updated on any changes that happen on the status of the pods.
+
 #. In Lens you can also track the status of the pods.
+
+[SCREEN SHOT]
 
 #. If the all pods are in the running state use the following temporary command in your terminal or Powershell session to see if we can get to the Dashboard of K10 kasten
 
@@ -675,6 +716,9 @@ K10 installation
       kubectl --namespace kasten-io port-forward service/gateway 8080:8000
 
 #. Open a browser and point it to http://127.0.0.1:8080/k10/#/ this should provide you access to the dashboard. Have a quick look around and then close the browser.
+
+[CAN'T LOOK AROUND. IT'S PROMPTING FOR COMPANY AND E-MAIL FIRST]
+
 #. In your terminal/Powershell session hit <CTRL>+C to stop the proxy process.
 
 Define Traefik for routing

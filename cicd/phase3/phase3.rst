@@ -437,6 +437,8 @@ CI/CD Upload of images
 
 #. Return to the VC instance we left earlier and run the Commit and push step via the Git extension, to get the CI/CD running. The end stage will be a push to the Dockerhub. The end of the CI/CD Pipeline should be that we have three images/versions in the Dockerhub environment (the below image is composed out of Drone UI and Dockerhub UI)
 
+[VERY CONFUSING. WE NEED THIS SPELLED OUT A BIT MORE, AS TO ME THIS IS JUST IN A JUMBLE. WHAT IS THE GOAL OF THE ABOVE?]
+
    .. figure:: images/27.png
 
 Now that we are able to use the CI/CD pipeline to build, basic test and push to Dockerhub repository the last step is to deploy the image as a container to the docker VM.
@@ -470,6 +472,8 @@ As we already deployed our own build Fiesta_App image in a former part of the wo
            - sleep 10
            - docker run --name Fiesta_App --rm -p 5000:3000 -d $USERNAME/fiesta_app:latest
 
+[ADD SCREENSHOT OF WHAT IT SHOULD LOOK LIKE WITH CORRECT FORMATTING.]
+
    .. note::
       The commands are there to:
 
@@ -483,7 +487,7 @@ As we already deployed our own build Fiesta_App image in a former part of the wo
         - *-d* Run in the background as a daemon
 
 #. Save the file, Commit and push the image
-#. This will make drone also deploy the container
+#. This will make drone also deploy the container [IS THIS CLEAR WHAT WE ACCOMPLISHED?]
 
 -------
 
@@ -595,7 +599,8 @@ Change runapp.sh
           pull: if-not-exists
           environment:
             USERNAME:
-              from_secret: dockerhub_username
+              from_
+: dockerhub_username
             PASSWORD:
               from_secret: dockerhub_password
             DB_SERVER:
@@ -688,7 +693,10 @@ Change runapp.sh
    .. figure:: images/29.png
 
 #. To see the progress of the container switch to the VC that we used to connect to the docker vm, or use a ssh session to the docker server and run ``docker logs --follow Fiesta_App``. The process will take approx 2-3 minutes. Wait to open the browser till you see a message like ``On Your Network:  http://172.17.0.6:3000``.
+
 #. Point your browser to **\http://<IP ADDRESS DOCKER VM>:5000/Products** and you'll see the Fiesta Application as you have seen before.
+
+[PORT SHOULD BE 5001?]
 
 ------
 .. raw:: html
