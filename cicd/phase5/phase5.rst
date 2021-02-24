@@ -249,7 +249,7 @@ We need to tell drone to make a difference in the steps it needs to run.
           - name: docker_sock
             path: /var/run/docker.sock
         commands:
-          - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; sleep 10; else echo "Docker container has not been found..."; fi
+          - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; sleep 30; else echo "Docker container has not been found..."; fi
           -
           - docker run --name Fiesta_App --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest
         when:
@@ -286,7 +286,7 @@ We need to tell drone to make a difference in the steps it needs to run.
           - name: docker_sock
             path: /var/run/docker.sock
         commands:
-          - if [ `docker ps | grep fiesta_app_dev | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app_dev; sleep 10; else echo "Docker container has not been found..."; fi
+          - if [ `docker ps | grep fiesta_app_dev | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop fiesta_app_dev; sleep 30; else echo "Docker container has not been found..."; fi
           - docker run -d -v /tmp:/tmp --rm --name fiesta_app_dev -p 5050:3000 -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME -e initials=$INITIALS -e era_ip=$ERA_IP -e era_admin=$ERA_USER -e era_password=$ERA_PASSWORD fiesta_app_dev:${DRONE_COMMIT_SHA:0:6}
         when:
           branch:

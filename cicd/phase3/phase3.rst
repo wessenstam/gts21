@@ -479,7 +479,7 @@ As we already deployed our own build Fiesta_App image in a former part of the wo
              path: /var/run/docker.sock
          commands:
            - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; else echo  "Docker container has not been found..."; fi
-           - sleep 10
+           - sleep 30
            - docker run --name Fiesta_App --rm -p 5000:3000 -d $USERNAME/fiesta_app:latest
 
 [ADD SCREENSHOT OF WHAT IT SHOULD LOOK LIKE WITH CORRECT FORMATTING.]
@@ -669,7 +669,7 @@ Change runapp.sh
               path: /var/run/docker.sock
           commands:
             - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; else echo "Docker container has not been found..."; fi
-            - sleep 10
+            - sleep 30
             - docker run --name Fiesta_App --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest
 
       volumes:

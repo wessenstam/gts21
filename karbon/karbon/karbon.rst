@@ -144,6 +144,7 @@ For Linux/MacOS [Lane repoted MacOS issues, can we just have everyone use WinToo
 
 
 #. Open metallb.yaml file in Visual Code via File -> Open..
+
 #. Change the following two lines:
 
    - On **Line 316** change *metallb/speaker:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-spkr:latest**
