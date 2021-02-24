@@ -683,8 +683,6 @@ As we also need to have the kubernetes environment updated for the DNS entries w
       Also make sure that the txt is lined out exactly as the already information. Kubernetes is very particular of that. If the formatiing is not correct, it will reopen again!
       In the following screenshots we have used **nutanix-demo** as the name of the Object Store and **10.42.3.41** as the IP addresses of teh Domain Controller
 
-[]
-
 #. Run ``kubectl -n kube-system describe configmap coredns`` to see that the information is correct
 
    .. figure:: images/40.png
