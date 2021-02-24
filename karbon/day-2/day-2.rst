@@ -209,7 +209,7 @@ Now that Grafana is deployed, we need to tell Traefik to route traffic from a sp
 Datasource configuration
 ************************
 
-#. Open a browser and point it ot the just created URL http://grafana.gts2021.local. Your Grafana interface should be shown with a login page
+#. Open a browser and point it to the just created URL http://grafana.gts2021.local. Your Grafana interface should be shown with a login page
 
    .. figure:: images/6.png
 
@@ -228,11 +228,8 @@ Datasource configuration
 
    .. figure:: images/8.png
 
-[YOU HAVE BOTH -OPERATED (HIGHLIGHTED) AND OPERATOR (IN YOUR INSTRUCTIONS) FIX SCREEN SHOT TO HIGHLIGHT OPERATOR.]
-
-[ALSO, HOW ARE YOU GETTING THE IP? WHAT IS IT CALLED? IN SS IT SAYS IN YOUR SS IT SAYS ENDPOINTS. SEEMS LIKE I CAN JUST CLICK ON IT, AND SEE THE IP. NOT THE CASE.]
-
 #. In the URL field type the IP address you have found. The port is 9090, so the URL, using the example screen shots, is http://172.20.1.11:9090
+
 #. Click the **Save & Test** button. If all is correct, you should receive a green bar above the button stating **Data source is working**
 
    .. figure:: images/9.png
@@ -245,7 +242,7 @@ Let's see if everything is working by creating a simple chart. We are going to c
 
 **Build your own dashboard**
 
-#. In Grafana hoover over the Dashboards icon (third from the top on the left hand navigation bar)
+#. In Grafana hover over the Dashboards icon (third from the top on the left hand navigation bar)
 #. Select manage
 #. Click **New Dashboard**
 #. Click the **+ Add new panel** button
@@ -295,9 +292,6 @@ Built-in logging environment
 #. Accept the certification issue
 #. Kibana interface will Open
 #. Click **Explore on my Own**
-
-[I DO NOT SEE THIS, BUT ABLE TO CONTINUE!]
-
 #. Click the :fa:`cog` Management icon on the bottom left side
 #. Click on **Index Patterns** in the Kibana section
 #. In the Index pattern field type *****
@@ -691,7 +685,7 @@ As we also need to have the kubernetes environment updated for the DNS entries w
 
 []
 
-#. Run ``kubectl -n kube-system describe configmap corredns`` to see that the information is correct
+#. Run ``kubectl -n kube-system describe configmap coredns`` to see that the information is correct
 
    .. figure:: images/40.png
 

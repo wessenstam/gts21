@@ -391,10 +391,6 @@ As our machine has no idea where to find that machine (portainer.gts2021.local),
 
 #. Open the browser and point it to http://portainer.gts2021.local/
 
-   .. raw:: html
-
-      <font color=red><bold>Don't forget the trailing / ! otherwise you will not get a reply</bold></font>
-
    .. figure:: images/23.png
 
 #. Provide the password of your choice in Portainer to go to the next screen. and click the **Create User** button
