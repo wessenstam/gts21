@@ -89,7 +89,7 @@ Windows Installation
       [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls, [Net.SecurityProtocolType]::Tls11, [Net.SecurityProtocolType]::Tls12, [Net.SecurityProtocolType]::Ssl3
       [Net.ServicePointManager]::SecurityProtocol = "Tls, Tls11, Tls12, Ssl3"
       wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml -OutFile namespace.yaml -UseBasicParsing
-      wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml -OutFile metallb.yaml -UseBasicParsing
+      wget https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/001-metallb.yaml -OutFile metallb.yaml -UseBasicParsing
 
 Now that we have the yaml files we need to manipulate them so we grab the images from the "proxy" account. [IS THIS WORTH DOING?]
 
@@ -140,7 +140,7 @@ For Linux/MacOS [Lane repoted MacOS issues, can we just have everyone use WinToo
 
      cd <LOCATION WHERE TO STORE FILES>
      wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
-     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
+     wget https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/001-metallb.yaml
 
 
 #. Open metallb.yaml file in Visual Code via File -> Open..
@@ -150,12 +150,13 @@ For Linux/MacOS [Lane repoted MacOS issues, can we just have everyone use WinToo
    - On **Line 372** change *metallb/controller:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-cntrl:latest**
 
 #. Save the file
+
 #. Run these two commands
 
    .. code-block:: bash
 
       kubectl apply -f namespace.yaml
-      kubectl apply -f metallb.yaml
+      kubectl apply -f 001-metallb.yaml
 
 #. When you are running MacOS or Linux use:
 
