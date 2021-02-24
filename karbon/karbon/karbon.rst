@@ -97,8 +97,8 @@ Now that we have the yaml files we need to manipulate them so we grab the images
 
 #. Change the following two lines:
 
-   - On **Line 316** change *metallb/speaker:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-cntrl:latest**
-   - On **Line 372** change *metallb/controller:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-spkr:latest**
+   - On **Line 316** change *metallb/speaker:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-spkr:latest**
+   - On **Line 372** change *metallb/controller:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-cntrl:latest**
 
 #. Save the file
 #. Run these two commands
