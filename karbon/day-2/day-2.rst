@@ -618,7 +618,7 @@ Assign access right to the bucket
 Add the bucket to the DNS
 *************************
 
-As the bucket can only be addressed by a URL we need to make sure that we have added the name to the DNS server that we have in our environment.
+As the bucket can only be addressed by a URL name and not on IP. To fix that we need to make sure that we have added the name to the DNS server that we have in our environment on the AutoAD.
 
 #. Open the DNS tool on your Windows Tools VM via **Desktop -> Tools -> Administrative Tools -> DNS**
 
@@ -632,7 +632,7 @@ As the bucket can only be addressed by a URL we need to make sure that we have a
 
 [UNDER FORWARD LOOKUP ZONES]
 
-#. Check to see if the DNS name ntnxlab.local has a subdomain with the same name as the Object Store.
+#. Check to see if under the DNS name ntnxlab.local there is a subdomain/folder with the same name as the Object Store.
 
    .. note::
       As the cluster is a shared resource, someone else might have created the domain already for you.
@@ -645,13 +645,16 @@ As the bucket can only be addressed by a URL we need to make sure that we have a
       .. figure:: images/35.png
 
    #. Type the name of the object store you have in your Prism Central **ntnx-objects** (examples are using nutanix-demo)
+
    #. Click the **OK** button to get the new domain created
 
-#. Right click the Domain ntnxlab.local and select  **New Host (A or AAAA)**...
-#. For the name type **<NAME OF THE OBJECT STORE>** (example ntnx-objects)
-#. For the IP address, use one of the public IP addresses of the Object Store you see in the Object Store interface in PRISM Central.
+   #. Right click again on the ntnxlab.local domain and select  **New Host (A or AAAA)**...
 
-   .. figure:: images/36.png
+   #. For the name type **<NAME OF THE OBJECT STORE>** (example ntnx-objects)
+   
+   #. For the IP address, use one of the public IP addresses of the Object Store you see in the Object Store interface in PRISM Central.
+
+      .. figure:: images/36.png
 
 #. Click **Add Host -> OK -> Done**
 
