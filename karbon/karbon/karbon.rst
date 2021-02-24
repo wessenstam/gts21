@@ -97,8 +97,8 @@ Now that we have the yaml files we need to manipulate them so we grab the images
 
 #. Change the following two lines:
 
-   - On **Line 316** change *metallb/speaker:v0.9.5* into **wessenstam/metallb-contr:v0.9.5**
-   - On **Line 372** change *metallb/controller:v0.9.5* into **wessenstam/metallb-spkr:v0.9.5**
+   - On **Line 316** change *metallb/speaker:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-cntrl:latest**
+   - On **Line 372** change *metallb/controller:v0.9.5* into **public.ecr.aws/n5p3f3u5/metallb-spkr:latest**
 
 #. Save the file
 #. Run these two commands
@@ -139,8 +139,8 @@ For Linux/MacOS [Lane repoted MacOS issues, can we just have everyone use WinToo
    .. code-block:: bash
 
      cd <LOCATION WHERE TO STORE FILES>
-     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml -O
-     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml -O
+     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
+     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
 
 
 #. Open metallb.yaml file in Visual Code via File -> Open..
