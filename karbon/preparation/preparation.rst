@@ -12,8 +12,8 @@ Prepare your environment
 
 For this workshop to be run, we need to prepare the environment. Follow the next steps to make your environment ready. They are in high level:
 
-- Enable Karbon
-- Download the Karbon needed OS
+- Enable Karbon [NOTE THAT THIS MAY HAVE ALREADY BEEN DONE BY SOMEONE ELSE]
+- Download the Karbon needed OS [DITTO]
 - Deploy a Kubernetes Development cluster
 
 Enable Karbon

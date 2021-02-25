@@ -65,7 +65,7 @@
    :name: _k8s
    :hidden:
 
-   .. karbon/preparation/preparation
+   karbon/preparation/preparation
    karbon/karbon/karbon
    karbon/deploy/deploy
    karbon/day-2/day-2
