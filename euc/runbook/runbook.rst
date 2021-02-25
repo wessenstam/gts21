@@ -205,7 +205,6 @@ Similar to the Calm Blueprint Editor, building a Runbook allows you to visually 
    - **Script** -
 
    .. code-block:: python
-      :linenos:
 
       # If on-prem cluster memory utilization > 20% OR cloud cluster memory utilization is < on-prem, provision new desktop to cloud cluster, otherwise, provision on-prem
 
@@ -234,7 +233,6 @@ Similar to the Calm Blueprint Editor, building a Runbook allows you to visually 
    - **Script** -
 
    .. code-block:: powershell
-      :linenos:
 
       $catalogName = "@@{TARGET_MCATALOG}@@"
       $deliveryGroup = "@@{DELIVERY_GROUP}@@"

@@ -53,7 +53,7 @@ A single Citrix Virtual Apps and Desktops site can contain multiple Delivery Con
 Tools VM
 ........
 
-The Windows Tools VM provides a number of different applications used across multiple Nutanix Bootcamps. Filter for your **USER**\ *##* in **Prism Central > Virtual Infrastructure > VMs** and take note of the IP of your tools VM, as you will be connecting to this VM via RDP (using **NTNXLAB** Administrator credentials).
+The Windows Tools VM provides a number of different applications used across multiple Nutanix Bootcamps. Filter for your **USER**\ *##* in **Prism Central > Virtual Infrastructure > VMs** and take note of the IP of your **USER**\ *##*\ **WinToolsVM** VM, as you will be connecting to this VM via RDP (using **NTNXLAB** Administrator credentials).
 
    .. figure:: images/3.png
 

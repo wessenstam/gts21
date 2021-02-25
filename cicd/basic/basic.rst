@@ -1,64 +1,55 @@
 .. _docker_start:
 
----------------------------
-Containerize the Fiesta App
----------------------------
+-----------------------------
+Containerizing the Fiesta App
+-----------------------------
 
-In this section, you will learn how to convert the legacy (Fiesta) application into a containerized application.
+In this section, you will learn how to convert the VM-based Fiesta web server into a containerized service running on your Docker VM. You will then test the application by deploying the container.
 
-.. note::
+..
+   .. note::
 
-   Estimated time **30 minutes**
+      Estimated time **30 minutes**
 
-Build the Container
---------------------
+Analyzing The Legacy Application
+++++++++++++++++++++++++++++++++
 
-- Use the Docker VM to build the containerized application
+Let's begin by reviewing the Blueprint to better understand how the installation and operation of the legacy, VM based Fiesta deployment.
 
-- Test the application by deploying the container
+#. In **Prism Central**, select :fa:`bars` **> Services > Calm**.
 
-Analyze the original Fiesta Application
-.......................................
+#. From the left-hand toolbar in **Calm**, click the |bp_icon| **Blueprints** icon.
 
-Let's begin by analyzing the installation of the Fiesta app, by viewing the blueprint.
+#. Open the **Docker_MariaDB_FiestaApp_ERA** blueprint.
 
-#. Within Prism Central, click on :fa:`bars` **Services > Calm**.
+#. Click on the **Fiesta_App_VM** VM, then from the right-hand pane, click on **Package > Configure Install**.
 
-#. Click the Blueprint |bp_icon| icon.
+   .. figure:: images/1b.png
 
-#. Click on the *Docker_MariaDB_FiestaApp_ERA* Blueprint.
+   Observe that the installation of this service consists of three serial tasks.
 
-#. Click on the *Fiesta_App_VM* VM, then from the right-hand pane, click on **Package > Configure Install**.
+#. Select **Install npm**, and maximize the **Script** section in the right-hand pane. The script performs the following steps:
 
-   .. figure:: images/1.png
+   - Install required packages, including NodeJS
+   - Clones a Git repository containing the Fiesta app source
+   - Builds the Fiesta application using the Node Package Manager (npm)
 
-#. Observe the three steps executed to perform the installation of the Fiesta app.
-
-#. Click **Install npm**, and observe the *Script* portion in the right-hand pane, which includes the steps to:
-
-   - Install required packages
-   - Clone a Git repository
-   - Install npm
-   - Build the application
-   - Install an npm dependency
-   - Run steps to get the application built
-
-   .. figure:: images/2.png
+   .. figure:: images/2b.png
 
 .. _basic_container:
 
-Install container
-.................
+Building Your First Container
++++++++++++++++++++++++++++++
 
-In this section, you will install the first container.
+In this section, you will build your initial container.
 
-   - The building of this container will be created from the settings within our ``dockerfile``.  A *Dockerfile* is a text document that contains all the commands a user could call on the command line to assemble the Docker image. Docker can build images automatically by reading the instructions from a *Dockerfile*.
+   - The building of this container will be created from the settings within our **dockerfile**. A **dockerfile** is a text document that contains all the commands a user could call on the command line to assemble the Docker image. Docker can build images automatically by reading the instructions from a **dockerfile**.
 
-   - A *Docker image* is a read-only template that contains a set of instructions for creating a container that can run on the Docker platform.
+   - A **Docker image** is a read-only template that contains a set of instructions for creating a container that can run on the Docker platform.
 
    - Using ``docker build`` users can create an automated build that executes several command-line instructions in succession.
 
-Here's a quick way to visualize these terms, and the overall process. As you can see in the below diagram, when the *Dockerfile* is built, it becomes a *Docker Image*. When we run the *Docker Image*, then it finally becomes a *Docker Container*.
+Here's a quick way to visualize these terms, and the overall process. As you can see in the below diagram, when the **dockerfile** is built, it becomes a **Docker Image**. When we run the **Docker Image**, it becomes a **Docker container**.
 
 .. figure:: images/2a.png
 
@@ -66,19 +57,28 @@ Here's a quick way to visualize these terms, and the overall process. As you can
 
    Disk space is a consideration when building any container, and as such, we are using Alpine Linux. Alpine Linux is a Linux distribution designed for security, simplicity, and resource efficiency.
 
-#. Login to your *UserXX*\ docker VM via SSH, using **root** as the username, and **nutanix/4u** as the password.
+#. In **Prism Central**, select :fa:`bars` **> Infrastructure > VMs**.
 
-#. Run the command ``mkdir github``, followed by ``cd github``. This will create, and change to the directory we will be using to store the Fiesta repository.
+#. Search for your **User**\ *##*\ **-docker_VM** VM and note its IP Address.
 
-#. Run the command ``git clone https://github.com/sharonpamela/Fiesta`` to make a local copy of the Fiesta repository into the *github* directory.
+#. Connect to your **User**\ *##*\ **-docker_VM** VM via SSH using the following credentials:
 
-#. Create a file called *dockerfile* by using the command ``vi dockerfile``. This will create a blank file using the vi text editor, and we will populate in the next step.
+   - **Username** - root
+   - **Password** - nutanix/4u
 
-.. note::
+#. Run ``mkdir github``, followed by ``cd github``.
 
-   Please feel free to use Nano, as your text editor of choice, if you are more familiar with it, and its commands.
+   This will create, and change to the directory we will be using to store the Fiesta repository.
 
-#. Hit the **Insert** key to begin inserting text into the *dockerfile* file.
+#. Run ``git clone https://github.com/sharonpamela/Fiesta`` to make a local copy of the Fiesta repository in the **github** directory.
+
+#. Run ``vi dockerfile`` to create the blank **dockerfile** and edit with the **vi** text editor.
+
+   .. note::
+
+      You can alternatively use nano, or any other text editor with which you are comfortable.
+
+#. Press either the **i** or **Insert** key to begin inserting text into the **dockerfile** file.
 
 #. Copy and paste the following:
 
@@ -105,22 +105,28 @@ Here's a quick way to visualize these terms, and the overall process. As you can
       # Start the application
       ENTRYPOINT [ "/code/runapp.sh"]
 
-      # Expose port 30001 and 3000 to the outside world
+      # Expose port 3001 and 3000 to the outside world
       EXPOSE 3001 3000
-
-#. Hit the **ESC** key to stop editing the file, followed by **:wq!** to save and close the file.
-
-#. Create a file called *runapp.sh* by using the command ``vi runapp.sh``. This will create a blank file, which we will populate in the next step.
-
-#. Hit the **Insert** key to begin inserting text into the *runapp.sh* file.
 
    .. note::
 
-      Before copying and pasting the below information, you must modify the *<MARIADB-IP-ADDRESS>* entry to match your UserXX*\ MariaDB VM's IP address.
+      If using **PuTTY** as your SSH client in Windows, you can paste into **vi** by right-clicking inside of the SSH session window.
+
+#. Press the **ESC** key to stop editing the file.
+
+#. Save the file and exit the editor by pressing **:wq!** followed by the **Return** key.
+
+#. Create a file called **runapp.sh** by running ``vi runapp.sh``.
+
+#. Press either the **i** or **Insert** key to begin inserting text into the **runapp.sh** file.
 
 #. Copy and paste the following:
 
-      .. figure:: images/dbip.png
+   .. note::
+
+      You must replace **<MARIADB-IP-ADDRESS>** to match your **USER**\ *##*\ **-MariaDB_VM** IP address. If you are uncomfortable with using **vi**, you can paste the contents into Notepad or another GUI-based text editor and update the value with the correct IP *before* pasting into **vi**.
+
+   .. figure:: images/dbip.png
 
    .. code-block:: bash
 
@@ -151,32 +157,43 @@ Here's a quick way to visualize these terms, and the overall process. As you can
       cd /code/Fiesta
       npm start
 
-#. Hit the **ESC** key to stop editing the file, followed by **:wq!** to save and close the file.
+#. Press the **ESC** key to stop editing the file.
 
-#. Enter **ls -al** to perform a directory listing. Ensure your github directory looks like the below before proceeding.
+#. Save the file and exit the editor by pressing **:wq!** followed by the **Return** key.
+
+#. Run ``ls -al`` to perform a directory listing.
+
+   Ensure your **github** directory looks like the below before proceeding.
 
    .. figure:: images/5.png
 
-#. Run the command ``docker build .`` (including the period) to create the container. This takes approximately 1 minute.
+#. Run ``docker build .`` (including the period) to create the container.
+
+   This should take approximately 1 minute to complete.
 
    .. note::
 
-       If you get a message stating **You have reached your pull limit...** ask the leading SE for the solution [SHOULD WE BE CONCERNED ABOUT THIS?]
+       If you get an error message stating **You have reached your pull limit...**, ask for support in Slack.
 
-#. Run the command ``docker image ls`` to list your images. The *docker image* command manages images.
+#. Run ``docker image ls`` to list your images.
+
+   You should observe two separate images. The **ntnx-alpine** image is the container OS you defined within your **Dockerfile**, and the unidentified container is the Fiesta service you've defined in this exercise.
 
    .. figure:: images/6.png
 
-So we have an image ID. Great. But what does this mean to us? Let's quickly add some context.
+   We can easily add some additional context to make the image easier to identify.
 
-#. Run the command ``docker build . -t fiesta_app:1.0``. This will change the existing *Repository* to *fiesta_app*, and the *tag* to *1.0*.
+#. Run ``docker build . -t fiesta_app:1.0``.
 
-#. Rerun ``docker build . -t fiesta_app:1.0`` . This will tag the existing image **<none>** to be called **fiesta_app** with version number **1.0**
-#. Run ``docker image ls`` to show the list of images we have in our docker environment.
+   This will change the existing *Repository* to **fiesta_app**, and the **tag** to **1.0**.
+
+   .. #. Rerun ``docker build . -t fiesta_app:1.0`` . This will tag the existing image **<none>** to be called **fiesta_app** with version number **1.0**
+
+#. Rerun ``docker image ls`` to show the list of images in your docker environment.
 
    .. figure:: images/7.png
 
-#. Run the command ``docker run -d --rm --name Fiesta_App fiesta_app:1.0`` to create the container.
+#. Run ``docker run -d --rm --name Fiesta_App fiesta_app:1.0`` to create the container.
 
    .. note::
 
@@ -186,49 +203,48 @@ So we have an image ID. Great. But what does this mean to us? Let's quickly add 
 
       - ``-d`` Run as a daemon (a background process that handles requests, but is dormant when not required).
 
-#. Run the command ``docker logs --follow Fiesta_App`` to see the console log of the container.
+#. Run ``docker logs --follow Fiesta_App`` to see the console log of the container.
 
    After approximately 2-3 minutes, the application will be started, and you will see something like the below.
 
-      .. figure:: images/8.png
+   .. figure:: images/8.png
 
 
-   Current status: the application has been started. However, if you visit the URL referenced in the screenshot, you won't get a response. This is because the IP address listed is internal to the Docker environment. To correct this, we must configure the docker engine to allow external traffic to reach port 3000.
+   While the application is running, you won't get a response if you visit the URL referenced in the screenshot. This is because the IP address listed is internal to the Docker environment. To correct this, we must configure the docker engine to allow external traffic to reach port 3000.
 
-#. Hit **<CTRL> + C** to exit the *docker logs* command, and return to the command prompt.
+#. Press **CTRL+C** to exit the ``docker logs`` command, and return to the command prompt.
 
-#. Run the command ``docker stop Fiesta_App`` to (you guessed it!) stop the container. This will not only stop the container, but as we specified on creation, will delete the container.
+#. Run ``docker stop Fiesta_App``. This will both stop and delete the container, as specified by the ``--rm`` switch when creating the container.
 
-[We need a pause here. I've tried this multiple times, and if I do these without waiting I get an the error: docker: Error response from daemon: Conflict. The container name "/Fiesta_App" is already in use by container "f838ddea0f8920fde1136bb722fd97fde6605871fd3813068f0e371cf79c6e28". You have to remove (or rename) that container to be able to reuse that name.]
+   ..
+   [We need a pause here. I've tried this multiple times, and if I do these without waiting I get an the error: docker: Error response from daemon: Conflict. The container name "/Fiesta_App" is already in use by container "f838ddea0f8920fde1136bb722fd97fde6605871fd3813068f0e371cf79c6e28". You have to remove (or rename) that container to be able to reuse that name.]
 
-#. Run the command ``docker run -d --rm -p 5000:3000 --name Fiesta_App fiesta_app:1.0``. The *-p 5000:3000* parameter exposes port 5000, and maps the external port of 5000 to the internal port of 3000.
+#. Run ``docker run -d --rm -p 5000:3000 --name Fiesta_App fiesta_app:1.0``.
 
-#. Run the command ``docker logs --follow Fiesta_App`` once again. At the same time, open a browser ``http://<DOCKER-VM-IP-ADDRESS>:5000/products``.
+   The ``-p 5000:3000`` parameter exposes port 5000, and maps external port 5000 to internal port 3000.
+
+#. Run ``docker logs --follow Fiesta_App`` again.
+
+   Once the application is running, you should be able to access the web interface by opening a browser to  ``http://<User##-docker_VM-IP-ADDRESS>:5000/products``.
 
    .. figure:: images/9.png
 
-#. Run the command ``docker stop Fiesta_App``, as we don't need it running for now.
+#. Run ``docker stop Fiesta_App``, as we don't need it running for now.
 
 .. raw:: html
 
-    <H1><font color="#AFD135"><center>Congratulations!!!!</center></font></H1>
+    <H1><font color="#B0D235"><center>Congratulations!</center></font></H1>
 
-We have just created our initial version of the Fiesta app as a container. However, there are some things we should address, as this isn't exactly an ideal deployment.
+You have just created your initial version of the Fiesta app as a container. However, fully re-architecting an application isn't that easy! We still need to address the following questions:
 
-   - Utilizing a text editor is not the most efficient method, not to mention prone to human error.
+   - What additional tools can make developing and deploying easier and faster?
 
-   - Variables could provide some extensibility, and would have to be set outside of the image we build.
+   - How can we dynamically build the environment based on external variables?
 
-   - Using this method is time-consuming and tedious to create a container, not to mention manage.
+   - How do we enable others to use the container image we have created?
 
-   - The start of the container takes a long time.
-
-   - The image is only available as long as the Docker VM exists.
-
-In the proceeding sections, we will show you how to address all of these concerns.
-
-.. |proj-icon| image:: ../../../images/projects_icon.png
-.. |bp_icon| image:: ../../../images/blueprints_icon.png
-.. |mktmgr-icon| image:: ../../../images/marketplacemanager_icon.png
-.. |mkt-icon| image:: ../../../images/marketplace_icon.png
-.. |bp-icon| image:: ../../../images/blueprints_icon.png
+.. |proj-icon| image:: ../../images/projects_icon.png
+.. |bp_icon| image:: ../../images/blueprints_icon.png
+.. |mktmgr-icon| image:: ../../images/marketplacemanager_icon.png
+.. |mkt-icon| image:: ../../images/marketplace_icon.png
+.. |bp-icon| image:: ../../images/blueprints_icon.png

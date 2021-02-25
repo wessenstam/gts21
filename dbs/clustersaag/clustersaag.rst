@@ -30,6 +30,10 @@ Registering a database/database server with Era allows you to create a Time Mach
 
    .. figure:: images/1.png
 
+   .. note::
+
+      You will see a **MariaDB** version of your **USER**\ *##*\ **-FiestaDB** already registered. These database servers are used in the **Containerizing Apps and CI/CD** lab track and are unrelated to this exercise.
+
 #. Select **Sources** from the left-hand menu and click **+ Register > Microsoft SQL Server > Database**.
 
    .. figure:: images/4.png
@@ -219,7 +223,7 @@ While you can't directly clone, we can use Era to provision a new multi-cluster 
 
    .. figure:: https://media.giphy.com/media/ZFnb8G00YssucZnVvf/giphy.gif
 
-   During this period, you can proceed to :ref:`db_clustersdam`
+   While you wait, you can proceed to :ref:`db_clustersdam` and then return to this exercise.
 
 Importing Your Database
 +++++++++++++++++++++++
@@ -384,7 +388,7 @@ Before testing failover, you will need to update the configuration of your Fiest
 
 #. Click **Close**.
 
-#. Return to **Era > Database Server VMs > > List > USER**\ *##*\ **-SQLAG** and verify that the database is still shown as available.
+#. Return to **Era > Database Server VMs > List > USER**\ *##*\ **-SQLAG** and verify that the database is still shown as available.
 
    .. figure:: images/40.png
 

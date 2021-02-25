@@ -5,7 +5,6 @@ Kubernetes configuration
 
 After we have created and configured the needed pre-requirements in the earlier module, we are now going to configure our deployed Kubernetes cluster so we can start using it. in this part of the workshop we cover the following items:
 
-- Get the kubeconfig file so we can interact with the kubernetes cluster
 - Install and configure MetalLB Load Balancer that mimics the Load Balancers like you would have with Google, Azure or AWS as example.
 - Install and configure Traefik Ingress Controller
 - Install and configure dashboards so we can visualize the kubernetes cluster
@@ -14,59 +13,6 @@ After we have created and configured the needed pre-requirements in the earlier 
    Estimated time **45 minutes**
 
    All screenshots have the **Downloads** folder of the logged in user as the location where we save files
-
-Interact with your kubernetes cluster
--------------------------------------
-
-Kubernetes uses by default a file for authentication and not username and password combinations. This file, called kubeconf.cfg, has be downloaded and stored local. As we will be using the command line a lot during this part of the workshop, we are going to set an environmental variable so if the command line is closed, we still are able to use the file.
-
-Follow these steps to get to interact with your kubernetes cluster.
-
-#. Open the Karbon UI in Prism Central via :fa:`bars` -> Services -> Karbon (if not already)
-#. Select your kubernets cluster by clicking the check box in front of the name.
-#. Click on the **Actions** button and select **Download Kubeconfig**
-
-   .. figure:: images/1.png
-
-#. Click on the Blue **Download** text
-#. Save the file somewhere on your machine, but remember where you have saved it as we need it in the next steps
-
-.. note::
-    When you get an error message from your browser about it could harm your machine, please click the **Keep** button.
-
-    .. figure:: images/2.png
-
-#. For Windows, open the Environment (Right CLick on the "start" button -> System -> Advanced System Settings -> Environment Variables)
-
-   .. figure:: images/3.png
-
-   #. Click on the **Environmental Variables** button and then on the **New...** button under the **User variables** (top of the screen)
-   #. Create a new variable and use the following parameters
-
-      - **Variable Name** - KUBECONFIG
-      - **Variable Value** - <Path of where you stored the file>/kubectl.cfg (screenshot below is the default Download location of the Administrator user)
-
-        .. figure:: images/5.png
-
-   #. Close all the windows, you have opened with respect to setting the **Environment Variable**
-
-#. For Linux or MacOS use the export functionality after you have opened the terminal session
-
-#. Open a terminal or powershell (on Windows only) and type
-
-   .. code-block:: bash
-
-      kubectl get nodes
-
-#. You should see something like the below screenshot
-
-   .. figure:: images/6.png
-
-   .. note::
-    If you don't then check the variable you just set by typing **dir env:** in PowerShell or **set** on Linux/MacOS machine and check the **KUBECONFIG** variable and check that is pointing to the kubectl.cfg file you downloaded earlier
-
-    .. figure:: images/7.png
-
 
 External Load Balancer
 ---------------------

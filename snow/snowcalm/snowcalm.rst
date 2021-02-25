@@ -262,7 +262,7 @@ With your Catalog Item active, you're ready to test ordering your first VM as an
 
 #. Once the app is provisioned, you can allow users to access and manage their VMs directly through Prism Central based on their Project entitlements. Try it out by logging into Prism Central as:
 
-   - **Username** - *user##*@ntnxlab.local (ex. user01@ntnxlab.local)
+   - **Username** - user\ *##*\ @ntnxlab.local (ex. user01@ntnxlab.local)
    - **Password** - nutanix/4u
 
    Based on your Calm **Operator** role for the project, you should have the ability to manage your application, including power operations, viewing metrics, and accessing VM consoles - without the ability to view, modify, or launch Blueprints.
