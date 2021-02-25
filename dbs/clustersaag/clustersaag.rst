@@ -223,7 +223,7 @@ While you can't directly clone, we can use Era to provision a new multi-cluster 
 
    .. figure:: https://media.giphy.com/media/ZFnb8G00YssucZnVvf/giphy.gif
 
-   During this period, you can proceed to :ref:`db_clustersdam`
+   While you wait, you can proceed to :ref:`db_clustersdam` and then return to this exercise.
 
 Importing Your Database
 +++++++++++++++++++++++

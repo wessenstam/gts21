@@ -17,6 +17,8 @@ In this exercise you will build a policy to replicate hourly snapshots between y
 
 A Prism **Category** is a key value pair. Categories are assigned to entities (such as VMs, Networks, or Images) based on some criteria (Location, Production-level, App Name, etc.). Policies can then be mapped to those entities that are assigned a specific category value.
 
+#. Refer to :ref:`clusterdetails` for your **Prism Central** IP and **admin** credentials.
+
 #. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > Categories**.
 
    .. figure:: images/1.png
@@ -94,11 +96,11 @@ Similar to the previous exercise, you'll map a microsegmentation policy to speci
 
    You'll find a CentOS webserver, **USER**\ *##*\ **-FiestaWeb**, running a Node-based inventory management application, and a Microsoft SQL database, **USER**\ *##*\ **-MSSQL-Source** storing its associated data.
 
-   *Ignore the Fiesta deployment with alternate VM names, as this is used in another lab!*
+   You can view the web interface of the application by opening \http://<*USER##-FiestaWeb-VM-IP*>.
 
-   .. note::
+   ..note::
 
-      You can view the web interface of the application by opening \http://<*USER##-FiestaWeb-VM-IP*>.
+      Ignore the Fiesta deployment with alternate VM names, as these are used in other GTS labs.
 
 #. Right-click your **USER##-FiestaWeb** VM and select **Manage Categories**.
 
