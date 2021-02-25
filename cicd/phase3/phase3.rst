@@ -196,7 +196,6 @@ Drone is looking for a file **.drone.yml** in the root of the repo to tell it wh
 #. Copy and paste the contents below into **.drone.yml**:
 
    .. code-block:: yaml
-      :linenos:
 
       kind: pipeline
       name: default
@@ -248,7 +247,6 @@ Drone is looking for a file **.drone.yml** in the root of the repo to tell it wh
 #. Create a new file in the root of the **Fiesta_Application** named **dockerfile** and paste the content below into the file.
 
    .. code-block:: docker
-      :linenos:
 
       # Grab the needed OS image
       FROM public.ecr.aws/n5p3f3u5/ntnx-alpine:latest
@@ -290,7 +288,6 @@ Drone is looking for a file **.drone.yml** in the root of the repo to tell it wh
    - **set_privileges.sql**
 
       .. code-block:: sql
-        :linenos:
 
          grant all privileges on FiestaDB.* to fiesta@'%' identified by 'fiesta';
          grant all privileges on FiestaDB.* to fiesta@localhost identified by 'fiesta';
@@ -298,7 +295,6 @@ Drone is looking for a file **.drone.yml** in the root of the repo to tell it wh
    - **runapp.sh**
 
       .. code-block:: bash
-        :linenos:
 
          #!/bin/sh
 
@@ -357,7 +353,6 @@ In a CI/CD pipeline testing is very important and needs to be run automatically.
 #. Add the following to the **.drone.yml** file, under the **steps:** section, after the **name: build test image** section.
 
    .. code-block:: yaml
-      :linenos:
 
          - name: Test built container
            image: fiesta_app:${DRONE_COMMIT_SHA:0:6}
@@ -487,7 +482,6 @@ As we do not want to save our **Docker Hub** credentials in plaintext inside of 
 #. Add the following to the **.drone.yml** file, under the **steps:** section, after the **name: Test built container** section.
 
    .. code-block:: yaml
-      :linenos:
 
       - name: Push to Dockerhub
         image: public.ecr.aws/n5p3f3u5/docker:latest
@@ -537,23 +531,22 @@ This type of automation is how mature DevOps teams found at organizations like *
 #. Add the following to the **.drone.yml** file, under the **steps:** section, after the **name: Push to Dockerhub** section.
 
    .. code-block:: yaml
-      :linenos:
 
-       - name: Deploy newest image
-         image: public.ecr.aws/n5p3f3u5/docker:latest
-         pull: if-not-exists
-         environment:
-           USERNAME:
-             from_secret: dockerhub_username
-           PASSWORD:
-             from_secret: dockerhub_password
-         volumes:
-           - name: docker_sock
-             path: /var/run/docker.sock
-         commands:
-           - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; else echo  "Docker container has not been found..."; fi
-           - sleep 10
-           - docker run --name Fiesta_App --rm -p 5000:3000 -d $USERNAME/fiesta_app:latest
+    - name: Deploy newest image
+      image: public.ecr.aws/n5p3f3u5/docker:latest
+      pull: if-not-exists
+      environment:
+        USERNAME:
+          from_secret: dockerhub_username
+        PASSWORD:
+          from_secret: dockerhub_password
+      volumes:
+        - name: docker_sock
+          path: /var/run/docker.sock
+      commands:
+        - if [ `docker ps | grep Fiesta_App | wc -l` -eq 1 ]; then echo "Stopping existing Docker Container...."; docker stop Fiesta_App; else echo  "Docker container has not been found..."; fi
+        - sleep 10
+        - docker run --name Fiesta_App --rm -p 5000:3000 -d $USERNAME/fiesta_app:latest
 
    Again, whitespace in **YAML** files *matters!* Refer to the image below for a properly indented example.
 

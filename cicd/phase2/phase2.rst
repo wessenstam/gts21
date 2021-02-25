@@ -111,7 +111,6 @@ In this exercise we will deploy **Gitea** and its required **MySQL** database as
 #. In the terminal, run the following commands to create the directories required for the deployment:
 
    .. code-block:: bash
-      :linenos:
 
        mkdir -p ~/github
        mkdir -p /docker-location/gitea

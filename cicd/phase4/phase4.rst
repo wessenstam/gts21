@@ -25,7 +25,6 @@ Updating Fiesta_App Files
 #. Overwrite **ALL** of the contents of the file with the following:
 
    .. code-block:: yaml
-    :linenos:
 
       # This dockerfile multi step is to start the container faster as the runapp.sh doesn't have to run all npm steps
 
@@ -77,14 +76,13 @@ Updating Fiesta_App Files
 
       We will **NOT** push the changes until all files have been updated.
 
-   Now we see that the Fiesta application source code will be cloned and built on the Docker VM and *then* copied into the container on **Line 32**.
+   Now we see that the Fiesta application source code will be cloned and built on the Docker VM and *then* copied into the container on the ``COPY --from=base /code /code`` line.
 
    Not only will this decrease the start time of the application, it will also decrease the total size. This is because many additional *temporary* packages are downloaded by **npm** as part of the build process which are not automatically removed after the build has completed.
 
 #. Open **runapp.sh** and overwrite **ALL** of the contents of the file with the following:
 
    .. code-block:: bash
-    :linenos:
 
       #!/bin/sh
 
@@ -160,7 +158,6 @@ Testing The Optimizations
 #. Copy and paste the script below into a temporary text file and update the **DB_SERVER** and **USERNAME** variables to match your environment and **Docker Hub** account.
 
    .. code-block:: bash
-      :lineos:
 
       DB_SERVER=<IP ADDRESS OF MARIADB VM>
       DB_NAME=FiestaDB

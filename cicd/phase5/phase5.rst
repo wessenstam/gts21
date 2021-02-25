@@ -133,10 +133,9 @@ We will now update our **.drone.yml** with an additional **step** to conditional
 
 #. Return to your **Visual Studio Code (Local)** window in your **USER**\ *##*\ **-WinToolsVM** and open **.drone.yml**.
 
-#. Copy and paste below content over the exiting content in the **.drone.yml** file
+#. Copy and paste below content over the exiting content in the **.drone.yml** file:
 
    .. code-block:: yaml
-    :linenos:
 
     kind: pipeline
     name: default
@@ -381,14 +380,13 @@ Now that we know our CI/CD pipeline can conditionally perform different actions 
 Creating Development runapp Script
 ++++++++++++++++++++++++++++++++++
 
-As seen in Era, there are multiple variables that need to be populated in order to successfully execute the clone operation. To simplify the lab, these steps have been provided for you (see **Lines 58-108** in **runapp-dev.sh** below).
+As seen in Era, there are multiple variables that need to be populated in order to successfully execute the clone operation. To simplify the lab, these steps have been provided for you.
 
 #. Create a new file named **runapp-dev.sh** in the **Fiesta_Application** directory.
 
 #. Copy and paste the contents below into the file:
 
    .. code-block:: bash
-    :linenos:
 
       #!/bin/sh
 
@@ -571,7 +569,6 @@ Now we need to make sure that the development container is using the newly creat
 #. Copy and paste the contents below into the file:
 
    .. code-block:: docker
-    :linenos:
 
       # This dockerfile multi step is to start the container faster as the runapp.sh doesn't have to run all npm steps
 
@@ -614,7 +611,7 @@ Now we need to make sure that the development container is using the newly creat
       ENTRYPOINT [ "/code/runapp.sh"]
       EXPOSE 3001 3000
 
-   This is nearly identical to your production **dockerfile**. You can see the difference on **Line 34** where **runapp-dev.sh** is copied into the container image as **runapp.sh**.
+   This is nearly identical to your production **dockerfile**. You can see the difference on the ``COPY runapp-dev.sh /code/runapp.sh`` line where **runapp-dev.sh** is copied into the container image as **runapp.sh**.
 
 #. Save the file.
 
