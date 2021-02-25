@@ -244,7 +244,7 @@ For the purposes of this exercise, you will upload an existing Blueprint of a si
 
    .. figure:: images/18.png
 
-#. Under **Disks > Disk (1) > Image** select **CENTOS7** to clone from the existing disk stored within the Prism Image Service.
+#. Under **Disks > Disk (1) > Image** select **CentOS7.qcow2** to clone from the existing disk stored within the Prism Image Service.
 
    .. figure:: images/19.png
 

@@ -1,34 +1,31 @@
 .. _phase4_container:
 
-Starting the Container Faster
-=============================
+------------------------
+Optimizing the Container
+------------------------
 
-As you may have noticed it takes a while before the Fiesta_App container is up and running. The CI/CD pipeline does it work in automating the build, test, upload to our Dockerhub registry and deployment steps, but still takes a few minutes before the application is up and running and serving \HTTP requests.
+While the CI/CD pipeline is now capable of automating the build, test, upload to your Docker Hub registry, and deployment steps, you may have noticed it still takes multiple minutes for the **Fiesta_App** to be ready for use. In environments where you could see thousands of code pushes per day, *minutes matter!*
 
-The reason for the time needed is that during the start of the container it has to run multiple npm commands to become ready. This part of the module is to see if we can speed this up and at the same time lower the size of the Fiesta_App image.
+As you add additional containerized services to the pipeline, where operations are executed begin to have a significant impact on optimizing the build and deployment times of your application.
 
-.. note::
-   Estimated time **45 minutes**
+Currently, the container clones and builds the application source code *after* the container starts. We can shift these operations into the container image build process to decrease the time required for the running container to become ready.
 
-Multi Step Image Build
-----------------------
+In this exercise you will:
 
-To do the step up of the Fiesta Application we are going to do three things
+   - Update the **dockerfile** to include the Fiesta installation commands
+   - Update **runapp.sh** to remove the Fiesta installation commands
+   - Update **.drone.yml** to remove irrelevant image test commands
+   - Test your updated build
 
-#. Recreate the **dockerfile** to become a multi-step build
-#. Change the **runapp.sh** so it doesn't start all the installation steps for the Application
-#. Change the test step in **.drone.yml**
+Updating Fiesta_App Files
++++++++++++++++++++++++++
 
-.. ntoe::
-   Please follow the steps to the letter as they are dependent on each other. When we save a file, just save and **don't commit and/or push** the files!!
+#. Return to your **Visual Studio Code (Local)** window and open **dockerfile**.
 
-Change dockerfile
-^^^^^^^^^^^^^^^^^
-
-#. Open your VC that you used before to manipulate the **runapp.sh, .drone.yml** and the **dockerfile**
-#. Exchange **all** content in the **dockerfile** with the content below
+#. Overwrite **ALL** of the contents of the file with the following:
 
    .. code-block:: yaml
+    :linenos:
 
       # This dockerfile multi step is to start the container faster as the runapp.sh doesn't have to run all npm steps
 
@@ -74,17 +71,20 @@ Change dockerfile
       ENTRYPOINT [ "/code/runapp.sh"]
       EXPOSE 3001 3000
 
-#. Save the file
+#. Save the file.
 
-Change runapp.sh
-^^^^^^^^^^^^^^^^
+   .. note::
 
-Now the dockerfile is running the npm stuff compared to earlier images, this has been done by the runapp.sh. We can change the file to less lines.
+      We will **NOT** push the changes until all files have been updated.
 
-#. Open in your VC **runapp.sh**
-#. Delete **all** lines from the file and copy paste the following in the file
+   Now we see that the Fiesta application source code will be cloned and built on the Docker VM and *then* copied into the container on **Line 32**.
+
+   Not only will this decrease the start time of the application, it will also decrease the total size. This is because many additional *temporary* packages are downloaded by **npm** as part of the build process which are not automatically removed after the build has completed.
+
+#. Open **runapp.sh** and overwrite **ALL** of the contents of the file with the following:
 
    .. code-block:: bash
+    :linenos:
 
       #!/bin/sh
 
@@ -114,48 +114,53 @@ Now the dockerfile is running the npm stuff compared to earlier images, this has
       cd /code/Fiesta
       npm start
 
-#. Save the file
+#. Save the file.
 
-Change the .drone.yml File
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+   The only thing the start-up script for our container is now responsible for is updating the **config.js** file with the environment variables and starting the application.
 
-#. Open the **.drone.yml** file
-#. Under the **Test local built container** section, remove the line ``- git clone https://github.com/sharonpamela/Fiesta /code/Fiesta`` as we already took care of that in **dockerfile**. Testing this step would lead to an error.
-#. Save the file
-#. **Commit and push** the changed files to Gitea and look at the Drone UI to see the container being build
-#. As you can see, the build phase is taking more time as it needs to run multiple steps.
+#. Open **.drone.yml**.
+
+#. Under **steps > name: Test local built container > commands**, remove the line ``- git clone https://github.com/sharonpamela/Fiesta /code/Fiesta``.
+
+   .. figure:: images/5.png
+
+   This test is no longer needed as the source code as is now being cloned from GitHub outside of the container image.
+
+#. Save the file.
+
+Testing The Optimizations
++++++++++++++++++++++++++
+
+#. Commit and push your 3 updated files to your **Gitea** repo.
+
+#. In **Drone > nutanix/Fiesta_Application > ACTIVITY FEED**, note the the **build test image** stage now takes significantly longer as this is where we have shifted a majority of the operations.
 
    .. figure:: images/1.png
 
-#. Wait till all steps in the cicd build have been run before moving forward
+   This is a reasonable trade-off as for every build in an environment, you will likely have multiple deployments (development environments, user acceptance testing, production, etc.).
 
-Check Effect of the New Build Method
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-To see the difference of these "New Way of Building" let's check two things:
+#. After the **Deploy newest image** stage is complete, return to your **Visual Studio Code (Docker VM SSH)** window and open the **Terminal**.
 
-- Size fo the new image
-- Start time using the new image
+   .. note:: Alternatively, you can SSH to your Docker VM using PuTTY or Terminal.
 
-Check Size Difference
-*********************
-
-#. Open a ssh session to the docker vm (using your other VC window or via terminal/putty)
-#. Run ``docker image ls`` to see the size of the images. As we can see the image has gone from 371 MB to 277 MB
+#. Run ``docker image ls`` to list the images.
 
    .. figure:: images/3.png
 
-Check the Start Time Needed
-***************************
+   In the example above, the size of the image decreased by nearly 100MB. Again this is due to eliminating all of the additional temporary packages downloaded by **npm** when performing the application build inside of the container.
 
-#. Open a ssh session to the docker vm (using your other VC window or via terminal/putty)
-#. Stop the Fiesta_App container using ``docker stop Fiesta_App``
-#. Run ``docker ps --all`` to make sure the Fiesta_App is not there anymore
+   Next we'll test how quickly the new image is able to start the Fiesta app.
 
-   .. figure:: images/4.png
+#. Run ``docker stop Fiesta_App`` to stop and remove your container.
 
-#. Run the following from the command line (**make sure you use your environment information!!**)
+#. You can run ``docker ps --all`` to validate **Fiesta_App** container is no longer present.
+
+   You should expect to see only your **drone**, **drone-runner-docker**, **gitea**, and **mysql** containers.
+
+#. Copy and paste the script below into a temporary text file and update the **DB_SERVER** and **USERNAME** variables to match your environment and **Docker Hub** account.
 
    .. code-block:: bash
+      :lineos:
 
       DB_SERVER=<IP ADDRESS OF MARIADB VM>
       DB_NAME=FiestaDB
@@ -165,35 +170,28 @@ Check the Start Time Needed
       USERNAME=<DOCKERHUB USERNAME>
       docker run --name Fiesta_App --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:latest && docker logs --follow Fiesta_App
 
-#. See how long it takes to get to the line that tells ``On Your Network:  http://172.17.0.6:3000`` **(approx. 15 seconds)**
-#. Run ``docker stop Fiesta_App`` to stop and remove the container
-#. Repeat the aboves steps, but change the image by **not using the latest as the version, but one that is 371 MB in size** *(use* ``docker image ls`` *to see the images available)* and keep track how long it takes to get to the same line ``On Your Network:  http://172.17.0.6:3000`` **(approx. 220 seconds)**
-#. Run ``docker stop Fiesta_App`` to stop and remove the container
+#. Paste the updated script into your SSH terminal session and press **Return** to execute the final command.
 
--------
+   The app should start in ~15 seconds, as indicated by ``You can now view client in the browser`` output from your terminal session. *That's significantly faster than the 3+ minutes it took previously!*
+
+#. Optionally, if you want to compare the start time of your previous build:
+
+   - Press **CTRL+C** to stop the ``docker log`` command
+   - Run ``docker stop Fiesta_App``
+   - Run ``docker image ls`` and note the **TAG** of one of your previous versions of the image, as indicated by its larger file size
+
+      .. figure:: images/6.png
+
+   - In the following command, replace **LATEST** with the **TAG** value from the previous step run ``docker run --name Fiesta_App --rm -p 5000:3000 -d -e DB_SERVER=$DB_SERVER -e DB_USER=$DB_USER -e DB_TYPE=$DB_TYPE -e DB_PASSWD=$DB_PASSWD -e DB_NAME=$DB_NAME $USERNAME/fiesta_app:LATEST && docker logs --follow Fiesta_App``
+
+   - Run the command
+
+   This version should take *much* longer than the optimized container image.
 
 .. raw:: html
 
-.. raw:: html
+    <H1><font color="#B0D235"><center>Congratulations!</center></font></H1>
 
-    <H1><font color="#AFD135"><center>Congratulations!!!!</center></font></H1>
+You've addressed the final issue in our CI/CD pipeline by optimizing the time it takes to deploy the application from the Docker container. :fa:`thumbs-up` What now?
 
-We have just used our CI/CD pipeline and solved these topics.
-
-- The way of working using **vi** or **nano** is not very effective and ready for human error (:fa:`thumbs-up`)
-- Variables needed, have to be set outside of the image we build (:fa:`thumbs-up`)
-- The container build takes a long time and is a tedeous work including it's management (:fa:`thumbs-up`)
-- The image is only available as long as the Docker VM exists (:fa:`thumbs-up`)
-- The start of the container takes a long time (:fa:`thumbs-up`)
-
-
-
-
-
-..   .. TODO::
-
-        All on MariaDB
-
-        - Integrate with Era if we have a dev branch
-        - Use Era to clone a Dev database from Production Database if there is none
-        - Use Era to refresh the data if there is a cloned Dev MariaDB server
+Up to this point in the lab, every build has been dependent on the pre-deployed "production" version of our MariaDB database. In the next exercise, we'll take advantage of **Nutanix Era** to provide database cloning as part of the pipeline.

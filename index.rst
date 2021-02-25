@@ -48,7 +48,7 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: Containerizg Apps and CI/CD
+   :caption: Containerizing Apps and CI/CD
    :name: _cicd
    :hidden:
 
@@ -87,6 +87,7 @@
    dbs/B3webtier/webtier
 
   <br><center><img src="https://get-ahv-images.s3.amazonaws.com/GTSLOGO.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
+  
 .. raw:: html
 
    <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/welcome.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
