@@ -313,7 +313,7 @@ spec:
             secretKeyRef:
               name: memberlist
               key: secretkey
-        image: public.ecr.aws/n5p3f3u5/metallb-cntrl:latest
+        image: public.ecr.aws/n5p3f3u5/metallb-spkr:latest
         imagePullPolicy: Always
         name: speaker
         ports:
@@ -369,7 +369,7 @@ spec:
       - args:
         - --port=7472
         - --config=config
-        image: public.ecr.aws/n5p3f3u5/metallb-spkr:latest
+        image: public.ecr.aws/n5p3f3u5/metallb-cntrl:latest
         imagePullPolicy: Always
         name: controller
         ports:
