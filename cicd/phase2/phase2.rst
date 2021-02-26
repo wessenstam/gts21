@@ -118,7 +118,7 @@ In this exercise we will deploy **Gitea** and its required **MySQL** database as
        mkdir -p /docker-location/drone/agent
        mkdir -p /docker-location/mysql
 
-#. Run ``cd ~/github``.
+#. Run ``cd ~/github``
 
 #. Run ``curl --silent https://raw.githubusercontent.com/nutanixworkshops/gts21/master/cicd/docker_files/docker-compose.yaml -O`` to download the **YAML** file describing the CI/CD infrastructure.
 
@@ -149,7 +149,7 @@ To do so we will use ``docker exec`` to execute commands *within* the Gitea cont
 
 #. Run ``docker exec -it gitea /bin/bash`` to access the Gitea container shell.
 
-#. From the container's **bash** prompt, run ``gitea cert --host <IP ADDRESS OF THE DOCKER VM>``.
+#. From the container's **bash** prompt, run ``gitea cert --host <IP ADDRESS OF THE DOCKER VM>``
 
    This will create two files **cert.pem** and **key.pem** in the root of the container.
 
@@ -203,7 +203,7 @@ To do so we will use ``docker exec`` to execute commands *within* the Gitea cont
 
 #. Save the file.
 
-#. From your terminal session, restart the container by running ``docker-compose restart gitea``.
+#. From your terminal session, restart the container by running ``docker-compose restart gitea``
 
 #. Reload the browser (\https://*<IP ADDRESS OF YOUR DOCKER VM>*:3000).
 
