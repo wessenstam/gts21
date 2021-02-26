@@ -118,7 +118,7 @@ Updating Fiesta_App Files
 
 #. Open **.drone.yml**.
 
-#. Under **steps > name: Test local built container > commands**, remove the line ``- git clone https://github.com/sharonpamela/Fiesta /code/Fiesta``.
+#. Under **steps > name: Test local built container > commands**, remove the line ``- git clone https://github.com/sharonpamela/Fiesta /code/Fiesta``
 
    .. figure:: images/5.png
 

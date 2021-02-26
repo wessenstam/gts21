@@ -634,7 +634,7 @@ Testing Your Development Build
 
    .. note:: Alternatively, you can SSH to your Docker VM using PuTTY or Terminal.
 
-#. Run ``docker logs --follow fiesta_app_dev``.
+#. Run ``docker logs --follow fiesta_app_dev``
 
    .. figure:: images/14.png
 

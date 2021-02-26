@@ -139,7 +139,7 @@ First we will create a repository (or *repo* for short) that we can use to store
 
    .. note::
 
-    In the lower right-hand corner you will get a prompt asking if you would like to periodically run a ``git fetch``. This is useful if you have multiple people working against the repo, but is unnecessary for the lab. Click **No** or allow the dialog to time out.
+    In the lower right-hand corner you will get a prompt asking if you would like to periodically run a ``git fetch`` This is useful if you have multiple people working against the repo, but is unnecessary for the lab. Click **No** or allow the dialog to time out.
 
     .. figure:: images/10.png
 
@@ -403,7 +403,7 @@ In a CI/CD pipeline testing is very important and needs to be run automatically.
 Uploading Images To Docker Hub
 +++++++++++++++++++++++++++++++
 
-Now that we are programmatically creating and testing our Docker image, the next step is to upload the versioned image to **Dcoker Hub** so it exists outside of our development environment. Just as Git acts as version control for source code, **Docker Hub** will act as our version control repository for the Docker images themselves.
+Now that we are programmatically creating and testing our Docker image, the next step is to upload the versioned image to **Docker Hub** so it exists outside of our development environment. Just as Git acts as version control for source code, **Docker Hub** will act as our version control repository for the Docker images themselves.
 
 The following exercise will require you to use your own **Docker Hub** credentials, not the **devnutanix** account referenced in the lab guide screenshots.
 
@@ -432,7 +432,7 @@ Manual Upload
 
       Your **Tag** will be different than the one in the screenshot. Every time someone uses the screenshot data in their own lab, and then wonders why their lab doesn't work, a sales rep gets an undeserved raise. Don't let it happen to you.
 
-#. Run ``docker image tag fiesta_app:YOUR-6-DIGIT-TAG YOUR-DOCKERHUB-ACCOUNT-NAME/fiesta_app:1.0``
+#. Run ``docker image tag fiesta_app:<YOUR-6-DIGIT-TAG><YOUR-DOCKERHUB-ACCOUNT-NAME>/fiesta_app:1.0``
 
    This will create a new image which will be tagged with *your* Docker Hub account and **fiesta_app**, as version **1.0**.
 
@@ -769,7 +769,7 @@ The following are parameters being used inside of either **.drone.yml** and/or *
 
    .. note:: Alternatively, you can SSH to your Docker VM using PuTTY or Terminal.
 
-#. From the SSH session, run ``docker logs --follow Fiesta_App``.
+#. From the SSH session, run ``docker logs --follow Fiesta_App``
 
    It will take approximately 2-3 minutes for the application to start.
 

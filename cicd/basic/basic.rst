@@ -66,7 +66,7 @@ Here's a quick way to visualize these terms, and the overall process. As you can
    - **Username** - root
    - **Password** - nutanix/4u
 
-#. Run ``mkdir github``, followed by ``cd github``.
+#. Run ``mkdir github`` followed by ``cd github``
 
    This will create, and change to the directory we will be using to store the Fiesta repository.
 
@@ -116,7 +116,7 @@ Here's a quick way to visualize these terms, and the overall process. As you can
 
 #. Save the file and exit the editor by pressing **:wq!** followed by the **Return** key.
 
-#. Create a file called **runapp.sh** by running ``vi runapp.sh``.
+#. Create a file called **runapp.sh** by running ``vi runapp.sh``
 
 #. Press either the **i** or **Insert** key to begin inserting text into the **runapp.sh** file.
 
@@ -183,7 +183,7 @@ Here's a quick way to visualize these terms, and the overall process. As you can
 
    We can easily add some additional context to make the image easier to identify.
 
-#. Run ``docker build . -t fiesta_app:1.0``.
+#. Run ``docker build . -t fiesta_app:1.0``
 
    This will change the existing *Repository* to **fiesta_app**, and the **tag** to **1.0**.
 
@@ -214,18 +214,18 @@ Here's a quick way to visualize these terms, and the overall process. As you can
 
 #. Press **CTRL+C** to exit the ``docker logs`` command, and return to the command prompt.
 
-#. Run ``docker stop Fiesta_App``. This will both stop and delete the container, as specified by the ``--rm`` switch when creating the container.
+#. Run ``docker stop Fiesta_App`` This will both stop and delete the container, as specified by the ``--rm`` switch when creating the container.
 
    ..
    [We need a pause here. I've tried this multiple times, and if I do these without waiting I get an the error: docker: Error response from daemon: Conflict. The container name "/Fiesta_App" is already in use by container "f838ddea0f8920fde1136bb722fd97fde6605871fd3813068f0e371cf79c6e28". You have to remove (or rename) that container to be able to reuse that name.]
 
-#. Run ``docker run -d --rm -p 5000:3000 --name Fiesta_App fiesta_app:1.0``.
+#. Run ``docker run -d --rm -p 5000:3000 --name Fiesta_App fiesta_app:1.0``
 
    The ``-p 5000:3000`` parameter exposes port 5000, and maps external port 5000 to internal port 3000.
 
 #. Run ``docker logs --follow Fiesta_App`` again.
 
-   Once the application is running, you should be able to access the web interface by opening a browser to  ``http://<User##-docker_VM-IP-ADDRESS>:5000/products``.
+   Once the application is running, you should be able to access the web interface by opening a browser to  ``http://<User##-docker_VM-IP-ADDRESS>:5000/products``
 
    .. figure:: images/9.png
 
