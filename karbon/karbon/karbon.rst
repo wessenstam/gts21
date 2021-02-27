@@ -1,43 +1,81 @@
 .. _environment_karbon:
 
-Kubernetes configuration
-========================
+------------------------------------
+Adding Network Services & Dashboards
+------------------------------------
 
-After we have created and configured the needed pre-requirements in the earlier module, we are now going to configure our deployed Kubernetes cluster so we can start using it. in this part of the workshop we cover the following items:
+As Karbon is simply providing a streamlined means of provisioning and managing Kubernetes infrastructure, Karbon clusters are able to take advantage of the best of breed tools available in the Kubernetes ecosystem.
 
-- Install and configure MetalLB Load Balancer that mimics the Load Balancers like you would have with Google, Azure or AWS as example.
-- Install and configure Traefik Ingress Controller
-- Install and configure dashboards so we can visualize the kubernetes cluster
+In this exercise we will deploy a **MetalLB Load Balancer** and a **Traefik Ingress Controller** for our Kubernetes cluster. Once these are configured, we will evaluate two different Kubernetes dashboard options to provide visualization of operations within the Kubernetes cluster.
 
-.. note::
-   Estimated time **45 minutes**
+If you are already familiar with basic Kubernetes networking, you can skip ahead to `Deploying A Load Balancer`_ to begin the lab. Otherwise, review the primer below.
 
-   All screenshots have the **Downloads** folder of the logged in user as the location where we save files
+Kubernetes Networking In 5 Minutes
+...................................
 
-External Load Balancer
----------------------
+*I built a container in the last lab, so I'm basically a Docker expert now. How is Kubernetes different?*
 
-Customers that use kubernetes from a cloud provider like Google, AWS and Azure will have the benefit of Load Balancers. On Premise installation could use the same or have the possibility to use other Hardware Load Balancers like F5, Palo-Alto, NGINX Plus, HAProxy or whatever is available.
+   While Kubernetes uses Docker containers, Kubernetes networking is significantly different than what we saw in the **Containerizing Apps and CI/CD** lab. Docker uses host-private networking, so containers can talk to other containers only if they are on the same machine. In order for Docker containers to communicate across nodes, there must be allocated ports on the machine's own IP address, which are then forwarded or proxied to the containers. This obviously means that containers must either coordinate which ports they use very carefully or ports must be allocated dynamically - difficult to coordinate at scale!
 
-Windows Installation
-********************
+   Kubernetes assumes that Pods can communicate with other Pods, regardless of which host they land on. Kubernetes gives every Pod its own cluster-private IP address, so you do not need to explicitly create links between Pods or map container ports to host ports. This means that containers within a Pod can all reach each other's ports on localhost, and all Pods in a cluster can see each other without NAT. In our Karbon cluster, this is implemented using **Flannel** and is automatically configured as part of the cluster deployment.
 
-#. In a Powershell interface, paste the following command and hit **Enter** to change to your *Downloads* folder:
+*But what about parts of our applications, like front end interfaces, that we want to expose to external clients?*
 
-   .. code-block:: bash
+   Kubernetes offers two methods to expose a service, **NodePort** and **LoadBalancer**.
 
-      cd downloads
+   **NodePort**
 
-#. Then paste in the following to install MetalLB: [Why are we doing this? What is this?]
+   **NodePort** is the simpler, but more primitive, means of getting external access to your service. As shown in the diagram below, the **NodePort** service opens a specific port across all Worker Nodes and any traffic sent to any Worker Node IP on that port would be forwarded to the service.
 
-   .. code-block:: bash
+   .. figure:: images/32.png
+
+   This approach is not recommended for production deployments as it limits you to only one service per port and changes to Node VM IPs create additional work.
+
+   **LoadBalancer**
+
+   A **LoadBalancer** functions similar to an application load balancer you'd find on your network. The **LoadBalancer** service is responsible for assigning a single, external IP to your service and forwarding traffic.
+
+   .. figure:: images/33.png
+
+   The **LoadBalancer** service is not natively implemented by Kubernetes, and will depend on the environment in which you are running. Providers like AWS, Azure, GCP, OpenStack, Tencent Cloud and Alibaba Cloud provide implementations for **LoadBalancers** (*and will charge you for every IP*).
+
+   For our Karbon environment, we will deploy **MetalLB** to act as our **LoadBalancer**.
+
+   .. note::
+
+         Technically, you can also access ports within your Kubernetes cluster using the ``kubectl proxy`` but this would typically only be used for debugging or non-production scenarios as it requires you to run as an authenticated user. *Not something you'd want to expose to the internet, yikes!*
+
+*So if the LoadBalancer service provides external access for Kubernetes services, what does the Ingress Controller do?*
+
+   While the **LoadBalancer** is capable of getting external traffic to our services, it is not capable of providing any filtering or routing that traffic. An **Ingress Controller** fills this void by sitting in front of multiple services and acting as an intelligent entry point for the Kubernetes cluster.
+
+   .. figure:: images/33.png
+
+   Using **Ingress** is common when you want to expose multiple services using the same IP address and multiple services are using the same Layer 7 protocol, like HTTP or HTTPS.
+
+*Matt, I love reading, can you give me more to read?*
+
+   Kubernetes networking is **a lot** to wrap your head around. If you're interested in learning more, `the official Kubernetes.io documentation <https://kubernetes.io/docs/concepts/>`_ has an entire section dedicated to **Concepts** that provides more in-depth explanations and examples. *More reading!*
+
+Deploying A Load Balancer
++++++++++++++++++++++++++
+
+In order to provide network access to any future services you will deploy to your Karbon cluster, you will first need to deploy a **LoadBalancer** solution that Kubernetes will use to provide external IPs.
+
+#. Connect to your **USER**\ *##*\ **-WinToolsVM** VM via RDP using the **NTNXLAB\\Administrator** credentials.
+
+#. Open **PowerShell** and run ``cd ~\Downloads``.
+
+#. Run the following commands to download the YAML files used to install **MetalLB**:
+
+   .. code-block:: powershell
 
       [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls, [Net.SecurityProtocolType]::Tls11, [Net.SecurityProtocolType]::Tls12, [Net.SecurityProtocolType]::Ssl3
       [Net.ServicePointManager]::SecurityProtocol = "Tls, Tls11, Tls12, Ssl3"
       wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml -OutFile namespace.yaml -UseBasicParsing
       wget https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/001-metallb.yaml -OutFile metallb.yaml -UseBasicParsing
 
-#. Run these two commands
+#. Run the following commands to install **MetalLB**.
 
    .. code-block:: bash
 
@@ -46,89 +84,35 @@ Windows Installation
 
    .. figure:: images/9.png
 
+   ``kubectl apply`` creates and updates applications using YAML files, referred to as Manifests, that define Kubernetes resources.
+
+#. Run ``kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"``.
+
+   This command creates a **secret** in Kubernetes used to encrypt communications between **MetalLB** Pods.
+
+#. Run ``kubectl get pods -n metallb-system`` to verify your **MetalLB** Pods are **Running**.
+
+   .. figure:: images/10.png
+
+   The Service has two components. The **controller** Pod is lcuster-wide and handles IP address assignments. The **speaker** is a per-Node daemon that advertises services with assigned IPs.
+
    .. note::
-        We are going to use Notepad to **construct** the needed command as it allows of basic manipulation of text. Powershell does not like the extra lines in variables.
 
-#. Open Notepad
-#. Copy the below command Notepad
+      If your **STATUS** of either Pod is not **Running**, you can run the following to investigate the cause:
 
-   .. code-block:: bash
+         - Note the **NAME** of the Pod that has an error
+         - Run ``kubectl describe pods <POD NAME> -n metallb-system``
+         - Run ``kubectl logs pod <POD NAME> -n metallb-system``
 
-        kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="<TO BE COPIED OUTPUT>"
+#. Refer to :ref:`clusterdetails` and note the IP range provided for **Karbon Network for MetalLB**.
 
-#. Back in Powershell, run
+   .. figure:: images/35.png
 
-   .. code-block:: bash
+   Before **MetalLB** can be used, we need to provide a **ConfigMap** file that defines the IP address pool available for assignment to services.
 
-      openssl rand -base64 128
+#. Open **Visual Studio Code** in your **USER**\ *##*\ **-WinToolsVM** VM.
 
-#. Copy the output of the command in your Notepad in place of the text <TO BE COPIED OUTPUT> and remove the extra lines at the end of the copied key.
-#. Copy the entire long line into the Powershell session and run the command
-
-   .. figure:: images/8.png
-
-For Linux/MacOS [Lane repoted MacOS issues, can we just have everyone use WinTools VM instead?]
-****************
-
-#. In a terminal session, type the following commands to install MetalLB
-
-   .. code-block:: bash
-
-     cd <LOCATION WHERE TO STORE FILES>
-     wget https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
-     wget https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/001-metallb.yaml
-
-
-#. Run these two commands
-
-   .. code-block:: bash
-
-      kubectl apply -f namespace.yaml
-      kubectl apply -f 001-metallb.yaml
-
-#. When you are running MacOS or Linux use:
-
-   .. code-block:: bash
-
-     kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-
-For all systems
-***************
-
-Now that we have installed MetalLB we need to make sure that the Pod are in a running state. To do this open your terminal or Powershell sessions and type
-
-.. code-block:: bash
-
-   kubectl get pods -n metallb-system
-
-This should show that there are two Pods, one with in the name controller and one with in the name speaker and they should have the status Running
-
-.. figure:: images/10.png
-
-If you don't see this status,we have to investigate what is the issue at hand. We can do this simply by looking at the command
-
-.. code-block:: bash
-
-   kubectl describe pods <name of the POD that has an issue> -n metallb-system
-
-This will show detailed information on the pod, the statuses and errors. INvestigate the last part of the information to get a direction where to search. Mostly it has been that the name of the image has been typed wrong, or not changed at all..
-
-.. figure:: images/11.png
-
-Configuration
-^^^^^^^^^^^^^
-
-Now that we know are sure that we have the Pods running we need to configure MetalLB. To do this we need to create a small yaml file that holds the IP range that we can use for MetalLB
-
-.. raw:: html
-
-   <font color="#FF0000"><strong> Make 100% sure you are using YOUR assinged IP addresses (2x) from the Lookup tool! Otherwise the other users on the cluster will suffice strange issues</strong></font>
-
-[We are using DHCP on these clusters, which makes it difficult and/or time consuming to determine 4 IPs in a row, especially with others using this cluster. What if they pick 4, and someone else at the same time picks the same 4? Can't we do better here to help them?]
-
-#. Open Visual Code
-
-#. Create a New File and copy the below text
+#. Select **File > New File** and paste the following into the blank file:
 
    .. code-block:: yaml
 
@@ -145,262 +129,143 @@ Now that we know are sure that we have the Pods running we need to configure Met
            addresses:
            - <START IP RANGE>-<END IP RANGE>
 
-#. Example could be
-
-   .. code-block:: yaml
-
-     apiVersion: v1
-     kind: ConfigMap
-     metadata:
-       namespace: metallb-system
-       name: config
-     data:
-       config: |
-         address-pools:
-         - name: metal-lb-ip-space
-           protocol: layer2
-           addresses:
-           - 10.42.3.45-10.42.3.49
-
-#. Save the file in your location of choice as **metallb-config.yaml**
-#. Run this command to get the configuration activated
-
-   .. code-block:: bash
-
-     kubectl apply -f metallb-config.yaml
-
-   .. figure:: images/12.png
-
-Now that we have a LoadBalancer like the Pulbic Cloud providers let's start to use it. To do that we are going to install Traefik as a Ingress controller, but use a "public IP address" so we can access it from our machines without the need of an extra component.
-
-Traefik
--------
-
-Traefik (http://traefik.io) can be used to route inbound traffic, based on URLs, from machines to specific Pods. We are going to use Traefik in a later state of this module.
-
-To do that we need to follow some steps. Installation, deploying and exposing the Traefik Pod using MetalLB.
-
-Installation
-^^^^^^^^^^^^
-
-We need to provide Kubernetes specific RBAC rules so Traefik can see the new rules and be able to access the Pods we are going to have routed like our Fiesta Application.
-
-#. Run the following commands in your Terminal or Powershell session.
-
-   .. code-block:: bash
-
-      kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/01-traefik-CRD.yaml
-      kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/02-traefik-svc.yaml
-      kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/03-traefik-Deployment.yaml
-
-   .. figure:: images/13.png
-
-#. These commands have done the following
-
-   #. Create a Custom Resource Definition (CRD) including RBAC for Traefik. CRDs extend the API of Kubernetes with specfic definitions. More can be found here: https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/
-   #. Created a service of the Type LoadBalancer (use MetalLB) so we can access the Webpage over the "normal" IP addresses in the rangr we defined for MetalLB
-   #. Created the needed Pods for Traefik
-
-#. Run the following command to see the Traefik UI "public" IP addresses
-
-   .. code-block:: bash
-
-      kubectl get svc
-
-#. This should show something under the column of **EXTERNAL-IP**.
-
-   .. figure:: images/14.png
-
-   .. note::
-      If you see Pending, the configuration of MetalLB has not been successful! Use **kubectl describe configmap config -n metallb-system** to see the configuration of MetalLB in the Kubernetes cluster and check the IP address range values.
-
-      .. figure:: images/15.png
-
-#. Open a browser and point to http://<EXTERNAL-IP_TRAEFIK>:8080. This should show the Traefik UI.
-
-   .. figure:: images/16.png
-
-Now that we have our LoadBalancer (MetalLB) and Ingress Controller (Traefik) running we want to have some monitoring for the system. The next part of this workshop is all about dashboards.
-
-Dashboards
-----------
-
-There are an enormous amount of possibilities, but we'll discuss three different dashboards. The built-in Kubernetes Dashboard, Portainer and the Lens dashboard which is running on your local machine. The other two are pods inside of the Kubernetes cluster.
-
-Kubernetes Dashboard
-^^^^^^^^^^^^^^^^^^^^
-
-For the installation and exposure of this dashboard we are going to use the Load Balancer so we can access it even when Traefik, the ingress controller has some issues. This is not the most secure way of working, as we can do a lot from the dashboard with respect to manipulating the environment.
-
-#. Install the Kubernetes Dashboard using the following command
-
-   .. code-block:: bash
-
-      kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/05-k8s-dashboard.yaml
-
-#. To see the EXTERNAL-IP so we can open the Dashboard, use the **kubectl get svc -n kubernetes-dashboard** command
-
-   .. figure:: images/17.png
-
-#. Open the browser and point it to https://<EXTERNAL-IP_DASHBOARD>/ and "bypass" the certification for your browser.
-#. In the screen that opens in the browser select Kubeconfig and point to your kubectl.cfg file you have downloaded earlier using the three dots and click the **Sign in** button.
-
-   .. figure:: images/18.png
-
-#. You now have the opportunity to manage your Kubernetes Cluster using this dashboard. The statuses for the different Deployments, Pods and Replica Sets
-
-   .. figure:: images/19.png
-
-#. Click around to look at some items on the left side to see if you see something familiar
-
-Portainer
-^^^^^^^^^
-
-Portainer is another dashboard that, eventhough still in development, is also avaialble can be used to deploy Pods as well.
-
-#. Install the Portainer dashboard using
-
-   .. code-block:: bash
-
-      kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/06-portainer.yaml
-
-#. Running the below command you will see that the Portainer service has NO EXTERNAL-IP
-
-   .. code-block:: bash
-
-      kubectl get svc -n portainer
-
-   .. figure:: images/20.png
-
-For Portainer we are going to use the Traefik Ingress Controller to "route" http://portainer.gts2021.local to the Portainer Pod via the service
-
-#. In Visual Code, create a new file and copy the below content in the file.
-
-   .. code-block:: yaml
-
-      apiVersion: traefik.containo.us/v1alpha1
-      kind: IngressRoute
-      metadata:
-        name: simpleingressroute
-        namespace: portainer
-      spec:
-        entryPoints:
-          - web
-        routes:
-        - match: Host(`portainer.gts2021.local`)
-          kind: Rule
-          services:
-          - name: portainer
-            port: 9000
-
-
-#. Save the file as **traefik-routes.yaml** in the location where you also have the other yaml files.
-
-[I NOTICED VCS SAVES "YAML" FILES AS .YML, SO WE SHOULD ADVISE FOLKS TO AVOID THIS.]
-
-#. Run **kubectl apply -f traefik-routes.yaml** to have Traefik configure the route to the Portainer application.
-
-As our machine has no idea where to find that machine (portainer.gts2021.local), we need to tell it by adding the external IP address of Traefik to the hosts file.
-
-#. Manipulate the hosts file using your tool off preference
-
-
-
-   .. note::
-
-      In Linux and MacOS this file is located in \/etc\/. Make sure you are using the root account or sudo to manipulate the /etc/hosts file. For Windows this file is located in **C:\Windows\System32\Drivers\etc\hosts**. To manipulate this file you MUST use notepad with evelated rights, otherwise you are not allowed to save the file.
-
-[LET'S JUST SAY NOTEPAD, AND REMOVE LINUX/MAC SINCE WE ARE TELLING FOLKS TO USE WINTOOLS VM]
-
-   .. figure:: images/21.png
-
-#. Save the file
-
-#. In the Terminal or Powershell session type **ping portainer.gts2021.local** and you should see that the FQDN is translated in the EXTERNAL IP address of the Traefik application and there should **NOT** be a ping reply. If the IP address not returned correct, it may be that you or 1) mistyped the line in the hosts file, or 2) forgotten to save the hosts file.
-
-#. Open the browser and point it to http://portainer.gts2021.local/
+#. Replace **<START IP RANGE>-<END IP RANGE>** with *your* **Karbon Network for MetalLB** values.
 
    .. raw:: html
 
-      <font color=red><bold>Don't forget the trailing / ! otherwise you will not get a reply</bold></font>
+      <BR><font color="#FF0000"><strong> Make 100% sure you are using only YOUR 2 assigned IP addresses otherwise you could cause unexpected issues for others sharing your cluster. Be kind.</strong></font>
 
-   .. figure:: images/23.png
+   .. figure:: images/36.png
 
-#. Provide the password of your choice in Portainer to go to the next screen. and click the **Create User** button
+   Note the **namespace** metadata provided in the manifest, this is how Kubernetes understands the relationship between the configuration file and the Pods we installed earlier in the exercise.
 
-[GIVE THEM A PASSWORD TO SPECIFY, FOR CONSISTENCY REASONS.]
+#. Save the file as **metallb-config.yaml** in your **Downloads** folder.
 
-#. Click the **Connect Button** at the left bottom corner,as *Kubernetes* has already been selected.
+   .. figure:: images/37.png
 
-#. Leave all default in the next screen and click the **Save configuration** button to start working with Portainer
+#. Return to **PowerShell** and run ``kubectl apply -f metallb-config.yaml`` to apply your configuration file.
 
-#. Browse through the dashboard and have a look around...
+   Your Karbon cluster can now provide Kubernetes **LoadBalancer** services similar to public cloud providers. We'll take advantage of this in the next exercise to expose our **Ingress Controller** to allow traffic into the cluster.
 
-#. Click on **Applications** in the left hand side and click on the 2 on the blue bar (right bottom corner) to see the rest of the Applications (Pods)
+Deploying An Ingress Controller
++++++++++++++++++++++++++++++++
 
-   .. figure:: images/24.png
+There are `many open source and commercial Ingress Controllers <https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/>`_ that can be used with Kubernetes. In this exercise, we will deploy the open source variant of `Traefik <https://traefik.io/>`_ to route inbound network traffic.
 
-[THERE IS NO APPLICATIONS UNTIL YOU CLICK ON THE KUBERNETES INSTALL, THEN YOU SEE IT IN THE LEFT-HAND MENU. VERSION I HAVE IS 2.0.1.]
+#. In **PowerShell**, run the following commands:
 
-#. Click on traefik and scroll down till you see the **Logs** and **Console** buttons
+   .. code-block:: bash
 
-   .. figure:: images/25.png
+      kubectl apply -f https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/01-traefik-CRD.yaml
+      kubectl apply -f https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/02-traefik-svc.yaml
+      kubectl apply -f https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/03-traefik-Deployment.yaml
 
-#. Here you can open the logs und execute some commands in the Pod/Container. Maybe for some debug settings....
+   .. figure:: images/38.png
 
-[MAYBE? LET'S BE A BIT MORE PERSCRIPTIVE!]
+   Applying these manifests does the following:
+
+   - Create a **Custom Resource Definition** (CRD) which defines RBAC capabilities for **Traefik**. CRDs `extend the API of Kubernetes <https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/>`_ with specific definitions.
+   - Create a service of the Type **LoadBalancer** (using **MetalLB**) to expose the **Traefik** web interface on Port 8080.
+   - Create the Pods for Traefik
+
+   .. note::
+
+      If interested, you can open the YAML manifests for any of these files using the URL in the ``kubectl apply`` commands.
+
+#. Run ``kubectl get svc`` to list advertised services on the cluster.
+
+   .. figure:: images/39.png
+
+   You should see one of your **MetalLB** IPs assigned as the **EXTERNAL-IP** for **Traefik**.
+
+   .. note::
+
+      If your **EXTERNAL-IP** is listed as **Pending**, this indicates an issue with your **MetalLB ConfigMap** file.
+
+      - Run ``kubectl describe configmap config -n metallb-system`` to verify your IP addresses are correct
+      - Fix your **metallb-config.yaml** file and run ``kubectl apply -f metallb-config.yaml`` again
+
+#. Open **Google Chrome** in your **USER**\ *##*\ **-WinToolsVM** VM, browse to \http://*<TRAEFIK-EXTERNAL-IP>*:8080.
+
+   .. figure:: images/40.png
+
+   Before we move on to deploying our Fiesta application on the Karbon cluster and exposing it to our external network using **MetalLB** and **Traefik**, let's look at two different options for providing informational dashboard visualization of the workloads running on our Kubernetes cluster.
+
+Using Dashboards
+++++++++++++++++
+
+As we saw in :ref:`karbon_environment_setup`, the Karbon dashboard currently provides us with information about the infrastructure that makes up our cluster, but doesn't provide any insight into our Services or Pods.
+
+There are approximately as many Kubernetes dashboard solutions as there are stars in the sky, so we'll narrow our focus to the official **Kubernetes Dashboard**, and **Lens**.
+
+Kubernetes Dashboard
+....................
+
+For the installation and exposure of this dashboard we are going to use the Load Balancer so we can access it even when Traefik, the ingress controller has some issues. This is not the most secure way of working, as we can do a lot from the dashboard with respect to manipulating the environment.
+
+#. Run ``kubectl apply -f https://raw.githubusercontent.com/nutanixworkshops/gts21/master/karbon/yaml%20files/05-k8s-dashboard.yaml`` to install the **Kubernetes Dashboard**.
+
+#. Run ``kubectl get svc -n kubernetes-dashboard`` to get the **EXTERNAL-IP** value of the **kubernetes-dashboard** service.
+
+   .. figure:: images/41.png
+
+#. Open \https://*<KUBERNETES-DASHBOARD-EXTERNAL-IP>* in **Google Chrome**. Ignore the certification warning.
+
+#. Select **Kubeconfig**.
+
+#. Click **...** and select the **USER**\ *##*\ **-karbon-kubectl.cfg** file you previously downloaded from Karbon.
+
+   .. figure:: images/42.png
+
+#. Click **Sign in**.
+
+   .. figure:: images/43.png
+
+   You can now browse around the built-in Kubernetes dashboard. Observe that while this UI provides some helpful visualizations, it's clearly not intended for managing your Kubernetes cluster.
+
+   Click **Cluster > Persistent Volumes** and see if you recognize anything - we'll make use of this persistent storage attached to your Kubernetes cluster via Nutanix Volumes in a later exercise!
 
 .. _lens:
 
 Lens
-----
+....
 
-Organizations might not always want to have their Kubernetes cluster to also run the monitoring solution. One way to solve this is to have an application in stalled on a machine that can "talk" to the Kubernetes cluster alike the Kubernetes Dashboard. Lens is such an application and can be downloaded at http://k8slens.dev
+Rather than running on the Kubernetes cluster, **Lens** can be installed on a Windows, Linux, or macOS host and communicate with your cluster via API.
 
-#. Open Lens, and click the **+** sign in the top left corner to add your cluster
+#. In your **USER**\ *##*\ **-WinToolsVM** VM, open **Lens** in the **Tools** folder on the desktop.
 
-   .. figure:: images/26.png
+   .. note::
 
-#. Provide the location of your kubectl.config file and click **Add cluster**
+      Lens is a quick, 1 step installation process - but it's also a 200MB download, and I value you're time. *High five!*
 
-   .. figure:: images/27.png
+#. Click **+** to add your cluster.
 
-#. The application is connecting to your Kubernetes cluster and is showing information on the performance
+#. Click :fa:`folder` and browse to your **USER**\ *##*\ **-karbon-kubectl.cfg** file.
 
-   .. figure:: images/28.png
+   .. figure:: images/44.png
 
-#. Browse around in Lens to see if this might be something for you.
+#. Click **Add cluster**.
 
-[HOW WOULD THEY KNOW? THIS MIGHT BE FOLKS FIRST TIME SEEING THIS.]
+   Similar to the **Kubernetes Dashboard**, **Lens** provides you with (arguably better looking) visualizations of cluster health and performance.
 
-#. Click on Worklodas -> Pods and search your traefik pod. Click on it and you'll be presented with the information for
+   .. figure:: images/46.png
 
-   - CPU
-   - Memory
-   - Network
-   - Filesystem
+#. Under **Workloads**, click **Pods** and select your **Traefik** Pod.
 
-   .. figure:: images/29.png
+   .. figure:: images/45.png
 
-#. If your interested in the logging of the Traefik pod, click in the right top corner on the second icon from the left (the sniplet icon).
+   **Lens** will give you per Pod configuration, performance, and logs, as well as the ability to open a terminal session into that specific Pod to execute commands.
 
-   .. figure:: images/30.png
+#. Click **Apps**.
 
-   .. figure:: images/31.png
+   .. figure:: images/47.png
 
-Now that we have an infrastructure running, can control/route URL based traffic, and we can visualize what is happening using a few dashboards, let's move into the deployment of our Fiesta App and use the MariaDB database that we provisioned earlier in the Workshop.
+   **Lens** provides a GUI for **Helm**, a popular command line package management tool for Kubernetes, making it easy for users to deploy new services. *This might be useful later!*
 
-During the rest of the workshop we will be using Lens as the dashboard. Reason is that the application runs on your machine and can be integrated into any Kubernetes environment. Nothing is needed like Traefik or other LoadBalancer or means of communicating with the Cluster.
+   .. raw:: html
 
+       <H1><font color="#B0D235"><center>Congratulations!</center></font></H1>
 
-.. raw:: html
+So far you have provisioned a Kubernetes cluster with Karbon, added the necessary network services to provide production level access to services from external networks, and can easily visualize operations within the cluster.
 
-    <BR><center><h2>That concludes this module!</H2></center>
-
-------
-
-Takeaways
-
-- Karbon is like a normal Kubernetes cluster, all known commands to manage a native Kubernetes cluster are the same
-- As Karbon is nothing more then a way of building and maintaining a Kubernetes Cluster, all available Pods, Applications, installations and configurations are exactly the same. THere is nothing that need to be manipulated so it works with the Karbon platform
-- Building relatively quickly an infrastructure on top of Kubernetes with a choice of dashboards for basic monitoring is quite easy to setup
+In the next exercise we will provision the **Fiesta** application as a Kubernetes service.

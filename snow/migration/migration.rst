@@ -21,13 +21,13 @@ Creating A Recovery Plan
 
 #. Fill out the following fields:
 
-   - **Recovery Plan Name** - *Initials*\ -DR (ex. XYZ-DR)
+   - **Recovery Plan Name** - **USER**\ *##*\ -DR (ex. XYZ-DR)
    - **Primary Location** - Local AZ
    - **Recovery Location** - Local AZ
    - **Primary Clusters** - AWS-Cluster
    - **Recovery Clusters** - Your *PHX###* Cluster
 
-   .. figure:: images/1.png
+   .. figure:: images/1b.png
 
 #. Click **Next**.
 
@@ -65,9 +65,9 @@ Creating A Recovery Plan
 Executing A Failover
 +++++++++++++++++++
 
-#. After you are returned to the list of available **Recovery Plans**, right-click your *Initials*\ **-DR** plan and select **Failover** to begin your migration.
+#. After you are returned to the list of available **Recovery Plans**, right-click your **USER**\ *##*\ **-DR** plan and select **Failover** to begin your migration.
 
-   .. figure:: images/6.png
+   .. figure:: images/6b.png
 
 #. Fill out the following fields:
 
@@ -89,7 +89,7 @@ Executing A Failover
 
       Move is a Nutanix supported tool that is typically used to migrate between hypervisors, but in the case of this AHV to AHV migration, is capable of taking and syncing snapshots continuously to this migration destination until a minimal cutover window is possible, and can be executed at the administrator's discretion.
 
-#. Click on your *Initials*\ **-DR** plan, and select the **Tasks > Failover** tabs to view the live progress.
+#. Click on your **USER**\ *##*\ **-DR** plan, and select the **Tasks > Failover** tabs to view the live progress.
 
    .. figure:: images/8.png
 

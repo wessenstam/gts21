@@ -1,8 +1,8 @@
 .. _euc_expand:
 
-------------------
-Provision & Expand
-------------------
+---------------------------------------
+Multi-Cloud Desktops with Citrix on AHV
+---------------------------------------
 
 Citrix Virtual Apps and Desktops on Nutanix Clusters allows IT to rapidly support distributed workforce needs for Citrix workloads by delivering the same capabilities in the cloud as they would have in their own datacenters. This is primarily due to Nutanix Clusters running AOS directly on public cloud servers and leveraging the same Prism Central management plane.
 

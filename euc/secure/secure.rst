@@ -92,7 +92,7 @@ Adding The Flow VDI Policy
 
    Typically you would select **Include VMs by name** and specify whatever portion of your VM naming scheme is shared across all your virtual desktops (ex. VDI or CTX). As the shared environment lacks this consistency, we will target ALL VMs. This will ensure all VMs will be subject to AD logon processing by Prism Central to dynamically assign its **ADGroup** category.
 
-#. Select **Add these VMs to a default policy**.
+.. #. Select **Add these VMs to a default policy**.
 
    .. figure:: images/7.png
 
@@ -116,7 +116,7 @@ Adding The Flow VDI Policy
 
    .. raw:: html
 
-      <strong><font color="red">DO NOT ENFORCE THIS POLICY AS IT COULD NEGATIVELY IMPACT OTHER USERS ON YOUR SHARED CLUSTER!</font></strong><br><br>
+      <br><br><strong><font color="red">DO NOT ENFORCE THIS POLICY AS IT COULD NEGATIVELY IMPACT OTHER USERS ON YOUR SHARED CLUSTER!</font></strong><br><br>
 
    .. figure:: https://media.giphy.com/media/yAcKHAu1iFdTvOysZK/giphy.gif
 

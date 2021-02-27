@@ -201,7 +201,7 @@ Drone is looking for a file **.drone.yml** in the root of the repo to tell it wh
       name: default
 
       clone:
-      skip_verify: true
+        skip_verify: true
 
       steps:
 
@@ -364,7 +364,7 @@ In a CI/CD pipeline testing is very important and needs to be run automatically.
              DB_TYPE: mysql
            commands:
              - npm version
-             - mysql -u$DB_PASSWD -p$DB_USER -h $DB_SERVER FiestaDB -e "select * from Products;"
+             - mysql -u$DB_USER -p$DB_PASSWD -h $DB_SERVER FiestaDB -e "select * from Products;"
              - git clone https://github.com/sharonpamela/Fiesta.git /code/Fiesta
              - sed -i 's/REPLACE_DB_NAME/FiestaDB/g' /code/Fiesta/config/config.js
              - sed -i "s/REPLACE_DB_HOST_ADDRESS/$DB_SERVER/g" /code/Fiesta/config/config.js
@@ -538,8 +538,6 @@ This type of automation is how mature DevOps teams found at organizations like *
       environment:
         USERNAME:
           from_secret: dockerhub_username
-        PASSWORD:
-          from_secret: dockerhub_password
       volumes:
         - name: docker_sock
           path: /var/run/docker.sock

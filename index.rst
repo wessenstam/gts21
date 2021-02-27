@@ -65,6 +65,7 @@
    :name: _k8s
    :hidden:
 
+   karbon/gettingstarted/gettingstarted
    karbon/preparation/preparation
    karbon/karbon/karbon
    karbon/deploy/deploy
@@ -144,7 +145,7 @@ Frequently Asked Questions
 
 .. raw:: html
 
-   <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/readme.png"></center><br><br>
+   <br><center><img src="https://media.giphy.com/media/9Pk1GBaXV8QGbsoaUF/giphy.gif"></center><br><br>
 
 Should I Copy Name & IP Information Directly From Snapshots?
 ............................................................
@@ -154,6 +155,19 @@ Should I Copy Name & IP Information Directly From Snapshots?
 .. raw:: html
 
    <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/skeleton.png"></center><br><br>
+
+Do The Names Provided In The Labs Really Matter?
+................................................
+
+William Shakespeare once wrote "*What's in a name? That which we call a rose by another other name would smell as sweet.*" William Shakespeare never tried to support hundreds of people simultaneously doing hands-on labs. Had he, Romeo and Juliet would have been a very different play.
+
+If the lab tells you to include your **USER**\ *##* ID in something, *please do it*. If the lab tells you to name a policy, or Blueprint, or VM, etc. a certain value, *please do it*.
+
+This make it far easier for our limited staff of SMEs to help you if and when you have issues.
+
+.. raw:: html
+
+   <br><center><img src="https://media.giphy.com/media/3orif35YFvvYrWAWmA/giphy.gif"></center><br><br>
 
 Where Is The Lab For Provisioning Clusters?
 ...........................................

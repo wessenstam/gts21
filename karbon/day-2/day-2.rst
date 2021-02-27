@@ -1,183 +1,126 @@
 .. _environment_day2:
 
-Day2 operations
-===============
+---------------------------
+Performing Day 2 Operations
+---------------------------
 
-As we are now looking at the day-2 operations, we are going to focus on these items which are still open:
+We've now deployed our initial infrastructure and application, but there are a number of other Day 2 considerations for running Kubernetes infrastructure that we'll explore, including:
 
-- Monitoring, not just using a Dashboard, but also having some more insights
-- Logging
-- Expand the Kubernetes cluster
-- Change the replicas AFTER we have expanded the cluster
-- Upgrade the cluster
-- Backup
+   - Monitoring
+   - Logging
+   - Cluster Expansion
+   - Cluster Upgrades
+   - Backup
 
-.. note::
-   Estimated time **60 minutes**
+Monitoring With Prometheus And Grafana
+++++++++++++++++++++++++++++++++++++++
 
-   All screenshots have the **Downloads** folder of the logged in user as the location where we save files
+Monitoring is one of the most important parts of administrating a Kubernetes Cluster, especially when most services are running in a network that can not be reached from the outside world. The solution to this is to run the monitoring stack within the cluster and, similar to **Fiesta**, expose the web frontend.
 
-Monitoring
-----------
+`Prometheus <https://prometheus.io/>`_ and `Grafana <https://grafana.com/>`_ are the peanut butter and jelly of Kubernetes monitoring solutions. Prometheus is an open source platform used for event monitoring and alerting, and Grafana provides rich visualizations from multiple data source backends.
 
-Monitoring is one of the most important parts in administrating a Kubernetes Cluster. Especially as the application are running in a network that can not be reached from the outside world.
-We are going to build a monitoring system using Prometheus and Grafana for the visualization.
+   .. figure:: images/52.png
 
+Deploying Prometheus
+.....................
 
-.. TODO: NEED TO RECREATE TO OWN PROMETHEUS installation
+#. *You're already done.* Nutanix Karbon deploys Prometheus as part of the cluster automatically, including persistent storage backed by Nutanix Volumes.
 
-Prometheus
-^^^^^^^^^^
+#. In **Lens > Workloads > Pods**, select **All Namespaces** from the dropdown menu.
 
-For Prometheus (http://www.prometheus.io) we are already done. Reason is that Karbon by default has Prometheus installed.
+   .. figure:: images/53.png
 
-#. In your Dashboard of choice, we are going to use Lens, open the **Workloads -> Pods** there you will see prometheus being mentioned.
+#. Select **prometheus-k8s-0** from the list.
 
-   .. figure:: images/1.png
+#. Under **Volumes**, select the name of the **persistentVolume Claim**
 
-   .. note::
-      If you don't see the pod mentioned, make sure that in the right hand side of Lens, you have **All Namespaces** selected.
+   .. figure:: images/54.png
 
-      .. figure:: images/1-a.png
+   This is the 30GiB volume which has been attached to the Pod using the **Nutanix Container Storage Interface (CSI)** plugin. As Pods are stateless sessions, it is critical for certain types of Pods to be able to store data that can persist across Pod deployments - *like when you're trying to store monitoring data!*
 
-Grafana
-^^^^^^^
+   The **Nutanix CSI** can provide persistent Kubernetes storage using either Nutanix Volumes or Nutanix Files.
 
-Grafana (http://www.grafana.com) is a open source application that can vizualize multiple sources. Prometheus being one of them. This part of the workshop is where we will:
+Deploying Grafana
+..................
 
-- Deploy Grafana
-- Use Traefik to open the Grafana UI to the external world
-- Configure Grafana to use the Prometheus built-in deployment
-- Import some dashboard that are available in the Grafana dashboard "marketplace"
+#. In **PowerShell** on your **USER**\ *##*\ **-WinToolsVM**, run ``kubectl create ns monitoring`` to create the namespace in which we'll deploy Grafana.
 
-Deployment
-**********
-
-#. Run the following command to create the Namespace monitoring in which we will deploy Grafana ``kubectl create ns monitoring``
-
-   .. figure:: images/2.png
-
-#. In Visual Cafe create a new YAML file called **grafana-deploy.yaml**
-#. Copy the below content in the file, this will deploy Grafana in the just created **monitoring** namespace
+#. In **Visual Studio Code**, create a new file and paste the following:
 
    .. code-block:: yaml
 
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          name: grafana
-          namespace: monitoring
-        spec:
-          replicas: 1
-          selector:
-            matchLabels:
-              app: grafana
-          template:
-            metadata:
-              name: grafana
-              labels:
-                app: grafana
-            spec:
-              containers:
-              - name: grafana
-                image: grafana/grafana:latest
-                ports:
-                - name: grafana
-                  containerPort: 3000
-                resources:
-                  limits:
-                    memory: "2Gi"
-                    cpu: "1000m"
-                  requests:
-                    memory: "1Gi"
-                    cpu: "500m"
-                volumeMounts:
-                  - mountPath: /var/lib/grafana
-                    name: grafana-storage
-                  - mountPath: /etc/grafana/provisioning/datasources
-                    name: grafana-datasources
-                    readOnly: false
-              volumes:
-                - name: grafana-storage
-                  emptyDir: {}
-                - name: grafana-datasources
-                  configMap:
-                      defaultMode: 420
-                      name: grafana-datasources
-
-#. Save the file
-#. Create a new file in Visual Cafe called **grafana-svc.yaml** for the service for Grafana and copy the below content in the file
-
-    .. code-block:: yaml
-
-        apiVersion: v1
-        kind: Service
-        metadata:
-          name: grafana
-          namespace: monitoring
-          annotations:
-              prometheus.io/scrape: 'true'
-              prometheus.io/port:   '3000'
-        spec:
-          selector:
-            app: grafana
-          ports:
-            - port: 3000
-
-#. Save the file
-
-#. Create a new file in Visual Cafe called **grafana-datasources.yaml** for the persistent storage for Grafana and copy the below in the file
-
-
-   .. code-block:: yaml
-
-      apiVersion: v1
-      kind: ConfigMap
+      apiVersion: apps/v1
+      kind: Deployment
       metadata:
-        name: grafana-datasources
+        name: grafana
         namespace: monitoring
-      data:
-        prometheus.yaml: |-
-          {
-              "apiVersion": 1,
-              "datasources": [
-                  {
-                     "access":"proxy",
-                      "editable": true,
-                      "name": "prometheus",
-                      "orgId": 1,
-                      "type": "prometheus",
-                      "url": "http://prometheus-service.monitoring.svc:8080",
-                      "version": 1
-                  }
-              ]
-          }
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: grafana
+        template:
+          metadata:
+            name: grafana
+            labels:
+              app: grafana
+          spec:
+            containers:
+            - name: grafana
+              image: grafana/grafana:latest
+              ports:
+              - name: grafana
+                containerPort: 3000
+              resources:
+                limits:
+                  memory: "2Gi"
+                  cpu: "1000m"
+                requests:
+                  memory: "1Gi"
+                  cpu: "500m"
+              volumeMounts:
+                - mountPath: /var/lib/grafana
+                  name: grafana-storage
+                - mountPath: /etc/grafana/provisioning/datasources
+                  name: grafana-datasources
+                  readOnly: false
+            volumes:
+              - name: grafana-storage
+                emptyDir: {}
+              - name: grafana-datasources
+                configMap:
+                    defaultMode: 420
+                    name: grafana-datasources
+      ---
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: grafana
+        namespace: monitoring
+        annotations:
+            prometheus.io/scrape: 'true'
+            prometheus.io/port:   '3000'
+      spec:
+        selector:
+          app: grafana
+        ports:
+          - port: 3000
 
-#. Use the following commands to deploy and configure Grafana
+#. Save the file as **grafana-deploy.yaml** in your **Downloads** folder.
 
-   .. code-block:: bash
+   Note that the **grafana** service is running on port 3000, the same port as your **fiesta-web** service. It will also pre-populate our **
 
-        kubectl apply -f grafana-datasources.yaml
-        kubectl apply -f grafana-deploy.yaml
-        kubectl apply -f grafana-svc.yaml
+#. Run ``kubectl apply -f grafana-deploy.yaml`` to install.
 
-#. Using Lens we should now see Grafana being mentioned in the **Workloads -> Pods** section
+   You can verify Grafana was installed in **Lens > Workloads > Pods**.
 
-   .. figure:: images/3.png
+   .. figure:: images/55.png
 
-   .. note::
-      If you don't see the pod mentioned, make sure that in the right hand side of Lens, you have **All Namespaces** selected.
+   Next we need to add a route to the **Traefik** configuration in order to access **Grafana**.
 
-      .. figure:: images/1-a.png
+#. In **Visual Studio Code**, open your existing **traefik-routes.yaml** file.
 
-Traefik configuration
-*********************
-
-Now that Grafana is deployed, we need to tell Traefik to route traffic from a specific URL to the Grafana Service we created.
-
-#. Open the file **traefik-routes.yaml** in Visual Code and add the following content to the end of the file:
-
-[DOES THE FORMATTING/SPACES MATTER ON THE 3 DASHES?]
+#. Paste the following to the end of your file:
 
    .. code-block:: yaml
 
@@ -191,587 +134,600 @@ Now that Grafana is deployed, we need to tell Traefik to route traffic from a sp
          entryPoints:
            - web
          routes:
-         - match: Host(`grafana.gts2021.local`)
+         - match: Host(`grafana.lab.local`)
            kind: Rule
            services:
            - name: grafana
              port: 3000
 
-#. Save the file and run ``kubectl apply -f traefik-routes.yaml`` to have Traefik being configured with the new route.
-#. Open the Traefik Dashboard -> HTTP and there should now be the route mentioned
+   .. figure:: images/56.png
 
-   .. figure:: images/4.png
+#. Save the file and run ``kubectl apply -f traefik-routes.yaml`` to update **Traefik**.
 
-#. Make the needed changes to the **hosts** file so we can open the URL in the browser
+   .. figure:: images/57.png
 
-   .. figure:: images/5.png
+#. Replace *<TRAEFIK-EXTERNAL-IP>* and run the following command in **PowerShell**:
 
-Datasource configuration
-************************
+   .. code-block:: powershell
 
-#. Open a browser and point it ot the just created URL http://grafana.gts2021.local. Your Grafana interface should be shown with a login page
+      Add-Content -Path C:\Windows\System32\drivers\etc\hosts -Value "<TRAEFIK-EXTERNAL-IP>`tgrafana.lab.local" -Force
+      cat C:\Windows\System32\drivers\etc\hosts
 
-   .. figure:: images/6.png
+   Similar to **fiesta-web**, this will add your **hosts** file record mapping **grafana.lab.local** to your **Traefik** external IP address.
 
-#. Use the combination **admin and admin** for the login and choose a new password in the screen that follows. [WHY NOT JUST SKIP CREATING A NEW PASSWORD, FOR TROUBLESHOOTING/CONSISTENCY PURPOSES?]
+#. Open http://grafana.lab.local in your **USER**\ *##*\ **-WinToolsVM** VM.
+
+   .. figure:: images/58.png
+
+#. Log in using the following credentials:
+
+   - **Username** - admin
+   - **Password** - admin
+
+#. Set **nutanix/4u** as the **New password** and click **Submit**.
+
+   Before we can build a monitoring dashboard, we first need to add our cluster's **Prometheus** deployment as a data source in **Grafana**. To do so, we'll need the internal Kubernetes network IP for **Prometheus**.
+
+#. In **Lens**, open **Network > Endpoints** and search for **prometheus-operated**.
+
+   .. figure:: images/59.png
 
    .. note::
-     You might get a popup p save the password, click on your preference. The workshop has no dependency on it.
 
-#. In the Grafana UI, click the :fa:`cog` Icon on the left hand side and click **Data Sources**
+      There is also a **prometheus-operator** service, make sure you're looking at **prometheus-operated**!
+
+#. Take note of the **prometheus-operated** Endpoint IP address.
+
+#. In **Grafana**, select the :fa:`cog` **Configuration** icon from the left-hand toolbar.
 
    .. figure:: images/7.png
 
-#. Click the **Add data source** button to add the built-in Prometheus deployment
-#. Select Prometheus in the next screen by clicking the **Select** button
-#. Switch to Lens and get the IP address of the Prometheus **operated** Service as shown in Lens (**Network -> Services -> prometheus-operated -> Endpoints**)
+#. Under **Data Sources**, click **Add data source** and select **Prometheus**.
 
-   .. figure:: images/8.png
+   .. figure:: images/60.png
 
-[YOU HAVE BOTH -OPERATED (HIGHLIGHTED) AND OPERATOR (IN YOUR INSTRUCTIONS) FIX SCREEN SHOT TO HIGHLIGHT OPERATOR.]
+#. Set **URL** to \https://*<prometheus-operated-Endpoint-IP>*:9090
 
-[ALSO, HOW ARE YOU GETTING THE IP? WHAT IS IT CALLED? IN SS IT SAYS IN YOUR SS IT SAYS ENDPOINTS. SEEMS LIKE I CAN JUST CLICK ON IT, AND SEE THE IP. NOT THE CASE.]
+   .. figure:: images/61.png
 
-#. In the URL field type the IP address you have found. The port is 9090, so the URL, using the example screen shots, is http://172.20.1.11:9090
-#. Click the **Save & Test** button. If all is correct, you should receive a green bar above the button stating **Data source is working**
+#. Click **Save & Test** at the bottom of the page.
 
    .. figure:: images/9.png
 
+   If you do not receive a message indicating the **Data source is working**, double check you have the correct **prometheus-operated** Endpoint IP, and have typed the **URL** correctly.
 
-Dashboard
-*********
+   *Time to take the first bite of our peanut butter and jelly sandwich!*
 
-Let's see if everything is working by creating a simple chart. We are going to create a chart that shows the cluster's CPU load average over 5 minutes.
+Building Grafana Dashboards
+...........................
 
-**Build your own dashboard**
+In this exercise we'll build our own, simple chart to display our Karbon cluster's CPU utilization average over the past 5 minutes.
 
-#. In Grafana hoover over the Dashboards icon (third from the top on the left hand navigation bar)
-#. Select manage
-#. Click **New Dashboard**
-#. Click the **+ Add new panel** button
-#. Select the field right to Metrics (half way the screen in the middle)
-#. Start typing **cpu** as soon as you start typing, data should be seen.
+#. Select **Dashboards > Manage** from the left-hand toolbar in **Grafana**.
 
-   .. figure:: images/10.png
+   .. figure:: images/62.png
+
+#. Click **New Dashboard** then **+ Add new panel**.
+
+#. In the **Enter a PromQL query** field, type **cpu**.
+
+   .. figure:: images/63.png
+
+   You should be provided with a drop-down menu of many different metrics related to **cpu**.
+
+#. Select **cluster:node_cpu:sum_rate5m** and press **Shift+Return** to begin populating data.
+
+   .. figure:: images/64.png
+
+#. Click **Apply** to save the chart to your dashboard.
+
+#. Click the :fa:`floppy-o` icon to **Save** your dashboard. Provide a name and click **Save**.
+
+   To see a more sophisticated example of the type of visualization **Grafana** can provide, we can easily import publicly available, pre-built dashboards.
+
+#. Select **Dashboards > Manage** from the left-hand toolbar and click **Import**.
+
+#. Under **Import via grafana.com**, specify **1621** and click **Load**.
+
+#. Under **Prometheus**, select your **Prometheus** data source and click **Import**.
+
+   .. figure:: images/65.png
+
+#. Kick up your feet and relax while the open source community does your job for you.
+
+   .. figure:: images/66.png
+
+   You can `browse the Grafana Labs site for user submitted dashboards <https://grafana.com/grafana/dashboards>`_ that target all types of platforms and workloads.
+
+   By leveraging the built-in **Prometheus** deployment and persistent container storage provided by Karbon, you can deploy a full Kubernetes monitoring solution in minutes.
+
+Logging With ELK Stack
+++++++++++++++++++++++
+
+Similar to monitoring, a robust logging solution for your Kubernetes environment is critical to quickly diagnosing issues with services. Karbon provides a complete **ELK** deployment as part of your cluster for logging related to the Kubernetes cluseter infrastructure. The **ELK** stack consists of **Elasticsearch**, **Logstash**, and **Kibana**. `Elasticsearch <https://www.elastic.co/elasticsearch/>`_ is a distributed, full-text search engine responsible for indexing log data to provide quick searches. `Logstash <https://www.elastic.co/logstash>`_ is a data processing pipeline responsible for filtering data and sending to different outputs, including Elasticsearch. `Kibana <https://www.elastic.co/kibana>`_ provides the front end to the stack, letting you explore and visualize data.
+
+   .. figure:: images/67.png
+
+#. In **Prism Central**, select :fa:`bars` **> Services > Karbon**.
+
+#. Click on *your* **USER**\ *##*\ **-karbon** cluster.
+
+#. Select **Add-on** from the left-hand menu and click **Logging** to launch the built-in **Kibana** interface.
+
+   .. figure:: images/68.png
 
    .. note::
-       If not, that means that the Prometheus server can not be reached. All the data points come from that infrastructure. One way to solve this is to wait a few minutes as it takes some time for Grafana to pull data from the data sources that have been defined.
 
-#. Select the line that shows **cluster:node_cpu:sum_rate5m** and click on another field. That way Grafana will pull the data and start displaying the chart.
+      If prompted to **Try our sample data**, click **Explore on my own**.
 
-   .. figure:: images/11.png
+#. Select :fa:`cog` **Management** from the left-hand toolbar.
 
-#. As this is working, click the **Discard**  button in the right top corner
-#. Hoover over the Dashbard icon again and select **Manage**, in the error screen click **Discard**.
+#. Under **Kibana**, click **Index Patterns**.
 
-**Import dashboard**
+   .. figure:: images/69.png
 
-We are going to import some dashboard that are already pre-built for people.
+#. Under **Index Pattern**, type **\*** to select all indices.
 
-#. CLick the **Import** button
-#. In the **Import via Grafana.com** type the number **1621** and click the **Load** button
-#. Under the Prometheus, select your prometheus _environment and click **Import*
-#. It will immediately pull data and start showing graphs..
+   .. figure:: images/70.png
 
-   .. figure:: images/12.png
+#. Click **> Next Step**.
 
-#. Other dashboards can be found using the Grafana webpage at https://www.grafana.com/grafana/dashboards. Search for your dashboard of choice and click on it. On the right hand side of the screen you see the ID that we just used. Follow the same process as we have just now done and import your choice. The one we used is just an example....
+#. Under **Time Filter field name**, select **@timestamp** from the dropdown menu.
 
+   This will allow you to filter your data based on the time events were logged.
 
-Logging
--------
+#. Click **Create Index Pattern**.
 
-Logging is very important to see what are possible reasons for rising issue. Logging can be done using the Kubernetes Dashboard, Portainer or the Lens application. Downside of this is that it doesn't show a full logging experience where you can drill down into the logs themselves or even search.
-To help in this area, Karbon already has an ELK (Elastic Search, Logfile and Kibana environment installed). This logging platform provides information for the Kubernetes installation only.
+#. Click :fa:`compass` **Discover** from the left-hand menu to be able to search your log data.
 
-As we need to see the logs from our pods, at the current release of Karbon, we have to build our own logging Stack. This part of the Module will show you how to use the internal only logging stack and how to install, configure and use another Stack that can be used for the user pods like our MetalLB, Traefik, Fiesta, Grafana and Prometheus Pods.
+   .. figure:: images/71.png
 
-Built-in logging environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   In the example above you can see ~1500 events are being logged every 30 seconds.
 
-#. Open Karbon via **Prism Central ->** :fa:`bars` **-> Services -> Karbon**
-#. Click on your cluster
-#. Click on **Add on -> Logging** (to the right)
-#. Accept the certification issue
-#. Kibana interface will Open
-#. Click **Explore on my Own**
+#. Search for **ntnx-csi-plugin** to see log entries related to Nutanix persistent container storage.
 
-[I DO NOT SEE THIS, BUT ABLE TO CONTINUE!]
+   This logging deployment only captures logs related to the Kubernetes infrastructure. As demonstrated in previous exercises, Karbon is based on standard Kubernetes and can leverage all the tools in the broad Kubernetes ecosystem. This includes deploying an additional ELK stack for capturing user space loggings.
 
-#. Click the :fa:`cog` Management icon on the bottom left side
-#. Click on **Index Patterns** in the Kibana section
-#. In the Index pattern field type *****
-#. Click on the **> Next step** button
-#. In the **Time Filter field name** select the **@timestamp** [FROM THE DROPDOWN]
-#. CLick the **Create index pattern** button
-#. When ready, click on the **Discover** text to the left of the screen in the navigation bar
-#. If all went ok, you should see now a vertical bar chart and the logs below in a chronological order.
 
-   .. figure:: images/13.png
+..
+   User space logging environment
+   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   As we need to see the logs from our pods, at the current release of Karbon, we have to build our own logging Stack. This part of the Module will show you how to use the internal only logging stack and how to install, configure and use another Stack that can be used for the user pods like our MetalLB, Traefik, Fiesta, Grafana and Prometheus Pods.
 
-User space logging environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   This part is all about creating our own Logging Stack.
 
-This part is all about creating our own Logging Stack.
+   We are going to do the following:
 
-We are going to do the following:
+   - Create a namespace for the logging
+   - Create Elasticsearch environment
+   - Create Kibana environment
+   - Create Fluentd environment
+   - Configure Traefik to alow access to the Kibana Pod
 
-- Create a namespace for the logging
-- Create Elasticsearch environment
-- Create Kibana environment
-- Create Fluentd environment
-- Configure Traefik to alow access to the Kibana Pod
+   Namespace
+   *********
 
-Namespace
-*********
+   To have a logical separation of the Pods we are going to create a new namespace in which we will deploy the full new stack
 
-To have a logical separation of the Pods we are going to create a new namespace in which we will deploy the full new stack
+   #. In the terminal or Powershell session run the following command
 
-#. In the terminal or Powershell session run the following command
+      .. code-block:: yaml
 
-   .. code-block:: yaml
+           kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/EFK%20session/kube-logging-ns.yaml
 
-        kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/EFK%20session/kube-logging-ns.yaml
+   #. This will create the Namespace **kube-logging**
 
-#. This will create the Namespace **kube-logging**
+      .. figure:: images/14.png
 
-   .. figure:: images/14.png
+   Elacsticsearch environment
+   **************************
 
-Elacsticsearch environment
-**************************
+   To get this working we need to install a service and the deployment of the Elasticsearch environment
 
-To get this working we need to install a service and the deployment of the Elasticsearch environment
+   #. Run the following commands [WHERE?] to get the Elasticsearch environment ready
 
-#. Run the following commands [WHERE?] to get the Elasticsearch environment ready
+      .. code-block:: yaml
 
-   .. code-block:: yaml
+           kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/EFK%20session/elasticsearch_svc.yaml
+           kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/EFK%20session/elasticsearch_statefulset.yaml
 
-        kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/EFK%20session/elasticsearch_svc.yaml
-        kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/EFK%20session/elasticsearch_statefulset.yaml
+   #. This will create the Namespace **Service and Deployment**
 
-#. This will create the Namespace **Service and Deployment**
+      .. figure:: images/15.png
 
-   .. figure:: images/15.png
+   Kibana environment
+   ******************
 
-Kibana environment
-******************
+   To get this working we need to install a service and the deployment of the Kibana environment
 
-To get this working we need to install a service and the deployment of the Kibana environment
+   #. Run the following commands to get the Kibana environment ready
 
-#. Run the following commands to get the Kibana environment ready
+      .. code-block:: yaml
 
-   .. code-block:: yaml
+           kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/EFK%20session/kibana.yaml
 
-        kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/EFK%20session/kibana.yaml
+   #. This will create the Namespace **Service and Deployment**
 
-#. This will create the Namespace **Service and Deployment**
+      .. figure:: images/16.png
 
-   .. figure:: images/16.png
 
+   Fluentd environment
+   *******************
 
-Fluentd environment
-*******************
+   To get this working we need to install a RBAC, Service account and the Daemonset (pods that are running on all Nodes of the Cluster) of the Fluentd environment
 
-To get this working we need to install a RBAC, Service account and the Daemonset (pods that are running on all Nodes of the Cluster) of the Fluentd environment
+   #. Run the following commands to get the Fluentd environment ready
 
-#. Run the following commands to get the Fluentd environment ready
+      .. code-block:: yaml
 
-   .. code-block:: yaml
+           kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/EFK%20session/fluentd.yaml
 
-        kubectl apply -f https://raw.githubusercontent.com/wessenstam/gts2021-prep/main/Karbon/yaml%20files/EFK%20session/fluentd.yaml
+   #. This will create the Namespace **Service and Deployment**
 
-#. This will create the Namespace **Service and Deployment**
+      .. figure:: images/17.png
 
-   .. figure:: images/17.png
+   Total overview
+   **************
 
-Total overview
-**************
+   #. To get a full overview of the Pods, in Lens change the *Namespace:* to **kube-logging**
 
-#. To get a full overview of the Pods, in Lens change the *Namespace:* to **kube-logging**
+      .. figure:: images/18.png
 
-   .. figure:: images/18.png
+   #. Now only the pods that are part of that namespace. All should have the **Running** status
 
-#. Now only the pods that are part of that namespace. All should have the **Running** status
+      .. figure:: images/19.png
 
-   .. figure:: images/19.png
+   #. When clicking the Network -> Services you would also see the services for the same Namespace
 
-#. When clicking the Network -> Services you would also see the services for the same Namespace
+      .. figure:: images/20.png
 
-   .. figure:: images/20.png
+   Now that we have the EFK logging environment ready, let tell Traefik to route http://kibana.gts2021.local to the Kibana interface so we can administer the logging externally from the Kubernetes cluster.
 
-Now that we have the EFK logging environment ready, let tell Traefik to route http://kibana.gts2021.local to the Kibana interface so we can administer the logging externally from the Kubernetes cluster.
+   Traefik configuration
+   *********************
 
-Traefik configuration
-*********************
+   #. Open the traefik-routes.yaml file and add the following to the end  of the file
 
-#. Open the traefik-routes.yaml file and add the following to the end  of the file
+      .. code-block:: yaml
 
-   .. code-block:: yaml
+           ---
+           apiVersion: traefik.containo.us/v1alpha1
+           kind: IngressRoute
+           metadata:
+             name: simpleingressroute
+             namespace: kube-logging
+           spec:
+             entryPoints:
+               - web
+             routes:
+             - match: Host(`kibana.gts2021.local`)
+               kind: Rule
+               services:
+               - name: kibana
+                 port: 5601
 
-        ---
-        apiVersion: traefik.containo.us/v1alpha1
-        kind: IngressRoute
-        metadata:
-          name: simpleingressroute
-          namespace: kube-logging
-        spec:
-          entryPoints:
-            - web
-          routes:
-          - match: Host(`kibana.gts2021.local`)
-            kind: Rule
-            services:
-            - name: kibana
-              port: 5601
+   #. Save the file
+   #. Make the changes to the **hosts** file so kibana.gts2021.local points to the External IP address of Traefik
+   #. Use ``kubectl apply -f traefik-routes.yaml`` to tell Traefik to start routing the URL to the Kibana service
+   #. Open the Traefik page to see that the route has been aded and is green
 
-#. Save the file
-#. Make the changes to the **hosts** file so kibana.gts2021.local points to the External IP address of Traefik
-#. Use ``kubectl apply -f traefik-routes.yaml`` to tell Traefik to start routing the URL to the Kibana service
-#. Open the Traefik page to see that the route has been aded and is green
+      .. figure:: images/21.png
 
-   .. figure:: images/21.png
+   #. Open a browser and point it to http://kibana.gts2021.local/ . The Kibana page will open
 
-#. Open a browser and point it to http://kibana.gts2021.local/ . The Kibana page will open
+      .. figure:: images/22.png
 
-   .. figure:: images/22.png
+   #. Click the **Explore on my own** button to proceed
 
-#. Click the **Explore on my own** button to proceed
+   #. Click the **No** button at the top of the screen
 
-#. Click the **No** button at the top of the screen
+   #. Click on **Index Patterns** under the *Manage and Administer the Elastic Stack* section.
 
-#. Click on **Index Patterns** under the *Manage and Administer the Elastic Stack* section.
+   [CLOSE PANEL ON RIGHT SIDE]
 
-[CLOSE PANEL ON RIGHT SIDE]
+   [ADD INSTRUCTION TO CREATE INDEX PATTERN]
 
-[ADD INSTRUCTION TO CREATE INDEX PATTERN]
+   #. In the **Index pattern** field, type **logstash\*** and click the **> Next step** button
 
-#. In the **Index pattern** field, type **logstash\*** and click the **> Next step** button
+      .. figure:: images/23.png
 
-   .. figure:: images/23.png
+   #. In the **Time Filter field name** select **@timestamp** [FROM THE DROPDOWN] and click the **Create index pattern** button
 
-#. In the **Time Filter field name** select **@timestamp** [FROM THE DROPDOWN] and click the **Create index pattern** button
+      .. figure:: images/24.png
 
-   .. figure:: images/24.png
+   #. After a few seconds, when you see the total overview of all possible fields, click on the Discover (compass :fa:`compass`) icon on the left hand side of the screen
+   #. This should show you all the logs from the system as well as our deployed pods (traefik, fiesta).
 
-#. After a few seconds, when you see the total overview of all possible fields, click on the Discover (compass :fa:`compass`) icon on the left hand side of the screen
-#. This should show you all the logs from the system as well as our deployed pods (traefik, fiesta).
+   [I DON'T KNOW WHAT I'M LOOKING AT, SO I DON'T KNOW!]
 
-[I DON'T KNOW WHAT I'M LOOKING AT, SO I DON'T KNOW!]
+   #. In the Filters field, type ``kubernetes.pod_name : traefik*`` and hit the enter key to filter just on that. Now you would see all logs lines that have the line **kubernetes.pod_name : traefik\*** in them
 
-#. In the Filters field, type ``kubernetes.pod_name : traefik*`` and hit the enter key to filter just on that. Now you would see all logs lines that have the line **kubernetes.pod_name : traefik\*** in them
+      .. figure:: images/25.png
 
-   .. figure:: images/25.png
+   #. There is much more you can do with Kibana, but that is outside of this workshop.
 
-#. There is much more you can do with Kibana, but that is outside of this workshop.
 
+Expanding The Cluster
++++++++++++++++++++++
 
-Expand the cluster
-------------------
+Based on the insights provided by **Lens**, **Grafana**, or any number of monitoring solutions, you will be able to determine when the Kubernetes cluster is in need of expansion to support running all of your Pods. With Nutanix Karbon, cluster expansion can be performed through **Prism Central** in just a few clicks.
 
-Over time a Kubernetes may need to be expanded due to the workloads that are going to be landing on the Kubernetes cluster. Expanding an existing cluster, can be easy or difficult based on the way the cluster has been created. With Karbon, this si nothing more than clicking a few buttons.
+#. In **Prism Central**, select :fa:`bars` **> Services > Karbon**.
 
-#. Open the Karbon interface via **Prism Central ->** :fa:`bars` **-> Services -> Karbon**
-#. Click on your cluster
-#. In the navigation pane, click on Nodes -> Worker
-#. Click the **+ Add worker** button to start the adding of two workers.
+#. Click your **USER**\ *##*\ **-karbon** cluster.
+
+#. Select **Nodes > Worker** from the left-hand menu and click **+ Add Worker**.
+
+   .. figure:: images/72.png
 
    .. note::
-      As we have deployed a Develop environment, we can not expand the etcd or the Master nodes. On a production version we would be able to also expand those two type of nodes.
 
-#. Change the field **Number of Nodes** to 1 and click the **Create** button to have your cluster being extended with two worker nodes.
+      In a **Production** Karbon deployment, you are also able to scale the number of **Master** and **etcd** nodes in the cluster. This is not supported for **Development** clusters.
 
-   .. figure:: images/26.png
-   .. figure:: images/27.png
+#. Set **Number of Nodes** to **1** and click **Create**.
 
-#. Wait till the two nodes are installed before proceeding (approx. 15-20 minutes)
+   .. figure:: images/73.png
 
-   .. figure:: images/28.png
-   .. figure:: images/29.png
+   .. raw:: html
 
-#. In Lens, we now see the two new nodes also appear.
+      <BR><font color="#FF0000"><strong>Do not increase your cluster by more than 1 Worker node. There is not enough memory/IP addresses available in the shared lab environment.</strong></font><BR>
 
-   .. figure:: images/30.png
+   Karbon will begin provisioning an addition Worker Node VM, this process will take ~5-15 minutes to complete. Progress can be monitored in **Prism Central > Activities > Tasks**.
 
-Your Kubernetes Cluster is now a 5 nodes cluster by just clicking a few buttons.
+   .. figure:: images/74.png
 
-Change replicas
----------------
+#. Once your expansion is completed, confirm in **Lens** your new Worker is **Ready**.
 
-Now that we have 3 workers, let's change the deployment of our application to start using all three worker nodes.
+   .. figure:: images/75.png
 
-#. Open your fiesta_app.yaml in Visual Code
+   Next we'll take advantage of the additional Worker by provisioning additional replica Pods to scale performance for our **Fiesta** web service.
 
-#. Change the number after **replicas:** to 3
+#. In **Visual Studio Code**, open **fiesta_app.yaml**.
 
-[SAVE THE FILE]
+#. Increase the number of **replicas** to **4** and save your file.
 
-#. Run ``kubectl apply -f fiesta_app.yaml`` to get the new configuration activated in the cluster.
+#. In **PowerShell**, run ``kubectl apply -f fiesta_app.yaml`` to apply the change.
 
-#. In Lens goto **Workloads -> Deployments** you should see now three Pods requested and after a few seconds should see below screenshot.
+#. In **Lens > Workloads > Pods**, observe the new Pods being provisioned. Select each of the 4 Pods and observe they're automatically distributed across the two available worker nodes.
 
-   .. figure:: images/31.png
+   .. figure:: images/76.png
 
-So scaling an application is a very simple step after you have expanded your cluster.
+   This is what allows Cloud Native applications to be so responsive to changes in demand. In this exercise we've manually increased the number of **Workers** and **replicas**, but using a **CI/CD** pipeline the scaling could be fully automated.
 
-Upgrade the cluster
--------------------
+   With Nutanix's API first development model you're also able to `scale your Karbon cluster programmatically <https://www.nutanix.dev/reference/karbon/api-reference/cluster/addnodes/>`_, which would allow you to automate cluster growth based on criteria like Pod performance. *Neat!*
 
-Upgrading a Kubernetes cluster is for now the O/S of the nodes. Upgrading the Kubernetes Version is on the roadmap. For now it has to be done using normal API/CLI commands.
-A video on upgrading the O/S of the nodes can be found here:
+Upgrading The Cluster
++++++++++++++++++++++
 
-The video can be found here. https://www.youtube.com/watch?v=IucbVL8lECk
+Currently Nutanix Karbon supports a 1-Click process for upgrading the underlying OS used by the Node VMs, with Kubernetes lifecycle management on the roadmap. Your environment is using the latest available Karbon OS image, but you can view an example of the upgrade process below.
 
-Backup
-------
+   .. raw:: html
 
-Backup is one of the most important processes for organizations. Is it not just arranged by internal policies, the process can be mandated by regulations in the country where the organization is located. This part of the workshop is using one of the backup solutions for Kubernetes. We are going to implement K10 and use Nutanix Objects as the target for the backups
+      <br><iframe width="600" height="337" src="https://www.youtube.com/embed/IucbVL8lECk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br>
 
-High level we are going to do the following steps:
+Backing Up Cloud Native Apps
+++++++++++++++++++++++++++++
 
-- Install an Object Store, if not already available
-- Create a Bucket for K10 called *initials* **-stash**
-- Deploy and configure K10 backup (http://www.kasten.io)
-- Config Traefik to publish the UI of K10
-- Run a backup in K10
-- Restore the Fiesta App as a clone
+Even though many container workloads are stateless, backup matters in Kubernetes! Think about it, with a single ``kubectl`` command you could wipe out an entire namespace containing multiple applications. Restoring workloads to a specific point in time needs to be equally as easy. In addition, backup can also be a critical component of regulatory compliance.
 
-Nutanix Objects
-^^^^^^^^^^^^^^^
+In this exercise we will deploy **Kasten K10**, a **Veeam** solution that integrates with **Nutanix Objects** to provide Kubernetes backup capabilities.
 
-As we want to use Nutanix Objects for the backup, we need to make sure there is a object-store in the environment.
+Configuring Objects Storage
+...........................
 
-Install an Object store
-***********************
+In order to provide a storage target for our backup solution, we first need to configure access permissions and provision a **Bucket** within our pre-staged **Nutanix Objects Object Store**.
 
-#. In your Prism Central click :fa:`bars` **-> Services -> Objects** and see if there is already an Object Store defined. If it is, skip to the next part, **Create a bucket**. If not follow these below steps
+#. In **Prism Central**, select :fa:`bars` **> Services > Objects**.
 
-   #. If it doesn't exists use the following parameters (after you have clicked on the **Create Object Store** button -> Continue):
+#. Under **Access Keys**, select **+ Add People**.
 
-         **Object store name**: nutanix
+   .. figure:: images/77.png
 
-[HOW ABOUT USER01?]
+#. Select **Add people not in a directory service**.
 
-         **Domain**: ntnxlab.local
+#. Fill out the following fields:
 
-      #. Click **Next**.
+   - **Email Address** - user\ *##*\ \-k10@lab.local (ex. \user01-k10@lab.local)
+   - **Name** - user\ *##*\ -k10 (ex. user01-k10)
 
-         **Performance** and **Resources**: leave default
+   .. figure:: images/78.png
 
-         **Capacity**: 1 TiB
+#. Click **Next**.
 
-      #. Click **Next**.
+#. Click **Generate Keys**.
 
-         **Cluster Details**: your cluster
+#. Click **Download Keys** *before* clicking **Close**, otherwise you will be unable to access your keys.
 
-         **Objects Infra Network**: your IP subnet of the primary network and then the .18 and .19, example 10.42.3.18,10.42.3.19
+   .. figure:: images/79.png
 
-         **Objects Public Network**: your IP subnet of the primary network and then the .20 till .23, example 10.42.3.20-10.42.3.23
+   This will download a file containing the **Access Key** and **Secret Key** you will need to access your S3 storage in an upcoming exercise.
 
-      #. Click **Create**.
+#. Under **Object Stores**, click **ntnx-objects** to open your existing Object Store in a new tab.
 
-   #. The Object store is being created. The process takes approx. 10-20 minutes
+   .. figure:: images/80.png
 
-Setting access to the Object Store
-**********************************
+#. Click **Create Bucket**.
 
-As we need to provide access to the objects store and to be created buckets, access needs to be granted to people or services/applications.
+#. Fill out the following fields:
 
-#. In your Objects UI, click on the top of the screen the **Access Keys** text
-#. Click the **Add People** Button
-#. In the new screen, as we have not defined a user in the AD that we want to use, click the *Add people not in a directory service*
-#. Provide the following parameters:
+   - **Name** - user\ *##*\ -k10-bucket (ex. user01-k10-bucket)
+   - **Object Versions** - *Leave default*
+   - **Lifecycle Policies** - *Leave default*
 
-   - Email Address: *initials*-**k10-backup@gts2021.local**
-   - Name (Optional): *initials*- XYZ K10 Backup
+   .. figure:: images/81.png
 
-   .. figure:: images/32.png
+#. Click **Create**.
 
-#. Click the **Next** button
-#. Click the **Generate Keys** button
-#. Make sure you click the **Download Keys** BEFORE you click the close button. Otherwise the keys can not be re-downloaded!
+   Now that the bucket exists, we must allow our **user**\ *##*\ **-k10** account to access it.
 
-Create a bucket
-***************
+#. Click your **user**\ *##*\ **-k10-bucket** and select **User Access** from the left-hand menu.
 
-The Object store is build, let's create a bucket and get some credentials we need for K10 to be able to write to the bucket.
+#. Click **Edit User Access**.
 
-#. In Objects [-> OBJECT STORES -> click the **Create Bucket** button
+#. Fill out the following fields:
 
-#. Provided the name *initials*-**k10-bucket**, leave all other fields default
+   - **People** - user\ *##*\ \-k10@lab.local
+   - **Permissions** - Read; Write
 
-#. Click the **Create** button to have the bucket created
+   .. figure:: images/82.png
 
-Assign access right to the bucket
-*********************************
+#. Click **Save**.
 
-#. Click on the bucket you just created and select the **User Access** [FROM THE LEFT-HAND SIDE -> EDIT USER ACCESS]
+Configuring DNS
+...............
 
-#. In the **People** field start typing your earlier created user. Select the user by clicking the checkbox in front on the user
+In order for our **K10** application to connect to our Objects bucket as a storage target, it needs to be able to access the bucket via DNS, not IP address. To do this we will need to add the appropriate DNS record for our bucket to the **NTNXLAB.local** DNS server, and update our Karbon cluster to use that DNS server.
 
-   .. figure:: images/33.png
+#. In **Prism Central**, select :fa:`bars` **> Services > Objects**.
 
-#. In the **Permissions**, select Read AND Write and click the **Save** button
+#. Note your **Objects Public IP**. This is the IP used to create client connections to your bucket via S3 APIs.
 
-#. Your created "user account" should be shown
+   .. figure:: images/83.png
 
+   You will need this IP in the following steps.
 
-Add the bucket to the DNS
-*************************
+#. In **PowerShell** in your **USER**\ *##*\ **-WinToolsVM**, paste the following:
 
-As the bucket can only be addressed by a URL name and not on IP. To fix that we need to make sure that we have added the name to the DNS server that we have in our environment on the AutoAD.
+.. code-block:: powershell
 
-#. Open the DNS tool on your Windows Tools VM via **Desktop -> Tools -> Administrative Tools -> DNS**
+   Invoke-Command -ComputerName dc.ntnxlab.local -ScriptBlock {Add-DnsServerResourceRecordA -Name "ntnx-objects" -ZoneName "ntnxlab.local" -AllowUpdateAny -IPv4Address "<OBJECTS-PUBLIC-IP>"}
+   Invoke-Command -ComputerName dc.ntnxlab.local -ScriptBlock {Add-DnsServerResourceRecordA -Name "<YOUR-BUCKET-NAME>.ntnx-objects" -ZoneName "ntnxlab.local" -AllowUpdateAny -IPv4Address "<OBJECTS-PUBLIC-IP>"}
 
-   .. figure:: images/34.png
+#. Replace *<YOUR-BUCKET-NAME>* and *<OBJECTS-PUBLIC-IP>* with your values and run the commands.
 
-#. In the Message box **Connect to DNS Server** type **DC**
+   .. figure:: images/84.png
 
-[IN WINTOOLS VM I SEE A RADIO BUTTON FOR "THE FOLLOWING COMPUTER". IF I HIT THAT BUTTON AND TYPE DC THIS WORKS FINE.]
-
-#. Your DC will open in the DNS, Expand till you see the content of ntnxlab.local
-
-[UNDER FORWARD LOOKUP ZONES]
-
-#. Check to see if under the DNS name ntnxlab.local there is a subdomain/folder with the same name as the Object Store.
+   This will create a **ntnx-objects** subdomain, which corresponds to the name of your Object Store, and a DNS A record for your bucket.
 
    .. note::
-      As the cluster is a shared resource, someone else might have created the domain already for you.
 
-#. If this is not the case, create it using the below steps
+      If the command fails to authenticate to **dc.ntnxlab.local**, you are likely logged into your **USER**\ *##*\ **-WinToolsVM** VM as the **local** Administrator account. You need to be logged in as **NTNXLAB\\Administrator**.
 
-   #. Right click on the ntnxlab.local domain name
-   #. Click **New Domain**
+      If the first command fails with **Failed to create resource record ntnx-objects in zone ntnxlab.local on server DC**, this is OK. It means that someone else on your cluster has already run the command to create the subdomain.
 
-      .. figure:: images/35.png
+#. Run ``ping <YOUR-BUCKET-NAME>.ntnx-objects.ntnxlab.local`` to verify you can resolve the name.
 
-   #. Type the name of the object store you have in your Prism Central **ntnx-objects** (examples are using nutanix-demo)
+   Next we'll update the DNS configuration for the Kubernetes cluster.
 
-   #. Click the **OK** button to get the new domain created
+   .. raw:: html
 
-   #. Right click again on the ntnxlab.local domain and select  **New Host (A or AAAA)**...
+      <BR><font color="#FF0000"><strong>Pay close attention to the following steps. You will be editing network configuration for your Kubernetes cluster and a mistake could leave you unable to access the cluster.</strong></font><BR><BR>
 
-   #. For the name type **<NAME OF THE OBJECT STORE>** (example ntnx-objects)
-   
-   #. For the IP address, use one of the public IP addresses of the Object Store you see in the Object Store interface in PRISM Central.
+#. Run ``kubectl -n kube-system edit configmap coredns``.
 
-      .. figure:: images/36.png
+   This will open the cluster DNS **ConfigMap** in **Notepad**.
 
-#. Click **Add Host -> OK -> Done**
+#. Insert the following *before* the line **kind: ConfigMap** in the file:
 
-#. Select the subdomain of ntnxlab.local, called **ntnx-objects**, you should see the just recreated A records in the form off **(same as parent folder)**
+   .. code-block:: yaml
 
-#. Right Click the subdomain and select **New Host (A or AAAA)**...
-
-#. For the name, use the name of the bucket you just created for K10 Backup (Example. xyz-k10-bucket)
-
-#. In the IP address type one of the Public IP addresses of the Object Store
-
-#. Click the **Add Host** button and then the **OK -> DONE** buttons to close the windows
-
-   .. figure:: images/37.png
-
-
-Update the Kubernetes DNS Services
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-As we also need to have the kubernetes environment updated for the DNS entries we just made, we need to tell the DNS service in the Kubernetes Cluster where the ntnxlab.local and <OBJECT STORE NAME>>.nutanix.local DNS servers/entries can be found. To do this follow these simple steps:
-
-#. In your terminal or Powershell session type ``kubectl -n kube-system edit configmap coredns`` this will open a Windows Notepad.
-#. Add the following before **kind:ConfigMap**
-
-   .. code-block:: bash
-
-     ntnxlab.local:53 {
+      ntnxlab.local:53 {
          errors
          cache 30
          forward . <AUTO AD Server>
-     }
+      }
+
+#. Replace *<AUTO AD Server>* with the IP of your **NTNXLAB.local** Domain Controller. See :ref:`clusterdetails`.
+
+#. Ensure the indentation of the **YAML** file is correct. After pasting the contents into the file, each line should be indented by 4 spaces from the left edge, as shown below.
+
+   .. figure:: images/85.png
+
+#. Save the file and close **Notepad**.
 
    .. note::
-      Make sure you change the **<AUTO AD Server>** to the IP address as mentioned in your Lookup tool under **Domain Controller IP (DNS Server)** BEFORE you save and close the editor!!! Otherwise you end up in a strange situation!!
-      Also make sure that the txt is lined out exactly as the already information. Kubernetes is very particular of that. If the formatiing is not correct, it will reopen again!
-      In the following screenshots we have used **nutanix-demo** as the name of the Object Store and **10.42.3.41** as the IP addresses of teh Domain Controller
 
-[]
+      If you formatted the file incorrectly, the file will re-open. Refer to the screenshot above to correct your indentation.
 
-#. Run ``kubectl -n kube-system describe configmap corredns`` to see that the information is correct
+#. Run ``kubectl -n kube-system describe configmap coredns`` to verify the configuration has been updated.
 
-   .. figure:: images/40.png
+   .. figure:: images/86.png
 
-#. This should tell the DNS service in Kubernetes to forward the DNS requests for domains **ntnxlab.local** and sub domains to your Domain Controller's IP address
+   This will tell the DNS service in Kubernetes to forward DNS requests **ntnxlab.local** (and any subdomains) to your Domain Controller's IP address, allowing the **K10** application to resolve the name of your bucket.
 
-We are now ready to have the Bucket and Object Store to be used by applications that need to have access.
+   *Isn't networking fun?!*
 
-- Object Store available
-- Bucket created
-- Security Access key and secret are available
-- Buckets can be addressed by a FQDN
+Installing K10
+..............
 
+Up to this point, we have used manually created manifest files to deploy our applications. For **K10** we will look at a more user friendly way to deploy apps using **Helm**. `Helm <https://helm.sh/>`_ is a community built and maintained package management tool for Kubernetes, similar to **yum** in CentOS or **npm** in Node.
+..
+   #. In **Lens**, click **File > Preferences**.
 
-K10 backup
-^^^^^^^^^^
+   #. Under **Helm**, click **Add Custom Helm Repo**.
 
-We are going to run a few steps to get K10 installed:
+      .. figure:: images/87.png
 
-- Get helm installed in our system as the installation of the backup application uses helm to install the application. More information can be found at https://helm.sh/
-- Install K10
-- Define the URL route in Traefik
-- Add our created Object Store as S3 storage for K10
-- Run a backup, export to S3 storage
-- Restore as a "clone"
+      By default, **Lens** only shows Helm packages (called **Charts**) from the **bitnami** repository, but it's simple to add additional repos.
 
-[HELM WILL BE STAGED]
+   #. Fill out the following fields:
 
-K10 installation
-******************
+      - **Helm repo name** - kasten
+      - **URL** - https://charts.kasten.io/
 
-#. In your terminal or Powershell, run the following command to create the logical separator for K10:
+   #. Click **Add**.
+
+   #. Clone and re-open **Lens**.
+
+      Currently this is the only way for **Lens** to refresh the available **Helm** packages after adding a new repo.
+
+   #. In **Lens**, select **Apps > Charts** and search from **k10**.
+
+   #. Select **k10** (not **K10restore**) and click **Install**.
+
+      .. figure:: images/88.png
+
+#. In **PowerShell**, run the following:
 
    .. code-block:: bash
 
       kubectl create namespace kasten-io
-
-#. In your terminal or Powershell, run the following commands:
-
-   .. code-block:: bash
-
       helm repo add kasten https://charts.kasten.io/
       helm repo update
       helm install k10 kasten/k10 --namespace=kasten-io
 
-   .. figure:: images/38.png
+   This will define a namespace on the **Kubernetes** cluster in which to manage and monitor the app, add the repository to **Helm** in order to download **K10**, and then install the application.
 
-#. Run the following two commands to see if all has been installed
+#. Monitor the deployment in **Lens > Workloads > Pods**.
 
-   .. code-block:: bash
+   .. figure:: images/89.png
 
-      kubectl get pods --namespace kasten-io
-
-#. Wait until all pods are in the running state (approx. 5 minutes). To have an auto update of the commend. add ``--watch`` to the command so you keep updated on any changes that happen on the status of the pods.
-#. In Lens you can also track the status of the pods.
+   Select the **kasten-io** namespace and wait until all Pods are in a **Running** state, this should take < 5 minutes.
 
    .. note::
-      If you don't see the pods mentioned, make sure that in the right hand side of Lens, you have **All Namespaces** selected.
 
-#. If all pods are in the running state use the following temporary command in your terminal or Powershell session to see if we can get to the Dashboard of K10 kasten
+      You may need to close/re-open **Lens** in order to see the new **kasten-io** namespace.
 
-   .. code-block:: bash
+   Similar to our other deployments, we will use Traefik to enable external access to the **K10** frontend. However, we can first quickly verify the app is up and running ``kubectl`` as a temporary proxy.
 
-      kubectl --namespace kasten-io port-forward service/gateway 8080:8000
+#. In **Powershell**, run ``kubectl --namespace kasten-io port-forward service/gateway 8080:8000``
 
-#. Open a browser and point it to http://127.0.0.1:8080/k10/#/ this should provide you access to the dashboard. Have a quick look around and then close the browser.
+#. Open http://127.0.0.1:8080/k10/#/ in your **USER**\ *##*\ **-WinToolsVM** browser.
 
-[CAN'T LOOK AROUND. IT'S PROMPTING FOR COMPANY AND E-MAIL FIRST]
+   .. figure:: images/91.png
 
-#. In your terminal/Powershell session hit <CTRL>+C to stop the proxy process.
+   If your deployment was successful, you will be prompted with the EULA.
 
-Define Traefik for routing
-**************************
+#. Press **Ctrl+C** in **PowerShell** to stop the proxy.
 
-Let's make this a more convenient solution by using Traefik.
+..   K10 backup
+   ^^^^^^^^^^
 
-#. Open the treafik-routes.yaml in Visual Cafe
-#. Add the following content to the end of the yaml file
+   We are going to run a few steps to get K10 installed:
+
+   - Get helm installed in our system as the installation of the backup application uses helm to install the application. More information can be found at https://helm.sh/
+   - Install K10
+   - Define the URL route in Traefik
+   - Add our created Object Store as S3 storage for K10
+   - Run a backup, export to S3 storage
+   - Restore as a "clone"
+
+Adding K10 Traefik Route
+........................
+
+#. In **Visual Studio Code**, open your existing **traefik-routes.yaml** file.
+
+#. Paste the following to the end of your file:
 
    .. code-block:: yaml
 
@@ -785,172 +741,172 @@ Let's make this a more convenient solution by using Traefik.
         entryPoints:
           - web
         routes:
-        - match: Host(`k10.gts2021.local`)
+        - match: Host(`k10.lab.local`)
           kind: Rule
           services:
           - name: gateway
             port: 8000
 
-#. Save the file
-#. Run ``kubectl apply -f traefik-routes.yaml`` to have the new routing rules activated.
+#. Save the file and run ``kubectl apply -f traefik-routes.yaml`` to update **Traefik**.
 
-   .. figure:: images/39.png
+   .. figure:: images/92.png
 
-K10 - Configure S3 storage
-**************************
+#. Replace *<TRAEFIK-EXTERNAL-IP>* and run the following command in **PowerShell**:
 
-#. Make the needed change to the hosts file of your machine so you can target the host **k10.gts2021.local** as resolving to the K10 Dashboard.
-#. Open a browser and type the URL **k10.gts2021.local/k10/#/** this should open the K10 dashboard
-#. Provide some information in the first screen you get.
+   .. code-block:: powershell
 
-#. Now you should see the "default" dashboard of K10
+      Add-Content -Path C:\Windows\System32\drivers\etc\hosts -Value "<TRAEFIK-EXTERNAL-IP>`tk10.lab.local" -Force
+      cat C:\Windows\System32\drivers\etc\hosts
 
-   .. figure:: images/41.png
+   Similar to **fiesta-web** and **Grafana**, this will add your **hosts** file record mapping **k10.lab.local** to your **Traefik** external IP address.
 
-#. Click on **Cluster Settings** on the right hand side of the Screen
-#. In the **Location Profiles** click the ** + New Profile** button
-#. Fill the fields with the following values:
+#. Open http://k10.lab.local/k10/#/ in your **USER**\ *##*\ **-WinToolsVM** VM.
 
-   - **Profile Name**: nutanix-objects (only lower cases are allowed)
-   - **Cloud Storage Provider**: S3 Compatible
-   - **S3 Access Key**: from the file that you downloaded during the Access Rights in the Nutanix Objects part.
-   - **S3 Secret**: from the file that you downloaded during the Access Rights in the Nutanix Objects part.
-   - **Endpoint**: https://<OBJECT STORE NAME>.ntnxlab.local
-   - **Skip certification...**: Checked, click then the Disable SSL Verify button
-   - **REgion**: Leave empty if you want
-   - **Bucket Name**: <NAME OF THE BUCKET YOU HAVE CREATED>
+Configuring K10
+...............
 
-     .. figure:: images/42.png
+Now that we have prepared our storage target and deployed **K10**, we're ready to configure **K10** to use our Objects storage and create our first backup policy.
 
-     .. note::
-        The File of the secret has been slightly changed so we see the information in one screen with the settings we have set. For the Endpoint and the Bucket we have used our example information we used earlier.
+#. In your browser, **Accept** the **K10** EULA.
 
-#. Click the **Save Profile** button. This should result in a green bar at the top of the screen and the just defined profile should be shown.
+   .. note::
 
-   .. figure:: images/43.png
+      If prompted to **Take a Quick Tour**, click **No**.
 
-#. Click on the K10 Logo in the top left corner of your screen to return to the Dashboard.
+   You should now see the **K10** dashboard, including multiple applications that have already been discovered on your cluster.
 
-K10 - Configure backup policy
-*****************************
+#. Click **Cluster Settings**.
 
-#. Click in the **Applications** box, **unmanaged**
+   .. figure:: images/93.png
 
-#. In the **default** box (default namespace), click the **Create Policy** button
+#. Under **Location Profiles**, click **+ New Profile**.
 
-   .. figure:: images/44.png
+#. Fill out the following fields:
 
-#. On the right side of the screen, you see the new policy with default settings.
+   - **Profile Name** - nutanix-objects
+   - **Cloud Storage Provider** - S3 Compatible
+   - **S3 Access Key** - *From your user##-k10@lab.local-keys-<DATE>.txt file downloaded from Objects*
+   - **S3 Secret** - *From your user##-k10@lab.local-keys-<DATE>.txt file downloaded from Objects*
+   - **Endpoint** - https://ntnx-objects.ntnxlab.local
+   - Select **Skip certificate chain and hostname verification**
+   - **Region** - *Leave blank*
+   - **Bucket Name** - user\ *##*\ -k10-bucket
 
-#. Leave all default Except the **Enable Backups via Snapshot Exports** and check that your created Location Profile (nutanix-demo) is shown
+   .. figure:: images/95.png
 
-   .. figure:: images/45.png
+   .. note::
 
-#. Click the **Create Policy** button so we have a policy
+      Don't worry Sebastien, these keys aren't valid.
 
-#. Now to run the Policy, click the **run once** button (running man icon)
+#. Click **Save Profile**.
 
-[ADD SCREENSHOT]
+   You should see a green dialog indicating the connection was successful. Otherwise, ensure your profile inputs are accurate and try saving again.
 
-#. Click **Run Policy** to have the policy run immediate.
+   Next we'll configure a backup policy.
 
-#. In the Dashboard a few seconds after the policy has been in a running state, it will start to export the data to the S3 bucket we created.
+#. Click **< Dashboard** to return to the **K10** dashboard.
 
-   .. figure:: images/46.png
+   .. figure:: images/96.png
 
-K10 - Restore data
-*******************
+#. Under **Applications**, select **Unmanaged**.
 
-Now that we have a backup and an export, let's restore some data in the form of "clone" the Pods we just backup-ed... The clone will be a separate name space.
+#. Under **default**, click **Create Policy**.
 
-#. Click on the **Applications** box.
+   .. figure:: images/97.png
 
-#. Click on the **restore** text in the bottom area of the box called default.
+   Each of the boxes map to a specific Namespace in your Kubernetes cluster.
 
-   .. figure:: images/47.png
+#. In the **New Policy** window, leave all of the default snapshot frequency settings.
 
-#. Click on the **default-backup** box. That is your *run once* manually created backup.
+#. Select **Enable Backups via Snapshot Exports** and ensure **Export Location Profile** is set to your **nutanix-objects** profile.
 
-   .. figure:: images/47a.png
+   .. figure:: images/98.png
 
-#. Click the **EXPORTED** box as we want the restore to be made from our Nutanix Objects S3 storage
+   This will export the snapshots created by K10 to your S3 bucket.
 
-   .. figure:: images/47b.png
+#. Click **Create Policy**.
 
-#. Within the *Application Name* section, click on **Create a New Namespace**. Enter **default-restore** as the name, and click **Create**.
+   Instead of waiting for the next scheduled snapshot to take place, we'll force the first backup.
 
-   .. figure:: images/47c.png
+#. Click **Run Once** and **Run Policy**.
 
-#. This will set the *Application name* to the just created *default-restore*.
+   .. figure:: images/99.png
 
-#. Scroll down to the *Artifacts* section, and click **Deselect All Artifacts**.
+#. Click **< Dashboard**.
 
-   .. figure:: images/47d.png
+# Under **Activity**, you should see your backup job complete after a few seconds. Select it and view the resources that were exported as part of the backup.
 
-#. Only select:
+   .. figure:: images/100.png
 
-   Type: **deployments** that has the name *npm-fiesta* in the *Name field*.
+Restoring K10 Backups
+.....................
 
-   Type: **services** that has the name *npm-fiesta* in the *Name* field.
+Now that we have a successful backup, we can restore "clones" of your applications to a separate namespace on the cluster.
 
-   .. figure:: images/48.png
+#. Select **Applications** from the **K10** dashboard.
+
+#. Under the **default** namespace, click **Restore**.
+
+   .. figure:: images/101.png
+
+#. Select your **default-backup** restore point and then click the **EXPORTED** version.
+
+   .. figure:: images/102.png
+
+   This will ensure we're restoring the data from the Nutanix Objects bucket, and not a local snapshot.
+
+#. Under **Restore Point > Application Name**, click **+ Create A New Namespace**:
+
+   - **New Namespace** - default-restore
+
+   .. figure:: images/103.png
+
+   This will update the **Application Name** to your new namespace.
+
+#. Under **Restore Point > Artifacts**, click **Deselect All Artifacts**.
+
+#. Select only your **fiesta-web-pods** Deployment and your **fiesta-web-svc** Service.
+
+   .. figure:: images/104.png
 
 #. Click the **Restore > Restore** button to start the restore process.
 
    .. note::
 
-      You may see a *Slow Connection* message pop up several times. This can be safely ignored.
+      You may see a *Slow Connection* message pop up. This can be safely ignored.
 
-#. Go back to your Dashboard, by clicking the text Dashboard at the top of your screen. You should see a Blue bar appear and rising. Also under the Actions you will see the Restore action taking place.
+#. Click **< Dashboard** to return to the dashboard.
 
-   .. figure:: images/49.png
+   Under **Activity**, you should see your restore operation either **Running** or **Completed**.
 
-#. Open up your Lens installation and look to see for:
+   .. figure:: images/105.png
 
-   #. A new name space: default-restore
-   #. In that name space: the Pod npm-fiesta in a running state.
+#. In **Lens > Workloads > Pods**, filter for your **default-restore** namespace and observe your Fiesta pods running.
 
-   .. figure:: images/50.png
-   .. figure:: images/50a.png
+   .. figure:: images/106.png
 
-.. note::
+   *Based on what you've learned so far in the lab, can you build a Traefik route to connect to your default-restore version of your app?*
 
-   To use the "restored" Fiesta app, you can use the Traefik and change the original route to point to the restored svc, OR create a new route, like fiesta_restore. The only thing that you need to change is the parameter namespace in the traefik-routes.yaml file.
-   Apply the file using ``kubectl apply -f traefik.yaml`` and you have the restore app available for testing etc.
+#. Return to **Prism Central >** :fa:`bars` **> Services > Objects > ntnx-objects** and click your bucket.
 
-Impact on the objects store
-***************************
+   Here you can view the number of objects stored within the bucket and the storage being consumed.
 
-#. Open your bucket in Nutanix Objects via **Prism Central ->** :fa:`bars` **-> Services -> Objects -> Your Object store -> Your bucket**
+#. Select **Performance** from the left-hand menu to view the load your backup policy has applied to the bucket.
 
-#. Click on the Performance on the right hand side and you should see the "load" the backup has had on your bucket.
+   .. figure:: images/107.png
 
-   .. figure:: images/51.png
+#. You can also view the bucket contents using the built-in Objects Browser by opening \http://*<OBJECT-STORE-PUBLIC-IP>*:7200 in your browser and logging in with the keys assigned to your **user**\ *##*\ **-k10** user.
+
+   .. figure:: images/108.png
+
+   .. note::
+
+      The snapshot exports from **K10** aren't human readable, so don't expect to find your original **YAML** files!
 
 .. raw:: html
 
-    <BR><center><h2>That concludes this module!</H2></center>
+    <H1><font color="#B0D235"><center>You made it!</center></font></H1>
 
-------
+After completing these exercises you should now be more familiar with the infrastructure considerations for production Kubernetes environments.
 
-All is working! We have deployed the following items in this part of the lab
-
-- Monitoring, not just using a Dashboard, but also having some more insights
-- Logging
-- Expand the Kubernetes cluster
-- Change the replicas AFTER we have expanded the cluster
-- Upgrade the cluster (video)
-- Defined a Nutanix Objects Bucket
-- Made changes to the built-in DNS in Kubernetes
-- Install K10 backup solution using Helm, and not YAML files
-- Configured backup policies and ran a manual triggered backup
-- Restored an application to a new namespace
-
-
-Takeaways
----------
-
-- Monitoring and logging are crucial as it is the only way to get an overview if there are issues in an environment which consists out of small spinning wheels and the possibility of loosing the overview is at hand.
-- Expanding and upgrading the nodes in the cluster has to be just some small clicks. Organizations don;t want to much time in expanding their infrastructure as manual labor could lead to inconsistency and failure
-- Using Objects in any backup scenario is a great value add. The Objects store is build in and can be used quickly by just a few mouse clicks.
-- The used backup solution, K10 from Kasten.io, is just an example of many backup solutions out in the market, but backups are important. Things will happen. People make mistakes and they can have a very big impact on the organization. Think of the following: running the command ``kubectl delete ns default-restore`` would literally delete ALL items in that name space! If you want to rebuild everything from hand, can be done, but is taken a lot of effort as not all steps that have been run AFTER the initial deployment might be documented. Kubernetes is capable of keeping pods alive and accessible via services, but a small mistake, even typo could lead to disaster....
+Nutanix Karbon provides significant value in the deployment and management of your Kubernetes infrastructure, while still providing an open platform capable of integrating with other stack components for logging, monitoring, backup, and more.

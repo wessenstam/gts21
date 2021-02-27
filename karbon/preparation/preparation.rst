@@ -81,13 +81,23 @@ To get the full experience of the simplicity of using Karbon to host cloud nativ
 
    This process will take approximately 10 minutes to complete. During this time, Karbon will deploy a non-highly available (development) Kubernetes cluster consisting of the following components:
 
-      - **1x Master Node** - The **master** node acts as the API front-end of the Kubernetes cluster and manages workloads provisioned on **worker** nodes.
-      - **1x Worker Node** - The **worker** nodes run the Pods (or containers)
-      - **1x etcd Node** - **etcd** is a distributed (in multi-node configurations), key-value store used to store Kubernetes cluster data.
+      - **1x Master Node**
 
-#. Once your **Cluster Status** reaches **Healthy**, you can proceed to the next exercise.
+         The **master** node acts as the API front-end of the Kubernetes cluster and manages workloads provisioned on **worker** nodes.
+
+      - **1x etcd Node**
+
+         **etcd** is a distributed (in multi-node configurations), key-value store used to store Kubernetes cluster data. This includes all of the YAML data that describes the Resources we will be deploying on the cluster to create Pods, Services, and more.
+
+      - **1x Worker Node**
+
+         The **worker** nodes run the Pods.
+
+#. Once your **Cluster Status** reaches **Healthy**, click your cluster **Name** to view the Karbon dashboard.
 
    .. figure:: images/9.png
+
+   Currently, the Karbon dashboard reports on the health of the Kubernetes infrastructure and provides functions for cluster management, such as providing additional persistent storage for your Pods via Nutanix Volumes or Nutanix Files.
 
 Connecting to Your Kubernetes Cluster
 +++++++++++++++++++++++++++++++++++++
@@ -148,9 +158,14 @@ We will use this file to interact with the cluster using the Kubernetes command 
 
    .. figure:: images/14.png
 
+   .. note::
+
+      For security purposes, the token used by **kubectl.cfg** is only valid for 24 hours by default. If you are completing these labs over multiple days, you will eventually need to download a fresh **kubectl.cfg** from Karbon.
 
 .. raw:: html
 
     <H1><font color="#B0D235"><center>Congratulations!</center></font></H1>
 
-I'm going to bed. We'll add a wrap-up for this tomorrow, yay!
+Using Nutanix Karbon, you've deployed and connected to a Kubernetes cluster in minutes. As seen in the wizard, deploying a highly available Kubernetes cluster for production environments is equally as simple.
+
+In the next exercise, we will build on this deployment by adding third party services commonly used to support production-ready cloud native application environments, and how they work with Karbon.
