@@ -227,6 +227,12 @@ Kubernetes can `set environment variables <https://kubernetes.io/docs/tasks/inje
 
 #. **IMPORTANT!** Change *<IP ADDRESS OF YOUR MARIADB SERVER>* to the IP address of your **User**\ *##*\ **-MariaDB_VM** VM.
 
+   .. note::
+
+      The database VM has already been provisioned for you, you do not need to deploy the database.
+
+      .. figure:: images/21.png
+
 #. Save the file and run ``kubectl apply -f fiesta_app.yaml`` to update your deployment.
 
 #. Wait a minute, and refer \http://fiesta.lab.local in your **USER**\ *##*\ **-WinToolsVM** browser.
