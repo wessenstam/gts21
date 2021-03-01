@@ -152,12 +152,12 @@ In order to get access to our **Fiesta** web frontend, we need to define a new *
       kind: IngressRoute
       metadata:
         name: simpleingressroute
-        namespace: default-restore
+        namespace: default
       spec:
         entryPoints:
           - web
         routes:
-        - match: Host(`fiesta-restore.lab.local`)
+        - match: Host(`fiesta.lab.local`)
           kind: Rule
           services:
           - name: fiesta-web-svc

@@ -4,7 +4,7 @@
 Deploying Karbon
 ----------------
 
-In this exercise you will deploy a Nutanix Karbon Kubernetes cluster.
+In this exercise you will deploy a complete Kubernetes cluster using Nutanix Karbon fewjhkvfweVJHKfew
 
 Deploying Your Cluster
 ++++++++++++++++++++++
@@ -61,9 +61,11 @@ To get the full experience of the simplicity of using Karbon to host cloud nativ
 
 #. On **Network Provider**, keep the default selections and click **Next**.
 
-   .. note::
+      Karbon utilizes **Flannel** to provide Layer 3 IPv4 networking between multiple nodes within the Karbon cluster. Kubernetes assumes that each Pod has a unique, routable IP inside the cluster.
 
-      Something about Flannel and Calico and Pod CIDR Range/ Service CIDR range
+      The **Service CIDR** defines the internal network range on which services (like etcd) are exposed.
+
+      The **Pod CIDR** defines the network range used to IP pods. The default configuration allows for a maximum of 256 nodes with up to 256 pods per node.
 
 #. On **Storage Class**, fill out the following fields:
 
@@ -83,7 +85,7 @@ To get the full experience of the simplicity of using Karbon to host cloud nativ
 
       - **1x Master Node**
 
-         The **master** node acts as the API front-end of the Kubernetes cluster and manages workloads provisioned on **worker** nodes.
+         The **Master** node acts as the API front-end of the Kubernetes cluster and manages workloads provisioned on **Worker** nodes.
 
       - **1x etcd Node**
 
@@ -91,7 +93,9 @@ To get the full experience of the simplicity of using Karbon to host cloud nativ
 
       - **1x Worker Node**
 
-         The **worker** nodes run the Pods.
+         The **Worker** nodes run the Pods as assigned by the **Master** nodes.
+
+   If you're still waiting for your Karbon cluster to provision, you can review the :ref:`karbon_networking` which provides more context around Karbon networking at the beginning of the next lab. *Be sure to return to this lab after reading to complete the connection to your Karbon cluster*.
 
 #. Once your **Cluster Status** reaches **Healthy**, click your cluster **Name** to view the Karbon dashboard.
 

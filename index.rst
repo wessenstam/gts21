@@ -169,6 +169,15 @@ This make it far easier for our limited staff of SMEs to help you if and when yo
 
    <br><center><img src="https://media.giphy.com/media/3orif35YFvvYrWAWmA/giphy.gif"></center><br><br>
 
+Can I Run LCM Updates On My Cluster?
+....................................
+
+**PLEASE NO!** The versions of PC, Karbon, Calm, etc. used in the labs are what have been verified. The latest version of Calm introduces some UI changes that would make the lab more difficult to follow. The latest version of PC introduces a Leap UI bug that that will impact the **Hybrid Cloud IaaS** lab.
+
+.. raw:: html
+
+   <br><center><img src="https://media.giphy.com/media/F8BGFOzGhswhRUS1w8/giphy.gif"></center><br><br>
+
 Where Is The Lab For Provisioning Clusters?
 ...........................................
 

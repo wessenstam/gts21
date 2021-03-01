@@ -10,6 +10,8 @@ In this exercise we will deploy a **MetalLB Load Balancer** and a **Traefik Ingr
 
 If you are already familiar with basic Kubernetes networking, you can skip ahead to `Deploying A Load Balancer`_ to begin the lab. Otherwise, review the primer below.
 
+.. _karbon_networking:
+
 Kubernetes Networking In 5 Minutes
 ...................................
 
@@ -86,7 +88,7 @@ In order to provide network access to any future services you will deploy to you
 
    ``kubectl apply`` creates and updates applications using YAML files, referred to as Manifests, that define Kubernetes resources.
 
-#. Run ``kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"``.
+#. Run ``kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"``
 
    This command creates a **secret** in Kubernetes used to encrypt communications between **MetalLB** Pods.
 
@@ -256,11 +258,11 @@ Rather than running on the Kubernetes cluster, **Lens** can be installed on a Wi
 
    **Lens** will give you per Pod configuration, performance, and logs, as well as the ability to open a terminal session into that specific Pod to execute commands.
 
-#. Click **Apps**.
+   ..   #. Click **Apps**.
 
-   .. figure:: images/47.png
+      .. figure:: images/47.png
 
-   **Lens** provides a GUI for **Helm**, a popular command line package management tool for Kubernetes, making it easy for users to deploy new services. *This might be useful later!*
+      **Lens** provides a GUI for **Helm**, a popular command line package management tool for Kubernetes, making it easy for users to deploy new services. *This might be useful later!*
 
    .. raw:: html
 
