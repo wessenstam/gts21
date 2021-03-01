@@ -46,7 +46,7 @@ What Are Containers?
 
 Containers are a standardized means of packaging software that include code and all its dependencies into an image, which allows an application to be reliably portable from one environment to another. The images run on an engine, such as Docker, which allows you to run multiple containers on the same host operating system while being completely isolated from one another.
 
-.. figure:: images/containers.png
+.. figure:: images/architectures1.png
 
 Think about your desktop. You have many applications installed on your desktop and have probably experienced issues before where you needed certain versions of Java or Internet Explorer to run one app, but a completely different version to run another.
 
@@ -55,7 +55,9 @@ Think about your desktop. You have many applications installed on your desktop a
 So Is Kubernetes Like Docker?
 .............................
 
-Kubernetes is an open source platform for *managing* containers, and *uses* Docker to run the underlying containers. Kubernetes supports multiple container engines, but Docker is the most prevalent.
+Kubernetes is an open source platform for *managing* containers, and *uses* Docker to run the underlying containers. Kubernetes supports multiple container engines, but Docker is the most prevalent. The containers are spread across multiple hosts, which Kubernetes manages as a cluster.
+
+.. figure:: images/architectures2.png
 
 **Think about it this way - if Docker is AHV, the platform on which you run your VMs, then Kubernetes is Prism and AOS, the products that make your VM deployment resilient and easy to manage.**
 
