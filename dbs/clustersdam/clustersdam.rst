@@ -137,6 +137,8 @@ Enabling Multi-Cluster Data Access Management
 
    .. figure:: images/19.png
 
+#. Click **Update**.
+
 #. Select **AWS-Cluster** from the **Nutanix Cluster** dropdown menu.
 
 #. Click **Actions > Create Database Clone > Database**.
@@ -146,6 +148,10 @@ Enabling Multi-Cluster Data Access Management
 #. Select **Current Time** to clone your database using the latest available data.
 
    .. figure:: images/12.png
+
+   .. note::
+
+      If **Point in Time** displays **Invalid**, data is still being synced to the remote site. Stretch, bathroom, coffee, try again.
 
 #. Click **Next**.
 
