@@ -104,7 +104,7 @@ Similar to the previous exercise, you'll map a microsegmentation policy to speci
 
    You can view the web interface of the application by opening \http://<*USER##-FiestaWeb-VM-IP*>.
 
-   ..note::
+   .. note::
 
       Ignore the Fiesta deployment with alternate VM names, as these are used in other GTS labs.
 
