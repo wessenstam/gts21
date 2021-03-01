@@ -156,7 +156,7 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
    .. figure:: images/14.png
 
-   This provides as overview of all of the Nutanix objects discovered by ServiceNow through Prism Central API. You can access addition details about resources within the dashboard, such as **Hosts**, by clicking them.
+   This provides as overview of all of the Nutanix objects discovered by ServiceNow through Prism Central API. You can access additional details about resources within the dashboard, such as **Hosts**, by clicking them.
 
 #. Within the dashboard, select the **Nutanix VM Summary** chart to view all currently discovered Nutanix VMs.
 
