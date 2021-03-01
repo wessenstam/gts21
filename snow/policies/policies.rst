@@ -40,6 +40,12 @@ A Prism **Category** is a key value pair. Categories are assigned to entities (s
 
 #. Click **Create Protection Policy** and fill out the following:
 
+   .. note::
+
+      If you are prompted that **Leap is not enabled on Local AZ**, click **Enable > Enable > Enable** to enable the feature. This is a non-disruptive, one-time operation within **Prism Central**. You can then click the **X** to close the warning dialog while **Leap** is enabled in the background.
+
+      .. figure:: images/23.png
+
    - **Policy name** - USER\ *##*-Bronze (ex. USER01-Bronze)
    - **Primary Location > Location** - Local AZ
    - **Primary Location > Cluster** - AWS-Cluster
