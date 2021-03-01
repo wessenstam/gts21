@@ -20,6 +20,7 @@ Monitoring is one of the most important parts of administrating a Kubernetes Clu
 `Prometheus <https://prometheus.io/>`_ and `Grafana <https://grafana.com/>`_ are the peanut butter and jelly of Kubernetes monitoring solutions. Prometheus is an open source platform used for event monitoring and alerting, and Grafana provides rich visualizations from multiple data source backends.
 
    .. figure:: images/52.png
+      :align: center
 
 Deploying Prometheus
 .....................
@@ -108,7 +109,7 @@ Deploying Grafana
 
 #. Save the file as **grafana-deploy.yaml** in your **Downloads** folder.
 
-   Note that the **grafana** service is running on port 3000, the same port as your **fiesta-web** service. It will also pre-populate our **
+   Note that the **grafana** service is running on port 3000, the same port as your **fiesta-web** service. This is not an issue as each Pod has a unique IP address within the cluster.
 
 #. Run ``kubectl apply -f grafana-deploy.yaml`` to install.
 
@@ -217,9 +218,9 @@ In this exercise we'll build our own, simple chart to display our Karbon cluster
 
 #. Select **cluster:node_cpu:sum_rate5m** and press **Shift+Return** to begin populating data.
 
-   .. figure:: images/64.png
-
 #. Click **Apply** to save the chart to your dashboard.
+
+   .. figure:: images/64.png
 
 #. Click the :fa:`floppy-o` icon to **Save** your dashboard. Provide a name and click **Save**.
 
@@ -244,7 +245,7 @@ In this exercise we'll build our own, simple chart to display our Karbon cluster
 Logging With ELK Stack
 ++++++++++++++++++++++
 
-Similar to monitoring, a robust logging solution for your Kubernetes environment is critical to quickly diagnosing issues with services. Karbon provides a complete **ELK** deployment as part of your cluster for logging related to the Kubernetes cluseter infrastructure. The **ELK** stack consists of **Elasticsearch**, **Logstash**, and **Kibana**. `Elasticsearch <https://www.elastic.co/elasticsearch/>`_ is a distributed, full-text search engine responsible for indexing log data to provide quick searches. `Logstash <https://www.elastic.co/logstash>`_ is a data processing pipeline responsible for filtering data and sending to different outputs, including Elasticsearch. `Kibana <https://www.elastic.co/kibana>`_ provides the front end to the stack, letting you explore and visualize data.
+Similar to monitoring, a robust logging solution for your Kubernetes environment is critical to quickly diagnosing issues with services. Karbon provides a complete **ELK** deployment as part of your cluster for logging related to the Kubernetes cluster infrastructure. The **ELK** stack consists of **Elasticsearch**, **Logstash**, and **Kibana**. `Elasticsearch <https://www.elastic.co/elasticsearch/>`_ is a distributed, full-text search engine responsible for indexing log data to provide quick searches. `Logstash <https://www.elastic.co/logstash>`_ is a data processing pipeline responsible for filtering data and sending to different outputs, including Elasticsearch. `Kibana <https://www.elastic.co/kibana>`_ provides the front end to the stack, letting you explore and visualize data.
 
    .. figure:: images/67.png
 
@@ -586,14 +587,14 @@ In order for our **K10** application to connect to our Objects bucket as a stora
 
    You will need this IP in the following steps.
 
-#. In **PowerShell** in your **USER**\ *##*\ **-WinToolsVM**, paste the following:
+#. Paste the following into your **USER**\ *##*\ **-WinToolsVM** and replace *<YOUR-BUCKET-NAME>* and *<OBJECTS-PUBLIC-IP>* with your values:
 
-.. code-block:: powershell
+   .. code-block:: powershell
 
-   Invoke-Command -ComputerName dc.ntnxlab.local -ScriptBlock {Add-DnsServerResourceRecordA -Name "ntnx-objects" -ZoneName "ntnxlab.local" -AllowUpdateAny -IPv4Address "<OBJECTS-PUBLIC-IP>"}
-   Invoke-Command -ComputerName dc.ntnxlab.local -ScriptBlock {Add-DnsServerResourceRecordA -Name "<YOUR-BUCKET-NAME>.ntnx-objects" -ZoneName "ntnxlab.local" -AllowUpdateAny -IPv4Address "<OBJECTS-PUBLIC-IP>"}
+      Invoke-Command -ComputerName dc.ntnxlab.local -ScriptBlock {Add-DnsServerResourceRecordA -Name "ntnx-objects" -ZoneName "ntnxlab.local" -AllowUpdateAny -IPv4Address "<OBJECTS-PUBLIC-IP>"}
+      Invoke-Command -ComputerName dc.ntnxlab.local -ScriptBlock {Add-DnsServerResourceRecordA -Name "<YOUR-BUCKET-NAME>.ntnx-objects" -ZoneName "ntnxlab.local" -AllowUpdateAny -IPv4Address "<OBJECTS-PUBLIC-IP>"}
 
-#. Replace *<YOUR-BUCKET-NAME>* and *<OBJECTS-PUBLIC-IP>* with your values and run the commands.
+#. Run the commands in **PowerShell**.
 
    .. figure:: images/84.png
 
@@ -651,31 +652,6 @@ Installing K10
 ..............
 
 Up to this point, we have used manually created manifest files to deploy our applications. For **K10** we will look at a more user friendly way to deploy apps using **Helm**. `Helm <https://helm.sh/>`_ is a community built and maintained package management tool for Kubernetes, similar to **yum** in CentOS or **npm** in Node.
-..
-   #. In **Lens**, click **File > Preferences**.
-
-   #. Under **Helm**, click **Add Custom Helm Repo**.
-
-      .. figure:: images/87.png
-
-      By default, **Lens** only shows Helm packages (called **Charts**) from the **bitnami** repository, but it's simple to add additional repos.
-
-   #. Fill out the following fields:
-
-      - **Helm repo name** - kasten
-      - **URL** - https://charts.kasten.io/
-
-   #. Click **Add**.
-
-   #. Clone and re-open **Lens**.
-
-      Currently this is the only way for **Lens** to refresh the available **Helm** packages after adding a new repo.
-
-   #. In **Lens**, select **Apps > Charts** and search from **k10**.
-
-   #. Select **k10** (not **K10restore**) and click **Install**.
-
-      .. figure:: images/88.png
 
 #. In **PowerShell**, run the following:
 
@@ -709,18 +685,6 @@ Up to this point, we have used manually created manifest files to deploy our app
    If your deployment was successful, you will be prompted with the EULA.
 
 #. Press **Ctrl+C** in **PowerShell** to stop the proxy.
-
-..   K10 backup
-   ^^^^^^^^^^
-
-   We are going to run a few steps to get K10 installed:
-
-   - Get helm installed in our system as the installation of the backup application uses helm to install the application. More information can be found at https://helm.sh/
-   - Install K10
-   - Define the URL route in Traefik
-   - Add our created Object Store as S3 storage for K10
-   - Run a backup, export to S3 storage
-   - Restore as a "clone"
 
 Adding K10 Traefik Route
 ........................
@@ -834,7 +798,7 @@ Now that we have prepared our storage target and deployed **K10**, we're ready t
 
 #. Click **< Dashboard**.
 
-# Under **Activity**, you should see your backup job complete after a few seconds. Select it and view the resources that were exported as part of the backup.
+#. Under **Activity**, you should see your backup job complete after a few seconds. Select it and view the resources that were exported as part of the backup.
 
    .. figure:: images/100.png
 
