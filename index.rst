@@ -32,7 +32,7 @@
    dbs/gettingstarted/gettingstarted
    dbs/clustersaag/clustersaag
    dbs/clustersdam/clustersdam
-   dbs/patching/patching
+   .. dbs/patching/patching
    dbs/sqlmonitoring/sqlmonitoring
 
 .. toctree::
