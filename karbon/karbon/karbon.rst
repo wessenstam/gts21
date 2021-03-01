@@ -1,8 +1,8 @@
 .. _environment_karbon:
 
-------------------------------------
-Adding Network Services & Dashboards
-------------------------------------
+--------------------------------------
+Adding Network Services and Dashboards
+--------------------------------------
 
 As Karbon is simply providing a streamlined means of provisioning and managing Kubernetes infrastructure, Karbon clusters are able to take advantage of the best of breed tools available in the Kubernetes ecosystem.
 

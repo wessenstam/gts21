@@ -4,7 +4,7 @@
 Deploying Karbon
 ----------------
 
-In this exercise you will deploy a complete Kubernetes cluster using Nutanix Karbon fewjhkvfweVJHKfew
+In this exercise you will deploy a complete Kubernetes cluster using Nutanix Karbon and verify your ability to communicate with the cluster via command line API tool, ``kubectl``.
 
 Deploying Your Cluster
 ++++++++++++++++++++++

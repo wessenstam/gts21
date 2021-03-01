@@ -47,6 +47,7 @@ What Are Containers?
 Containers are a standardized means of packaging software that include code and all its dependencies into an image, which allows an application to be reliably portable from one environment to another. The images run on an engine, such as Docker, which allows you to run multiple containers on the same host operating system while being completely isolated from one another.
 
 .. figure:: images/architectures1.png
+   :align: center
 
 Think about your desktop. You have many applications installed on your desktop and have probably experienced issues before where you needed certain versions of Java or Internet Explorer to run one app, but a completely different version to run another.
 
@@ -58,6 +59,7 @@ So Is Kubernetes Like Docker?
 Kubernetes is an open source platform for *managing* containers, and *uses* Docker to run the underlying containers. Kubernetes supports multiple container engines, but Docker is the most prevalent. The containers are spread across multiple hosts, which Kubernetes manages as a cluster.
 
 .. figure:: images/architectures2.png
+   :align: center
 
 **Think about it this way - if Docker is AHV, the platform on which you run your VMs, then Kubernetes is Prism and AOS, the products that make your VM deployment resilient and easy to manage.**
 
@@ -68,7 +70,7 @@ So What Does It Do Then?
 
 *Containers are a good way to bundle and run your applications. In a production environment, you need to manage the containers that run the applications and ensure that there is no downtime. For example, if a container goes down, another container needs to start. Wouldn't it be easier if this behavior was handled by a system?*
 
-*That's how Kubernetes comes to the rescue! Kubernetes provides you with a framework to run distributed systems resiliently. It takes care of scaling and failover for your application, provides deployment patterns, and more. For example, Kubernetes can easily manage a canary deployment for your system.*
+*That's how Kubernetes comes to the rescue! Kubernetes provides you with a framework to run distributed systems resiliently. It takes care of scaling and failover for your application, provides deployment patterns, and more.*
 
 You will see multiple practical examples of this throughout the lab.
 
@@ -85,6 +87,7 @@ What Basic Terms Should I Know?
 Below are key terms you should know related to the core Kubernetes infrastructure. Other terms and concepts will be defined throughout the lab.
 
 .. figure:: images/k8-architecture.jpg
+   :align: center
 
 **Container**
 

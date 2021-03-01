@@ -4,8 +4,12 @@
 Containerizing the Fiesta App
 -----------------------------
 
-In this section, you will learn how to convert the VM-based Fiesta web server into a containerized service running on your Docker VM. You will then test the application by deploying the container.
+Containers are a standardized means of packaging software that include code and all its dependencies into an image, which allows an application to be reliably portable from one environment to another. The images run on an engine, such as Docker, which allows you to run multiple containers on the same host operating system while being completely isolated from one another.
 
+.. figure:: images/architectures1.png
+   :align: center
+
+In this section, you will learn how to convert the VM-based Fiesta web server into a containerized service running on your Docker VM. You will then test the application by deploying the container.
 ..
    .. note::
 

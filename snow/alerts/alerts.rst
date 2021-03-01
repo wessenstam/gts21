@@ -1,8 +1,8 @@
 .. _snow_alerts:
 
------------------------------------
-ServiceNow Alert & CMDB Integration
------------------------------------
+-------------------------------------
+ServiceNow Alert and CMDB Integration
+-------------------------------------
 
 Since July 2019, ServiceNow has offered native support for discovering Nutanix infrastructure running AHV or ESXi as part of its Change Management Database (CMDB). This provides ServiceNow/Nutanix customers with complete visibility of Nutanix clusters, hosts, VMs, categories, CVMs, storage pools, and storage containers with ServiceNow - including the ability to:
 

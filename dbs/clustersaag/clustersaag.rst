@@ -236,7 +236,7 @@ In a production environment, you would follow a manual backup/restore procedure 
 
 #. Log in using the **NTNXLAB\\Administrator** credentials.
 
-#. Enable **Remote Desktop** for the VM as shown in the screenshot below and connect via RDP for a smoother experience over remote connections.
+#. Enable **Remote Desktop** for the VM as shown in the screenshot below and **connect via RDP** for a smoother experience over remote connections.
 
    .. figure:: images/20.png
 
