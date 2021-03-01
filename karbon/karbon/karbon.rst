@@ -96,7 +96,7 @@ In order to provide network access to any future services you will deploy to you
 
    .. figure:: images/10.png
 
-   The Service has two components. The **controller** Pod is lcuster-wide and handles IP address assignments. The **speaker** is a per-Node daemon that advertises services with assigned IPs.
+   The Service has two components. The **controller** Pod is cluster-wide and handles IP address assignments. The **speaker** is a per-Node daemon that advertises services with assigned IPs.
 
    .. note::
 
@@ -135,7 +135,7 @@ In order to provide network access to any future services you will deploy to you
 
    .. raw:: html
 
-      <BR><font color="#FF0000"><strong> Make 100% sure you are using only YOUR 2 assigned IP addresses otherwise you could cause unexpected issues for others sharing your cluster. Be kind.</strong></font>
+      <BR><font color="#FF0000"><strong> Make 100% sure you are using only YOUR 2 assigned IP addresses otherwise you could cause unexpected issues for others sharing your cluster. Be kind.</strong></font><BR><BR>
 
    .. figure:: images/36.png
 
