@@ -67,7 +67,7 @@ While you may typically want to send many, or all, Nutanix alerts from your clus
 
    - **Entity Type** - VM
    - **Entity** - All VMs in a Category
-   - **Category** - Your User:\ *##* Category (ex. User:01)
+   - **Category** - Your User: *##* Category (ex. User: 01)
    - **Metric** - Memory Usage
 
 #. Under **Static Threshold**, select **Alert Critical if** and specify **>= 75%**.
@@ -105,7 +105,7 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
 #. Click **+ Add Action** and select **Send Alert to ServiceNow**.
 
-#. Refer to your :ref:`clusterdetails` and enter the **ServiceNow Instance Name** from your **Developer Instance URL** (ex. dev12345) and your **ServiceNow admin Credentials**.
+#. Refer to your :ref:`clusterdetails` and enter the **ServiceNow Instance Name** (ex. dev12345) and your **ServiceNow admin Credentials**.
 
    .. figure:: images/8.png
 
@@ -123,7 +123,7 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
    Hmmm, maybe we should apply some artificial load instead!
 
-#. SSH into your *Initials*\ **-CentOS####** VM as **root** and run the following commands to begin consuming free memory:
+#. SSH into your **USER**\ *##*\ **-CentOS####** VM as **root** and run the following commands to begin consuming free memory:
 
    ::
 
@@ -140,6 +140,10 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
    This can be seen in on the **VM Metrics** page inside Prism Central as well, though this data is only updated in 5 minute increments.
 
+   .. note::
+
+      The alert could take as long as 15 minutes to trigger, good time to stretch and grab a *drink*!
+
 #. Once the **Alert** appears in **Prism Central**, cancel the stress command in your SSH session by pressing ``Ctrl+C``.
 
    .. figure:: images/12.png
@@ -152,11 +156,11 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
    .. figure:: images/14.png
 
-   This provides... You can access addition details about resources within the dashboard, such as **Hosts**, by clicking them.
+   This provides as overview of all of the Nutanix objects discovered by ServiceNow through Prism Central API. You can access addition details about resources within the dashboard, such as **Hosts**, by clicking them.
 
 #. Within the dashboard, select the **Nutanix VM Summary** chart to view all currently discovered Nutanix VMs.
 
-#. Select your **VM** to view associated details from the **Change Management Database**.
+#. Search for and select your **USER**\ *##*\ **-CentOS####** VM to view associated details from the **Change Management Database**.
 
    .. figure:: images/15.png
 
@@ -174,7 +178,7 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
 #. In the **Filter Navigator** field in the upper-left, search for **All Alerts**.
 
-   If there are multiple alerts, you can easily identify yours by clicking the **Filter** icon and looking for **Resource starts with** *Your Initials*.
+   If there are multiple alerts, you can easily identify yours by clicking the **Filter** icon and looking for **Resource starts with** *USER##* (ex. USER01).
 
    .. figure:: images/13.png
 

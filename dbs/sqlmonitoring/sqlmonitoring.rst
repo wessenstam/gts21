@@ -15,7 +15,7 @@ SQL Server Monitoring with Prism Ultimate
 
 Prism Ultimate licensing includes the SQL Server monitoring pack, which allows IT admins to understand how infrastructure may impact applications and vice versa. This is an agentless solution that gives visibility into databases, queries, SQL metrics and applies the X-FIT behavior learning and anomaly detection capabilities.
 
-#. Within Prism Central, click on :fa:`bars` **Infrastructure > VMs**.
+#. Within Prism Central, click on :fa:`bars` **> Virtual Infrastructure > VMs**.
 
 #. Select your **USER**\ *##*\ **-MSSQL-Source** VM and note the IP Address.
 
@@ -115,7 +115,7 @@ Triggering Prism SQL Server Alert
 
    We will now artificially generate the required usage to activate the alert we previously created. To do so, we will be executing a PowerShell script, which utilizes a program called HammerDB.
 
-#. Using **File Explorer**, navigate to **Local Disk(C:) > Program Files > HammerDB**.
+#. Using **File Explorer**, navigate to **Local Disk(C:) > Program Files > HammerDB-3.3**.
 
 #. Right-click on the file *workload.ps1*, and select **Run with Powershell**.
 

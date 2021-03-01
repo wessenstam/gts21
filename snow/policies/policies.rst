@@ -4,7 +4,7 @@
 Preparing Policies and Projects
 -------------------------------
 
-With the additional infrastructure capacity you've unlocked with Nutanix Clusters, one of the goals is to provide users with the ability to request and operate their owns VMs and applications. Depending on the user and/or application, PTE needs to ensure that VMs are properly protected for backup and DR purposes, as well as properly secured on the network from the time of creation.
+With the additional infrastructure capacity you've unlocked with Nutanix Clusters, one of the goals is to provide users with the ability to request and operate their own VMs and applications. Depending on the user and/or application, PTE needs to ensure that VMs are properly protected for backup and DR purposes, as well as properly secured on the network from the time of creation.
 
 In this exercise, you'll configure example policies in Prism Central for both data protection and microsegmentation that can be applied to apps and VMs. The goal is to have these policies in place prior to provisioning your VMs, so they can be applied and enforced as VMs are created through self-service.
 
@@ -120,13 +120,9 @@ Similar to the previous exercise, you'll map a microsegmentation policy to speci
 
 #. In the **Search** field, specify the **Environment: Production** category and click :fa:`plus-circle` to add it.
 
-#. Search for the **User** category and select the **User:** *##* value based on your :ref:`clusterdetails` assignment.
+#. Search for the **User** category and select the pre-staged **User:** *##* value (NOT one your **USER**\ *##*\ **-DP** values) based on your :ref:`clusterdetails` assignment.
 
    .. figure:: images/9.png
-
-   .. note::
-
-      The **User** category and values have already been pre-staged to the lab environment.
 
 #. Click **Save**.
 
@@ -173,7 +169,7 @@ Creating A Calm Project
 
 Nutanix Calm allows you to build, provision, and manage your applications across both private (AHV, ESXi) and public cloud (AWS, Azure, GCP) infrastructure.
 
-In order for non-infrastructure administrators to access Calm, allowing them to create or manage applications, users or groups must first be assigned to a **Project**, which acts as a logical container to define user roles, infrastructure resources, and resource quotas. Projects define a set users with a common set of requirements or a common structure and function, such as a team of developers collaborating on the Fiesta application.
+In order for non-infrastructure administrators to access Calm, allowing them to create or manage applications, users or groups must first be assigned to a **Project**, which acts as a logical container to define user roles, infrastructure resources, and resource quotas. Projects define a of set users with a common set of requirements or a common structure and function, such as a team of developers collaborating on the Fiesta application.
 
 #. In **Prism Central**, select :fa:`bars` **> Services > Calm**.
 
@@ -181,11 +177,15 @@ In order for non-infrastructure administrators to access Calm, allowing them to 
 
    .. figure:: images/12.png
 
-#. Specify *USER##*\ **-Project** (ex. USER01-Project) as your **Project Name**.
+#. Specify **USER**\ *##*\ **-Project** (ex. USER01-Project) as your **Project Name**.
 
 #. Under **Users, Groups, and Roles**, click **+ User** and fill out the following:
 
-   - **Name** - user\ *##*\ @ntnxlab.local (ex. user01@ntnxlab.local)
+   .. note::
+
+      If **+ User** is greyed out, refresh Calm. The **NTNXLAB.local** profile is already configured in Prism Central, but this issue has occurred (rarely) in testing.
+
+   - **Name** - operator\ *##*\ @ntnxlab.local (ex. user01@ntnxlab.local)
    - **Role** - Operator
    - Click **Save**
 
@@ -228,7 +228,7 @@ For the purposes of this exercise, you will upload an existing Blueprint of a si
 
 #. Click **Upload Blueprint** and select the **CentOS VM.json** file downloaded in Step 1.
 
-#. Update the **Blueprint Name** to include your *Initials* or *USER##* and select the Calm Project you created in the previous exercise.
+#. Update the **Blueprint Name** to include your **USER**\ *##* and select the Calm Project you created in the previous exercise.
 
    .. figure:: images/17.png
 
