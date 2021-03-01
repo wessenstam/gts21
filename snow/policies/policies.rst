@@ -134,7 +134,7 @@ Similar to the previous exercise, you'll map a microsegmentation policy to speci
 
    .. raw:: html
 
-      <strong><font color="red">Do NOT add the User:## category to this VM!</font></strong>
+      <strong><font color="red">Do NOT add the User:## category to this VM!</font></strong><br>
 
 #. In **Prism Central**, select :fa:`bars` **> Policies > Security**.
 
