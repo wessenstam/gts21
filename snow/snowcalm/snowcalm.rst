@@ -67,11 +67,15 @@ Nutanix Calm Plugin Configuration
 
 #. The plugin will periodically sync with Prism Central to update Blueprints, Projects, etc., however as you just created both your Project and Blueprint, you can force a sync by clicking the **Sync Now** button at the bottom of **Application Properties**. Click **OK** to begin the sync.
 
-   .. figure:: images/5.png
-
    .. note::
 
-      While the sync is taking place, users may experience issues trying to create catalog items and launch Blueprints. As multiple users will be sharing a cluster and working on the lab simultaneously, you may need to re-attempt these actions if the conflict with another user beginning a sync. The sync typically only takes ~1 minute, so this should not cause any serious disruption. Take a minute to stand up from your desk, stretch, and try again!
+      If the UI shows that the plug-in is currently **Syncing**, you will have to wait a minute, refresh the page and click **Sync Now** once the previous sync has finished.
+
+   .. figure:: images/5.png
+
+   .. raw:: html
+
+      <strong><font color="red">While the sync is taking place, users may experience issues trying to create catalog items or launch Blueprints. As multiple users will be sharing a cluster and working on the lab simultaneously, you may need to re-attempt these actions if the conflict with another user beginning a sync. The sync typically only takes ~1 minute, so this should not cause any serious disruption. Take a minute to stand up from your desk, stretch, and try again!</font></strong><br><br>
 
 #. While your inventory sync is in process, return to the **Nutanix Calm > Application Properties** page.
 
