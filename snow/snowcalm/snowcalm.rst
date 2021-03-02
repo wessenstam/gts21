@@ -20,7 +20,7 @@ Your Environment
 Local User Accounts and Group
 .............................
 
-To integrate with LDAP, ServiceNow requires connectivity to your on-prem Active Directory environment through either VPN or utilizing a read-only Domain Controller in your network's DMZ. As this is not possible within the HPOC environment, you will utilize local accounts (**user01**, **user02**, etc.) that have been pre-created within ServiceNow.
+To integrate with LDAP, ServiceNow requires connectivity to your on-prem Active Directory environment through either VPN or utilizing a read-only Domain Controller in your network's DMZ. As this is not possible within the HPOC environment, you will utilize local accounts (**operator01**, **operator02**, etc.) that have been pre-created within ServiceNow.
 
 These local user accounts have all been added to the User Group: **Calm Users**. The group has been assigned the ServiceNow Role: **x_nuta2_nutanix_ca.user**. Users need to be assigned this specific role in order to appear within the Calm Plug-in as eligible for being assigned access to Blueprint Catalog Items.
 
