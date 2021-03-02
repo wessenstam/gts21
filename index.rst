@@ -178,6 +178,17 @@ Can I Run LCM Updates On My Cluster?
 
    <br><center><img src="https://media.giphy.com/media/F8BGFOzGhswhRUS1w8/giphy.gif"></center><br><br>
 
+I Have An Issue, Should I Reboot Prism Central On My Cluster?
+.............................................................
+
+I can't believe I have to say this, but **NO**, please do not reboot Prism Central or Prism Central services on your cluster **THAT IS BEING SHARED WITH SEVERAL OTHER PEOPLE**. Reach out in the appropriate Slack channel for assistance with your lab issue.
+
+See :ref:`help` for complete instructions.`
+
+.. raw:: html
+
+   <br><center><img src="https://media.giphy.com/media/l3V0H7bYv5Ml5TOfu/giphy.gif"></center><br><br>
+
 Where Is The Lab For Provisioning Clusters?
 ...........................................
 
