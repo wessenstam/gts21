@@ -72,7 +72,7 @@ Each shared environment has been pre-staged with a Nutanix Era server, configure
 
       Software Profiles are templates that include the database engine installation and the host operating system, and are used for provisioning and cloning operations. This template exists as a hidden disk image on your Nutanix storage.
 
-   - **MSSQL_19_USER**\ *##* Software Profiles pre-created using the same VM, but located only on **AWS-Cluster**.
+..   - **MSSQL_19_USER**\ *##* Software Profiles pre-created using the same VM, but located only on **AWS-Cluster**.
 
       .. figure:: images/5.png
 
