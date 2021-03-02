@@ -4,7 +4,7 @@
 ServiceNow Alert and CMDB Integration
 -------------------------------------
 
-Since July 2019, ServiceNow has offered native support for discovering Nutanix infrastructure running AHV or ESXi as part of its Change Management Database (CMDB). This provides ServiceNow/Nutanix customers with complete visibility of Nutanix clusters, hosts, VMs, categories, CVMs, storage pools, and storage containers with ServiceNow - including the ability to:
+Since July 2019, ServiceNow has offered native support for discovering Nutanix infrastructure running AHV or ESXi as part of its Configuration Management Database (CMDB). This provides ServiceNow/Nutanix customers with complete visibility of Nutanix clusters, hosts, VMs, categories, CVMs, storage pools, and storage containers with ServiceNow - including the ability to:
 
    - Generate full cluster topologies
    - Report on storage utilization
@@ -30,7 +30,7 @@ Subscription Plugins
 
 Certain plugins are available as subscriptions separate from the core ServiceNow platform.
 
-- `Discovery <https://docs.servicenow.com/bundle/paris-it-operations-management/page/product/discovery/reference/r-discovery.html>`_ - Finds applications and devices on the network and updates the Change Management Database (CMDB)
+- `Discovery <https://docs.servicenow.com/bundle/paris-it-operations-management/page/product/discovery/reference/r-discovery.html>`_ - Finds applications and devices on the network and updates the Configuration Management Database (CMDB)
 - `Event Management <https://docs.servicenow.com/bundle/paris-it-operations-management/page/product/event-management/concept/c_EM.html>`_ - Provides alert aggregation and root cause analysis (RCA) for discovered services, application services, and automated alert groups.
 - `IntegrationHub <https://docs.servicenow.com/bundle/paris-servicenow-platform/page/administer/integrationhub/concept/integrationhub.html>`_ - IntegrationHub enables execution of third-party APIs as a part of a flow when a specific event occurs in ServiceNow. These integrations, referred to as spokes, are easy to configure and enable you to quickly add powerful actions without the need to write a script. For example, you can post a message and incident details in a Slack channel when a high priority incident is created.
 
@@ -160,7 +160,7 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
 #. Within the dashboard, select the **Nutanix VM Summary** chart to view all currently discovered Nutanix VMs.
 
-#. Search for and select your **USER**\ *##*\ **-CentOS####** VM to view associated details from the **Change Management Database**.
+#. Search for and select your **USER**\ *##*\ **-CentOS####** VM to view associated details from the **Configuration Management Database**.
 
    .. figure:: images/15.png
 
