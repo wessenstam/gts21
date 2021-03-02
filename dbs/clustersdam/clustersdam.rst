@@ -151,7 +151,7 @@ Enabling Multi-Cluster Data Access Management
 
    .. note::
 
-      If **Point in Time** displays **Invalid**, data is still being synced to the remote site. Stretch, bathroom, coffee, try again.
+      If **Point in Time** displays **Invalid**, data is still being synced to the remote site. It's been reported this can take as long as 35 minutes to sync due to the volume of users completing labs.
 
 #. Click **Next**.
 

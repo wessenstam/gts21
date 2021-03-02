@@ -91,6 +91,12 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
    .. figure:: images/11.png
 
+   .. note::
+
+      Users have reported an inconsistent issue where Alert Settings may not appear in the dropdown menu. Refreshing the page or returning to the list of **External Entity Instances** and trying again resolves the issue. It may take multiple attempts. Standing on one leg, rubbing your stomach, while patting your head also seems to help.
+
+      The issue also appears to affect Firefox more often than Chrome.
+
 #. Fill out the following fields:
 
    - **Policy Name** - USER\ *##* - SQL Buffer Alert
