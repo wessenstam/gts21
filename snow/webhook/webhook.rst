@@ -291,7 +291,9 @@ Building the Flow
 
       If search does not find your action, return to your **USER**\ *##*\ **-RESTAPI** tab in **Flow Designer** and click **Publish**.
 
-#. Finally, you need to map the data provided by the **Alert Record** in your **Trigger** to the **Input Variables** you created for your Action. Expand **Alert Record** in the **Data** column, then drag and drop the appropriate values to match the screenshot below:
+      Finally, you need to map the data provided by the **Alert Record** in your **Trigger** to the **Input Variables** you created for your Action. 
+
+#. Expand **Alert Record** in the **Data** column, then drag and drop the appropriate values to match the screenshot below:
 
    .. figure:: images/25.png
 
