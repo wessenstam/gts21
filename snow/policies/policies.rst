@@ -185,7 +185,7 @@ In order for non-infrastructure administrators to access Calm, allowing them to 
 
       If **+ User** is greyed out, refresh Calm. The **NTNXLAB.local** profile is already configured in Prism Central, but this issue has occurred (rarely) in testing.
 
-   - **Name** - operator\ *##*\ @ntnxlab.local (ex. user01@ntnxlab.local)
+   - **Name** - operator\ *##*\ @ntnxlab.local (ex. operator01@ntnxlab.local)
    - **Role** - Operator
    - Click **Save**
 
