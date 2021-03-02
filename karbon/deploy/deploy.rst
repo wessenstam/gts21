@@ -186,6 +186,10 @@ In order to get access to our **Fiesta** web frontend, we need to define a new *
       Add-Content -Path C:\Windows\System32\drivers\etc\hosts -Value "<TRAEFIK-EXTERNAL-IP>`tfiesta.lab.local" -Force
       cat C:\Windows\System32\drivers\etc\hosts
 
+   .. note::
+
+      No, ``<TRAEFIK-EXTERNAL-IP>`tfiesta.lab.local`` isn't a typo. ```t`` in PowerShell inserts a tab between the **<TRAEFIK-EXTERNAL-IP>** value and **fiesta.lab.local**.
+
    .. figure:: images/17.png
 
 #. Open \http://fiesta.lab.local in your **USER**\ *##*\ **-WinToolsVM** browser. *Looking good!*

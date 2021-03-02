@@ -51,7 +51,7 @@ Kubernetes Networking In 5 Minutes
 
    While the **LoadBalancer** is capable of getting external traffic to our services, it is not capable of providing any filtering or routing that traffic. An **Ingress Controller** fills this void by sitting in front of multiple services and acting as an intelligent entry point for the Kubernetes cluster.
 
-   .. figure:: images/33.png
+   .. figure:: images/34.png
 
    Using **Ingress** is common when you want to expose multiple services using the same IP address and multiple services are using the same Layer 7 protocol, like HTTP or HTTPS.
 
