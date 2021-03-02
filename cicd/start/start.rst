@@ -51,7 +51,7 @@ Using a Calm Blueprint, each on-premises (HPOC) cluster has been pre-staged with
 
       A CentOS 7 VM running a NodeJS-based web application used to access the Fiesta database. The Fiesta app is a simple example of a web application for performing inventory management for party goods supply stores.
 
-      You can validate your Fiesta application is capable of reaching your source database by browsing to \http://*USER##-Fiesta_App_VM-IP-ADDRESS*\ /
+      You can validate your Fiesta application is capable of reaching your source database by browsing to \http://*USER##-Fiesta_App_VM-IP-ADDRESS*\ :5001/
 
    - **USER**\ *##*\ **-MariaDB_VM**
 
