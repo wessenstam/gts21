@@ -50,6 +50,31 @@ Deploying Grafana
 
    .. code-block:: yaml
 
+
+   .. code-block:: yaml
+
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: grafana-datasources
+        namespace: monitoring
+      data:
+        prometheus.yaml: |-
+          {
+              "apiVersion": 1,
+              "datasources": [
+                  {
+                     "access":"proxy",
+                      "editable": true,
+                      "name": "prometheus",
+                      "orgId": 1,
+                      "type": "prometheus",
+                      "url": "http://prometheus-service.monitoring.svc:8080",
+                      "version": 1
+                  }
+              ]
+          }
+      ---
       apiVersion: apps/v1
       kind: Deployment
       metadata:
