@@ -105,6 +105,10 @@ Nutanix Calm Plugin Configuration
 
    .. figure:: images/6.png
 
+   .. note::
+
+      If your Blueprint does not appear. Log out of the ServiceNow instance, clear your cache (or use Incognito), and log into ServiceNow again. Retry the **Sync Now** operation on the **ServiceNow > Nutanix Calm > Configuration > Application Properties** page.
+
    Now you're ready to create your first service offering!
 
 Creating Catalog Items
@@ -266,6 +270,20 @@ With your Catalog Item active, you're ready to test ordering your first VM as an
    .. figure:: images/19.png
 
    In a production ServiceNow environment, the user would receive updates on their request ticket via e-mail (and potentially through additional integrations like Slack).
+
+   .. note::
+
+      If you do not see your Blueprint being provisioned, do the following to determine the source of your error:
+
+      - Log-in/impersonate your **operator**\ *##* account in **ServiceNow**
+      - Open **Service Now > Nutanix Calm > Tracking > Incidents** and click the **INC#######** record
+      - Under **Activities**, open **Incident attachment.txt** and review the error message.
+
+         .. figure:: images/33.png
+
+         The most common cause is leading or trailing whitespace in the naming of the **USER**\ *##*\ **-SnowReq1**.
+
+      - Go to **Launch Blueprint** and try again
 
 #. The Calm plugin also provides built-in dashboards for both admins and users to easily visualize key metrics relevant to the Calm integration.
 
