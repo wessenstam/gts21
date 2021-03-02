@@ -53,28 +53,6 @@ Deploying Grafana
 
    .. code-block:: yaml
 
-      apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        name: grafana-datasources
-        namespace: monitoring
-      data:
-        prometheus.yaml: |-
-          {
-              "apiVersion": 1,
-              "datasources": [
-                  {
-                     "access":"proxy",
-                      "editable": true,
-                      "name": "prometheus",
-                      "orgId": 1,
-                      "type": "prometheus",
-                      "url": "http://prometheus-service.monitoring.svc:8080",
-                      "version": 1
-                  }
-              ]
-          }
-      ---
       apiVersion: apps/v1
       kind: Deployment
       metadata:
@@ -104,19 +82,6 @@ Deploying Grafana
                 requests:
                   memory: "1Gi"
                   cpu: "500m"
-              volumeMounts:
-                - mountPath: /var/lib/grafana
-                  name: grafana-storage
-                - mountPath: /etc/grafana/provisioning/datasources
-                  name: grafana-datasources
-                  readOnly: false
-            volumes:
-              - name: grafana-storage
-                emptyDir: {}
-              - name: grafana-datasources
-                configMap:
-                    defaultMode: 420
-                    name: grafana-datasources
       ---
       apiVersion: v1
       kind: Service
@@ -254,6 +219,10 @@ In this exercise we'll build our own, simple chart to display our Karbon cluster
 #. Select **Dashboards > Manage** from the left-hand toolbar and click **Import**.
 
 #. Under **Import via grafana.com**, specify **1621** and click **Load**.
+
+   .. note::
+
+      Leading or trailing spaces can cause this operation to fail.
 
 #. Under **Prometheus**, select your **Prometheus** data source and click **Import**.
 
