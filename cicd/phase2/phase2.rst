@@ -178,6 +178,10 @@ To do so we will use ``docker exec`` to execute commands *within* the Gitea cont
 
    - Under **General Settings**
 
+      .. note::
+
+         Ensure you are updating the **Base URL** from **HTTP** to **HTTPS**!
+
      - **SSH Server Port**: 2222
      - **Gitea Base URL**: **https**://*<IP ADDRESS OF YOUR DOCKER VM>*:3000
 
