@@ -86,7 +86,7 @@ What Basic Terms Should I Know?
 
 Below are key terms you should know related to the core Kubernetes infrastructure. Other terms and concepts will be defined throughout the lab.
 
-.. figure:: images/k8-architecture.jpg
+.. figure:: images/k8s.png
    :align: center
 
 **Container**
