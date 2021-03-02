@@ -21,6 +21,10 @@ Configuring ID Based Security
 
    <strong><font color="red">Configuring the settings in this section only needs to be done once per shared environment.</font></strong><br><br>
 
+.. note::
+
+   You can ignore any warnings about the **Prism-Pro-Cluster** having a version of AOS < 5.17, as this isn't a real cluster.
+
 #. If the **Bootcamp Users** and **SSP Developers** user groups have already been added, review the configuration and skip to :ref:`euc_flowpolicy`.
 
 #. In **Prism Central**, select :fa:`bars` **> Prism Central Settings**.
