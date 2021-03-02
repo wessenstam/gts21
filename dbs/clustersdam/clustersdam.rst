@@ -175,7 +175,7 @@ Enabling Multi-Cluster Data Access Management
 
    .. figure:: images/21.png
 
-   Continue with the :ref:`dbs_patching` exercise to keep your new database servers up to date!
+..   Continue with the :ref:`dbs_patching` exercise to keep your new database servers up to date!
 
 Takeaways
 +++++++++
