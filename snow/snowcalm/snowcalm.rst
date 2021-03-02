@@ -321,7 +321,7 @@ Finally, you will verify the data protection and microsegmentation policies you 
 
    .. note::
 
-      The policy mapping view may not be populated immediately, despite the policies being applied. You can return to this view after verifying the policies are being applied.
+      The policy mapping view may not be populated immediately, despite the policies being applied. You can continue with the lab and return to this view after verifying the policies are being applied.
 
 #. Click **Back to** **USER**\ *##*\ **-CentOS####** to return to your VM summary.
 
