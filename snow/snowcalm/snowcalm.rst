@@ -289,6 +289,12 @@ With your Catalog Item active, you're ready to test ordering your first VM as an
 
       - Go to **Launch Blueprint** and try again
 
+   .. note::
+
+      The first person to provision this VM on a cluster may experience extended time to deploy the first VM. This is because the **CentOS.qcow2** image must first be synced to the **AWS-Cluster** from **Prism Central**.
+
+      In rare cases the deployment may time out, indicating the **CentOS7.qcow2** image did not sync. Trying again should resolve, if not, reach out for assistance.
+
 #. The Calm plugin also provides built-in dashboards for both admins and users to easily visualize key metrics relevant to the Calm integration.
 
    .. figure:: images/21.png
