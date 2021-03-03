@@ -88,6 +88,12 @@ Adding The Flow VDI Policy
 
    .. figure:: images/6.png
 
+   .. note::
+
+      If **Secure VDI Groups (VDI Policy)** appears greyed out, this means the policy has already been created. By design, Flow currently only supports a single VDI Policy, as you are able to perform mappings for multiple Active Directory user groups within a single policy.
+
+      Click **Cancel** and search for **VDI Policy** in the list of available policies. Review the following steps to see how the policy works, but action is not required until you reach `Creating A User Based Isolation Policy`_.
+
 #. Click **Create**.
 
 #. Select **Include all VMs**.
