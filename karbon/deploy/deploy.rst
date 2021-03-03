@@ -90,7 +90,7 @@ We'll begin by creating the manifest file for the **Fiesta** web frontend and th
 
       - **spec > template > spec > containers > ports > containerPort:** 3000
 
-         This is the port that the Docker container NodeJS webserver is listening on. It is hard coded as part of the container image. Self-proclaimed DevOps genius and Nutanix Solutions Architect, Christophe Jauffret, would tell you that we should have probably defined the port using an environment variable - *sorry Christophe!*
+         This is the port that the Docker container NodeJS webserver is listening on. It is hard coded as part of the container image.
 
    **Lines 19-29** define the **Service**
 
