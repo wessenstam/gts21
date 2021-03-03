@@ -80,6 +80,10 @@ Adding The Flow VDI Policy
 
    <strong><font color="red">Configuring the settings in this section only needs to be done once per shared environment.</font></strong><br><br>
 
+The VDI Policy needs to be added to Prism Central in order for Flow to start processing Active Directory logins for VMs. This will start automatically adding the **ADGroup** category to VMs that are in use by AD user accounts mapped to the groups that you've configured for ID Based Security in Prism Central.
+
+In addition to the single VDI Policy, which allows you to map whitelist connections to your various ADGroup values, you can also leverage the ADGroup category in Isolation Policies.
+
 #. If the **VDI Policy** already exists, review the steps and proceed to :ref:`euc_flowpolicy2`.
 
 #. In **Prism Central**, select :fa:`bars` **> Policies > Security**.
