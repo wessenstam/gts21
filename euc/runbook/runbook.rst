@@ -62,7 +62,7 @@ In total, to automate your **Add Desktop** function, your Runbook will need to c
    - **Name** - USER\ *##* DDC
    - **Project** - USER\ *##*\ -Project
    - **Type** - Windows
-   - **IP Addresses** - ddc.ntnxlab.local
+   - **IP Addresses** - *YOUR-Citrix-DDC-VM-IP* (10.XX.XX.44, NOT your AutoAD(DC) IP)
    - **Username** - NTNXLAB\\Administrator
    - **Password** - Refer to :ref:`clusterdetails`
 
