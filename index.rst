@@ -10,67 +10,6 @@
    info/help
    info/validate
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Hybrid Cloud IaaS
-   :name: _hybridiaas
-   :hidden:
-
-   snow/gettingstarted/gettingstarted
-   snow/policies/policies
-   snow/snowcalm/snowcalm
-   snow/migration/migration
-   snow/alerts/alerts
-   snow/webhook/webhook
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Hybrid Cloud Database Management
-   :name: _hybrideuc
-   :hidden:
-
-   dbs/gettingstarted/gettingstarted
-   dbs/clustersaag/clustersaag
-   dbs/clustersdam/clustersdam
-   .. dbs/patching/patching
-   dbs/sqlmonitoring/sqlmonitoring
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Hybrid Cloud EUC
-   :name: _hybrideuc
-   :hidden:
-
-   euc/gettingstarted/gettingstarted
-   euc/expand/expand
-   euc/runbook/runbook
-   euc/secure/secure
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Containerizing Apps and CI/CD
-   :name: _cicd
-   :hidden:
-
-   cicd/start/start
-   cicd/basic/basic
-   cicd/phase2/phase2
-   cicd/phase3/phase3
-   cicd/phase4/phase4
-   cicd/phase5/phase5
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Cloud Native Apps on Nutanix
-   :name: _k8s
-   :hidden:
-
-   karbon/gettingstarted/gettingstarted
-   karbon/preparation/preparation
-   karbon/karbon/karbon
-   karbon/deploy/deploy
-   karbon/day-2/day-2
-
 .. raw:: html
 
    <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/welcome.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
@@ -201,8 +140,10 @@ How Long Do I Have Access To The Labs?
 
 The lab environments will be available all day Tuesday and Wednesday. The labs will be supported by a team of SMEs during the following periods:
 
-- **Tuesday** - 08:00 CET - 20:00 CET
-- **Wednesday** - 08:00 CET - 12:00 CET
+- **Tuesday** - 06:00AM PST - 6:00PM PST
+- **Wednesday** - 06:00AM PST - 12:00PM PST
+
+The lab environments will continue to be available until 9:00PM PST on Wednesday if you wish to continue working on labs after the closing session. SME support and lab validation will end at the beginning of Wednesday's closing session.
 
 Do I Have To Complete The Lab Tracks In Order?
 ..............................................
