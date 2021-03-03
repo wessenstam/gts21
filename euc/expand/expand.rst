@@ -132,7 +132,7 @@ Creating Your On-Prem Machine Catalog
 
    .. figure:: images/14.png
 
-   Observe the clone exists in **Prism Element** but is not powered on. Select your  and observe both the OS vDisk and ID disk attached to the VM on the **Virtual Disks** tab below the VMs table in **Prism Element**. Each VM appears to have its own unique read/write copy of the gold image. With VMs in a Machine Catalog spanning several Nutanix nodes, data locality for VM reads is provided inherently by the Unified Cache.
+   Observe the clone exists in **Prism Element** but is not powered on. Select the VM and observe both the OS vDisk and ID disk attached to the VM on the **Virtual Disks** tab below the VMs table in **Prism Element**. Each VM appears to have its own unique read/write copy of the gold image. With VMs in a Machine Catalog spanning several Nutanix nodes, data locality for VM reads is provided inherently by the Unified Cache.
 
    .. figure:: images/15.png
 

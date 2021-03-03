@@ -177,7 +177,7 @@ Deploying Grafana
 
    .. figure:: images/60.png
 
-#. Set **URL** to \https://*<prometheus-operated-Endpoint-IP>*:9090
+#. Set **URL** to \http://*<prometheus-operated-Endpoint-IP>*:9090
 
    .. figure:: images/61.png
 

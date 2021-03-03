@@ -211,7 +211,7 @@ AWS STAGING:
    	-H 'Content-Type: application/json' \
    	-H 'Authorization: Basic YWRtaW46dGVjaFgyMDIxIQ==' \
    	-d \
-   	'{"availableClusterIds":["f0717c40-85c6-4fc1-909a-625abea289e8","8fba5661-75dd-4eef-b665-fb9e3d5e1544"],"updateClusterAvailability":true,"name":"MSSQL19","description":""}'
+   	'{"availableClusterIds":["f0717c40-85c6-4fc1-909a-625abea289e8","8fba5661-75dd-4eef-b665-fb9e3d5e1544"],"updateClusterAvailability":true,"name":"MSSQL_19_SYNCED","description":""}'
 
       Replication took 11~ min on the test cluster. I believe the profile should be ~18.5GiB
 

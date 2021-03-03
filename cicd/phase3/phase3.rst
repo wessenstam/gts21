@@ -397,13 +397,13 @@ In a CI/CD pipeline testing is very important and needs to be run automatically.
    Adding this step to **.drone.yml** gets us closer to the goal of delivering *Infrastructure as Code*:
 
    - We create container using the **fiesta_app** image being automatically built by **Drone**
-   - Under **environment**, we define the variables used to for the database connection
+   - Under **environment**, we define the variables used for the database connection
    - Under **commands**, we define the operations that we are evaluating as part of the test:
 
 Uploading Images To Docker Hub
 +++++++++++++++++++++++++++++++
 
-Now that we are programmatically creating and testing our Docker image, the next step is to upload the versioned image to **Dcoker Hub** so it exists outside of our development environment. Just as Git acts as version control for source code, **Docker Hub** will act as our version control repository for the Docker images themselves.
+Now that we are programmatically creating and testing our Docker image, the next step is to upload the versioned image to **Docker Hub** so it exists outside of our development environment. Just as Git acts as version control for source code, **Docker Hub** will act as our version control repository for the Docker images themselves.
 
 The following exercise will require you to use your own **Docker Hub** credentials, not the **devnutanix** account referenced in the lab guide screenshots.
 
