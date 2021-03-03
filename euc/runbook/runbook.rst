@@ -64,7 +64,7 @@ In total, to automate your **Add Desktop** function, your Runbook will need to c
    - **Type** - Windows
    - **IP Addresses** - ddc.ntnxlab.local
    - **Username** - NTNXLAB\\Administrator
-   - **Password** - Refer to your :ref:`clusterassignments`
+   - **Password** - Refer to :ref:`clusterdetails`
 
 #. Click **Save**.
 
@@ -95,7 +95,11 @@ Variables will allow you to define the names of your machine catalogs and delive
 
    .. figure:: images/2.png
 
-#. Click **Add/Edit Variables > + Add Variable** and create the following variables (CASE SENSITIVE):
+#. Click **Add/Edit Variables > + Add Variable** and create the following variables:
+
+   .. raw:: html
+
+      <BR><font color="#FF0000"><strong>The variable names and values are not case sensitive, but the runbook will fail if the Machine Catalog and Delivery Group values do not match the values in Citrix Studio. Watch out for typos and extra spaces!</strong></font><BR>
 
    - **Variable 1**
 
@@ -281,6 +285,8 @@ Testing Your Runbook
       If you encounter an error, review the **Output** and return to **Edit this Runbook**. In the example below, the Endpoint was misconfigured to point to **Prism Central** and not **Prism Element** resulting in an incorrect API response.
 
       .. figure:: images/12.png
+
+      Also verify your variable values for **ONPREM_MCATALOG**, **CLOUD_MCATALOG**, and **DELIVERY_GROUP** match the names in Citrix Studio.
 
 #. If properly configured, the Runbook should complete successfully in a matter of seconds.
 
