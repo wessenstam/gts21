@@ -183,7 +183,7 @@ I Have An Issue, Should I Reboot Prism Central On My Cluster?
 
 I can't believe I have to say this, but **NO**, please do not reboot Prism Central or Prism Central services on your cluster **THAT IS BEING SHARED WITH SEVERAL OTHER PEOPLE**. Reach out in the appropriate Slack channel for assistance with your lab issue.
 
-See :ref:`help` for complete instructions.`
+See :ref:`help` for complete instructions.
 
 .. raw:: html
 
