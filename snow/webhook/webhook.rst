@@ -189,6 +189,10 @@ Building the Action
    - **Name** - Content-Type
    - **Value** - application/json
 
+   .. note::
+
+      Double check you are creating **Content-Type application/json** under **Headers** and not **Query Parameters**!
+
    *This will allow sending data in the API call body back to the Prism webhook in the expected format.*
 
    .. figure:: images/15.png
