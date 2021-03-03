@@ -164,6 +164,11 @@ What Happens To The Labs Post-Event?
 
 Following the event, we will be integrating the GTS labs into new and existing Bootcamps for you to drive prospect and customer engagement during 2021.
 
+Generic Looking Frequently Asked Question?
+..........................................
+
+If you're paying attention, come join us in `#﻿literate-adults <slack://channel?team=T0252CLM8&id=C01MHG5NDPD>`_ on Slack.
+
 How Do I Get My Cluster Assignment Info?
 ........................................
 
@@ -193,8 +198,3 @@ Where Can I Access More Clusters Demo Resources?
 - `Standalone Clusters Deployment Demo <https://clusters.nutanixtestdrive.com/>`_ - On-demand MCM Clusters on AWS deployment demo *without a Test Drive sign-up.* A great option for quick demos of how easily Clusters can be provisioned.
 
 - `Nutanix YouTube Clusters Playlist <https://www.youtube.com/playlist?list=PLAHgaS9IrJeevEB17CSW5BE8Y9n9v18bU>`_ - Short videos covering topics like deployment, networking, security, and hibernation.
-
-When Is Matt Going To Shave? He Looks Ridiculous.
-.................................................
-
-Your concern is noted and appreciated. Ask again in April.
