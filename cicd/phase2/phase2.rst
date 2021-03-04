@@ -12,7 +12,7 @@ In addition to the CI platform, we will also require a supported version control
 
 But first - your most important tool is your development environment!
 
-In creating the initial containerized version of Fiesta, we used a command line text editor (ex. **vi** or **nano**) to manipulate files. While these tools can certain do the job, as we've seen, this method is not exactly easy, or efficient to modify files on a large scale.
+In creating the initial containerized version of Fiesta, we used a command line text editor (ex. **vi** or **nano**) to manipulate files. While these tools can certainly do the job, as we've seen, this method is not exactly easy, or efficient to modify files on a large scale.
 
 In this exercise, we'll graduate to **Visual Studio Code**. **Visual Studio Code** is a free source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.
 
@@ -177,6 +177,10 @@ To do so we will use ``docker exec`` to execute commands *within* the Gitea cont
    .. figure:: images/10-1.png
 
    - Under **General Settings**
+
+      .. note::
+
+         Ensure you are updating the **Base URL** from **HTTP** to **HTTPS**!
 
      - **SSH Server Port**: 2222
      - **Gitea Base URL**: **https**://*<IP ADDRESS OF YOUR DOCKER VM>*:3000

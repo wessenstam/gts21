@@ -15,7 +15,7 @@ SQL Server Monitoring with Prism Ultimate
 
 Prism Ultimate licensing includes the SQL Server monitoring pack, which allows IT admins to understand how infrastructure may impact applications and vice versa. This is an agentless solution that gives visibility into databases, queries, SQL metrics and applies the X-FIT behavior learning and anomaly detection capabilities.
 
-#. Within Prism Central, click on :fa:`bars` **Infrastructure > VMs**.
+#. Within Prism Central, click on :fa:`bars` **> Virtual Infrastructure > VMs**.
 
 #. Select your **USER**\ *##*\ **-MSSQL-Source** VM and note the IP Address.
 
@@ -91,6 +91,12 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
    .. figure:: images/11.png
 
+   .. note::
+
+      Users have reported an inconsistent issue where Alert Settings may not appear in the dropdown menu. Refreshing the page or returning to the list of **External Entity Instances** and trying again resolves the issue. It may take multiple attempts. Standing on one leg, rubbing your stomach, while patting your head also seems to help.
+
+      The issue also appears to affect Firefox more often than Chrome.
+
 #. Fill out the following fields:
 
    - **Policy Name** - USER\ *##* - SQL Buffer Alert
@@ -115,7 +121,7 @@ Triggering Prism SQL Server Alert
 
    We will now artificially generate the required usage to activate the alert we previously created. To do so, we will be executing a PowerShell script, which utilizes a program called HammerDB.
 
-#. Using **File Explorer**, navigate to **Local Disk(C:) > Program Files > HammerDB**.
+#. Using **File Explorer**, navigate to **Local Disk(C:) > Program Files > HammerDB-3.3**.
 
 #. Right-click on the file *workload.ps1*, and select **Run with Powershell**.
 

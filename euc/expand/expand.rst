@@ -1,8 +1,8 @@
 .. _euc_expand:
 
-------------------
-Provision & Expand
-------------------
+---------------------------------------
+Multi-Cloud Desktops with Citrix on AHV
+---------------------------------------
 
 Citrix Virtual Apps and Desktops on Nutanix Clusters allows IT to rapidly support distributed workforce needs for Citrix workloads by delivering the same capabilities in the cloud as they would have in their own datacenters. This is primarily due to Nutanix Clusters running AOS directly on public cloud servers and leveraging the same Prism Central management plane.
 
@@ -132,7 +132,7 @@ Creating Your On-Prem Machine Catalog
 
    .. figure:: images/14.png
 
-   Observe the clone exists in **Prism Element** but is not powered on. Select your  and observe both the OS vDisk and ID disk attached to the VM on the **Virtual Disks** tab below the VMs table in **Prism Element**. Each VM appears to have its own unique read/write copy of the gold image. With VMs in a Machine Catalog spanning several Nutanix nodes, data locality for VM reads is provided inherently by the Unified Cache.
+   Observe the clone exists in **Prism Element** but is not powered on. Select the VM and observe both the OS vDisk and ID disk attached to the VM on the **Virtual Disks** tab below the VMs table in **Prism Element**. Each VM appears to have its own unique read/write copy of the gold image. With VMs in a Machine Catalog spanning several Nutanix nodes, data locality for VM reads is provided inherently by the Unified Cache.
 
    .. figure:: images/15.png
 
@@ -141,7 +141,7 @@ Creating Your On-Prem Machine Catalog
    .. note:: To learn about MCS provisioning in greater detail, see the following articles:
 
      - `Citrix MCS for AHV: Under the hood <http://blog.myvirtualvision.com/2016/01/14/citrix-mcs-for-ahv-under-the-hood/>`_
-     - `Citrix MCS and PVS on Nutanix: Enhancing XenDesktop VM Provisioning with Nutanix  <http://next.nutanix.com/t5/Nutanix-Connect-Blog/Citrix-MCS-and-PVS-on-Nutanix-Enhancing-XenDesktop-VM/ba-p/3489>`_
+     - `Citrix MCS and PVS on Nutanix: Enhancing XenDesktop VM Provisioning with Nutanix  <https://next.nutanix.com/community-blog-154/citrix-mcs-and-pvs-on-nutanix-enhancing-xendesktop-vm-provisioning-with-nutanix-part-1-3489>`_
 
      To learn more about how Nutanix implements Shadow Clones, see the `Shadow Clones <https://nutanixbible.com/#anchor-book-of-acropolis-shadow-clones>`_ section of the Nutanix Bible.
 

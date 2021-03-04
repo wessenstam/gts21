@@ -4,8 +4,12 @@
 Containerizing the Fiesta App
 -----------------------------
 
-In this section, you will learn how to convert the VM-based Fiesta web server into a containerized service running on your Docker VM. You will then test the application by deploying the container.
+Containers are a standardized means of packaging software that include code and all its dependencies into an image, which allows an application to be reliably portable from one environment to another. The images run on an engine, such as Docker, which allows you to run multiple containers on the same host operating system while being completely isolated from one another.
 
+.. figure:: images/architectures1.png
+   :align: center
+
+In this section, you will learn how to convert the VM-based Fiesta web server into a containerized service running on your Docker VM. You will then test the application by deploying the container.
 ..
    .. note::
 
@@ -161,11 +165,17 @@ Here's a quick way to visualize these terms, and the overall process. As you can
 
 #. Save the file and exit the editor by pressing **:wq!** followed by the **Return** key.
 
+   .. note::
+
+      As a general best practice, you would never put static information such as a database IP address inside of a container image. This type of information should be passed in as a variable in order to make your container portable. This will be addressed later.
+
 #. Run ``ls -al`` to perform a directory listing.
 
    Ensure your **github** directory looks like the below before proceeding.
 
    .. figure:: images/5.png
+
+#. Run ``docker login`` and provide the credentials for your Docker Hub account created during :ref:`environment_start`.
 
 #. Run ``docker build .`` (including the period) to create the container.
 
@@ -183,7 +193,7 @@ Here's a quick way to visualize these terms, and the overall process. As you can
 
    We can easily add some additional context to make the image easier to identify.
 
-#. Run ``docker build . -t fiesta_app:1.0``.
+#. Run ``docker build . -t fiesta_app:1.0``
 
    This will change the existing *Repository* to **fiesta_app**, and the **tag** to **1.0**.
 
@@ -214,22 +224,24 @@ Here's a quick way to visualize these terms, and the overall process. As you can
 
 #. Press **CTRL+C** to exit the ``docker logs`` command, and return to the command prompt.
 
-#. Run ``docker stop Fiesta_App``. This will both stop and delete the container, as specified by the ``--rm`` switch when creating the container.
+#. Run ``docker stop Fiesta_App``
+
+   This will both stop and delete the container, as specified by the ``--rm`` switch when creating the container.
 
    ..
    [We need a pause here. I've tried this multiple times, and if I do these without waiting I get an the error: docker: Error response from daemon: Conflict. The container name "/Fiesta_App" is already in use by container "f838ddea0f8920fde1136bb722fd97fde6605871fd3813068f0e371cf79c6e28". You have to remove (or rename) that container to be able to reuse that name.]
 
-#. Run ``docker run -d --rm -p 5000:3000 --name Fiesta_App fiesta_app:1.0``.
+#. Run ``docker run -d --rm -p 5000:3000 --name Fiesta_App fiesta_app:1.0``
 
    The ``-p 5000:3000`` parameter exposes port 5000, and maps external port 5000 to internal port 3000.
 
 #. Run ``docker logs --follow Fiesta_App`` again.
 
-   Once the application is running, you should be able to access the web interface by opening a browser to  ``http://<User##-docker_VM-IP-ADDRESS>:5000/products``.
+   Once the application is running, you should be able to access the web interface by opening a browser to  \http://*<User##-docker_VM-IP-ADDRESS>*:5000/products
 
    .. figure:: images/9.png
 
-#. Run ``docker stop Fiesta_App``, as we don't need it running for now.
+#. Run ``docker stop Fiesta_App`` as we don't need it running for now.
 
 .. raw:: html
 

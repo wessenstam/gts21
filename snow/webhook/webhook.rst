@@ -92,7 +92,7 @@ ServiceNow Event Rules give us the ability to perform additional data manipulati
 
    - Select **Resource**
    - Select **starts with**
-   - Specify your *Initials* (or whatever unique value prepends your VM name)
+   - Specify your **USER**\ *##* (or whatever unique value prepends your VM name)
    - Click **AND**
    - Select **Metric Name**
    - Select **is**
@@ -144,7 +144,9 @@ Building the Action
 
    .. figure:: images/11.png
 
-#. Click **+ Create Input** 3 times to create 3 input variables for your Action, labeled **type**, **name** and **uuid**, respectively.
+#. Click **+ Create Input** 3 times to create 3 input variables for your Action.
+
+#. Change the labels of your inputs to **type**, **name** and **uuid**, respectively (this will also update the values in the **Name** field).
 
    .. figure:: images/12.png
 
@@ -169,14 +171,14 @@ Building the Action
 
    - Select **Use MID**
 
-   *This will leverage the local MID Server on the Nutanix cluster to issue the REST API, as your ServiceNow instance is not directly routable to the cluster in this environment.*
+   *This will leverage the local MID Server on the Nutanix cluster to issue the REST API, as your cluster is not directly routable to the ServiceNow instance in this environment.*
 
    - **Base URL** - *Paste your Webhook URL from your Playbook* (ex. https://10.XX.XX.39:9440/api/nutanix/v3/action_rules/trigger)
 
    - **MID Application** - Discovery
    - **Capabilities** - ALL
 
-   *These fields help determine which MID Server to use for the REST API call in environments with multiple MID Servers.*
+   *These fields help determine which MID Server to use for the REST API call in environments with multiple MID Servers. These selections match default settings for the MID Server deployed on your cluster.*
 
       .. figure:: images/14.png
 
@@ -187,25 +189,31 @@ Building the Action
    - **Name** - Content-Type
    - **Value** - application/json
 
+   .. note::
+
+      Double check you are creating **Content-Type application/json** under **Headers** and not **Query Parameters**!
+
    *This will allow sending data in the API call body back to the Prism webhook in the expected format.*
 
    .. figure:: images/15.png
 
 #. Under **Request Content**, paste your Webhook Body in the **Request Body[Text]** field.
 
-#. Remove all **optional** fields except **entity1**, as shown in the screenshot below.
+#. Remove all **optional** fields except **entity1** (*string1-string5, integer1-integer5, entity2*), as shown in the screenshot below.
 
    .. figure:: images/16.png
 
 #. Replace **<ENTITY_TYPE>**, **ENTITY_NAME>**, and **<ENTITY_UUID>** with the appropriate **Input Variables** by dragging and dropping from the **Data** column.
 
-   Your finished **Request Body** should resemble the screenshot below, with your unique **webhook_id**. Watch out for typos, including missing escape slashes before quotation marks (ex. \\")!
+   Your finished **Request Body** should resemble the screenshot below, with your unique **webhook_id**. Watch out for typos, including missing escape slashes before quotation marks (ex. ``\"``)!
 
    .. figure:: images/17.png
 
    .. note::
 
 #. Click **Save**.
+
+   .. figure:: images/27.png
 
 Testing the Action
 ..................
@@ -218,7 +226,7 @@ Testing the Action
 
    .. note::
 
-      The UUID value can be copied out of the ServiceNow event you opened earlier in this exercise to begin creating your Event Rule.
+      The VM name (Resource) and VM UUID value can be copied out of the ServiceNow event you opened earlier in this exercise to begin `Creating ServiceNow Event Rules`_.
 
    .. figure:: images/18.png
 
@@ -234,9 +242,11 @@ Testing the Action
 
    .. figure:: images/20.png
 
-   The most common error is syntax within the **Request Body**, specifically not having escaped quotation mark characters in the right place (ex. **\\"type\\":\\"action->type\\",**).
+   The most common error is syntax within the **Request Body**, specifically not having escaped quotation mark characters in the right place (ex. **\\"type\\":\\"action->type\\",**). Or providing an incorrect VM **name** or **uuid** value for the test.
 
-#. After validating your Action executes successfully, return to the **Flow Designer** and **Publish** your Action.
+#. After validating your Action executes successfully, return to the **Flow Designer**.
+
+#. Select your **USER**\ *##*\ **-RESTAPI** tab, close your test dialog, and **Publish** your Action.
 
    .. figure:: images/23.png
 
@@ -261,9 +271,9 @@ Building the Flow
    - **Trigger** - Created
    - **Table** - Alert [em_alert]
    - Select **+ Add Filters**
-   - Select **Resource**
+   - Select **Resource** from **--choose field--** dropdown menu
    - Select **starts with**
-   - Specify your *Initials* (or whatever unique value prepends your VM name)
+   - Specify your **USER**\ *##* (or whatever unique value prepends your VM name)
    - Click **AND**
    - Select **Metric Name**
    - Select **is**
@@ -277,11 +287,17 @@ Building the Flow
 
 #. Under **Actions**, select the **+** icon.
 
-#. Click **Action** and select your previously published Action.
+#. Click **Action** and select your previously published **USER**\ *##*\ **-RESTAPI** Action.
 
    .. figure:: images/24.png
 
-#. Finally, you need to map the data provided by the **Alert Record** in your **Trigger** to the **Input Variables** you created for your Action. Expand **Alert Record** in the **Data** column, then drag and drop the appropriate values to match the screenshot below:
+   .. note::
+
+      If search does not find your action, return to your **USER**\ *##*\ **-RESTAPI** tab in **Flow Designer** and click **Publish**.
+
+      Finally, you need to map the data provided by the **Alert Record** in your **Trigger** to the **Input Variables** you created for your Action.
+
+#. Expand **Alert Record** in the **Data** column, then drag and drop the appropriate values to match the screenshot below:
 
    .. figure:: images/25.png
 
@@ -293,8 +309,14 @@ Building the Flow
 
 #. Click **Save > Activate > OK** to enable your Flow.
 
+   .. figure:: images/28.png
+
 Testing the Flow
 ................
+
+#. In **Prism Central**, select :fa:`bars` **> Activity Alerts**.
+
+#. Select your existing **User:**\ *##* **-VM Memory Usage** alert and click **Resolve** to clear before generating a new alert.
 
 #. SSH into your *Initials*\ **-CentOS####** VM as **root** and run the following commands to begin consuming free memory:
 
@@ -307,6 +329,8 @@ Testing the Flow
 #. Validate you have triggered another Memory Usage alert for your VM, resulting in the triggering of your ServiceNow Flow and the execution of your Playbook.
 
    .. figure:: images/26.png
+
+   **Congratulations!** you've integrated ServiceNow and Nutanix to provide automated issue remediation, while tracking event and action data as part of the ServiceNow CMDB. *Now that's enterprise ready!*
 
 #. Cancel the stress command in your SSH session by pressing ``Ctrl+C``.
 

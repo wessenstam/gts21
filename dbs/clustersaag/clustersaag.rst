@@ -26,7 +26,7 @@ Registering a database/database server with Era allows you to create a Time Mach
 
 #. Open **Era** in your browser and log in with the provided credentials.
 
-#. From the **Dashboard** dropdown menu, select **Databases**.
+#. From the **Dashboard** dropdown menu, select **Databases** and then **Sources** from the left-hand menu.
 
    .. figure:: images/1.png
 
@@ -34,7 +34,7 @@ Registering a database/database server with Era allows you to create a Time Mach
 
       You will see a **MariaDB** version of your **USER**\ *##*\ **-FiestaDB** already registered. These database servers are used in the **Containerizing Apps and CI/CD** lab track and are unrelated to this exercise.
 
-#. Select **Sources** from the left-hand menu and click **+ Register > Microsoft SQL Server > Database**.
+#. Click **+ Register > Microsoft SQL Server > Database**.
 
    .. figure:: images/4.png
 
@@ -42,7 +42,7 @@ Registering a database/database server with Era allows you to create a Time Mach
 
    - Select **Not Registered**
    - **Nutanix Cluster** - EraCluster
-   - **Name of VM** - USER\ *##*\ -MSSQL-Source (ex. USER01-MSSQL-Source *Case Sensitive*)
+   - **Name of VM** - USER\ *##*\ -MSSQL-Source
    - **Windows Administrator Name** - Administrator
    - **Windows Administrator Password** - Nutanix/4u
    - **Instance** - MSSQLSERVER
@@ -236,7 +236,7 @@ In a production environment, you would follow a manual backup/restore procedure 
 
 #. Log in using the **NTNXLAB\\Administrator** credentials.
 
-#. Enable **Remote Desktop** for the VM as shown in the screenshot below and connect via RDP for a smoother experience over remote connections.
+#. Enable **Remote Desktop** for the VM as shown in the screenshot below and **connect via RDP** for a smoother experience over remote connections.
 
    .. figure:: images/20.png
 
