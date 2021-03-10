@@ -228,7 +228,7 @@ Following the event, we will be integrating the GTS labs into new and existing B
 Generic Looking Frequently Asked Question?
 ..........................................
 
-If you're paying attention, come join us in `#﻿literate-adults <slack://channel?team=T0252CLM8&id=C01MHG5NDPD>`_ on Slack.
+If you're paying attention, come join us in `#﻿readingisfun <slack://channel?team=T0252CLM8&id=C01Q7G18VK6>`_ on Slack.
 
 How Do I Get My Cluster Assignment Info?
 ........................................
