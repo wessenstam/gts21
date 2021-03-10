@@ -135,6 +135,10 @@ Triggering Prism SQL Server Alert
 
    If you were waiting on your SQL Server to provision in the :ref:`db_clustersdam` exercise, you should now be able to return and complete the exercise.
 
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
+
 Takeaways
 +++++++++
 

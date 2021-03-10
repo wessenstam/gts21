@@ -188,6 +188,10 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
    With the alert data inside of ServiceNow, IT has visibility into which dependent services could be impacted, historical related incidents, knowledgebase articles, and the ability to open an incident to track remediation activities.
 
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
+
 Takeaways
 +++++++++
 

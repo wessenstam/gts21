@@ -189,6 +189,10 @@ In addition to the single VDI Policy, which allows you to map whitelist connecti
 
    That's it! Optionally, you can continue logging into desktops as your **user** and **devuser** accounts and validate that categories and policy are applied as expected - whether on-prem or in the cloud!
 
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
+
 Takeaways
 +++++++++
 

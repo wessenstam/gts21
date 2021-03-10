@@ -189,7 +189,9 @@ Enabling Multi-Cluster Data Access Management
 
    .. figure:: images/21.png
 
-..   Continue with the :ref:`dbs_patching` exercise to keep your new database servers up to date!
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 Takeaways
 +++++++++

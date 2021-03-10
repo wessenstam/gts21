@@ -67,7 +67,7 @@ Creating Your On-Prem Machine Catalog
 
       By default, Citrix Virtual Apps and Desktops has support for provisioning virtual machines to a number of platforms, including: VMware vSphere, Microsoft Hyper-V, Citrix XenServer, Microsoft Azure, and AWS. The Citrix Provisioning SDK provides the ability to integrate additional platforms with the Delivery Controller's provisioning and power management functions, creating a native Citrix management experience on top of Nutanix AHV.
 
-      To enable this integration, the **Nutanix AHV Plugin for Citrix** has been pre-installed on the DDC. In a production environment, the plugin must be installed on each DDC. The plugin is available for download on the `Nutanix Portal <https://portal.nutanix.com/#/page/static/supportTools>`_.
+      To enable this integration, the **Nutanix AHV Plugin for Citrix** has been pre-installed on the DDC. In a production environment, the plugin must be installed on each DDC. The plugin is available for download on the `Nutanix Portal <https://portal.nutanix.com/page/downloads?product=ahv&bit=Citrix>`_.
 
    The first step in providing desktops for users is to provision a pool, referred to as a Machine Catalog,
    based on your Gold Image snapshot.
@@ -84,7 +84,7 @@ Creating Your On-Prem Machine Catalog
 
    .. note::
 
-      Machine Creation Services (MCS) is a VM creation/orchestration framework installed as part of the Desktop Delivery Controller role and managed through Citrix Studio.
+      Machine Creation Services (MCS) is a VM creation/orchestration framework installed as part of the Delivery Controller role and managed through Citrix Studio.
 
 #. Click **Next**.
 
@@ -143,7 +143,7 @@ Creating Your On-Prem Machine Catalog
      - `Citrix MCS for AHV: Under the hood <http://blog.myvirtualvision.com/2016/01/14/citrix-mcs-for-ahv-under-the-hood/>`_
      - `Citrix MCS and PVS on Nutanix: Enhancing XenDesktop VM Provisioning with Nutanix  <https://next.nutanix.com/community-blog-154/citrix-mcs-and-pvs-on-nutanix-enhancing-xendesktop-vm-provisioning-with-nutanix-part-1-3489>`_
 
-     To learn more about how Nutanix implements Shadow Clones, see the `Shadow Clones <https://nutanixbible.com/#anchor-book-of-acropolis-shadow-clones>`_ section of the Nutanix Bible.
+     To learn more about how Nutanix implements Shadow Clones, see the `Shadow Clones <https://nutanixbible.com/#anchor-book-of-aos-shadow-clones>`_ section of the Nutanix Bible.
 
 Creating Your Delivery Group
 ............................
@@ -199,6 +199,10 @@ Creating Your Delivery Group
    Observe the powered on desktop soon appears as **Registered** with the Delivery Controller, indicating the desktop is ready for user connection.
 
    .. figure:: images/20.png
+
+   .. note::
+
+      You will have to **Refresh** manually in **Citrix Studio**. It may take 2-4 minutes for the VM to appear powered on and registered.
 
 Testing Your Desktop
 ....................
@@ -356,6 +360,10 @@ Including your on-prem and Clusters hosted machine catalogs within the same Citr
    This scenario could be further expanded by leveraging Nutanix Files and Peer Software to `active/active file storage to support user data storage and profiles <https://www.youtube.com/watch?v=iytTfFiXJQ4>`_.
 
    What about persistent virtual desktops? Native AOS replication could be used to provide DR capabilities across sites.
+
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 Takeaways
 +++++++++

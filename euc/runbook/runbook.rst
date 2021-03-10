@@ -304,6 +304,10 @@ Testing Your Runbook
 
    Or you could fully automate the process to grow and shrink your machine catalogs based on utilization by `launching Runbooks via API <https://www.nutanix.dev/2020/06/12/nutanix-calm-runbooks-api-automation/>`_.
 
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
+
 Takeaways
 +++++++++
 

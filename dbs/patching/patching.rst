@@ -95,6 +95,10 @@ Perform the following procedure to apply updates from the available software pro
 
    .. figure:: images/6.png
 
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
+
 Takeaways
 +++++++++
 

@@ -688,7 +688,7 @@ Testing Your Development Build
 
 .. raw:: html
 
-  <H1><font color="#B0D235"><center>Congratulations!</center></font></H1>
+   <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 By leveraging **Nutanix Era** as part of your CI/CD pipeline, you are now able to easily deploy clones of your production application database to deliver complete application development environments to your users.
 

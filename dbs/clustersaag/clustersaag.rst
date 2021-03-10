@@ -236,7 +236,7 @@ In a production environment, you would follow a manual backup/restore procedure 
 
 #. Log in using the **NTNXLAB\\Administrator** credentials.
 
-#. Enable **Remote Desktop** for the VM as shown in the screenshot below and **connect via RDP** for a smoother experience over remote connections.
+#. Enable **Remote Desktop** for the VM as shown in the screenshot below and then **connect via RDP** to enable you to copy/paste into the VM.
 
    .. figure:: images/20.png
 
@@ -350,6 +350,14 @@ Before testing failover, you will need to update the configuration of your Fiest
 
    .. figure:: images/33.png
 
+   .. note::
+
+      If you cannot access the web interface this indicates there was something wrong with your DB connection.
+
+      Open a VM console to your **USER**\ *##*\ **-FiestaWeb** VM (U\:root P\:nutanix/4u) and run ``cat Fiesta/config/config.js`` to view your DB configuration. Is the database name correct? Are you using the FQDN as **DB_HOST_ADDRESS**?
+
+      You can re-run the Calm action to easily make any fixes and restart the Fiesta service.
+
 #. In **Prism Central**, power off your **USER**\ *##*\ **-SQLAG-1** VM running on your on-premises cluster.
 
    .. figure:: images/34.png
@@ -397,6 +405,10 @@ Before testing failover, you will need to update the configuration of your Fiest
 #. Optionally, you can update your Fiesta configuration again using the same **Calm Action** to point to your 10.210.X.X listener IP address, as shown in the Topology view in Era.
 
    In a production scenario, a proper load balancer would be used across both sites to re-direct to whichever SQL listener IP is associated with the primary replica of the database. Additionally, you would also scale the web tier across sites and similarly leverage a load balancer for connectivity.
+
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 Takeaways
 +++++++++

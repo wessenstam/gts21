@@ -733,9 +733,9 @@ Now that we have prepared our storage target and deployed **K10**, we're ready t
 
    You should now see the **K10** dashboard, including multiple applications that have already been discovered on your cluster.
 
-#. Click **Cluster Settings**.
+#. Click **Settings**.
 
-   .. figure:: images/93.png
+   .. figure:: images/93b.png
 
 #. Under **Location Profiles**, click **+ New Profile**.
 
@@ -863,7 +863,7 @@ Now that we have a successful backup, we can restore "clones" of your applicatio
 
 .. raw:: html
 
-    <H1><font color="#B0D235"><center>You made it!</center></font></H1>
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 After completing these exercises you should now be more familiar with the infrastructure considerations for production Kubernetes environments.
 
