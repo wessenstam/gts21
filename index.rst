@@ -148,8 +148,8 @@ Frequently Asked Questions
 
    <br><center><img src="https://media.giphy.com/media/9Pk1GBaXV8QGbsoaUF/giphy.gif"></center><br><br>
 
-Should I Copy Name & IP Information Directly From Snapshots?
-............................................................
+Should I Copy Name & IP Information Directly From Screenshots?
+..............................................................
 
 **NO!** Screenshots are meant to provide navigational context. Screenshot values such as **XYZ** and **USER00** should be replaced with your actual initials or user ID value, as directed in the text of the lab. Similarly, IP addresses used should be relevant to **YOUR** cluster/VM/application/etc.
 
