@@ -21,7 +21,7 @@
 
    - **Hybrid Cloud IaaS**
 
-      Take self-service to the next level with Nutanix ServiceNow integrations. Expand, migrate, secure, and automate your operations.
+      Take self-service to the next level with Nutanix ServiceNow integrations. Configure self-service VM provisioning across your multi-cloud environment with ServiceNow and Calm. Secure, protect, and migrate workloads with Flow and Leap. Automatically remediate performance issues with ServiceNow and Prism X-Play.
 
    - **Hybrid Cloud Database Management**
 
@@ -29,15 +29,15 @@
 
    - **Hybrid Cloud EUC**
 
-      Find out how you can go from hundreds to thousands of Citrix Desktops in hours versus weeks. Use Calm Runbooks to build powerful, repeatable automations.
+      Find out how you can go from hundreds to thousands of Citrix Desktops in hours versus weeks. Use Calm Runbooks to build powerful, repeatable automation to intelligently provision new desktops. Secure your desktop environment with Flow's VDI Policy.
 
    - **Containerizing Apps and CI/CD**
 
-      Learn about the benefits and challenges of re-platforming applications first hand.
+      Learn about the benefits and challenges of re-platforming applications first hand by containerizing an application with Docker. Build a full CI/CD pipeline with Git and Drone. Integrate with Era APIs for database cloning.
 
    - **Cloud Native Apps on Nutanix**
 
-      Lift and shift may not be for you, but there are still economic and security benefits to running your containerized apps on-prem. Deploy and manage Nutanix Karbon and Objects, plus third party integrations, to deliver a full infrastructure stack to support Cloud Native Apps.
+      Lift and shift may not be for you, but there are still economic and security benefits to running your containerized apps on-prem. Deploy and manage Nutanix Karbon and Objects, plus third party integrations, to deliver a full Kubernetes stack to support Cloud Native Apps.
 
 .. raw:: html
 
