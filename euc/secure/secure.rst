@@ -149,7 +149,7 @@ In addition to the single VDI Policy, which allows you to map whitelist connecti
 
 #. Fill out the following fields:
 
-   - **Name** - USER\ *##*\ -UserIsolation (ex. USER01-ADIsolation)
+   - **Name** - USER\ *##*\ -ADIsolation (ex. USER01-ADIsolation)
    - **Purpose** - Blacklisting NTNXLAB Bootcamp Users from category
    - **Isolate this category** - ADGroup:Bootcamp Users
    - **From this category** - User:\ *##* (ex. USER:01)
