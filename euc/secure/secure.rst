@@ -179,7 +179,7 @@ In addition to the single VDI Policy, which allows you to map whitelist connecti
 
    .. figure:: images/12.png
 
-#. Return to your **USER**\ *##*\ **-UserIsolation** policy in **Prism Central** and observe that traffic flows have been discovered, and your VM has been automatically added to the **ADGroup:Bootcamp Users** category.
+#. Return to your **USER**\ *##*\ **-ADIsolation** policy in **Prism Central** and observe that traffic flows have been discovered, and your VM has been automatically added to the **ADGroup:Bootcamp Users** category.
 
    .. figure:: images/14.png
 
