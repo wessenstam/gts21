@@ -138,6 +138,8 @@ Building the Action
 
    .. note::
 
+      The Flow Designer opens in a separate window and may be blocked as a popup by your browser.
+
       You may need to expand the Flow Designer browser window to view all fields mentioned in the following steps.
 
 #. Under **Action Properties**, specify **User**\ *##*\ **-RESTAPI** as the **Name** and click **Submit**.
