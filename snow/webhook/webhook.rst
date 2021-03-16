@@ -209,7 +209,9 @@ Building the Action
 
    .. note::
 
-      Watch out for typos, including missing escape slashes before quotation marks (ex. ``\"``)! Additionally the **enetity1** line in the **Request Body** should be on a SINGLE LINE. It is wrapped to two lines in the screenshot below due to the window being narrow, there is no return before **action->name**.
+      Watch out for typos, including missing escape slashes before quotation marks (ex. ``\"``)!
+
+      Additionally the **entity1** line in the **Request Body** should be on a **SINGLE LINE**. It appears to be on two lines in the screenshot only because of the width of the window. There is **NO** return before **action->name**.
 
    .. figure:: images/17.png
 
