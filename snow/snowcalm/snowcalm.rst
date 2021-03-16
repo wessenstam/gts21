@@ -351,6 +351,10 @@ Finally, you will verify the data protection and microsegmentation policies you 
 
 #. From your CentOS VM, issue a ``ping <USER##-MSSQL-Source-IP>`` command and observe normal connectivity.
 
+   .. note::
+
+      If the ping fails, validate that the **USER**\ *##*\ **-MSSQL-Source** Windows Firewall is disabled.
+
    Despite being included in the **Environment: Production** category, your **USER**\ *##*\ **-MSSQL-Source** VM lacks the additional **User:** *##* category to apply the security policy.
 
    Take note of the latency reported by the ping (*it should be >25ms if stretching from AWS Oregon to the Nutanix PHX datacenter*).
