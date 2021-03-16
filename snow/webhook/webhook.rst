@@ -92,7 +92,7 @@ ServiceNow Event Rules give us the ability to perform additional data manipulati
 
    - Select **Resource**
    - Select **starts with**
-   - Specify your **USER**\ *##* (or whatever unique value prepends your VM name)
+   - Specify your **USER**\ *##* (or whatever unique value prepends your VM name - *THIS IS CASE SENSITIVE!*)
    - Click **AND**
    - Select **Metric Name**
    - Select **is**
@@ -109,6 +109,22 @@ ServiceNow Event Rules give us the ability to perform additional data manipulati
    .. figure:: images/8.png
 
    The Flow you will create in the following exercise will now have easy access to the **vm_uuid** value.
+
+   Before moving on to the next section, you should validate that your new Event Rule will be applied to future alerts.
+
+#. In the **Filter Navigator** field in the upper-left, return to **All Events**.
+
+#. Select the event that corresponds to the **Alert** you previously generated for high memory usage.
+
+      .. figure:: images/4.png
+
+#. Under **Related Links** at the bottom of the page, click **Check processing of event**.
+
+   The message at the top of the screen should indicate your event matches the **USER**\ *##*\ **Alerts** rule you have created. If this rule does **NOT** match the event, return to your Event Rule and double check your **Resource** name is correct (CASE SENSITIVE).
+
+   .. figure:: images/29.png
+
+
 
 Creating A ServiceNow Flow
 ++++++++++++++++++++++++++
