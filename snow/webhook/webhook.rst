@@ -205,11 +205,13 @@ Building the Action
 
 #. Replace **<ENTITY_TYPE>**, **ENTITY_NAME>**, and **<ENTITY_UUID>** with the appropriate **Input Variables** by dragging and dropping from the **Data** column.
 
-   Your finished **Request Body** should resemble the screenshot below, with your unique **webhook_id**. Watch out for typos, including missing escape slashes before quotation marks (ex. ``\"``)!
-
-   .. figure:: images/17.png
+   Your finished **Request Body** should resemble the screenshot below, with your unique **webhook_id**.
 
    .. note::
+
+      Watch out for typos, including missing escape slashes before quotation marks (ex. ``\"``)! Additionally the **enetity1** line in the **Request Body** should be on a SINGLE LINE. It is wrapped to two lines in the screenshot below due to the window being narrow, there is no return before **action->name**.
+
+   .. figure:: images/17.png
 
 #. Click **Save**.
 
