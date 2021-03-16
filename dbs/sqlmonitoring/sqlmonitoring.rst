@@ -59,7 +59,7 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
    .. note::
 
-      If the connection test fails, verify you have the correct IP and your VM is powered on.
+      If the connection test fails, verify you have the correct IP and your VM is powered on. Additionally verify the Windows Firewall is disabled on your **USER**\ *##*\ **-MSSQL-Source** VM (or at least allows TCP 1433).
 
 #. After a successful test, click **Save**.
 
