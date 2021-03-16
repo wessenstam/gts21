@@ -229,7 +229,7 @@ With your Catalog Item active, you're ready to test ordering your first VM as an
 
       As all users are part of the local **Calm Users** group in the ServiceNow Developer Instance, you should expect to see other users' Catalog Items listed alongside your own. In a production environment you could use LDAP to enforce individually users only seeing the Blueprint Catalog Items which they have been assigned.
 
-#. Expand **Category: Un-Published Blueprints**, and click your **USER**\ *##*\ **CentOS - 3GB Bronze** entry to begin the user request.
+#. Expand **Category: Un-Published Blueprints**, and under the **Name** column, click your **USER**\ *##*\ **CentOS - 3GB Bronze** entry to begin the user request.
 
 #. Click **Launch**.
 
