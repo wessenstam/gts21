@@ -344,7 +344,7 @@ Before testing failover, you will need to update the configuration of your Fiest
 
    .. figure:: images/30.png
 
-#. Verify the connection to your new database was successful by browsing to \http://*USER##-FiestaWeb-IP-ADDRESS*\ and using the web app to make an update to the database.
+#. Verify the connection to your new database was successful by browsing to the IP Address of your **USER**\ *##*\ **-FiestaWeb** VM (ex. http://10.0.0.100) and using the web app to make an update to the database.
 
    This can be done by clicking **Stores > Add New Store** and filling out the required fields.
 
