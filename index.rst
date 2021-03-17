@@ -202,10 +202,10 @@ How Long Do I Have Access To The Labs?
 
 The lab environments will be available all day Tuesday and Wednesday. The labs will be supported by a team of SMEs during the following periods:
 
-- **Tuesday** - 06:00AM PST - 6:00PM PST
-- **Wednesday** - 06:00AM PST - 12:00PM PST
+- **Tuesday** - 06:00AM PDT - 6:00PM PDT
+- **Wednesday** - 06:00AM PDT - 12:00PM PDT
 
-The lab environments will continue to be available until 9:00PM PST on Wednesday if you wish to continue working on labs after the closing session. SME support and lab validation will end at the beginning of Wednesday's closing session.
+The lab environments will continue to be available until 11:59PM PDT on Wednesday if you wish to continue working on labs after the closing session. SME support and lab validation will end at the beginning of Wednesday's closing session.
 
 Do I Have To Complete The Lab Tracks In Order?
 ..............................................
