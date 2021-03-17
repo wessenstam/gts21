@@ -184,6 +184,7 @@ In order to get access to our **Fiesta** web frontend, we need to define a new *
    .. code-block:: powershell
 
       Add-Content -Path C:\Windows\System32\drivers\etc\hosts -Value "<TRAEFIK-EXTERNAL-IP>`tfiesta.lab.local" -Force
+      
       cat C:\Windows\System32\drivers\etc\hosts
 
    .. note::
