@@ -104,7 +104,7 @@ Takeaways
 
 We've demonstrated the process of creating just a single Software Profile, and utilizing that to apply a single patch, to a single SQL server. Let's imagine the time and effort we've saved using Era for just this example shown here. Just for fun, think of the amount of time you think that might take. It's ok, just take your best guess. Got it? Alright.
 
-What if we were to expand this example to a handful of servers? What about dozens? More? Now consider that Microsoft released eight Cumulative Updates in the spam of just 11 months from releasing SQL Server 2019.
+What if we were to expand this example to a handful of servers? What about dozens? More? Now consider that Microsoft released eight Cumulative Updates in the span of just 11 months from releasing SQL Server 2019.
 
 Remember that guess you made? Alright, now take it and multiply it by even a handful of SQL Servers. Then consider taking that amount of time, and spending it just on patching SQL Servers once every ~6 weeks on average.
 
