@@ -10,68 +10,6 @@
    info/help
    info/validate
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Hybrid Cloud IaaS
-   :name: _hybridiaas
-   :hidden:
-
-   snow/gettingstarted/gettingstarted
-   snow/policies/policies
-   snow/snowcalm/snowcalm
-   snow/migration/migration
-   snow/alerts/alerts
-   snow/webhook/webhook
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Hybrid Cloud Database Management
-   :name: _hybrideuc
-   :hidden:
-
-   dbs/gettingstarted/gettingstarted
-   dbs/clustersaag/clustersaag
-   dbs/clustersdam/clustersdam
-   dbs/patching/patching
-   dbs/sqlmonitoring/sqlmonitoring
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Hybrid Cloud EUC
-   :name: _hybrideuc
-   :hidden:
-
-   euc/gettingstarted/gettingstarted
-   euc/expand/expand
-   euc/runbook/runbook
-   euc/secure/secure
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Containerizing Apps and CI/CD
-   :name: _cicd
-   :hidden:
-
-   cicd/start/start
-   cicd/basic/basic
-   cicd/phase2/phase2
-   cicd/phase3/phase3
-   cicd/phase4/phase4
-   cicd/phase5/phase5
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Cloud Native Apps on Nutanix
-   :name: _k8s
-   :hidden:
-
-   karbon/gettingstarted/gettingstarted
-   karbon/preparation/preparation
-   karbon/karbon/karbon
-   karbon/deploy/deploy
-   karbon/day-2/day-2
-
-
 .. raw:: html
 
    <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/welcome.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
@@ -202,10 +140,10 @@ How Long Do I Have Access To The Labs?
 
 The lab environments will be available all day Tuesday and Wednesday. The labs will be supported by a team of SMEs during the following periods:
 
-- **Tuesday** - 06:00AM PDT - 6:00PM PDT
-- **Wednesday** - 06:00AM PDT - 12:00PM PDT
+- **Tuesday** - 09:00AM AEST - 10:00PM AEST
+- **Wednesday** - 09:00AM AEST - 10:00PM AEST
 
-The lab environments will continue to be available until 11:59PM PDT on Wednesday if you wish to continue working on labs after the closing session. SME support and lab validation will end at the beginning of Wednesday's closing session.
+The lab environments will continue to be available until 11:59PM JST on Wednesday if you wish to continue working on labs after the closing session. *SME support and lab validation will be available on a best effort basis after Wednesday's closing session.*
 
 Do I Have To Complete The Lab Tracks In Order?
 ..............................................
@@ -225,11 +163,6 @@ What Happens To The Labs Post-Event?
 ....................................
 
 Following the event, we will be integrating the GTS labs into new and existing Bootcamps for you to drive prospect and customer engagement during 2021.
-
-Generic Looking Frequently Asked Question?
-..........................................
-
-If you're paying attention, come join us in `#﻿readingisfun <slack://channel?team=T0252CLM8&id=C01Q7G18VK6>`_ on Slack.
 
 How Do I Get My Cluster Assignment Info?
 ........................................
