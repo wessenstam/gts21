@@ -304,9 +304,11 @@ As Clusters on AWS runs the same AHV hypervisor and AOS stack, adding this clust
 Creating Your Cloud Machine Catalog
 ...................................
 
+In this exercise you will create an additional Machine Catalog that will take advantage of your new Cluster.
+
 #. In **Citrix Studio > Machine Catalogs**, click **Create Machine Catalog**.
 
-#. Complete the **Machine Catalog Setup** with the following configuration changes:
+#. Complete the **Machine Catalog Setup** with the following configuration changes, otherwise leave the default selections:
 
    - Select **Single-session OS**
 
