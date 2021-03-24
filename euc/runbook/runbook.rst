@@ -36,10 +36,10 @@ In total, to automate your **Add Desktop** function, your Runbook will need to c
    - **Name** - USER\ *##* AWS PE VIP
    - **Project** - USER\ *##*\ -Project
    - **Type** - HTTP
-   - **Base URL** - \https://*YOUR-AWS-CLUSTER-PRISM-VIP*\ :9440 (ex. https://10.210.X.X:9440)
+   - **Base URL** - \https://*YOUR-AWS-CLUSTER-PRISM-VIP*\ :9440 (ex. https://10.210.X.5:9440)
    - **Authentication > Type** - Basic
    - **Username** - admin
-   - **Password** - Refer to your :ref:`clusterassignments`
+   - **Password** - Refer to your :ref:`clusterdetails`
 
    .. figure:: images/5.png
 
@@ -50,10 +50,10 @@ In total, to automate your **Add Desktop** function, your Runbook will need to c
    - **Name** - USER\ *##* HPOC PE VIP
    - **Project** - USER\ *##*\ -Project
    - **Type** - HTTP
-   - **Base URL** - \https://*YOUR-HPOC-CLUSTER-PRISM-VIP*\ :9440 (ex. https://10.42.X.39:9440)
+   - **Base URL** - \https://*YOUR-HPOC-CLUSTER-PRISM-VIP*\ :9440 (ex. https://10.42.X.37:9440)
    - **Authentication > Type** - Basic
    - **Username** - admin
-   - **Password** - Refer to your :ref:`clusterassignments`
+   - **Password** - Refer to your :ref:`clusterdetails`
 
 #. Click **Save**.
 
