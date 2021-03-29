@@ -124,8 +124,6 @@ ServiceNow Event Rules give us the ability to perform additional data manipulati
 
    .. figure:: images/29.png
 
-
-
 Creating A ServiceNow Flow
 ++++++++++++++++++++++++++
 

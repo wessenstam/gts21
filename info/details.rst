@@ -8,7 +8,7 @@ Your Lab Environment Details
 
   <strong><font color="red">DO NOT ATTEMPT TO CONNECT TO YOUR CLUSTER PRIOR TO THE DESIGNATED TIME ON MARCH 15th. Some clusters may be in-use for testing purposes, or be in the process of being staged for the event. Unauthorized access to the clusters during this time could negatively impact your lab experience. Thank you.</font></strong></br></br>
 
-Refer to the `Hands-On Labs <https://gts2021.ntnxevents.com/nutanixgtsindex>`_ page for the credentials to access the Lab User Lookup tool. Sebastien would be mad if I put the credentials in GitHub.
+Refer to the `Hands-On Labs <https://gts2021.ntnxevents.com/nutanixgtsindex>`_ page for the credentials to access the Lab User Lookup tool. *Sebastien would be mad if I put the credentials in GitHub.*
 
 `Click here to access the Lab User Lookup tool <http://lookup.ntnxworkshops.com/>`_
 
