@@ -65,13 +65,13 @@ Nutanix Calm Plugin Configuration
 
    <strong><font color="red">DO NOT EDIT ANY OF THESE VALUES.</font></strong><br><br>
 
-#. The plugin will periodically sync with Prism Central to update Blueprints, Projects, etc., however as you just created both your Project and Blueprint, you can force a sync by clicking the **Sync Now** button at the bottom of **Application Properties**. Click **OK** to begin the sync.
+#. The plugin will periodically sync with Prism Central to update Blueprints, Projects, etc., however as you just created both your Project and Blueprint, you can force a sync by clicking the **Sync Now** link below **Related Links** at the bottom of **Application Properties**. Click **OK** to begin the sync.
 
    .. note::
 
       If the UI shows that the plug-in is currently **Syncing**, you will have to wait a minute, refresh the page and click **Sync Now** once the previous sync has finished.
 
-   .. figure:: images/5.png
+   .. figure:: images/5b.png
 
    .. raw:: html
 
