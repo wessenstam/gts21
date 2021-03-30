@@ -346,11 +346,19 @@ Testing the Flow
 
 #. Get up, have a good stretch, call a family member you haven't spoken to in a while and tell them you love them.
 
-#. Validate you have triggered another Memory Usage alert for your VM, resulting in the triggering of your ServiceNow Flow and the execution of your Playbook.
+#. After your alert is generated, in **Prism Central**, select :fa:`bars` **> Operations > Playbooks > Plays** and validate your **USER**\ *##* **Memory Add** playbook has run again successfully. You can also look at your VM and verify the memory has increased by 1GiB again.
 
    .. figure:: images/26.png
 
+   .. note::
+
+      If your playbook status is **Failed**, select the Play to view the associated error. If you have a **NotFound: 18** error, this indicates ServiceNow is not returning the UUID of your VM. This is likely due to an error when following `Creating ServiceNow Event Rules`_. Review those steps to ensure your Event Rule is has the proper case for your **Resource** name and that you have the **Description** field set to **${vm_uuid}**.
+
    **Congratulations!** you've integrated ServiceNow and Nutanix to provide automated issue remediation, while tracking event and action data as part of the ServiceNow CMDB. *Now that's enterprise ready!*
+
+   .. note::
+
+      If your Playbook executed but
 
 #. Cancel the stress command in your SSH session by pressing ``Ctrl+C``.
 
