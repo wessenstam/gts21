@@ -264,6 +264,8 @@ Testing the Action
 
    The most common error is syntax within the **Request Body**, specifically not having escaped quotation mark characters in the right place (ex. **\\"type\\":\\"action->type\\",**). Or providing an incorrect VM **name** or **uuid** value for the test.
 
+   If the test was successful (**Response Code 202**), but your Playbook still did not run. Disable and re-enable your Playbook in Prism Central and try your test in **ServiceNow Flow Designer** again.
+
 #. After validating your Action executes successfully, return to the **Flow Designer**.
 
 #. Select your **USER**\ *##*\ **-RESTAPI** tab, close your test dialog, and **Publish** your Action.
