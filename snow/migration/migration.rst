@@ -62,6 +62,10 @@ Creating A Recovery Plan
 
 #. Click **Done > Continue** to save your Recovery Plan.
 
+   .. note::
+
+      You can ignore any warnings regarding **Incomplete Network Mapping**.
+
 Executing A Failover
 +++++++++++++++++++
 
