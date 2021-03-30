@@ -39,7 +39,7 @@ Visual Studio Code (VSC)
 
    .. figure:: images/2b.png
 
-#. Select the location **C:\\Users\\Administrator\\.ssh\\config** (typically first entry) to update the config file.
+#. Select the location **C:\\Users\\Administrator\ \\.ssh\\config** (typically first entry) to update the config file.
 
 #. Select **Connect** on the pop-up in the bottom right corner to connect to the VM.
 

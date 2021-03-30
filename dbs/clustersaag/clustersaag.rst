@@ -26,6 +26,10 @@ Registering a database/database server with Era allows you to create a Time Mach
 
 #. Open **Era** in your browser and log in with the provided credentials.
 
+   .. note::
+
+      You may experienced a delay getting a log in prompt the first time you log into Era. It could take as much as 3 minutes. Era ENG is investigating.
+
 #. From the **Dashboard** dropdown menu, select **Databases** and then **Sources** from the left-hand menu.
 
    .. figure:: images/1.png
