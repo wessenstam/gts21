@@ -178,7 +178,7 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
 #. In the **Filter Navigator** field in the upper-left, search for **All Alerts**.
 
-   If there are multiple alerts, you can easily identify yours by clicking the **Filter** icon and looking for **Resource starts with** *USER##* (ex. USER01).
+   If there are multiple alerts, you can easily identify yours by clicking the **Filter** icon as shown below and selecting **Resource**, **starts with**, and entering *USER##* (ex. USER01).
 
    .. figure:: images/13.png
 
