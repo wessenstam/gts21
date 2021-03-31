@@ -602,6 +602,14 @@ In order for our **K10** application to connect to our Objects bucket as a stora
 
 #. Run ``ping <YOUR-BUCKET-NAME>.ntnx-objects.ntnxlab.local`` to verify you can resolve the name.
 
+   .. note::
+
+      If you are unable to ping your entry and believe you have made a typo, you can remove your A Record by running the command below and then attempt to re-add.
+
+      ``Invoke-Command -ComputerName dc.ntnxlab.local -ScriptBlock {Remove-DnsServerResourceRecord -Name "<YOUR-BUCKET-NAME>.ntnx-objects" -ZoneName "ntnxlab.local" -RRType "A"}``
+
+      *Or* you launch **Administrative Tools > DNS Manager** from your **USER**\ *##*\ **-WinToolsVM** VM and connect to **DC.ntnxlab.local** to modify using the UI. *Do not modify other DNS records!*
+
    Next we'll update the DNS configuration for the Kubernetes cluster.
 
    .. raw:: html
