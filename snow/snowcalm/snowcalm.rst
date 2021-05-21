@@ -65,13 +65,13 @@ Nutanix Calm Plugin Configuration
 
    <strong><font color="red">DO NOT EDIT ANY OF THESE VALUES.</font></strong><br><br>
 
-#. The plugin will periodically sync with Prism Central to update Blueprints, Projects, etc., however as you just created both your Project and Blueprint, you can force a sync by clicking the **Sync Now** button at the bottom of **Application Properties**. Click **OK** to begin the sync.
+#. The plugin will periodically sync with Prism Central to update Blueprints, Projects, etc., however as you just created both your Project and Blueprint, you can force a sync by clicking the **Sync Now** link below **Related Links** at the bottom of **Application Properties**. Click **OK** to begin the sync.
 
    .. note::
 
       If the UI shows that the plug-in is currently **Syncing**, you will have to wait a minute, refresh the page and click **Sync Now** once the previous sync has finished.
 
-   .. figure:: images/5.png
+   .. figure:: images/5b.png
 
    .. raw:: html
 
@@ -229,7 +229,7 @@ With your Catalog Item active, you're ready to test ordering your first VM as an
 
       As all users are part of the local **Calm Users** group in the ServiceNow Developer Instance, you should expect to see other users' Catalog Items listed alongside your own. In a production environment you could use LDAP to enforce individually users only seeing the Blueprint Catalog Items which they have been assigned.
 
-#. Expand **Category: Un-Published Blueprints**, and click your **USER**\ *##*\ **CentOS - 3GB Bronze** entry to begin the user request.
+#. Expand **Category: Un-Published Blueprints**, and under the **Name** column, click your **USER**\ *##*\ **CentOS - 3GB Bronze** entry to begin the user request.
 
 #. Click **Launch**.
 
@@ -351,6 +351,10 @@ Finally, you will verify the data protection and microsegmentation policies you 
 
 #. From your CentOS VM, issue a ``ping <USER##-MSSQL-Source-IP>`` command and observe normal connectivity.
 
+   .. note::
+
+      If the ping fails, validate that the **USER**\ *##*\ **-MSSQL-Source** Windows Firewall is disabled.
+
    Despite being included in the **Environment: Production** category, your **USER**\ *##*\ **-MSSQL-Source** VM lacks the additional **User:** *##* category to apply the security policy.
 
    Take note of the latency reported by the ping (*it should be >25ms if stretching from AWS Oregon to the Nutanix PHX datacenter*).
@@ -364,6 +368,10 @@ Finally, you will verify the data protection and microsegmentation policies you 
    .. figure:: images/26.png
 
    While this is a simple example, it demonstrates that combining ServiceNow, Calm, Flow, and other native Nutanix features such as replication and categories, new VMs and applications can be introduced into the environment through end user requests, but with administrative policy automatically applied.
+
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 Takeaways
 +++++++++

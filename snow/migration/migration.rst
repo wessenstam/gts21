@@ -62,6 +62,10 @@ Creating A Recovery Plan
 
 #. Click **Done > Continue** to save your Recovery Plan.
 
+   .. note::
+
+      You can ignore any warnings regarding **Incomplete Network Mapping**.
+
 Executing A Failover
 +++++++++++++++++++
 
@@ -129,6 +133,10 @@ Validating the Migration
 #. SSH into your VM or click **Launch Console** and re-attempt your pings to **USER**\ *##*\ **-FiestaWeb** and **USER**\ *##*\ **-MSSQL-Source** IP addresses. You should observe that you are still isolated from **USER**\ *##*\ **-FiestaWeb** and you now have minimal latency to connect to your **USER**\ *##*\ **-MSSQL-Source** database - goal achieved!
 
    .. figure:: images/12.png
+
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 Takeaways
 +++++++++

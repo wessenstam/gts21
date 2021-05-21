@@ -184,6 +184,7 @@ In order to get access to our **Fiesta** web frontend, we need to define a new *
    .. code-block:: powershell
 
       Add-Content -Path C:\Windows\System32\drivers\etc\hosts -Value "<TRAEFIK-EXTERNAL-IP>`tfiesta.lab.local" -Force
+      
       cat C:\Windows\System32\drivers\etc\hosts
 
    .. note::
@@ -245,10 +246,9 @@ Kubernetes can `set environment variables <https://kubernetes.io/docs/tasks/inje
 
    *That's better!*
 
-
 .. raw:: html
 
-    <H1><font color="#B0D235"><center>Congratulations!</center></font></H1>
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 You now have a highly available web front end for your **Fiesta** application to is accessible to the outside world on a standard HTTP port, while maintaining the ability to share port 80 with other services that could be deployed to the Kubernetes cluster in the future.
 

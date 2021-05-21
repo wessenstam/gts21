@@ -264,9 +264,9 @@ Rather than running on the Kubernetes cluster, **Lens** can be installed on a Wi
 
       **Lens** provides a GUI for **Helm**, a popular command line package management tool for Kubernetes, making it easy for users to deploy new services. *This might be useful later!*
 
-   .. raw:: html
+.. raw:: html
 
-       <H1><font color="#B0D235"><center>Congratulations!</center></font></H1>
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 So far you have provisioned a Kubernetes cluster with Karbon, added the necessary network services to provide production level access to services from external networks, and can easily visualize operations within the cluster.
 

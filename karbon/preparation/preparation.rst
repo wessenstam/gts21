@@ -112,6 +112,10 @@ We will use this file to interact with the cluster using the Kubernetes command 
 
 #. Connect to your **USER**\ *##*\ **-WinToolsVM** VM via RDP using the **NTNXLAB\\Administrator** credentials.
 
+   .. raw:: html
+
+      <BR><font color="#FF0000"><strong>Make sure you are NOT using the local Administrator account, you should be connecting as NTNXLAB\Administrator or Administrator@ntnxlab.local</strong></font><BR><BR>
+
 #. Within your **USER**\ *##*\ **-WinToolsVM** VM, open **Prism Central** in Google Chrome.
 
 #. In **Prism Central**, select :fa:`bars` **> Services > Karbon**.

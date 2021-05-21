@@ -10,6 +10,68 @@
    info/help
    info/validate
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Hybrid Cloud IaaS
+   :name: _hybridiaas
+   :hidden:
+
+   snow/gettingstarted/gettingstarted
+   snow/policies/policies
+   snow/snowcalm/snowcalm
+   snow/migration/migration
+   snow/alerts/alerts
+   snow/webhook/webhook
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Hybrid Cloud Database Management
+   :name: _hybrideuc
+   :hidden:
+
+   dbs/gettingstarted/gettingstarted
+   dbs/clustersaag/clustersaag
+   dbs/clustersdam/clustersdam
+   dbs/patching/patching
+   dbs/sqlmonitoring/sqlmonitoring
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Hybrid Cloud EUC
+   :name: _hybrideuc
+   :hidden:
+
+   euc/gettingstarted/gettingstarted
+   euc/expand/expand
+   euc/runbook/runbook
+   euc/secure/secure
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Containerizing Apps and CI/CD
+   :name: _cicd
+   :hidden:
+
+   cicd/start/start
+   cicd/basic/basic
+   cicd/phase2/phase2
+   cicd/phase3/phase3
+   cicd/phase4/phase4
+   cicd/phase5/phase5
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Cloud Native Apps on Nutanix
+   :name: _k8s
+   :hidden:
+
+   karbon/gettingstarted/gettingstarted
+   karbon/preparation/preparation
+   karbon/karbon/karbon
+   karbon/deploy/deploy
+   karbon/day-2/day-2
+
+
 .. raw:: html
 
    <br><center><img src="https://github.com/nutanixworkshops/gts21/raw/master/images/welcome.png" alt="Welcome to Nutanix Virtual Global Tech Summit 2021"></center><br>
@@ -21,7 +83,7 @@
 
    - **Hybrid Cloud IaaS**
 
-      Take self-service to the next level with Nutanix ServiceNow integrations. Expand, migrate, secure, and automate your operations.
+      Take self-service to the next level with Nutanix ServiceNow integrations. Configure self-service VM provisioning across your multi-cloud environment with ServiceNow and Calm. Secure, protect, and migrate workloads with Flow and Leap. Automatically remediate performance issues with ServiceNow and Prism X-Play.
 
    - **Hybrid Cloud Database Management**
 
@@ -29,15 +91,15 @@
 
    - **Hybrid Cloud EUC**
 
-      Find out how you can go from hundreds to thousands of Citrix Desktops in hours versus weeks. Use Calm Runbooks to build powerful, repeatable automations.
+      Find out how you can go from hundreds to thousands of Citrix Desktops in hours versus weeks. Use Calm Runbooks to build powerful, repeatable automation to intelligently provision new desktops. Secure your desktop environment with Flow's VDI Policy.
 
    - **Containerizing Apps and CI/CD**
 
-      Learn about the benefits and challenges of re-platforming applications first hand.
+      Learn about the benefits and challenges of re-platforming applications first hand by containerizing an application with Docker. Build a full CI/CD pipeline with Git and Drone. Integrate with Era APIs for database cloning.
 
    - **Cloud Native Apps on Nutanix**
 
-      Lift and shift may not be for you, but there are still economic and security benefits to running your containerized apps on-prem. Deploy and manage Nutanix Karbon and Objects, plus third party integrations, to deliver a full infrastructure stack to support Cloud Native Apps.
+      Lift and shift may not be for you, but there are still economic and security benefits to running your containerized apps on-prem. Deploy and manage Nutanix Karbon and Objects, plus third party integrations, to deliver a full Kubernetes stack to support Cloud Native Apps.
 
 .. raw:: html
 
@@ -86,8 +148,8 @@ Frequently Asked Questions
 
    <br><center><img src="https://media.giphy.com/media/9Pk1GBaXV8QGbsoaUF/giphy.gif"></center><br><br>
 
-Should I Copy Name & IP Information Directly From Snapshots?
-............................................................
+Should I Copy Name & IP Information Directly From Screenshots?
+..............................................................
 
 **NO!** Screenshots are meant to provide navigational context. Screenshot values such as **XYZ** and **USER00** should be replaced with your actual initials or user ID value, as directed in the text of the lab. Similarly, IP addresses used should be relevant to **YOUR** cluster/VM/application/etc.
 
@@ -140,15 +202,15 @@ How Long Do I Have Access To The Labs?
 
 The lab environments will be available all day Tuesday and Wednesday. The labs will be supported by a team of SMEs during the following periods:
 
-- **Tuesday** - 06:00AM PST - 6:00PM PST
-- **Wednesday** - 06:00AM PST - 12:00PM PST
+- **Tuesday** - 09:00AM AEST - 10:00PM AEST
+- **Wednesday** - 09:00AM AEST - 10:00PM AEST
 
-The lab environments will continue to be available until 9:00PM PST on Wednesday if you wish to continue working on labs after the closing session. SME support and lab validation will end at the beginning of Wednesday's closing session.
+The lab environments will continue to be available until 11:59PM JST on Wednesday if you wish to continue working on labs after the closing session. *SME support and lab validation will be available on a best effort basis after Wednesday's closing session.*
 
 Do I Have To Complete The Lab Tracks In Order?
 ..............................................
 
-Within a **Lab Track** (ex. **Hybrid Cloud EUC**), inidividual exercises should be completed in order (**Getting Started -> Provision and Expand -> ...**). However, you should be able to complete the tracks in your order of interest.
+Within a **Lab Track** (ex. **Hybrid Cloud EUC**), individual exercises should be completed in order (**Getting Started -> Provision and Expand -> ...**). However, you should be able to complete the tracks in your order of interest.
 
 .. note::
 
@@ -163,11 +225,6 @@ What Happens To The Labs Post-Event?
 ....................................
 
 Following the event, we will be integrating the GTS labs into new and existing Bootcamps for you to drive prospect and customer engagement during 2021.
-
-Generic Looking Frequently Asked Question?
-..........................................
-
-If you're paying attention, come join us in `#﻿literate-adults <slack://channel?team=T0252CLM8&id=C01MHG5NDPD>`_ on Slack.
 
 How Do I Get My Cluster Assignment Info?
 ........................................

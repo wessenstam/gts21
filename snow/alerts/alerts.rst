@@ -178,7 +178,7 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
 
 #. In the **Filter Navigator** field in the upper-left, search for **All Alerts**.
 
-   If there are multiple alerts, you can easily identify yours by clicking the **Filter** icon and looking for **Resource starts with** *USER##* (ex. USER01).
+   If there are multiple alerts, you can easily identify yours by clicking the **Filter** icon as shown below and selecting **Resource**, **starts with**, and entering *USER##* (ex. USER01).
 
    .. figure:: images/13.png
 
@@ -187,6 +187,10 @@ Nutanix Playbooks, or X-Play, allow administrators to easily automate tasks with
    .. figure:: images/17.png
 
    With the alert data inside of ServiceNow, IT has visibility into which dependent services could be impacted, historical related incidents, knowledgebase articles, and the ability to open an incident to track remediation activities.
+
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 Takeaways
 +++++++++

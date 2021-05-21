@@ -59,7 +59,7 @@ Prism Ultimate licensing includes the SQL Server monitoring pack, which allows I
 
    .. note::
 
-      If the connection test fails, verify you have the correct IP and your VM is powered on.
+      If the connection test fails, verify you have the correct IP and your VM is powered on. Additionally verify the Windows Firewall is disabled on your **USER**\ *##*\ **-MSSQL-Source** VM (or at least allows TCP 1433).
 
 #. After a successful test, click **Save**.
 
@@ -134,6 +134,10 @@ Triggering Prism SQL Server Alert
       .. figure:: images/15.png
 
    If you were waiting on your SQL Server to provision in the :ref:`db_clustersdam` exercise, you should now be able to return and complete the exercise.
+
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 Takeaways
 +++++++++

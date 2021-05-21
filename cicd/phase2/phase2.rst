@@ -39,7 +39,7 @@ Visual Studio Code (VSC)
 
    .. figure:: images/2b.png
 
-#. Select the location **C:\\Users\\Administrator\\.ssh\\config** (typically first entry) to update the config file.
+#. Select the location **C:\\Users\\Administrator\ \\.ssh\\config** (typically first entry) to update the config file.
 
 #. Select **Connect** on the pop-up in the bottom right corner to connect to the VM.
 
@@ -259,7 +259,7 @@ You may have noticed that the **Drone** service is described in the same **docke
 
 #. Return to your existing **Visual Studio Code** session.
 
-#. From the **Explorer** side panel, open **/root/github/docker-composer.yaml**.
+#. From the **Explorer** side panel, open **/root/github/docker-compose.yaml**.
 
 #. Under **drone-server > environment**, update the following fields:
 
@@ -276,7 +276,7 @@ You may have noticed that the **Drone** service is described in the same **docke
 
    .. figure:: images/18b.png
 
-#. Save **docker-composer.yaml**.
+#. Save **docker-compose.yaml**.
 
 #. Return to your Terminal session.
 

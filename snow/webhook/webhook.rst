@@ -92,7 +92,7 @@ ServiceNow Event Rules give us the ability to perform additional data manipulati
 
    - Select **Resource**
    - Select **starts with**
-   - Specify your **USER**\ *##* (or whatever unique value prepends your VM name)
+   - Specify your **USER**\ *##* (or whatever unique value prepends your VM name - *THIS IS CASE SENSITIVE!*)
    - Click **AND**
    - Select **Metric Name**
    - Select **is**
@@ -109,6 +109,20 @@ ServiceNow Event Rules give us the ability to perform additional data manipulati
    .. figure:: images/8.png
 
    The Flow you will create in the following exercise will now have easy access to the **vm_uuid** value.
+
+   Before moving on to the next section, you should validate that your new Event Rule will be applied to future alerts.
+
+#. In the **Filter Navigator** field in the upper-left, return to **All Events**.
+
+#. Select the event that corresponds to the **Alert** you previously generated for high memory usage.
+
+      .. figure:: images/4.png
+
+#. Under **Related Links** at the bottom of the page, click **Check processing of event**.
+
+   The message at the top of the screen should indicate your event matches the **USER**\ *##*\ **Alerts** rule you have created. If this rule does **NOT** match the event, return to your Event Rule and double check your **Resource** name is correct (CASE SENSITIVE).
+
+   .. figure:: images/29.png
 
 Creating A ServiceNow Flow
 ++++++++++++++++++++++++++
@@ -137,6 +151,8 @@ Building the Action
 #. Click **Create** to launch the **Flow Designer**.
 
    .. note::
+
+      The Flow Designer opens in a separate window and may be blocked as a popup by your browser.
 
       You may need to expand the Flow Designer browser window to view all fields mentioned in the following steps.
 
@@ -205,11 +221,15 @@ Building the Action
 
 #. Replace **<ENTITY_TYPE>**, **ENTITY_NAME>**, and **<ENTITY_UUID>** with the appropriate **Input Variables** by dragging and dropping from the **Data** column.
 
-   Your finished **Request Body** should resemble the screenshot below, with your unique **webhook_id**. Watch out for typos, including missing escape slashes before quotation marks (ex. ``\"``)!
-
-   .. figure:: images/17.png
+   Your finished **Request Body** should resemble the screenshot below, with your unique **webhook_id**.
 
    .. note::
+
+      Watch out for typos, including missing escape slashes before quotation marks (ex. ``\"``)!
+
+      Additionally the **entity1** line in the **Request Body** should be on a **SINGLE LINE**. It appears to be on two lines in the screenshot only because of the width of the window. There is **NO** return before **action->name**.
+
+   .. figure:: images/17.png
 
 #. Click **Save**.
 
@@ -243,6 +263,8 @@ Testing the Action
    .. figure:: images/20.png
 
    The most common error is syntax within the **Request Body**, specifically not having escaped quotation mark characters in the right place (ex. **\\"type\\":\\"action->type\\",**). Or providing an incorrect VM **name** or **uuid** value for the test.
+
+   If the test was successful (**Response Code 202**), but your Playbook still did not run. Disable and re-enable your Playbook in Prism Central and try your test in **ServiceNow Flow Designer** again.
 
 #. After validating your Action executes successfully, return to the **Flow Designer**.
 
@@ -326,13 +348,25 @@ Testing the Flow
 
 #. Get up, have a good stretch, call a family member you haven't spoken to in a while and tell them you love them.
 
-#. Validate you have triggered another Memory Usage alert for your VM, resulting in the triggering of your ServiceNow Flow and the execution of your Playbook.
+#. After your alert is generated, in **Prism Central**, select :fa:`bars` **> Operations > Playbooks > Plays** and validate your **USER**\ *##* **Memory Add** playbook has run again successfully. You can also look at your VM and verify the memory has increased by 1GiB again.
 
    .. figure:: images/26.png
 
+   .. note::
+
+      If your playbook status is **Failed**, select the Play to view the associated error. If you have a **NotFound: 18** error, this indicates ServiceNow is not returning the UUID of your VM. This is likely due to an error when following `Creating ServiceNow Event Rules`_. Review those steps to ensure your Event Rule is has the proper case for your **Resource** name and that you have the **Description** field set to **${vm_uuid}**.
+
    **Congratulations!** you've integrated ServiceNow and Nutanix to provide automated issue remediation, while tracking event and action data as part of the ServiceNow CMDB. *Now that's enterprise ready!*
 
+   .. note::
+
+      If your Playbook executed but
+
 #. Cancel the stress command in your SSH session by pressing ``Ctrl+C``.
+
+.. raw:: html
+
+    <H1><a href="http://lookup.ntnxworkshops.com/" target="_blank"><font color="#B0D235"><center>Click Here To Submit Validation Request</center></font></a></H1>
 
 Takeaways
 +++++++++
